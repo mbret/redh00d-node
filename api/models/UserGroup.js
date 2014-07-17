@@ -1,5 +1,5 @@
 /**
- * Event
+ * UserGroup
  *
  * @module      :: Model
  * @description :: A short summary of how this model works and what it represents.
@@ -9,15 +9,17 @@
 module.exports = {
 
     attributes: {
-        ID: {
+  	
+  	    ID: {
             type: 'integer'
         },
-        name: {
-            type: 'string'
+        authorID: {
+
         },
-        description: {
-            type: 'string'
+        name: {
+
         }
+    
     }
 
 };
