@@ -2,3 +2,30 @@
 Database is based on these conventions: http://wiki.coldbox.org/wiki/DatabaseNamingConventions.cfm#Table_Conventions
 
 API structure is based on http://pages.apigee.com/rs/apigee/images/api-design-ebook-2012-03.pdf
+
+Database:
+
+event
+--------------------------------------------------------------------------------------------------------
+| eventID | eventName | eventDescription | eventPlace | eventDate | eventCreatedDate | eventUpdatedDate |
+--------------------------------------------------------------------------------------------------------
+event_invitation
+------------------------------------------------------------------------------------------------------------------------------------
+| eventInvitationID | eventInvitationStatus | FK_userID | FK_userTargetID | eventInvitationCreatedDate | eventInvitationUpdatedDate |
+------------------------------------------------------------------------------------------------------------------------------------
+user
+------------------------------------------------------------------------------------------
+| userID | userName | userMail | userPassword | phone | userCreatedDate | userUpdatedDate |
+------------------------------------------------------------------------------------------
+user_group
+-------------------------------------------------------------------------------------------------
+| userGroupID | FK_applicantUserID | userGroupName | userGroupCreatedDate | userGroupUpdatedDate |
+-------------------------------------------------------------------------------------------------
+user_friendship
+-----------------------------------------------------------------------------------------------------------------
+| userFriendshipID | FK_applicantUserID | FK_targetUserID | userFriendshipIsAccepted | userFriendshipCreatedDate |
+-----------------------------------------------------------------------------------------------------------------
+user_friendship_group
+--------------------------------------------------------------------------------------------------------------------------------------------------
+| userFriendshipGroupID | FK_userGroupID | FK_applicantUserID | FK_targetUserID | userFriendshipGroupCreatedDate | userFriendshipGroupUpdatedDate |
+--------------------------------------------------------------------------------------------------------------------------------------------------
