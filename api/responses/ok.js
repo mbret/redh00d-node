@@ -23,10 +23,11 @@ module.exports = function sendOK (data, options) {
   // Set status code
   res.status(200);
 
-  // If appropriate, serve data as JSON(P)
-  if (req.wantsJSON) {
-    return res.jsonx(data);
-  }
+    // If appropriate, serve data as JSON(P)
+    if (req.wantsJSON) {
+        data.status = 200;
+        return res.jsonx(data);
+    }
 
   // If second argument is a string, we take that to mean it refers to a view.
   // If it was omitted, use an empty object (`{}`)
