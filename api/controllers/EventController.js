@@ -18,37 +18,79 @@
 module.exports = {
     
   
-  /**
-   *
-   */
-   find: function (req, res) {
-    
-    // Send a JSON response
-    return res.json({
-      hello: 'world'
-    });
-  },
-
-
     /**
-    *
-    */
-    findMultiple: function (req, res) {
+     *
+     */
+    find: function (req, res) {
     
         // Send a JSON response
         return res.json({
-        hello: 'world'
+            hello: 'world'
         });
     },
 
 
+    /**
+     *
+     */
+    findMultiple: function (req, res) {
+
+        // Get all events
+        Event.find().exec( function(err, events){
+            if(err){
+                //@todo
+            }
+            if(!events){
+                //@todo
+            }
+            // Build correct json response
+            eventsJsonized = [];
+            for (var i in events) {
+                eventsJsonized.push( events[i].toCustomer() );
+            }
+            return res.json({
+                events: eventsJsonized
+            }, 200);
+        });
+    },
+
+    /**
+     * Create a new event
+     * @param req
+     * @param res
+     * @returns {*}
+     */
+    create: function(req, res){
+
+        // Check params
+        if( ! req.param('name') ){
+            //@todo
+            return res.notFound();
+        }
+
+        Event.create({
+            name: req.param('name'),
+            description: req.param('description'),
+            place: req.param('place'),
+            date: req.param('date'),
+            createdDate: new Date()
+        }).exec(function(err, user){
+            if(err){
+                //@todo
+                console.log(err);
+            }
+
+            return res.json();
+        });
+
+    },
 
 
-  /**
-   * Overrides for the settings in `config/controllers.js`
-   * (specific to EventController)
-   */
-  _config: {}
+    /**
+     * Overrides for the settings in `config/controllers.js`
+     * (specific to EventController)
+     */
+    _config: {}
 
   
 };
