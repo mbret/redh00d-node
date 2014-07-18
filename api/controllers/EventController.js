@@ -30,16 +30,16 @@ module.exports = {
   },
 
 
-  /**
-   *
-   */
-   findMultiple: function (req, res) {
+    /**
+    *
+    */
+    findMultiple: function (req, res) {
     
-    // Send a JSON response
-    return res.json({
-      hello: 'world'
-    });
-  },
+        // Send a JSON response
+        return res.json({
+        hello: 'world'
+        });
+    },
 
 
 

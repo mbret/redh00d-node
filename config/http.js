@@ -39,10 +39,18 @@ module.exports.http = {
 
   },
 
-  // The number of seconds to cache flat files on disk being served by
-  // Express static middleware (by default, these files are in `.tmp/public`)
-  //
-  // The HTTP static cache is only active in a 'production' environment,
-  // since that's the only time Express will cache flat-files.
-  cache: 31557600000
+    // Extra options to pass directly into the Express server
+    // when it is instantiated
+    //      (or false to disable)
+    //
+    // This is the options object for the `createServer` method, as discussed here:
+    // http://nodejs.org/docs/v0.10.20/api/https.html#https_class_https_server
+    serverOptions: undefined,
+
+    // The number of seconds to cache flat files on disk being served by
+    // Express static middleware (by default, these files are in `.tmp/public`)
+    //
+    // The HTTP static cache is only active in a 'production' environment,
+    // since that's the only time Express will cache flat-files.
+    cache: 31557600000
 };
