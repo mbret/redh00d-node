@@ -49,6 +49,15 @@ module.exports = {
             console.log(obj);
             delete obj.ID;
             return obj.toJSON();
+        },
+
+
+    },
+
+    validation_messages: {
+        place: {
+            string: 'undefined',
+            required: 'required'
         }
     }
 

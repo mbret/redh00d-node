@@ -41,16 +41,16 @@ module.exports = {
                 //@todo
             }
             if(!events){
-                //@todo
+                return res.notFound("No events");
             }
             // Build correct json response
             eventsJsonized = [];
             for (var i in events) {
                 eventsJsonized.push( events[i].toCustomer() );
             }
-            return res.json({
+            return res.ok({
                 events: eventsJsonized
-            }, 200);
+            });
         });
     },
 
@@ -74,16 +74,28 @@ module.exports = {
             place: req.param('place'),
             date: req.param('date'),
             createdDate: new Date()
-        }).exec(function(err, user){
+        }).exec(function(err, event){
             if(err){
+                if(err.ValidationError){
+                    errors = HandleValidation.transformValidation( Event, err.ValidationError );
+                    errorsNormalized = [];
+                    for( entry in errors ){
+                        errorsNormalized.push( )
+                    }
+
+                }
                 //@todo
-                console.log(err);
+//                console.log(err);
             }
 
-            return res.json();
+            return res.created({
+                event: event
+            });
         });
 
     },
+
+
 
 
     /**

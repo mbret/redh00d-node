@@ -17,7 +17,7 @@
  * automatically.
  */
 
-module.exports = function notFound (data, options) {
+module.exports = function notFound (message, data, options) {
 
   // Get access to `req`, `res`, & `sails`
   var req = this.req;
@@ -40,10 +40,18 @@ module.exports = function notFound (data, options) {
     data = undefined;
   }
 
-  // If the user-agent wants JSON, always respond with JSON
-  if (req.wantsJSON) {
-    return res.jsonx(data);
-  }
+    // If the user-agent wants JSON, always respond with JSON
+    if (req.wantsJSON) {
+        if( !message ){
+            message = "The requested resource was not found";
+        }
+        if(! data){
+            data = {};
+        }
+        data.status = 404;
+        data.message = message;
+        return res.jsonx(data);
+    }
 
   // If second argument is a string, we take that to mean it refers to a view.
   // If it was omitted, use an empty object (`{}`)
