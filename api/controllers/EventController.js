@@ -16,7 +16,8 @@
  */
 
 module.exports = {
-    
+
+
   
     /**
      * Return an event by id
@@ -36,6 +37,7 @@ module.exports = {
                 event: event
             });
         });
+
     },
 
 
@@ -45,18 +47,25 @@ module.exports = {
      */
     findMultiple: function (req, res) {
 
-        // Get all events
-        Event.find().exec( function(err, events){
+        // Get optional parameters from URL to refine the search
+        var optionalData = {};
+        if( req.param('id') ){
+            optionalData.ID = req.param('id');
+        }
+        if( req.param('name') ){
+            optionalData.name = req.param('name');
+        }
+
+        // Get all events (with data)
+        Event.find( optionalData ).exec( function(err, events){
             if(err){
                 //@todo
             }
-            // Build correct json response
-            eventsJsonized = [];
-            for (var i in events) {
-                eventsJsonized.push( events[i].toCustomer() );
+            if(!events){
+                return res.notFound("No events");
             }
             return res.ok({
-                events: eventsJsonized
+                events: events
             });
         });
     },
