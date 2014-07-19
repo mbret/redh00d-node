@@ -25,22 +25,27 @@ module.exports.routes = {
     /**
      * API routes
      */
+    apiPrefix: '/api',
+
+    /**
+     * EVENT relatives routes
+     * Possible actions:
+     *      - get one or multiple event
+     *      - update, delete one event
+     *      - get all user from an event
+     */
     // Just one route possible with the primary key
-    'get /api/events/:id': {
-        controller: 'EventController',
-        action: 'find'
-    },
-
+    'get /api/events/:id': 'EventController.find',
     // Optional parameters are available to refine the search
-    'get /api/events*': {
-        controller: 'EventController',
-        action: 'findMultiple'
-    },
-
-    'post /api/events': {
-        controller: 'EventController',
-        action: 'create'
-    }
+    'get /api/events*': 'EventController.findMultiple',
+    // Create
+    'post /api/events': 'EventController.create',
+    // Delete
+    'delete /api/events/:id': 'EventController.destroy',
+    // Update an event
+    'put /api/events/:id': 'EventController.update',
+    // get all users from an event
+    'get /api/event/:id/users': 'EventController.findMultipleUsers',
 
 
   // If a request to a URL doesn't match any of the custom routes above,

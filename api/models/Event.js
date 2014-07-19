@@ -8,6 +8,13 @@
 
 module.exports = {
 
+    tableName: 'event',
+
+    autoCreatedAt: true,
+    autoUpdatedAt: true,
+
+    autoPK: true,
+
     attributes: {
 
         ID: {
@@ -15,41 +22,39 @@ module.exports = {
             autoIncrement: true,
             unique: true,
             index: true,
-            primaryKey: true
+            primaryKey: true,
+            columnName: 'eventID'
         },
         name: {
             type: 'string',
-            required: true
+            required: true,
+            columnName: 'eventName'
         },
         description: {
             type: 'string',
-            required: true
+            required: true,
+            columnName: 'eventDescription'
         },
         place: {
             type: 'string',
-            required: true
+            required: true,
+            columnName: 'eventPlace'
         },
         date: {
             type: 'datetime',
-            required: true
+            required: true,
+            columnName: 'eventDate'
         },
-        createdDate: {
-            type: 'datetime'
+        // This attribute is auto managed by ORM
+        createdAt: {
+            type: 'datetime',
+            columnName: 'eventCreatedDate'
         },
-        updatedDate: {
-            type: 'datetime'
-        },
-
-        /**
-         * Return a safe object for customers
-         * @returns {*}
-         */
-        toCustomer: function(){
-            var obj = this.toObject();
-            console.log(obj);
-            delete obj.ID;
-            return obj.toJSON();
-        },
+        // This attribute is auto managed by ORM
+        updatedAt: {
+            type: 'datetime',
+            columnName: 'eventUpdatedDate'
+        }
 
 
     },

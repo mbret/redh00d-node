@@ -17,8 +17,6 @@
 
 module.exports = {
 
-
-  
     /**
      * Return an event by id
      */
@@ -83,19 +81,19 @@ module.exports = {
             name: req.param('name'),
             description: req.param('description'),
             place: req.param('place'),
-            date: req.param('date'),
-            createdDate: new Date()
+            date: req.param('date')
+//            createdDate: new Date()
 
         }).exec(function(err, event){
             if(err){
+                // Validation error
                 if(err.ValidationError){
-                    errors = HandleValidation.transformValidation( Event, err.ValidationError );
-                    errorsNormalized = [];
-                    for( entry in errors ){
-                        errorsNormalized.push( )
-                    }
+                    return res.badRequest( 'The given parameters are invalid', err.ValidationError );
                 }
-                return res.badRequest( err.ValidationError );
+                else{
+                    return res.serverError(err);
+                }
+
             }
 
             return res.created({
@@ -111,7 +109,7 @@ module.exports = {
      * @param req
      * @param res
      */
-    delete: function(req, res){
+    destroy: function(req, res){
 
         // Check the event before deletion
         Event.findOne( req.param('id')).exec(function(err, event){
@@ -135,13 +133,41 @@ module.exports = {
 
     /**
      * Update an event
+     * Required parameters: id
+     * Optional parameters: name/date/description/place
      * @param req
      * @param res
      */
     update: function(req, res){
 
-    },
+        // Get param from request
+        var dataToUpdate = {};
+        if ( req.param('name') ) dataToUpdate.name = req.param('name');
+        if ( req.param('place') ) dataToUpdate.place = req.param('place');
+        if ( req.param('description') ) dataToUpdate.description = req.param('description');
+        if ( req.param('date') ) dataToUpdate.date = req.param('date');
 
+        var query = {
+            'ID': req.param('id')
+        }
+
+        Event.update(query, dataToUpdate, function(err, event) {
+
+            if (err) {
+                // Error due to validators
+                if(err.ValidationError){
+                    return res.badRequest('The given parameters are invalid', err.ValidationError);
+                }
+                else{
+                    return res.serverError();
+                }
+            }else{
+                return res.ok({
+                    event: event
+                });
+            }
+        });
+    },
 
     /**
      * Overrides for the settings in `config/controllers.js`

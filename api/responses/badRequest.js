@@ -15,7 +15,7 @@
  * ```
  */
 
-module.exports = function badRequest(data, options) {
+module.exports = function badRequest(message, errors, data, options) {
 
   // Get access to `req`, `res`, & `sails`
   var req = this.req;
@@ -40,6 +40,12 @@ module.exports = function badRequest(data, options) {
 
     // If the user-agent wants JSON, always respond with JSON
     if (req.wantsJSON) {
+        if( !message ) message = "Bad request";
+        if( !errors ) errors = {};
+        if(! data) data = {};
+
+        data.errors = errors;
+        data.message = message;
         data.status = 400;
         return res.jsonx(data);
     }
