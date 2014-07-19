@@ -19,6 +19,7 @@ module.exports = {
 
     /**
      * Return an event by id
+     * @route /events/:id
      * @return {event}
      */
     find: function (req, res) {
@@ -27,6 +28,7 @@ module.exports = {
 
             if(err){
                 //@todo
+                return res.serverError(err);
             }
             if(!event){
                 return res.notFound( res.i18n("resource (%s) doesn't exist", res.i18n('event')) );
@@ -59,6 +61,7 @@ module.exports = {
         Event.find( optionalData ).exec( function(err, events){
             if(err){
                 //@todo
+                return res.serverError(err);
             }
             if(!events){
                 return res.notFound("No events");
@@ -83,7 +86,6 @@ module.exports = {
             description: req.param('description'),
             place: req.param('place'),
             date: req.param('date')
-//            createdDate: new Date()
 
         }).exec(function(err, event){
             if(err){
@@ -94,7 +96,6 @@ module.exports = {
                 else{
                     return res.serverError(err);
                 }
-
             }
 
             return res.created({
@@ -116,7 +117,6 @@ module.exports = {
         Event.findOne( req.param('id')).exec(function(err, event){
             if(err){
                 //@todo
-                console.log(err);
                 return res.noFound("This event doesn't exist");
             }
 
@@ -154,7 +154,6 @@ module.exports = {
 
         Event.update(query, dataToUpdate, function(err, event) {
 
-            console.log(event);
             if (err) {
                 // Error due to validators
                 if (err.ValidationError) {

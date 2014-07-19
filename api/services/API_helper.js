@@ -20,8 +20,11 @@ exports.helper = {
         if( ! data ) {
             data = {};
         }
-        data.locale = res.locale;
+        data.locale = response.locale;
         data.api_version = sails.config.general.apiVersion;
+        if( sails.config.environment === 'development' ){
+            data.debug = {}
+        }
         return data;
     }
 

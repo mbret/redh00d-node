@@ -7,15 +7,21 @@
  * @docs        :: http://sailsjs.org/#!documentation/policies
  *
  */
+var passport = require('passport');
+
 module.exports = function(req, res, next) {
 
-  // User is allowed, proceed to the next policy, 
-  // or if this is the last policy, the controller
-  if (req.session.authenticated) {
-    return next();
-  }
+    // User is authenticated, proceed to controller
+    if (req.isAuthenticated()) return next();
 
-  // User is not allowed
-  // (default res.forbidden() behavior can be overridden in `config/403.js`)
-  return res.forbidden('You are not permitted to perform this action.');
+    // Try authenticating user with API key
+    passport.authenticate('basic', { session: false }, function (err, user, info) {
+        if (err) return res.serverError(err);
+
+        if (!user) return res.send(401, { status: "Not authorized" });
+
+        req.user = user;
+        next();
+    })(req, res, next);
+
 };

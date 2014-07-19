@@ -15,6 +15,14 @@ module.exports.general = {
     api: {
         version: '0.0.1',
 
+    },
+
+    mail: {
+        // Default sender name and address for transactional emails
+        from: {
+            name: 'Maxime',
+            email: 'xmax54@gmail.com'
+        }
     }
 
 };

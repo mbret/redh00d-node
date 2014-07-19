@@ -47,6 +47,21 @@ module.exports.routes = {
     // get all users from an event
     'get /api/event/:id/users': 'EventController.findMultipleUsers',
 
+    /**
+     * USER relatives routes
+     *
+     */
+    "post /api/users": 'UserController.create',
+
+    'post /api/users/password-reset' : {
+        controller: 'UserController',
+        action: 'createPasswordReset',
+    },
+
+    'put /api/users/password-reset/:id?' : {
+        controller: 'UserController',
+        action: 'updatePassword'
+    }
 
   // If a request to a URL doesn't match any of the custom routes above,
   // it is matched against Sails route blueprints.  See `config/blueprints.js`

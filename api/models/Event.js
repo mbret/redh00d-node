@@ -9,13 +9,11 @@
 module.exports = {
 
     tableName: 'event',
-
     autoCreatedAt: true,
     autoUpdatedAt: true,
-
     autoPK: true,
 
-    attributes: {
+    attributes:{
 
         ID: {
             type: 'integer',
@@ -24,6 +22,14 @@ module.exports = {
             index: true,
             primaryKey: true,
             columnName: 'eventID'
+        },
+        user: {
+            model: 'User'
+        },
+        userID: {
+            type: 'integer',
+            index: true,
+            columnName: 'userID'
         },
         name: {
             type: 'string',
@@ -55,8 +61,37 @@ module.exports = {
             type: 'datetime',
             columnName: 'eventUpdatedDate'
         }
+    },
 
+    // Modifies user input before validation
+    beforeValidation: function(event, next){
 
+        // Filter date
+        if( ! event.date || event.date == '0000-00-00'){
+            event.date == null;
+        }
+
+        console.log(event.date);
+        //@todo
+        next();
+    },
+
+    beforeCreate: function(event, next){
+        console.log(event.date);
+        //@todo convert date to database datetime
+        next();
+    },
+
+    afterCreate: function(newlyInsertedEvent, next){
+        next();
+    },
+
+    beforeUpdate: function(event, next){
+        next();
+    },
+
+    afterUpdate: function(newlyUpdatedEvent, next){
+        next();
     },
 
     validation_messages: {
