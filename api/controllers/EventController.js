@@ -22,11 +22,18 @@ module.exports = {
      *
      */
     find: function (req, res) {
-    
-        // Send a JSON response
-        return res.json({
-            hello: 'world'
+
+        Event.findOne(req.param('id')).exec(function(err, event){
+
+            if(!event){
+                return res.notFound("No event");
+            }
+            // Send a JSON response
+            return res.ok({
+                event: event
+            })
         });
+        ;
     },
 
 
