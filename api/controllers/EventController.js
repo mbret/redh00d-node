@@ -19,19 +19,29 @@ module.exports = {
     
   
     /**
-     *
+     * Return an event by id
      */
     find: function (req, res) {
-    
-        // Send a JSON response
-        return res.json({
-            hello: 'world'
+
+        Event.findOne( req.param('id')).exec( function(err, event){
+
+            if(err){
+                //@todo
+            }
+            if(!event){
+                return res.notFound('Event not found');
+            }
+            // Send a JSON response
+            return res.ok({
+                event: event
+            });
         });
     },
 
 
     /**
-     *
+     * Return all events.
+     * Return a list of events (empty or not) and a status 200.
      */
     findMultiple: function (req, res) {
 
@@ -39,9 +49,6 @@ module.exports = {
         Event.find().exec( function(err, events){
             if(err){
                 //@todo
-            }
-            if(!events){
-                return res.notFound("No events");
             }
             // Build correct json response
             eventsJsonized = [];
@@ -62,18 +69,14 @@ module.exports = {
      */
     create: function(req, res){
 
-        // Check params
-        if( ! req.param('name') ){
-            //@todo
-            return res.notFound();
-        }
-
+        // Create the event
         Event.create({
             name: req.param('name'),
             description: req.param('description'),
             place: req.param('place'),
             date: req.param('date'),
             createdDate: new Date()
+
         }).exec(function(err, event){
             if(err){
                 if(err.ValidationError){
@@ -82,10 +85,8 @@ module.exports = {
                     for( entry in errors ){
                         errorsNormalized.push( )
                     }
-
                 }
-                //@todo
-//                console.log(err);
+                return res.badRequest( err.ValidationError );
             }
 
             return res.created({
@@ -96,6 +97,41 @@ module.exports = {
     },
 
 
+    /**
+     * Delete an event
+     * @param req
+     * @param res
+     */
+    delete: function(req, res){
+
+        // Check the event before deletion
+        Event.findOne( req.param('id')).exec(function(err, event){
+            if(err){
+                //@todo
+                console.log(err);
+                return res.noFound("This event doesn't exist");
+            }
+
+            // Deletion
+            event.destroy(function(err){
+                if(err){
+                    //@todo
+                    return res.serverError(err);
+                }
+                return res.noContent();
+            })
+        });
+    },
+
+
+    /**
+     * Update an event
+     * @param req
+     * @param res
+     */
+    update: function(req, res){
+
+    },
 
 
     /**

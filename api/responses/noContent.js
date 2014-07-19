@@ -1,5 +1,5 @@
 /**
- * 201 (CREATED) Response
+ * 204 (NO CONTENT) Response
  *
  * Usage:
  * return res.ok();
@@ -18,14 +18,14 @@ module.exports = function sendOK (data, options) {
   var res = this.res;
   var sails = req._sails;
 
-  sails.log.silly('res.ok() :: Sending 201 ("OK") response');
+  sails.log.silly('res.ok() :: Sending 204 ("OK") response');
 
   // Set status code
-  res.status(201);
+  res.status(204);
 
     // If appropriate, serve data as JSON(P)
     if (req.wantsJSON) {
-        data.status = 201;
+        data.status = 204;
         return res.jsonx(data);
     }
 

@@ -38,10 +38,11 @@ module.exports = function badRequest(data, options) {
     data = undefined;
   }
 
-  // If the user-agent wants JSON, always respond with JSON
-  if (req.wantsJSON) {
-    return res.jsonx(data);
-  }
+    // If the user-agent wants JSON, always respond with JSON
+    if (req.wantsJSON) {
+        data.status = 400;
+        return res.jsonx(data);
+    }
 
   // If second argument is a string, we take that to mean it refers to a view.
   // If it was omitted, use an empty object (`{}`)
