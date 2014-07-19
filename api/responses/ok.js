@@ -20,11 +20,12 @@ module.exports = function sendOK (data, options) {
 
   sails.log.silly('res.ok() :: Sending 200 ("OK") response');
 
-  // Set status code
-  res.status(200);
+    // Set status code
+    res.status(200);
 
     // If appropriate, serve data as JSON(P)
     if (req.wantsJSON) {
+        data = API_helper.helper.getBaseResponseData( data, res );
         data.status = 200;
         return res.jsonx(data);
     }

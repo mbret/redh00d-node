@@ -19,6 +19,7 @@ module.exports = {
 
     /**
      * Return an event by id
+     * @return {event}
      */
     find: function (req, res) {
 
@@ -28,7 +29,7 @@ module.exports = {
                 //@todo
             }
             if(!event){
-                return res.notFound('Event not found');
+                return res.notFound( res.i18n("resource (%s) doesn't exist", res.i18n('event')) );
             }
             // Send a JSON response
             return res.ok({
@@ -153,14 +154,18 @@ module.exports = {
 
         Event.update(query, dataToUpdate, function(err, event) {
 
+            console.log(event);
             if (err) {
                 // Error due to validators
-                if(err.ValidationError){
+                if (err.ValidationError) {
                     return res.badRequest('The given parameters are invalid', err.ValidationError);
                 }
-                else{
+                else {
                     return res.serverError();
                 }
+            }
+            if(!event || event.length < 1){
+                return res.notFound( res.i18n("resource (%s) doesn't exist", res.i18n('event')) );
             }else{
                 return res.ok({
                     event: event

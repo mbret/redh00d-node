@@ -40,10 +40,9 @@ module.exports = function badRequest(message, errors, data, options) {
 
     // If the user-agent wants JSON, always respond with JSON
     if (req.wantsJSON) {
+        data = API_helper.helper.getBaseResponseData( data, res );
         if( !message ) message = "Bad request";
         if( !errors ) errors = {};
-        if(! data) data = {};
-
         data.errors = errors;
         data.message = message;
         data.status = 400;

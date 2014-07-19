@@ -1,7 +1,7 @@
 /**
  * Created by Maxime on 7/18/2014.
  */
-exports = {
+exports.object = {
 
     /**
      * Extract all possible data from the request (loop over params)

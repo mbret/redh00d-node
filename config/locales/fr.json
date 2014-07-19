@@ -1,3 +1,5 @@
 {
-  "Welcome": "Bienvenue"
+    "Welcome": "Bienvenue",
+    "event": "événement",
+    "resource (%s) doesn't exist": "La ressource (%s) demandée n'existe pas"
 }

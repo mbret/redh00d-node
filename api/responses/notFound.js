@@ -42,11 +42,9 @@ module.exports = function notFound (message, data, options) {
 
     // If the user-agent wants JSON, always respond with JSON
     if (req.wantsJSON) {
+        data = API_helper.helper.getBaseResponseData( data, res );
         if( !message ){
             message = "The requested resource was not found";
-        }
-        if(! data){
-            data = {};
         }
         data.status = 404;
         data.message = message;
