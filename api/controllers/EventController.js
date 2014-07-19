@@ -19,12 +19,15 @@ module.exports = {
     
   
     /**
-     *
+     * Get one event
      */
     find: function (req, res) {
 
         Event.findOne(req.param('id')).exec(function(err, event){
 
+            if(err){
+                //@todo
+            }
             if(!event){
                 return res.notFound("No event");
             }
@@ -33,30 +36,34 @@ module.exports = {
                 event: event
             })
         });
-        ;
+
     },
 
 
     /**
-     *
+     * Get multiple events
      */
     findMultiple: function (req, res) {
 
-        // Get all events
-        Event.find().exec( function(err, events){
+        // Get optional parameters from URL to refine the search
+        var optionalData = {};
+        if( req.param('id') ){
+            optionalData.ID = req.param('id');
+        }
+        if( req.param('name') ){
+            optionalData.name = req.param('name');
+        }
+
+        // Get all events (with data)
+        Event.find( optionalData ).exec( function(err, events){
             if(err){
                 //@todo
             }
             if(!events){
                 return res.notFound("No events");
             }
-            // Build correct json response
-            eventsJsonized = [];
-            for (var i in events) {
-                eventsJsonized.push( events[i].toCustomer() );
-            }
             return res.ok({
-                events: eventsJsonized
+                events: events
             });
         });
     },

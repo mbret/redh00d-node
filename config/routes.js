@@ -25,12 +25,14 @@ module.exports.routes = {
     /**
      * API routes
      */
+    // Just one route possible with the primary key
     'get /api/events/:id': {
         controller: 'EventController',
         action: 'find'
     },
 
-    'get /api/events': {
+    // Optional parameters are available to refine the search
+    'get /api/events*': {
         controller: 'EventController',
         action: 'findMultiple'
     },
