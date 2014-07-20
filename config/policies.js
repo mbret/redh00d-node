@@ -18,7 +18,16 @@ module.exports.policies = {
 
   // Default policy for all controllers and actions
   // (`true` allows public access)
-  '*': false,
+  '*': false, // nothing allowed by default
+
+    DebugController: {
+        '*': true
+    },
+
+    AuthController: {
+        'login': true,
+        'logout': ['isAuthenticated'],
+    },
 
     UserController: {
         '*': false,
@@ -32,9 +41,9 @@ module.exports.policies = {
         '*': false,
         find: true,
         findMultiple: true,
-        create: ['isLoggedIn'],
-        update: ['isLoggedIn'],
-        destroy: ['isLoggedIn']
+//        create: ['isLoggedIn'],
+//        update: ['isLoggedIn'],
+//        destroy: ['isLoggedIn']
     }
 
 	// Here's an example of mapping some policies to run before

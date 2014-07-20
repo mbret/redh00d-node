@@ -22,6 +22,18 @@
 
 module.exports.routes = {
 
+    // This path is used to do some stuff in any way before all controllers
+    // We could have call a controller which implement function(req, res, next) and call at last next()
+    // but due to short logic/code a function placed here is more practice.
+    '/*': function(req, res, next) {
+        // simple log of http request
+        sails.log.info(req.method, req.url);
+        next();
+    },
+
+    // Debug route
+    'get /api/debug/db': 'DebugController.dumpDatabase',
+
     /**
      * API routes
      */
@@ -48,23 +60,26 @@ module.exports.routes = {
     'get /api/event/:id/users': 'EventController.findMultipleUsers',
 
     /**
+     * AUTHENTICATION relatives routes
+     */
+    'post /api/auth/login': { controller: 'AuthController', action: 'login' },
+    'post /api/auth/logout': { controller: 'AuthController', action: 'logout' },
+
+    /**
      * USER relatives routes
      *
      */
-    "post /api/users": 'UserController.create',
+    // Create new user
+    "post /api/users": { controller: 'UserController', action: 'create' },
 
-    'post /api/users/password-reset' : {
-        controller: 'UserController',
-        action: 'createPasswordReset',
-    },
+    // ask for new password (required: email)
+    'post /api/users/password-reset' : { controller: 'UserController', action: 'createPasswordReset' },
 
-    'put /api/users/password-reset/:id?' : {
-        controller: 'UserController',
-        action: 'updatePassword'
-    }
+    // update password (required: user id, reset token)
+    'put /api/users/password-reset/:id?' : { controller: 'UserController', action: 'updatePassword' }
 
-  // If a request to a URL doesn't match any of the custom routes above,
-  // it is matched against Sails route blueprints.  See `config/blueprints.js`
-  // for configuration options and examples.
+    // If a request to a URL doesn't match any of the custom routes above,
+    // it is matched against Sails route blueprints.  See `config/blueprints.js`
+    // for configuration options and examples.
 
 };

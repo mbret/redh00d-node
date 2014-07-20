@@ -22,14 +22,22 @@ module.exports = {
 
 
     /**
-     * Create a new session (log in user)
+     * Create a new session (log in user).
+     *
+     * Use and give control to the passport middleware
+     *
+     * @param req should contain email/password
      */
     login: function(req, res, next) {
-        passport.authenticate('local', function (err, user, info) {
+
+        // Call authenticate function of passport which act as a new route and manage req, res etc by itself
+        passport.authenticate( 'local', function (err, user, info) {
             if (err) return res.serverError(err);
 
-            // Authentication failed
-            if (!user) return res.badRequest(info);
+            // Authentication failed (bad params, no user)
+            if (!user){
+                return res.badRequest('Authentication failed', info);
+            }
 
             // Log the user in
             req.logIn(user, function (err) {

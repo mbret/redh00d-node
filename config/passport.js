@@ -10,11 +10,11 @@ var passport = require( "passport" ),
 /** Passport session setup. */
 
 passport.serializeUser( function (user, cb) {
-    cb(null, user.id);
+    cb(null, user.ID);
 });
 
 passport.deserializeUser( function (userId, cb) {
-    User.findOneById(userId, function (err, user) {
+    User.findOne({ ID: userId }, function (err, user) {
         cb(err, user);
     });
 });
@@ -22,42 +22,52 @@ passport.deserializeUser( function (userId, cb) {
 /** Passport authentication strategies */
 
 /**
- * Passport Local Strategy
+ * Passport Local Strategy.
+ * This strategy is used by passport when passport middleware takes hand on.
+ * it means that when passport.authenticate( 'local', function (err, user, info).. is called
+ *
+ * Try to find a user with the email and then check if the password are the same.
+ * Return a user if everything is ok.
  */
+passport.use(
+    new LocalStrategy(
+        {
+            usernameField: 'email'
+        },
+        function (email, password, cb) {
 
-passport.use( new LocalStrategy(
-    { usernameField: 'email' },
-    function (email, password, cb) {
-        User.findOneByEmail( email, function (err, user) {
-            if(err) return cb(err);
-
-            // No user was found
-            if(!user) {
-                return cb(null, false, { message: 'Unknown user' });
-            }
-
-            // Validate user password
-            user.validatePassword( password, function (err, isValid) {
+            sails.log.debug('conf/passport.js : LocalStrategy is processing. email=%s', email);
+            User.findOne( {email: email } , function (err, user) {
                 if(err) return cb(err);
 
-                // If the password was not valid
-                if(!isValid)
-                    return cb(null, false, { message: 'Invalid password' });
+                // No user was found
+                if(!user) {
+                    return cb(null, false, { message: 'Unknown user' });
+                }
 
-                // We are successfully authenticated, return the user instance
-                cb(null, user);
+                // Validate user password
+                user.validatePassword( password, function (err, isValid) {
+                    if(err) return cb(err);
+
+                    // If the password was not valid
+                    if(!isValid)
+                        return cb(null, false, { message: 'Invalid password' });
+
+                    // We are successfully authenticated, return the user instance
+                    cb(null, user);
+                });
             });
-        });
-    }
-));
+        }
+    )
+);
 
 /**
- * Passport Remember Me (cookie) Startegy
- *
- * This strategy consumes a remember me token, supplying the user the
- * token was originally issued to. The token is single-use, so a new
- * token is then issued to replace it.
- */
+* Passport Remember Me (cookie) Startegy
+*
+* This strategy consumes a remember me token, supplying the user the
+* token was originally issued to. The token is single-use, so a new
+* token is then issued to replace it.
+*/
 
 passport.use(new RememberMeStrategy(
     function (token, cb) {
@@ -69,29 +79,33 @@ passport.use(new RememberMeStrategy(
 ));
 
 /**
- * Passport Basic HTTP Auth Startegy
- */
-
-passport.use(new BasicStrategy( function (apiKey, password, cb) {
-    if (apiKey !== password) {
-        return cb( new Error( "API key and password do not match" ) );
-    }
-    // Find the user by API key.  If there is no user with the given
-    // API key, or the password is not correct, set the user to `false` to
-    // indicate failure.  Otherwise, return the authenticated `user`.
-    User.findOneByApiKey( apiKey, function (err, user) {
-        if (err) return cb(err);
-        if (!user) return cb( null, false, { message: 'Invalid or unknown API key' } );
-        cb(null, user);
-    });
-}));
+* Passport Basic HTTP Auth Startegy
+*/
+passport.use(
+    new BasicStrategy( function (apiKey, password, cb) {
+        if (apiKey !== password) {
+            return cb( new Error( "API key and password do not match" ) );
+        }
+        // Find the user by API key.  If there is no user with the given
+        // API key, or the password is not correct, set the user to `false` to
+        // indicate failure.  Otherwise, return the authenticated `user`.
+        User.findOneByApiKey( apiKey, function (err, user) {
+            if (err) return cb(err);
+            if (!user) return cb( null, false, { message: 'Invalid or unknown API key' } );
+            cb(null, user);
+        });
+    })
+);
 
 module.exports = {
-    express: {
+    http: {
         customMiddleware: function(app){
-            console.log('express midleware for passport');
-            app.use(passport.initialize());
-            app.use(passport.session());
+            sails.log.debug('Passport middleware injected inside express');
+
+            // some express.use() has been called before
+            app.use(passport.initialize()); // passport middleware initialized now
+            app.use(passport.session()); // uses persistent login sessions
+            // some express.use() will be called after
         }
     }
 };

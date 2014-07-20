@@ -6,11 +6,15 @@
  * @docs		:: http://sailsjs.org/#!documentation/models
  */
 
-var bcrypt = require('bcrypt');
+//var bcrypt = require('bcrypt');
 var uuid = require("node-uuid");
 var  _ = require("lodash");
 
-module.exports = {
+// use this method https://groups.google.com/forum/#!topic/sailsjs/GTGoOGHAEvE to emulate inheritance of object
+// The base model is cloned and then merged with this model. This model is a child of the clone so not a child of ./BaseModel itself
+module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
+
+    autoPK: true,
 
     attributes: {
 
@@ -30,32 +34,32 @@ module.exports = {
         },
         encryptedPassword: {
             type: 'string',
-            minLength: 4,
-            required: true,
             columnName: "userPassword"
         },
         password: {
-            type: 'string'
+            type: 'string',
+            minLength: 4,
+            required: true
         },
         firstName: {
-            type: 'string'
+            type: 'string',
+            columnName: 'userFirstName'
         },
         lastName: {
-            type: 'string'
-        },
-        avatar: {
             type: 'string',
-            url: true
+            columnName: 'userLastName'
         },
         sessionTokens: {
             type: 'array'
         },
         passwordResetToken: {
-            type: 'json'
+            type: 'json',
+            columnName: 'userPasswordResetToken'
         },
         apiKey: {
             type: 'string',
-            unique: true
+            unique: true,
+            columnName: 'userApiKey'
         },
 
         /**
@@ -70,10 +74,12 @@ module.exports = {
          */
         toJSON: function() {
             var user = this.toObject();
-            delete user.password;
-            delete user.encryptedPassword;
-            delete user.sessionTokens;
-            delete user._csrf;
+            if(sails.config.environment !== 'development') {
+                delete user.password;
+                delete user.encryptedPassword;
+                delete user.sessionTokens;
+                delete user._csrf;
+            }
             return user;
         },
 
@@ -81,10 +87,16 @@ module.exports = {
          * Check if the supplied password matches the stored password.
          */
         validatePassword: function( candidatePassword, cb ) {
-            bcrypt.compare( candidatePassword, this.encryptedPassword, function (err, valid) {
-                if(err) return cb(err);
-                cb(null, valid);
-            });
+            if( candidatePassword === this.encryptedPassword ){
+                return cb(null, true);
+            }
+            else{
+                return cb(null, false);
+            }
+//            bcrypt.compare( candidatePassword, this.encryptedPassword, function (err, valid) {
+//                if(err) return cb(err);
+//                cb(null, valid);
+//            });
         },
 
         /**
@@ -133,9 +145,6 @@ module.exports = {
         }
     },
 
-    /**
-     * Functions that run before a user is created
-     */
     beforeCreate: [
         // Encrypt user's password
         function (values, cb) {
@@ -145,25 +154,23 @@ module.exports = {
         },
 
         // Create an API key
+        //@todo maybe check here the uniqueness of the api key inside db before register
         function (values, cb) {
             values.apiKey = uuid.v4();
+            sails.log.debug("User: Class.beforeCreate: API key generated '%s'", values.apiKey);
             cb();
         }
     ],
 
-    /**
-     * Functions that run before a user is updated
-     */
     beforeUpdate: [
         // Encrypt user's password, if changed
         function (values, cb) {
-            if (!values.password) {
-                return cb();
+            if ( values.password ) {
+                User.encryptPassword(values, function (err) {
+                    cb(err);
+                });
             }
-
-            User.encryptPassword(values, function (err) {
-                cb(err);
-            });
+            return cb(); // otherwise continue
         }
     ],
 
@@ -171,11 +178,14 @@ module.exports = {
      * User password encryption. Uses bcrypt.
      */
     encryptPassword: function(values, cb) {
-        bcrypt.hash(values.password, 10, function (err, encryptedPassword) {
-            if(err) return cb(err);
-            values.encryptedPassword = encryptedPassword;
-            cb();
-        });
+        values.encryptedPassword = values.password;
+        sails.log.debug("User: Class.encryptPassword: Password encrypted from '%s' to '%s'", values.password, values.encryptedPassword);
+        cb();
+//        bcrypt.hash(values.password, 10, function (err, encryptedPassword) {
+//            if(err) return cb(err);
+//            values.encryptedPassword = encryptedPassword;
+//            cb();
+//        });
     },
 
     /**
@@ -232,4 +242,4 @@ module.exports = {
 
     // findOneByEmail() exist because waterline allow dynamic call with model attribute
 
-};
+});

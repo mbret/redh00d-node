@@ -18,6 +18,14 @@ module.exports.general = {
     },
 
     mail: {
+        ssl: true,
+        port: 465,
+        host: 'host',
+        to: 'xmax54@gmail.com',
+        prepend_subject: 'Happy Contact Form | ',
+        user: 'user',
+        pass: 'pass',
+
         // Default sender name and address for transactional emails
         from: {
             name: 'Maxime',
