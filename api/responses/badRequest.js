@@ -17,34 +17,30 @@
 
 module.exports = function badRequest(message, errors, data) {
 
-    // Get access to `req`, `res`, & `sails`
-    var req = this.req;
-    var res = this.res;
-    var sails = req._sails;
     var defaultMessage = "Bad Request";
 
     // Set status code
-    res.status(400);
+    this.res.status(400);
 
     // Formalize response
-    data = API_helper.helper.buildBaseResponseData( data, req, res );
+    data = API_helper.helper.buildBaseResponseData( data, this.req, this.res );
     if( !message ) message = defaultMessage;
     if( !errors ) errors = {};
     data.errors = errors;
     data.message = message;
-    data.status = res.status;
+    data.status = this.res.status;
 
     // Log error to console
-    sails.log.debug('Sending 400 ("Bad Request") response: \n',data);
+    this.req._sails.log.debug('Sending 400 ("Bad Request") response: \n',data);
 
     // If the user-agent wants JSON, always respond with JSON
-    if (req.wantsJSON) {
+    if ( this.req.wantsJSON ) {
         return res.jsonx(data);
     }
     else{
 
         // Not implemented
-        res.send(400);
+        this.res.send(400);
     }
 
 };
