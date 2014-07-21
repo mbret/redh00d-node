@@ -24,11 +24,14 @@ module.exports = {
     /**
      * Create a new session (log in user).
      *
-     * Use and give control to the passport middleware
-     *
-     * @param req should contain email/password
+     * @module      :: Controllers
+     * @description :: Use and give control to the passport middleware
+     * @docs        ::
+     * @param       :: req should contain email/password
      */
     login: function(req, res, next) {
+
+        if( req.user ) return res.badRequest('You are already logged');
 
         // Call authenticate function of passport which act as a new route and manage req, res etc by itself
         passport.authenticate( 'local', function (err, user, info) {
@@ -39,17 +42,18 @@ module.exports = {
                 return res.badRequest('Authentication failed', info);
             }
 
+            res.send(user.toJSON());
             // Log the user in
             req.logIn(user, function (err) {
                 if(err) return res.serverError(err);
 
                 // If remember me option was specified, issue a session token
-                User.issueSessionToken( user, function (err, token) {
-                    if(err) return res.serverError(err);
-                    res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 60*60*24*30 });
+//                User.issueSessionToken( user, function (err, token) {
+//                    if(err) return res.serverError(err);
+//                    res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 60*60*24*30 });
                     // ... and return user data as JSON
-                    res.send(user.toJSON());
-                });
+                    res.ok({user: user.toJSON()});
+//                });
             });
 
         })(req, res, next);
@@ -57,14 +61,13 @@ module.exports = {
 
     /**
      * Logout a user
-     *  -
+     * @description :: The user should be inside req.user
      * @param res
      * @param req
      * @param cb
      * @returns {*}
      */
     logout: function(res, req, cb){
-        if (!req.user) return res.send();
 
         // Clear user's session tokens
         req.user.sessionTokens = [];
@@ -72,10 +75,10 @@ module.exports = {
             if(err) return res.serverError(err);
 
             // Log out the user
-            req.logout();
+            req.logout(); // remove req.user and clean login session
 
             // Send empty response
-            res.send();
+            res.ok();
         });
     },
 

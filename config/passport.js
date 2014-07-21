@@ -1,6 +1,6 @@
 var passport = require( "passport" ),
     LocalStrategy = require('passport-local').Strategy,
-    BasicStrategy = require('passport-http').BasicStrategy,
+    BasicStrategy = require('passport-http').BasicStrategy;
     RememberMeStrategy = require('passport-remember-me').Strategy;
 
 /**
@@ -69,14 +69,14 @@ passport.use(
 * token is then issued to replace it.
 */
 
-passport.use(new RememberMeStrategy(
-    function (token, cb) {
-        User.consumeSessionToken(token, function (err, user) {
-            cb(err, user);
-        });
-    },
-    User.issueSessionToken
-));
+//passport.use(new RememberMeStrategy(
+//    function (token, cb) {
+//        User.consumeSessionToken(token, function (err, user) {
+//            cb(err, user);
+//        });
+//    },
+//    User.issueSessionToken
+//));
 
 /**
 * Passport Basic HTTP Auth Startegy
@@ -97,15 +97,15 @@ passport.use(
     })
 );
 
-module.exports = {
-    http: {
-        customMiddleware: function(app){
-            sails.log.debug('Passport middleware injected inside express');
-
-            // some express.use() has been called before
-            app.use(passport.initialize()); // passport middleware initialized now
-            app.use(passport.session()); // uses persistent login sessions
-            // some express.use() will be called after
-        }
-    }
-};
+//module.exports = {
+//    http: {
+//        customMiddleware: function(app){
+//            sails.log.debug('Passport middleware injected inside express');
+//
+//            // some express.use() has been called before
+//            app.use(passport.initialize()); // passport middleware initialized now
+//            app.use(passport.session()); // uses persistent login sessions
+//            // some express.use() will be called after
+//        }
+//    }
+//};

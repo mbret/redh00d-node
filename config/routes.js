@@ -73,10 +73,10 @@ module.exports.routes = {
     "post /api/users": { controller: 'UserController', action: 'create' },
 
     // ask for new password (required: email)
-    'post /api/users/password-reset' : { controller: 'UserController', action: 'createPasswordReset' },
+    //'post /api/users/password-reset' : { controller: 'UserController', action: 'createPasswordReset' },
 
     // update password (required: user id, reset token)
-    'put /api/users/password-reset/:id?' : { controller: 'UserController', action: 'updatePassword' }
+    //'put /api/users/password-reset/:id?' : { controller: 'UserController', action: 'updatePassword' }
 
     // If a request to a URL doesn't match any of the custom routes above,
     // it is matched against Sails route blueprints.  See `config/blueprints.js`

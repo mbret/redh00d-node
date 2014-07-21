@@ -10,12 +10,13 @@
  * http://links.sailsjs.org/docs/config/i18n
  */
 
-module.exports.i18n = {
+module.exports = {
 
-    // Which locales are supported?
-    locales: ['en', 'es', 'fr', 'de'],
+    i18n: {
+        // Which locales are supported?
+        locales: ['en', 'es', 'fr', 'de'],
 
-    defaultLocale: 'en',
-
+        defaultLocale: 'en',
+    }
 
 };

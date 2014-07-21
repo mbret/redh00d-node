@@ -41,9 +41,9 @@ module.exports.policies = {
         '*': false,
         find: true,
         findMultiple: true,
-//        create: ['isLoggedIn'],
-//        update: ['isLoggedIn'],
-//        destroy: ['isLoggedIn']
+        create: ['isAuthenticated'],
+        update: ['isAuthenticated'],
+        destroy: ['isAuthenticated']
     }
 
 	// Here's an example of mapping some policies to run before

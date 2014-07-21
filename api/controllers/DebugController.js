@@ -9,16 +9,25 @@ module.exports = {
 
     dumpDatabase: function(req, res){
 
+        var data = {};
+        if( req.user ){
+            data.loggedUser = req.user;
+        }
+
+        // retrieve users
         User.find().exec(function(err, users){
 
+            data.users = users
+            // retrieve events
             Event.find().exec(function(err, events){
-                return res.ok({
-                    users: users,
-                    event: events
-                });
+
+                data.events = events;
+                return res.ok(data);
             });
 
         });
+
+
 
 
     }

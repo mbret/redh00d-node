@@ -30,9 +30,10 @@
         "passport": "0.2.x", "//": "http://passportjs.org/guide/ module which handle authentication and more",
         "lodash": "2.4.x", "//": "http://lodash.com/ A utility library delivering consistency, customization, performance, & extras.",
         "passport-http": "0.2.x",
+        "passport-remember-me": "0.0.x",
         "passport-local": "0.1.x",
-        "bcrypt": "0.7.x",
         "nodemailer": "0.5.x",
+        "node-uuid": "1.4.x",
         "email-templates": "0.1.x"
     },
     "devDependencies": {
