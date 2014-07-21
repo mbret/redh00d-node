@@ -58,27 +58,28 @@ module.exports = {
         })(req, res, next);
     },
 
+
+
+
     /**
      * Logout a user
-     * @description :: The user should be inside req.user
-     * @param res
-     * @param req
+     * @description :: The user should be inside req.user. This method destroy the session relative to user.
      * @param cb
      * @returns {*}
      */
-    logout: function(res, req, cb){
+    logout: function(req, res, next){
 
         // Clear user's session tokens
-        req.user.sessionTokens = [];
-        req.user.save(function (err) {
-            if(err) return res.serverError(err);
+//        req.user.sessionTokens = [];
+//        req.user.save(function (err) {
+//            if(err) return res.serverError(err);
 
             // Log out the user
             req.logout(); // remove req.user and clean login session
 
             // Send empty response
             res.ok();
-        });
+//        });
     },
 
 

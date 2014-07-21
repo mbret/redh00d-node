@@ -17,14 +17,16 @@ module.exports = function(req, res, next) {
     // isAuthenticated is a function injected inside req by passport (https://github.com/jaredhanson/passport/blob/master/lib/http/request.js)
     if (req.isAuthenticated()) return next();
 
+    return res.forbidden();
+
     // Try authenticating user with API key
-    passport.authenticate( 'basic', { session: false }, function (err, user, info) {
-        if (err) return res.serverError(err);
-
-        if (!user) return res.forbidden();
-
-        req.user = user;
-        next();
-    })(req, res, next);
+//    passport.authenticate( 'basic', { session: false }, function (err, user, info) {
+//        if (err) return res.serverError(err);
+//
+//        if (!user) return res.forbidden();
+//
+//        req.user = user;
+//        next();
+//    })(req, res, next);
 
 };

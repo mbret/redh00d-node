@@ -48,7 +48,8 @@ passport.deserializeUser( function (userId, cb) {
 passport.use(
     new LocalStrategy(
         {
-            usernameField: 'email'
+            usernameField: 'email',
+            passwordField: 'password'
         },
         function (email, password, cb) {
 

@@ -192,53 +192,53 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
      * Issue a session token for a user
      * (generate)
      */
-    issueSessionToken: function(user, cb) {
-        if (!user || typeof user === 'function') return cb("A user model must be supplied");
-
-        if (!user.sessionTokens) {
-            user.sessionTokens = [];
-        }
-
-        var token = uuid.v4();
-
-        user.sessionTokens.push({
-            token: token,
-            issuedAt: new Date()
-        });
-
-        user.save(function (err) {
-            cb(err, token);
-        });
-    },
+//    issueSessionToken: function(user, cb) {
+//        if (!user || typeof user === 'function') return cb("A user model must be supplied");
+//
+//        if (!user.sessionTokens) {
+//            user.sessionTokens = [];
+//        }
+//
+//        var token = uuid.v4();
+//
+//        user.sessionTokens.push({
+//            token: token,
+//            issuedAt: new Date()
+//        });
+//
+//        user.save(function (err) {
+//            cb(err, token);
+//        });
+//    },
 
     /**
      * Consume a user's session token
      */
-    consumeSessionToken: function (token, cb) {
-        if (!token || typeof token === 'function') return cb("A token must be supplied");
-
-        User.findOne({'sessionTokens.token': token }, function (err, user) {
-            if (err) return cb( err );
-            if (!user) return cb(null, false);
-
-            // Remove the consumed session token so it can no longer be used
-            if (user.sessionTokens) {
-                user.sessionTokens.forEach(function (sessionToken, index) {
-                    if (sessionToken.token === token) {
-                        delete user.sessionTokens[index];
-                    }
-                });
-            }
-
-            // Remove falsy tokens
-            user.sessionTokens = _.compact(user.sessionTokens);
-
-            // Save
-            user.save(function (err) {
-                return cb( err, user );
-            });
-        });
-    }
+//    consumeSessionToken: function (token, cb) {
+//        if (!token || typeof token === 'function') return cb("A token must be supplied");
+//
+//        User.findOne({'sessionTokens.token': token }, function (err, user) {
+//            if (err) return cb( err );
+//            if (!user) return cb(null, false);
+//
+//            // Remove the consumed session token so it can no longer be used
+//            if (user.sessionTokens) {
+//                user.sessionTokens.forEach(function (sessionToken, index) {
+//                    if (sessionToken.token === token) {
+//                        delete user.sessionTokens[index];
+//                    }
+//                });
+//            }
+//
+//            // Remove falsy tokens
+//            user.sessionTokens = _.compact(user.sessionTokens);
+//
+//            // Save
+//            user.save(function (err) {
+//                return cb( err, user );
+//            });
+//        });
+//    }
 
     // findOneByEmail() exist because waterline allow dynamic call with model attribute
 

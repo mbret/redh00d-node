@@ -69,9 +69,30 @@ module.exports = {
     },
 
     // @todo
+    find: function (req, res) {
+
+    },
+
+    // @todo
+    findMultiple: function (req, res) {
+
+    },
+
+    // @todo
     update: function (req, res) {
 
     },
+
+    // @todo
+    patch: function (req, res) {
+
+    },
+
+    // @todo
+    destroy: function (req, res) {
+
+    },
+
 
     /**
      * Create a new password reset token and send

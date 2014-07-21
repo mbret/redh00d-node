@@ -64,7 +64,7 @@ module.exports.routes = {
      * AUTHENTICATION relatives routes
      */
     'post /api/auth/login': { controller: 'AuthController', action: 'login' },
-    'post /api/auth/logout': { controller: 'AuthController', action: 'logout' },
+    'get /api/auth/logout': { controller: 'AuthController', action: 'logout' },
 
     /**
      * USER relatives routes
