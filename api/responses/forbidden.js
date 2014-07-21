@@ -17,10 +17,10 @@ module.exports = function forbidden (message, data, options) {
     if(!data) data = {};
     if(!message) message = "Access denied";
 
-  // Get access to `req`, `res`, & `sails`
-  var req = this.req;
-  var res = this.res;
-  var sails = req._sails;
+    // Get access to `req`, `res`, & `sails`
+    var req = this.req;
+    var res = this.res;
+    var sails = req._sails;
 
   // Set status code
   res.status(403);
