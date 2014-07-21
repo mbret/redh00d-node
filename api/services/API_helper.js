@@ -16,14 +16,20 @@ exports.helper = {
      * @param response {object}
      * @returns {object}
      */
-    getBaseResponseData: function( data, response ){
+    getBaseResponseData: function( data, req, res ){
         if( ! data ) {
             data = {};
         }
-        data.locale = response.locale;
-        data.api_version = sails.config.general.apiVersion;
         if( sails.config.environment === 'development' ){
-            data.debug = {}
+            data._debug = {
+                api_version: sails.config.general.apiVersion,
+                locale: res.locale,
+                region: res.region,
+                session: req.session,
+                sessionID: req.sessionID,
+                sessionStore: req.sessionStore,
+                signedCookies: req.signedCookies
+            }
         }
         return data;
     }

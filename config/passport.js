@@ -7,19 +7,35 @@ var passport = require( "passport" ),
  * Passport setup
  */
 
-/** Passport session setup. */
+/*=============================================================
 
+                Passport session setup.
+
+ =============================================================*/
+
+/**
+ * We tell to passport how to serialize the user after logIn() function
+ * Here we keep only ID
+ */
 passport.serializeUser( function (user, cb) {
     cb(null, user.ID);
 });
 
+/**
+ * We tell to passport how to retrieve user. Passport middleware retrieve user and then place it into req.user.
+ * Then we can process our routes. with the user inside req.user.
+ */
 passport.deserializeUser( function (userId, cb) {
     User.findOne({ ID: userId }, function (err, user) {
         cb(err, user);
     });
 });
 
-/** Passport authentication strategies */
+/*=============================================================
+
+            Passport authentication strategies
+
+ =============================================================*/
 
 /**
  * Passport Local Strategy.
@@ -96,16 +112,3 @@ passport.use(
         });
     })
 );
-
-//module.exports = {
-//    http: {
-//        customMiddleware: function(app){
-//            sails.log.debug('Passport middleware injected inside express');
-//
-//            // some express.use() has been called before
-//            app.use(passport.initialize()); // passport middleware initialized now
-//            app.use(passport.session()); // uses persistent login sessions
-//            // some express.use() will be called after
-//        }
-//    }
-//};

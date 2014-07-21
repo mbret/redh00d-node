@@ -21,7 +21,7 @@ module.exports = function(req, res, next) {
     passport.authenticate( 'basic', { session: false }, function (err, user, info) {
         if (err) return res.serverError(err);
 
-        if (!user) return res.send(401, { status: "Not authorized" });
+        if (!user) return res.forbidden();
 
         req.user = user;
         next();

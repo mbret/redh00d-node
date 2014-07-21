@@ -31,8 +31,6 @@ module.exports = {
      */
     login: function(req, res, next) {
 
-        if( req.user ) return res.badRequest('You are already logged');
-
         // Call authenticate function of passport which act as a new route and manage req, res etc by itself
         passport.authenticate( 'local', function (err, user, info) {
             if (err) return res.serverError(err);
@@ -43,8 +41,9 @@ module.exports = {
             }
 
             res.send(user.toJSON());
-            // Log the user in
-            req.logIn(user, function (err) {
+
+            // Log the user in (insert user id inside session)
+            req.logIn(user, option = null, function (err) {
                 if(err) return res.serverError(err);
 
                 // If remember me option was specified, issue a session token
@@ -85,11 +84,11 @@ module.exports = {
 
 
 
-  /**
-   * Overrides for the settings in `config/controllers.js`
-   * (specific to UserController)
-   */
-  _config: {}
+    /**
+     * Overrides for the settings in `config/controllers.js`
+     * (specific to UserController)
+     */
+    _config: {}
 
   
 };

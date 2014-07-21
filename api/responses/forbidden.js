@@ -12,7 +12,10 @@
  * ```
  */
 
-module.exports = function forbidden (data, options) {
+module.exports = function forbidden (message, data, options) {
+
+    if(!data) data = {};
+    if(!message) message = "Access denied";
 
   // Get access to `req`, `res`, & `sails`
   var req = this.req;
@@ -36,9 +39,12 @@ module.exports = function forbidden (data, options) {
   }
 
   // If the user-agent wants JSON, always respond with JSON
-  if (req.wantsJSON) {
-    return res.jsonx(data);
-  }
+    if (req.wantsJSON) {
+        data.status = 403;
+        data.message = message;
+        data = API_helper.helper.getBaseResponseData( data, req, res );
+        return res.jsonx(data);
+    }
 
   // If second argument is a string, we take that to mean it refers to a view.
   // If it was omitted, use an empty object (`{}`)

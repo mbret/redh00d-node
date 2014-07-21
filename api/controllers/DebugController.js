@@ -14,6 +14,9 @@ module.exports = {
             data.loggedUser = req.user;
         }
 
+        console.log(req);
+        data.session = req.session;
+
         // retrieve users
         User.find().exec(function(err, users){
 

@@ -25,9 +25,10 @@ module.exports.routes = {
     // This path is used to do some stuff in any way before all controllers
     // We could have call a controller which implement function(req, res, next) and call at last next()
     // but due to short logic/code a function placed here is more practice.
-    '/*': function(req, res, next) {
+    '/*': function preDispatch(req, res, next) {
         // simple log of http request
         sails.log.info(req.method, req.url);
+
         next();
     },
 

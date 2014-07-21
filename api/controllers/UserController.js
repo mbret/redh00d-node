@@ -20,11 +20,10 @@ module.exports = {
 
     /**
      * Create a new user.
-     * Create a simple user with the required fields.
-     * This is a two time function, try to retrieve the user and only if the user doesn't exist then he is created.
      *
+     * @description :: Create a simple user with the required fields.
+     *                 This is a two time function, try to retrieve the user and only if the user doesn't exist then he is created.
      * @todo try to make a better handle of (already exist) maybe handle this error after User.create for more logic and less spaghetti
-     *
      * @param req the params email & password should be present.
      * @param res
      * @returns {*}

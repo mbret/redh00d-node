@@ -16,29 +16,27 @@
 
 module.exports.policies = {
 
-  // Default policy for all controllers and actions
-  // (`true` allows public access)
-  '*': false, // nothing allowed by default
+    // Default policy for all controllers and actions
+    // (`true` allows public access)
+    '*': false, // nothing allowed by default
 
     DebugController: {
         '*': true
     },
 
     AuthController: {
-        'login': true,
+        'login': ['isUnAuthenticated'],
         'logout': ['isAuthenticated'],
     },
 
     UserController: {
-        '*': false,
-        login: true,
         create: true,
         update: ['isAuthenticated','preventApiKeyUpdate'],
-
+        createPasswordResetToken: ['isAuthenticated','preventApiKeyUpdate'],
+        resetPassword: ['isAuthenticated','preventApiKeyUpdate'],
     },
 
     EventController: {
-        '*': false,
         find: true,
         findMultiple: true,
         create: ['isAuthenticated'],

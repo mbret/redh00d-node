@@ -37,7 +37,7 @@ module.exports = function serverError (data, options) {
 
     // If the user-agent wants JSON, always respond with JSON
     if (req.wantsJSON) {
-        data = API_helper.helper.getBaseResponseData( data, res );
+        data = API_helper.helper.getBaseResponseData( data, req, res );
         data.status = 500;
         return res.jsonx(data);
     }

@@ -25,7 +25,7 @@ module.exports = function sendOK (data, options) {
 
     // If appropriate, serve data as JSON(P)
     if (req.wantsJSON) {
-        data = API_helper.helper.getBaseResponseData( data, res );
+        data = API_helper.helper.getBaseResponseData( data, req, res );
         data.status = 200;
         return res.jsonx(data);
     }
