@@ -1,5 +1,12 @@
 {
+    "//": "Various",
     "Welcome": "Welcome",
     "event": "event",
-    "resource (%s) doesn't exist": "The requested resource (%s) doesn't exist"
+
+    "//": "Not found",
+    "resource (%s) doesn't exist": "The requested resource (%s) doesn't exist",
+
+    "//": "Bad request",
+    "Email already taken": "This email is already taken",
+    "Parameters invalid": "The given parameters are invalid"
 }

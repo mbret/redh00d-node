@@ -2,19 +2,22 @@
  * 400 (Bad Request) Handler
  *
  * Usage:
- * return res.badRequest();
- * return res.badRequest(data);
- * return res.badRequest(data, 'some/specific/badRequest/view');
+ * res.badRequest( 'Hey man your email is invalid' )
+ * res.badRequest( 'Hey man your email is invalid', {} )
+ * res.badRequest( 'hey man your email is invalid', {} , { additional data } );
  *
- * e.g.:
- * ```
- * return res.badRequest(
- *   'Please choose a valid `password` (6-12 characters)',
- *   'trial/signup'
- * );
- * ```
+ * Exemple of badRequest response:
+ *
+ *  {
+ *      message: 'A message which says more or less why bad request',
+ *      errors: {
+ *                  qsd
+ *              },
+ *      status: 400,
+ *      ... optional data ...
+ *  }
+ *
  */
-
 module.exports = function badRequest(message, errors, data) {
 
     var defaultMessage = "Bad Request";
@@ -35,7 +38,7 @@ module.exports = function badRequest(message, errors, data) {
 
     // If the user-agent wants JSON, always respond with JSON
     if ( this.req.wantsJSON ) {
-        return res.jsonx(data);
+        return this.res.jsonx(data);
     }
     else{
 

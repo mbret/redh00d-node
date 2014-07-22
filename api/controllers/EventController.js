@@ -41,7 +41,6 @@ module.exports = {
 
     },
 
-
     /**
      * Return all events.
      * Return a list of events (empty or not) and a status 200.
@@ -105,7 +104,6 @@ module.exports = {
 
     },
 
-
     /**
      * Delete an event
      * @param req
@@ -130,7 +128,6 @@ module.exports = {
             })
         });
     },
-
 
     /**
      * Update an event
@@ -172,6 +169,18 @@ module.exports = {
             }
         });
     },
+
+    /**
+     * Find a user by id from an event
+     * @param req
+     * @param res
+     */
+    findUser: function(req, res){
+        // inject event id in request
+        req.param.eventID = req.param('ID');
+        sails.controllers.user.findMultiple(req, res);
+    },
+
 
     /**
      * Overrides for the settings in `config/controllers.js`

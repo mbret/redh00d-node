@@ -25,7 +25,7 @@ module.exports.routes = {
     // This path is used to do some stuff in any way before all controllers
     // We could have call a controller which implement function(req, res, next) and call at last next()
     // but due to short logic/code a function placed here is more practice.
-    '/*': function preDispatch(req, res, next) {
+    '*': function preDispatch(req, res, next) {
         // simple log of http request
         sails.log.info(req.method, req.url);
 
@@ -56,18 +56,16 @@ module.exports.routes = {
      *      - update, delete one event
      *      - get all user from an event
      */
-    // Just one route possible with the primary key
-    'get /api/events/:id': 'EventController.find',
-    // Optional parameters are available to refine the search
-    'get /api/events*': 'EventController.findMultiple',
-    // Create
+
+    'get /api/events/:id':          'EventController.find',
+    'get /api/events/:id/users':    'EventController.findMultipleUser',
+    'get /api/events/:id/users/:id':'EventController.findUser',
+    'get /api/events*':             'EventController.findMultiple',
+
     'post /api/events': 'EventController.create',
-    // Delete
     'delete /api/events/:id': 'EventController.destroy',
-    // Update an event
     'put /api/events/:id': 'EventController.update',
-    // get all users from an event
-    'get /api/event/:id/users': 'EventController.findMultipleUsers',
+
 
     /**
      * AUTHENTICATION relatives routes
@@ -79,10 +77,10 @@ module.exports.routes = {
      * USER relatives routes
      *
      */   
-     //get an user by id 
-     'get /api/users/:id': 'UserController.find',
-    // Create new user
-     "post /api/users": { controller: 'UserController', action: 'create' },
+    'get /api/users/:id':   'UserController.find',
+    'get /api/users*':      'UserController.findMultiple',
+
+    'post /api/users':     'UserController.create',
     //get an user by email
 //    "get /api/users/:email": 'UserController.findByEmail',
    

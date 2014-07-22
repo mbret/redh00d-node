@@ -1,5 +1,13 @@
 {
+    "//": "Various",
     "Welcome": "Bienvenue",
     "event": "événement",
-    "resource (%s) doesn't exist": "La ressource (%s) demandée n'existe pas"
+
+    "//": "Not found",
+    "resource (%s) doesn't exist": "La ressource (%s) demandée n'existe pas",
+
+    "//": "Bad request",
+    "Email already taken": "Cet email est déjà pris",
+    "Parameters invalid": "Les paramètres donnés sont invalides"
+
 }

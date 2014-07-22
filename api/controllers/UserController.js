@@ -85,7 +85,7 @@ module.exports = {
             }
             if( user ){
                 // If an user was found it's because email is taken
-                return res.badRequest('This email is already taken');
+                return res.badRequest( res.i18n('email already taken') );
             }
             else{
 
@@ -95,12 +95,13 @@ module.exports = {
                     password: req.param('password'),
                     firstName: req.param('firstName'),
                     lastName: req.param('lastName')
-
-                }).exec(function(err, user){
+                })
+                .exec(function(err, user){
                     if(err){
                         // Validation error
                         if(err.ValidationError){
-                            return res.badRequest( 'The given parameters are invalid', err.ValidationError );
+                            console.log(res.i18n);
+                            return res.badRequest( res.i18n('Parameters invalid'), err.ValidationError );
                         }
                         else{
                             return res.serverError(err);
