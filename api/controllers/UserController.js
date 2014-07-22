@@ -46,8 +46,8 @@ module.exports = {
      * @return {user}
      */
     
-    findbyEmail: function (req, res) {
-        User.findOneByEmail(req.param('email')).exec(function(err,user){
+    findByEmail: function (req, res) {
+        User.findOne(req.param('email')).exec(function(err,user){
             if(err){
                 return res.serverError(err);
             }
