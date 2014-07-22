@@ -2,49 +2,36 @@
  * 400 (Bad Request) Handler
  *
  * Usage:
- * res.badRequest( 'Hey man your email is invalid' )
- * res.badRequest( 'Hey man your email is invalid', {} )
- * res.badRequest( 'hey man your email is invalid', {} , { additional data } );
+ * return res.badRequest( 'Hey man your email is invalid' )
+ * return res.badRequest( 'Hey man your email is invalid', { errors } )
+ * return res.badRequest( 'hey man your email is invalid', { errors } , { additional data } );
  *
  * Exemple of badRequest response:
  *
  *  {
  *      message: 'A message which says more or less why bad request',
  *      errors: {
- *                  qsd
+ *                  errors ...
  *              },
- *      status: 400,
  *      ... optional data ...
  *  }
  *
  */
 module.exports = function badRequest(message, errors, data) {
 
-    var defaultMessage = "Bad Request";
-
-    // Set status code
-    this.res.status(400);
-
-    // Formalize response
-    data = API_helper.helper.buildBaseResponseData( data, this.req, this.res );
-    if( !message ) message = defaultMessage;
-    if( !errors ) errors = {};
-    data.errors = errors;
-    data.message = message;
-    data.status = this.res.status;
-
     // Log error to console
-    this.req._sails.log.debug('Sending 400 ("Bad Request") response: \n',data);
+    this.req._sails.log.debug('Sending 400 ("Bad Request") response: \n',message, errors, data);
 
-    // If the user-agent wants JSON, always respond with JSON
-    if ( this.req.wantsJSON ) {
-        return this.res.jsonx(data);
-    }
-    else{
+    // init
+    var defaultMessage = this.res.__('Bad request');
+    this.res.status(400);
+    if( !data ) data = {};
+    if( message ) data.message = message;
+    else data.message = defaultMessage;
+    data.errors = errors;
 
-        // Not implemented
-        this.res.send(400);
-    }
+    // send response
+    return ResponseHelper.helper.handleSend( this.req, this.res, data );
 
 };
 
