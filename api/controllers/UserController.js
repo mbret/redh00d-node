@@ -17,6 +17,53 @@
 
 module.exports = {
 
+     /**
+     * find an user.
+     *
+     * @description :: try to find an user from by id
+     * @route /users/:id
+     * @return {user}
+     */
+    find: function (req, res) {
+        User.findOne(req.param('id')).exec(function(err,event){
+            if(err){
+                return res.serverError(err);
+            }
+            if(!event){
+                return res.notFound( res.i18n("resource (%s) doesn't exist", res.i18n('event')) );
+            }
+            return res.ok({
+                event:event
+            });
+        });
+     },
+     
+      /**
+     * find an user.
+     *
+     * @description : try to find an user from by email
+     * @route /users/:email
+     * @return {user}
+     */
+    
+    /*findbyEmail: function (req, res) {
+        User.findOneByEmail(req.param('email')).exec(function(err,event){
+            if(err){
+                return res.serverError(err);
+            }
+            if(!event){
+                return res.notFound( res.i18n("resource (%s) doesn't exist", res.i18n('event')) );
+            }
+            return res.ok({
+                event:event
+            });
+        });
+     },*/
+
+    // @todo
+    findMultiple: function (req, res) {
+
+    },
 
     /**
      * Create a new user.
@@ -68,19 +115,42 @@ module.exports = {
 
     },
 
-    // @todo
-    find: function (req, res) {
 
-    },
-
-    // @todo
-    findMultiple: function (req, res) {
-
-    },
-
-    // @todo
+    /**
+     * Update an user
+     * Required parameters: id
+     * Optional parameters: firstname/lastname/email/password
+     * @param req
+     */
     update: function (req, res) {
+        var dataToUpdate = {};
+        if ( req.param('firstname') ) dataToUpdate.firstname = req.param('firstname');
+        if ( req.param('lastname') ) dataToUpdate.lastname = req.param('lastname');
+        if ( req.param('email') ) dataToUpdate.email = req.param('email');
+        if ( req.param('password') ) dataToUpdate.password = req.param('password');
+        var query = {
+            'ID': req.param('id')
+        }
+        User.update(query, dataToUpdate, function(err, event) {
 
+            if (err) {
+                // Error due to validators
+                if (err.ValidationError) {
+                    return res.badRequest('The given parameters are invalid', err.ValidationError);
+                }
+                else {
+                    return res.serverError();
+                }
+            }
+            if(!event || event.length < 1){
+                return res.notFound( res.i18n("resource (%s) doesn't exist", res.i18n('event')) );
+            }else{
+                return res.ok({
+                    event: event
+                });
+            }
+        });
+  
     },
 
     // @todo
