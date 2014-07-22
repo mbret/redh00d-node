@@ -39,8 +39,6 @@ module.exports = {
                 return res.badRequest('Authentication failed', info);
             }
 
-            res.send(user.toJSON());
-
             // Log the user in (insert user id inside session)
             req.logIn(user, option = null, function (err) {
                 if(err) return res.serverError(err);
@@ -50,7 +48,11 @@ module.exports = {
 //                    if(err) return res.serverError(err);
 //                    res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 60*60*24*30 });
                     // ... and return user data as JSON
-                    res.ok({user: user.toJSON()});
+                    res.ok(
+                        {
+                            user: user.toJSON()
+                        }
+                    );
 //                });
             });
 
