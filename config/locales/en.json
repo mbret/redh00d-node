@@ -1,12 +1,20 @@
 {
     "//": "Various",
-    "Welcome": "Welcome",
-    "event": "event",
+    "Welcome":                      "Welcome",
+    "event":                        "event",
 
     "//": "Not found",
-    "resource (%s) doesn't exist": "The requested resource (%s) doesn't exist",
+    "Resource not found":           "Resource not found",
+    "resource (%s) doesn't exist":  "The requested resource (%s) doesn't exist",
 
     "//": "Bad request",
-    "Email already taken": "This email is already taken",
-    "Parameters invalid": "The given parameters are invalid"
+    "Bad request":                  "Bad request",
+    "Email already taken":          "This email is already taken",
+    "Parameters invalid":           "The given parameters are invalid",
+
+    "//": "Forbidden",
+    "Access denied":                "Access denied",
+
+    "//": "500 series",
+    "An internal error occurred":   "An internal error occurred"
 }

@@ -72,8 +72,10 @@ module.exports = {
     },
 
     /**
-     * Create a new event
-     * @param req
+     * Create a new event.
+     *
+     * @description :: Create an event.
+     * @param req   :: Required params (name/secription/place/date)
      * @param res
      * @returns {*}
      */

@@ -4,10 +4,17 @@
     "event": "événement",
 
     "//": "Not found",
+    "Resource not found":           "La ressource demandée n'existe pas",
     "resource (%s) doesn't exist": "La ressource (%s) demandée n'existe pas",
 
     "//": "Bad request",
     "Email already taken": "Cet email est déjà pris",
-    "Parameters invalid": "Les paramètres donnés sont invalides"
+    "Parameters invalid": "Les paramètres donnés sont invalides",
+
+    "//": "Forbidden",
+    "Access denied":        "Accès interdit",
+
+    "//": "500 series",
+    "An internal error occurred":   "Une erreur interne est apparu"
 
 }

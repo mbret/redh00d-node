@@ -10,47 +10,6 @@ exports.helper = {
     },
 
 
-    /**
-     * Return the base of a well structured data in order to give a correct API response.
-     * @param data {object}
-     * @param response {object}
-     * @returns {object}
-     */
-    buildBaseResponseData: function( data, req, res ){
-        if( ! data ) {
-            data = {};
-        }
-        if( sails.config.environment === 'development' ){
-            data._debug = {
-                api_version: sails.config.general.apiVersion,
-                locale: res.locale,
-                region: res.region,
-                session: req.session,
-                sessionID: req.sessionID,
-                sessionStore: req.sessionStore,
-                signedCookies: req.signedCookies
-            }
-        }
-        return data;
-    },
-    getBaseResponseData: function( data, req, res ){
-        if( ! data ) {
-            data = {};
-        }
-        if( sails.config.environment === 'development' ){
-            data._debug = {
-                api_version: sails.config.general.apiVersion,
-                locale: res.locale,
-                region: res.region,
-                session: req.session,
-                sessionID: req.sessionID,
-                sessionStore: req.sessionStore,
-                signedCookies: req.signedCookies
-            }
-        }
-        return data;
-    }
-
 };
 
 // `sails` is not available out here
