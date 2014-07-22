@@ -29,8 +29,14 @@ module.exports.routes = {
         // simple log of http request
         sails.log.info(req.method, req.url);
 
-        next();
+        // If user is not using API call (ask for json) then stop request
+        if( !req.wantsJSON ){
+            return res.view('layout');
+        }
+
+        return next();
     },
+
 
     // Debug route
     'get /api/debug/db': 'DebugController.dumpDatabase',
