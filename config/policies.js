@@ -30,6 +30,7 @@ module.exports.policies = {
     },
 
     UserController: {
+        find: true,
         create: true,
         update: ['isAuthenticated','preventApiKeyUpdate'],
         createPasswordResetToken: ['isAuthenticated','preventApiKeyUpdate'],
