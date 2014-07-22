@@ -20,20 +20,20 @@ module.exports = {
      /**
      * find an user.
      *
-     * @description :: try to find an user from by id
+     * @description :: try to find an user by id
      * @route /users/:id
      * @return {user}
      */
     find: function (req, res) {
-        User.findOne(req.param('id')).exec(function(err,event){
+        User.findOne(req.param('id')).exec(function(err,user){
             if(err){
                 return res.serverError(err);
             }
-            if(!event){
-                return res.notFound( res.i18n("resource (%s) doesn't exist", res.i18n('event')) );
+            if(!user){
+                return res.notFound( res.i18n("resource (%s) doesn't exist", res.i18n('user')) );
             }
             return res.ok({
-                event:event
+                user:user
             });
         });
      },
@@ -41,24 +41,24 @@ module.exports = {
       /**
      * find an user.
      *
-     * @description : try to find an user from by email
+     * @description : try to find an user by email
      * @route /users/:email
      * @return {user}
      */
     
-    /*findbyEmail: function (req, res) {
-        User.findOneByEmail(req.param('email')).exec(function(err,event){
+    findbyEmail: function (req, res) {
+        User.findOneByEmail(req.param('email')).exec(function(err,user){
             if(err){
                 return res.serverError(err);
             }
-            if(!event){
-                return res.notFound( res.i18n("resource (%s) doesn't exist", res.i18n('event')) );
+            if(!user){
+                return res.notFound( res.i18n("resource (%s) doesn't exist", res.i18n('user')) );
             }
             return res.ok({
-                event:event
+                user:user
             });
         });
-     },*/
+     },
 
     // @todo
     findMultiple: function (req, res) {
@@ -131,7 +131,7 @@ module.exports = {
         var query = {
             'ID': req.param('id')
         }
-        User.update(query, dataToUpdate, function(err, event) {
+        User.update(query, dataToUpdate, function(err, user) {
 
             if (err) {
                 // Error due to validators
@@ -142,11 +142,11 @@ module.exports = {
                     return res.serverError();
                 }
             }
-            if(!event || event.length < 1){
-                return res.notFound( res.i18n("resource (%s) doesn't exist", res.i18n('event')) );
+            if(!user || user.length < 1){
+                return res.notFound( res.i18n("resource (%s) doesn't exist", res.i18n('user')) );
             }else{
                 return res.ok({
-                    event: event
+                    user: user
                 });
             }
         });

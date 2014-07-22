@@ -81,7 +81,7 @@ module.exports.routes = {
     // Create new user
      "post /api/users": { controller: 'UserController', action: 'create' },
     //get an user by email
-    "get /api/users/:email": 'UserController.findByEmail',
+        "get /api/users/:email": 'UserController.findByEmail',
    
  
     // ask for new password (required: email)
