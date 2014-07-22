@@ -20,7 +20,6 @@ var passport = require('passport');
 module.exports = {
 
 
-
     /**
      * Create a new session (log in user).
      *

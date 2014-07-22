@@ -5,14 +5,16 @@
 
     "//": "Not found",
     "Resource not found":           "La ressource demandée n'existe pas",
-    "resource (%s) doesn't exist": "La ressource (%s) demandée n'existe pas",
+    "resource (%s) doesn't exist":  "La ressource (%s) demandée n'existe pas",
 
     "//": "Bad request",
-    "Email already taken": "Cet email est déjà pris",
-    "Parameters invalid": "Les paramètres donnés sont invalides",
+    "Email already taken":      "Cet email est déjà pris",
+    "Parameters invalid":       "Les paramètres donnés sont invalides",
 
     "//": "Forbidden",
-    "Access denied":        "Accès interdit",
+    "Access denied":                "Accès interdit",
+    "You must be authenticate":    "Vous devez vous être authentifié",
+    "You cannot access this resource": "Vous ne pouvez pas accéder à cette ressource",
 
     "//": "500 series",
     "An internal error occurred":   "Une erreur interne est apparu"

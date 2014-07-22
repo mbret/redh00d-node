@@ -21,14 +21,13 @@
 
 module.exports = function serverError (message, errors, data) {
 
-    sails.log.error('Sending 500 ("Server Error") response: \n',errors, data);
+    sails.log.error('Sending 500 ("Server Error") response: \n',message, errors, data);
 
     // Set status code
     this.res.status(500);
 
     // init
     var defaultMessage = this.res.__('An internal error occurred');
-    this.res.status(400);
     if( !data ) data = {};
     if( message ) data.message = message;
     else data.message = defaultMessage;

@@ -14,6 +14,8 @@
 
     "//": "Forbidden",
     "Access denied":                "Access denied",
+    "You must be authenticate":    "You must be authenticate",
+    "You cannot access this resource": "You cannot access this resource",
 
     "//": "500 series",
     "An internal error occurred":   "An internal error occurred"

@@ -18,7 +18,7 @@ module.exports = function sendOK (data) {
     sails.log.debug('res.ok() :: Sending 201 ("OK") response');
 
     // Set status code
-    this<res.status(201);
+    this.res.status(201);
 
     // send response
     return ResponseHelper.helper.handleSend( this.req, this.res, data );

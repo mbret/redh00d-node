@@ -23,11 +23,8 @@ module.exports = {
      * @return {event}
      */
     find: function (req, res) {
-
         Event.findOne( req.param('id')).exec( function(err, event){
-
             if(err){
-                //@todo
                 return res.serverError(err);
             }
             if(!event){
@@ -38,7 +35,6 @@ module.exports = {
                 event: event
             });
         });
-
     },
 
     /**
@@ -92,7 +88,7 @@ module.exports = {
             if(err){
                 // Validation error
                 if(err.ValidationError){
-                    return res.badRequest( 'The given parameters are invalid', err.ValidationError );
+                    return res.badRequest( null, err.ValidationError );
                 }
                 else{
                     return res.serverError(err);

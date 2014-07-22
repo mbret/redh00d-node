@@ -38,7 +38,7 @@ module.exports = {
         });
      },
      
-      /**
+    /**
      * find an user.
      *
      * @description : try to find an user by email
@@ -62,7 +62,7 @@ module.exports = {
 
     // @todo
     findMultiple: function (req, res) {
-
+        res.notFound();
     },
 
     /**
@@ -151,7 +151,6 @@ module.exports = {
                 });
             }
         });
-  
     },
 
     // @todo

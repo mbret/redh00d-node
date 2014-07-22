@@ -17,7 +17,7 @@ module.exports = function(req, res, next) {
     // isAuthenticated is a function injected inside req by passport (https://github.com/jaredhanson/passport/blob/master/lib/http/request.js)
     if (req.isAuthenticated()) return next();
 
-    return res.forbidden();
+    return res.forbidden( res.i18n("You must be authenticate") );
 
     // Try authenticating user with API key
 //    passport.authenticate( 'basic', { session: false }, function (err, user, info) {

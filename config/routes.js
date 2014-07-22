@@ -37,14 +37,6 @@ module.exports.routes = {
         return next();
     },
 
-
-
-
-    /**
-     * API routes
-     */
-    apiPrefix: '/api',
-
     // Debug route
     'get /api/debug/db': 'DebugController.dumpDatabase',
 
@@ -70,8 +62,8 @@ module.exports.routes = {
     /**
      * AUTHENTICATION relatives routes
      */
-    'post /api/auth/login': { controller: 'AuthController', action: 'login' },
-    'get /api/auth/logout': { controller: 'AuthController', action: 'logout' },
+    'post /api/auth': { controller: 'AuthController', action: 'login' },
+    'delete /api/auth': { controller: 'AuthController', action: 'logout' },
 
     /**
      * USER relatives routes
@@ -80,7 +72,7 @@ module.exports.routes = {
     'get /api/users/:id':   'UserController.find',
     'get /api/users*':      'UserController.findMultiple',
 
-    'post /api/users':     'UserController.create',
+    'post /api/users':     'UserController.create'
     //get an user by email
 //    "get /api/users/:email": 'UserController.findByEmail',
    
