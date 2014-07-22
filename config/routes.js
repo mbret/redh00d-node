@@ -29,7 +29,7 @@ module.exports.routes = {
         // simple log of http request
         sails.log.info(req.method, req.url);
 
-        // If user is not using API call (ask for json) then stop request
+        // If request does not accept application/json then block request
         if( !req.wantsJSON ){
             return res.view('layout');
         }
@@ -38,13 +38,16 @@ module.exports.routes = {
     },
 
 
-    // Debug route
-    'get /api/debug/db': 'DebugController.dumpDatabase',
+
 
     /**
      * API routes
      */
     apiPrefix: '/api',
+
+    // Debug route
+    'get /api/debug/db': 'DebugController.dumpDatabase',
+
 
     /**
      * EVENT relatives routes
