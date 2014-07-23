@@ -33,17 +33,18 @@ module.exports.policies = {
         find: true,
         create: true,
         findMultiple: true,
-        update: ['isAuthenticated','preventApiKeyUpdate'],
-        createPasswordResetToken: ['isAuthenticated','preventApiKeyUpdate'],
-        resetPassword: ['isAuthenticated','preventApiKeyUpdate']
+        update:                     ['isAuthenticated','preventApiKeyUpdate'],
+        createPasswordResetToken:   ['isAuthenticated','preventApiKeyUpdate'],
+        resetPassword:              ['isAuthenticated','preventApiKeyUpdate'],
+        createEvent:                ['isAuthenticated']
     },
 
     EventController: {
         find: true,
         findMultiple: true,
-        create: ['isAuthenticated'],
-        update: ['isAuthenticated'],
-        destroy: ['isAuthenticated'],
+        create:     ['isAuthenticated'],
+        update:     ['isAuthenticated'],
+        destroy:    ['isAuthenticated'],
         findUser: true
     }
 

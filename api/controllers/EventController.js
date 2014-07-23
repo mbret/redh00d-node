@@ -67,40 +67,7 @@ module.exports = {
         });
     },
 
-    /**
-     * Create a new event.
-     *
-     * @description :: Create an event.
-     * @param req   :: Required params (name/secription/place/date)
-     * @param res
-     * @returns {*}
-     */
-    create: function(req, res){
 
-        // Create the event
-        Event.create({
-            name: req.param('name'),
-            description: req.param('description'),
-            place: req.param('place'),
-            date: req.param('date')
-
-        }).exec(function(err, event){
-            if(err){
-                // Validation error
-                if(err.ValidationError){
-                    return res.badRequest( null, err.ValidationError );
-                }
-                else{
-                    return res.serverError(err);
-                }
-            }
-
-            return res.created({
-                event: event
-            });
-        });
-
-    },
 
     /**
      * Delete an event

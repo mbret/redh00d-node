@@ -29,6 +29,7 @@ module.exports = {
         userID: {
             type: 'integer',
             index: true,
+            required: true,
             columnName: 'userID'
         },
         name: {
