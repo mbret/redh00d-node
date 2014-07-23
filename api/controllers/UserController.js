@@ -182,46 +182,7 @@ module.exports = {
     },
 
 
-    /**
-     * Create an event for a user.
-     * @param req
-     * @param res
-     */
-    createEvent: function(req, res){
 
-        var eventData = {
-            name: req.param('name'),
-            description: req.param('description'),
-            place: req.param('place'),
-            date: req.param('date')
-        };
-
-        // Search user to inject ID
-        User.findOne( {ID: req.param('userid')}).exec(function(err, user){
-            if(err) return res.serverError();
-            if( ! user ) return res.notFound( res.i18n("Resource (%s) doesn't exist", res.i18n('user')) );
-
-            eventData.userID = user.ID;
-
-            // Create the event
-            Event.create( eventData ).exec(function(err, event){
-                if(err){
-                    // Validation error
-                    if(err.ValidationError){
-                        return res.badRequest( null, err.ValidationError );
-                    }
-                    else{
-                        return res.serverError(err);
-                    }
-                }
-
-                return res.created({
-                    event: event
-                });
-            });
-        });
-
-    },
 
 
     /**
