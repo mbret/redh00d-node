@@ -66,6 +66,24 @@ module.exports = {
     },
 
     /**
+     * GET /events/:event-id/users
+     * @param req
+     * @param res
+     */
+    findMultipleByEvent: function(req, res){
+
+    },
+
+    /**
+     * GET /events/:event-id/users/:id
+     * @param req
+     * @param res
+     */
+    findUserByEvent: function(req, res){
+
+    },
+
+    /**
      * Create a new user.
      *
      * @description :: Create a simple user with the required fields.
