@@ -160,6 +160,8 @@ module.exports = {
             date: req.param('date')
         };
 
+        if( ! req.param('user_id') ) return res.badRequest( "no user specified" );
+
         // Search user to inject ID
         User.findOne( {ID: req.param('user_id')}).exec(function(err, user){
             if(err) return res.serverError();

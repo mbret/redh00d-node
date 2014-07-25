@@ -13,8 +13,15 @@ module.exports.general = {
     ],
 
     api: {
-        version: '0.0.1'
+        version: '0.0.1',
 
+        errors: {
+            codes: [
+                "modelNotFound",
+                "pageNotFound",
+                // ...
+            ]
+        }
     },
 
     mail: {

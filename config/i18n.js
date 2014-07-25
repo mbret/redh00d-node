@@ -16,7 +16,9 @@ module.exports = {
         // Which locales are supported?
         locales: ['en', 'fr'],
 
-        defaultLocale: 'fr'
+        defaultLocale: 'fr',
+
+        localesDirectory: '/config/locales'
     }
 
 };

@@ -17,7 +17,7 @@
 
 module.exports = {
 
-     /**
+    /**
      * find an user.
      *
      * @description :: try to find an user by id
@@ -45,7 +45,6 @@ module.exports = {
      * @route /users/:email
      * @return {user}
      */
-    
     findByEmail: function (req, res) {
         User.findOne(req.param('email')).exec(function(err,user){
             if(err){
@@ -134,7 +133,6 @@ module.exports = {
 
     },
 
-
     /**
      * Update an user
      * Required parameters: id
@@ -181,10 +179,6 @@ module.exports = {
 
     },
 
-
-
-
-
     /**
      * Create a new password reset token and send
      * an email with instructions to user
@@ -203,7 +197,6 @@ module.exports = {
             });
         });
     },
-
 
     /**
      * Update user password
@@ -245,7 +238,6 @@ module.exports = {
             });
         });
     },
-
 
     /**
     * Overrides for the settings in `config/controllers.js`

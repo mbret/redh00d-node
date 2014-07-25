@@ -1,0 +1,18 @@
+{
+
+    "name": "API redh00d",
+    "version": "0.0.1",
+    "description": "Documentation de l'api redh00d",
+    "title": "Documentation de l'api redh00d",
+    "url" : "https://localhost",
+    "header": {
+        "title": "My own header title"
+    },
+    "footer": {
+        "title": "My own footer title"
+    },
+    "template": {
+        "withCompare": true,
+        "withGenerator": true
+    }
+}
