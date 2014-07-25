@@ -44,3 +44,9 @@
  *       "error": "UserNotFound"
  *     }
  */
+
+/**
+ * @api {post} /users Modifier un utilisateur
+ * @apiName UpdateUser
+ * @apiGroup Users
+ */

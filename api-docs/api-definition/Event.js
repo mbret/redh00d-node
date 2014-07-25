@@ -1,7 +1,7 @@
 /**
- * @api {get} /user/:id Cherche un événement par ID
+ * @api {get} /events/:id Cherche un événement par ID
  * @apiName GetUser
- * @apiGroup Event
+ * @apiGroup Events
  *
  * @apiParam {Number} id Users unique ID.
  *
@@ -22,4 +22,16 @@
  *     {
  *       "error": "UserNotFound"
  *     }
+ */
+
+/**
+ * @api {post} /events Modifier un événement
+ * @apiName UpdateEvent
+ * @apiGroup Events
+ */
+
+/**
+ * @api {delete} /events Supprimer un événement
+ * @apiName DeleteEvent
+ * @apiGroup Events
  */
