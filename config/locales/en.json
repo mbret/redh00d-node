@@ -5,7 +5,7 @@
 
     "//": "Not found",
     "Resource not found":           "Resource not found",
-    "resource (%s) doesn't exist":  "The requested resource (%s) doesn't exist",
+    "Resource (%s) doesn't exist":  "The requested resource (%s) doesn't exist",
 
     "//": "Bad request",
     "Bad request":                  "Bad request",

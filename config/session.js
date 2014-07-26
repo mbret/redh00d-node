@@ -19,13 +19,20 @@ module.exports.session = {
     // forcing them to log in again.
     secret: 'c68714496b0057c20f69d1b178bcadea',
 
+    key: "redh00d.sid",
 
     // Set the session cookie expire time
     // The maxAge is set by milliseconds, the example below is for 24 hours
     cookie: {
-        maxAge: 24 * 60 * 60 * 1000
+        maxAge: 24 * 60 * 60 * 1000,
+        secure: false, // put true for production, if access over http the cookie will not be set
+        httpOnly: true, // Prevent access from client-side javascript
+        path: '/'
     },
 
+    adapter: 'memory'
+
+//    proxy: true,
   // In production, uncomment the following lines to set up a shared redis session store
   // that can be shared across multiple Sails.js servers
 //  adapter: 'redis',

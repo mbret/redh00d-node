@@ -17,7 +17,7 @@
 
 module.exports = {
 
-     /**
+    /**
      * find an user.
      *
      * @description :: try to find an user by id
@@ -30,7 +30,7 @@ module.exports = {
                 return res.serverError(err);
             }
             if(!user){
-                return res.notFound( res.i18n("resource (%s) doesn't exist", res.i18n('user')) );
+                return res.notFound( res.i18n("Resource (%s) doesn't exist", res.i18n('user')) );
             }
             return res.ok({
                 user:user
@@ -45,14 +45,13 @@ module.exports = {
      * @route /users/:email
      * @return {user}
      */
-    
     findByEmail: function (req, res) {
         User.findOne(req.param('email')).exec(function(err,user){
             if(err){
                 return res.serverError(err);
             }
             if(!user){
-                return res.notFound( res.i18n("resource (%s) doesn't exist", res.i18n('user')) );
+                return res.notFound( res.i18n("Resource (%s) doesn't exist", res.i18n('user')) );
             }
             return res.ok({
                 user:user
@@ -63,6 +62,24 @@ module.exports = {
     // @todo
     findMultiple: function (req, res) {
         res.notFound();
+    },
+
+    /**
+     * GET /events/:event-id/users
+     * @param req
+     * @param res
+     */
+    findMultipleByEvent: function(req, res){
+
+    },
+
+    /**
+     * GET /events/:event-id/users/:id
+     * @param req
+     * @param res
+     */
+    findUserByEvent: function(req, res){
+
     },
 
     /**
@@ -116,7 +133,6 @@ module.exports = {
 
     },
 
-
     /**
      * Update an user
      * Required parameters: id
@@ -144,7 +160,7 @@ module.exports = {
                 }
             }
             if(!user || user.length < 1){
-                return res.notFound( res.i18n("resource (%s) doesn't exist", res.i18n('user')) );
+                return res.notFound( res.i18n("Resource (%s) doesn't exist", res.i18n('user')) );
             }else{
                 return res.ok({
                     user: user
@@ -162,7 +178,6 @@ module.exports = {
     destroy: function (req, res) {
 
     },
-
 
     /**
      * Create a new password reset token and send
@@ -182,7 +197,6 @@ module.exports = {
             });
         });
     },
-
 
     /**
      * Update user password
@@ -224,7 +238,6 @@ module.exports = {
             });
         });
     },
-
 
     /**
     * Overrides for the settings in `config/controllers.js`

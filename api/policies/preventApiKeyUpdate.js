@@ -8,8 +8,9 @@
  */
 module.exports = function(req, res, next) {
 
-    if (req.body.apiKey)
-        delete req.body.apiKey;
+    if( req.params.api_key ){
+        delete params.api_key;
+    }
 
     next();
 

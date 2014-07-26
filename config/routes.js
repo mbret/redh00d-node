@@ -43,36 +43,35 @@ module.exports.routes = {
 
     /**
      * EVENT relatives routes
-     * Possible actions:
-     *      - get one or multiple event
-     *      - update, delete one event
-     *      - get all user from an event
      */
+    // only events
+    'get    /api/events/:id':                   'EventController.find',
+    'post   /api/events':                       'EventController.create',
+    'delete /api/events/:id':                   'EventController.destroy',
+    'put    /api/events/:id':                   'EventController.update',
+    // users from events
+    'get    /api/events/:eventid/users':        'UserController.findMultipleByEvent',
+    'get    /api/events/:eventid/users/:id':    'UserController.findUserByEvent',
 
-    'get /api/events/:id':          'EventController.find',
-    'get /api/events/:id/users':    'EventController.findMultipleUser',
-    'get /api/events/:id/users/:id':'EventController.findUser',
-    'get /api/events*':             'EventController.findMultiple',
-
-    'post /api/events': 'EventController.create',
-    'delete /api/events/:id': 'EventController.destroy',
-    'put /api/events/:id': 'EventController.update',
-
+    'get    /api/events*':                      'EventController.findMultiple',
 
     /**
      * AUTHENTICATION relatives routes
      */
-    'post /api/auth': { controller: 'AuthController', action: 'login' },
-    'delete /api/auth': { controller: 'AuthController', action: 'logout' },
+    'post   /api/auth':                         'AuthController.login',
+    'delete /api/auth':                         'AuthController.logout',
 
     /**
      * USER relatives routes
-     *
-     */   
-    'get /api/users/:id':   'UserController.find',
-    'get /api/users*':      'UserController.findMultiple',
+     */
+    // only users
+    'get   /api/users/:id':                     'UserController.find',
+    'post  /api/users':                         'UserController.create',
+    // events from users
+    'get   /api/users/:userid/events':          'EventController.findMultipleByUser',
+    'get   /api/users*':                        'UserController.findMultiple'
 
-    'post /api/users':     'UserController.create'
+
     //get an user by email
 //    "get /api/users/:email": 'UserController.findByEmail',
    

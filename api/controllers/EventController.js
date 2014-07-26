@@ -67,40 +67,7 @@ module.exports = {
         });
     },
 
-    /**
-     * Create a new event.
-     *
-     * @description :: Create an event.
-     * @param req   :: Required params (name/secription/place/date)
-     * @param res
-     * @returns {*}
-     */
-    create: function(req, res){
 
-        // Create the event
-        Event.create({
-            name: req.param('name'),
-            description: req.param('description'),
-            place: req.param('place'),
-            date: req.param('date')
-
-        }).exec(function(err, event){
-            if(err){
-                // Validation error
-                if(err.ValidationError){
-                    return res.badRequest( null, err.ValidationError );
-                }
-                else{
-                    return res.serverError(err);
-                }
-            }
-
-            return res.created({
-                event: event
-            });
-        });
-
-    },
 
     /**
      * Delete an event
@@ -179,6 +146,48 @@ module.exports = {
         sails.controllers.user.findMultiple(req, res);
     },
 
+    /**
+     * Create an event for a user.
+     * @param req
+     * @param res
+     */
+    create: function(req, res){
+
+        var eventData = {
+            name: req.param('name'),
+            description: req.param('description'),
+            place: req.param('place'),
+            date: req.param('date')
+        };
+
+        if( ! req.param('user_id') ) return res.badRequest( "no user specified" );
+
+        // Search user to inject ID
+        User.findOne( {ID: req.param('user_id')}).exec(function(err, user){
+            if(err) return res.serverError();
+            if( ! user ) return res.notFound( res.i18n("Resource (%s) doesn't exist", res.i18n('user')) );
+
+            eventData.userID = user.ID;
+
+            // Create the event
+            Event.create( eventData ).exec(function(err, event){
+                if(err){
+                    // Validation error
+                    if(err.ValidationError){
+                        return res.badRequest( null, err.ValidationError );
+                    }
+                    else{
+                        return res.serverError(err);
+                    }
+                }
+
+                return res.created({
+                    event: event
+                });
+            });
+        });
+
+    },
 
     /**
      * Overrides for the settings in `config/controllers.js`
