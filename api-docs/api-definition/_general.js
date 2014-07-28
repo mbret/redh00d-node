@@ -95,57 +95,49 @@
 
 /**
  * @apiDefineErrorStructure BadRequestError
- * @apiError (400) {Object[]} errors Contenu de(s) erreur(s).
- * @apiError (400) {String} errors.message Message de l'erreur.
- * @apiError (400) {String} errors.code Code de l'erreur.
- * @apiErrorExample Answer (wrong params sample):
- *     HTTP/1.1 400 BAD REQUEST
- *     {
- *       "errors": {
- *          "message": "This user doesn't exist",
- *          "code": "modelNotFound"
- *       },
- *       "status": "400"
- *     }
+ * @apiError (400) {String} message Message de l'erreur.
+ * @apiError (400) {String} code Code de l'erreur.
+ * @apiError (400) {String} status 400.
+ * @apiError (400) {Object[]} [errors] Erreurs supplémentaire. Ici les champs contenu dans Form Data.
  * @apiErrorExample Answer (validation params fail sample):
  *     HTTP/1.1 400 BAD REQUEST
  *     {
- *       "errors": {
- *          "message": "This user doesn't exist",
- *          "code": "modelNotFound"
- *       },
+ *       "message": "The requested parameters are not correct",
+ *       "code": "invalidParams"
+ *       "errors": [
+ *          {
+ *            "message": "You should fill this field",
+ *            "code": "fieldEmpy"
+ *            "field": "name"
+ *          },
+ *          ...
+ *       ],
  *       "status": "400"
  *     }
  */
 
 /**
  * @apiDefineErrorStructure NotFoundError
- * @apiError (404) {Object[]} errors Contenu de(s) erreur(s).
- * @apiError (404) {String} errors.message Message de l'erreur.
- * @apiError (404) {String} errors.code Code de l'erreur.
+ * @apiError (404) {String} message Message de l'erreur.
+ * @apiError (404) {String} code Code de l'erreur.
  * @apiErrorExample Answer (sample):
  *     HTTP/1.1 404 Not Found
  *     {
- *       "errors": {
- *          "message": "This user doesn't exist",
- *          "code": "modelNotFound"
- *       },
+ *       "message": "This user doesn't exist",
+ *       "code": "modelNotFound"
  *       "status": "404"
  *     }
  */
 
 /**
  * @apiDefineErrorStructure forbiddenError
- * @apiError (403) {Object[]} errors Contenu de(s) erreur(s).
- * @apiError (403) {String} errors.message Message de l'erreur.
- * @apiError (403) {String} errors.code Code de l'erreur.
+ * @apiError (403) {String} message Message de l'erreur.
+ * @apiError (403) {String} code Code de l'erreur.
  * @apiErrorExample Answer (sample):
  *     HTTP/1.1 403 Forbidden Error
  *     {
- *       "errors": {
- *          "message": "You do not have enough rights to access this resource",
- *          "code": "noAccessRights"
- *       },
+ *       "message": "You do not have enough rights to access this resource",
+ *       "code": "noAccessRights"
  *       "status": "403"
  *     }
  */
@@ -156,16 +148,13 @@
 
 /**
  * @apiDefineErrorStructure serverError
- * @apiError (500) {Object[]} errors Contenu de(s) erreur(s).
- * @apiError (500) {String} errors.message Message de l'erreur.
- * @apiError (500) {String} errors.code Code de l'erreur.
+ * @apiError (500) {String} message Message de l'erreur.
+ * @apiError (500) {String} code Code de l'erreur.
  * @apiErrorExample Answer (sample):
  *     HTTP/1.1 500 Serveur Error
  *     {
- *       "errors": {
- *          "message": "Database unavailable",
- *          "code": "dbUnavailable"
- *       },
+ *       "message": "Database unavailable",
+ *       "code": "dbUnavailable"
  *       "status": "500"
  *     }
  */

@@ -5,6 +5,8 @@
  * @api {get} /users/:id Chercher un utilisateur par ID
  * @apiName Find
  * @apiGroup Users
+ * @apiGroupDescription API relative aux utilisateurs
+ *
  * @apiPermission authenticated
  * @apiDescription Chercher un utilisateur par ID
  *
@@ -47,6 +49,7 @@
  * @api {post} /users Créer un utilisateur
  * @apiName Create
  * @apiGroup Users
+ * @apiDescription Créer un utilisateur et le récupère.
  *
  * @apiParamTitle (formData) Parameters (Form Data)
  * @apiParam (formData) {String} email
@@ -58,14 +61,13 @@
  * form-data: email=xmax54%40gmail.com&password=password
  *
  * @apiSuccessStructure CreateSuccess
+ *
  * @apiErrorStructure BadRequestError
  * @apiErrorExample Answer (email taken sample):
  *     HTTP/1.1 400 BAD REQUEST
  *     {
- *       "errors": {
- *          "message": "This email was already taken",
- *          "code": "emailArleadyTaken"
- *       },
+ *       "message": "This email was already taken",
+ *       "code": "emailArleadyTaken",
  *       "status": "400"
  *     }
  *
@@ -74,9 +76,21 @@
 // Update one
 // ------------------------------------------------------------------------------------------
 /**
- * @api {post} /users Modifier un utilisateur
- * @apiName UpdateUser
+ * @api {put} /users Mettre à jour un utilisateur
+ * @apiName Update
  * @apiGroup Users
+ * @apiDescription Mets à jour un utilisateur et le récupère.
+ *
+ * @apiParamTitle (formData) Parameters (Form Data)
+ * @apiParam (formData) {String} email
+ * @apiParam (formData) {String} [firstname]
+ * @apiParam (formData) {String} [lastname]
+ * @apiExample Example d'utilisation
+ * put http://localhost/users
+ * form-data: email=xmax54%40gmail.com&firstname=pascal
  *
  * @apiSuccessStructure UpdateSuccess
+ *
+ * @apiErrorStructure BadRequestError
+ *
  */
