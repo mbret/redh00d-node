@@ -2,8 +2,11 @@
 // Success definitions.
 // ------------------------------------------------------------------------------------------
 /**
- * @apiDefineSuccessStructure FindSuccess
  * @apiSuccessTitle (200) Success (200 - OK)
+ * @apiSuccessTitle (201) Success (201 - CREATED)
+ */
+/**
+ * @apiDefineSuccessStructure FindSuccess
  * @apiSuccess (200) {Object} object L'objet recherché.
  * @apiSuccess (200) {String} status 200.
  * @apiSuccessExample Answer (sample):
@@ -20,13 +23,12 @@
 
 /**
  * @apiDefineSuccessStructure FindMultipleSuccess
- * @apiSuccessTitle (200) Success (200 - OK)
  * @apiSuccess (200) {Object[]} data La liste des objets.
  * @apiSuccess (200) {String} status 200.
  * @apiSuccessExample Answer (sample):
  *     HTTP/1.1 200 OK
  *     {
- *       "data": [
+ *       "objects": [
  *          "object": {
  *              "field1": "Foo",
  *              "field2": "Bar",
@@ -39,14 +41,13 @@
  * @apiSuccessExample Answer (empty sample):
  *     HTTP/1.1 200 OK
  *     {
- *       "data": [ ],
+ *       "objects": [ ],
  *       "status": 200
  *     }
  */
 
 /**
  * @apiDefineSuccessStructure CreateSuccess
- * @apiSuccessTitle (201) Success (201 - CREATED)
  * @apiSuccess (201) {Object} object L'objet crée.
  * @apiSuccess (201) {String} status 201.
  * @apiSuccessExample Answer (sample):
@@ -63,9 +64,8 @@
 
 /**
  * @apiDefineSuccessStructure UpdateSuccess
- * @apiSuccessTitle (201) Success (200 - OK)
- * @apiSuccess (201) {Object} object L'objet modifié.
- * @apiSuccess (201) {String} status 200.
+ * @apiSuccess (200) {Object} object L'objet modifié.
+ * @apiSuccess (200) {String} status 200.
  * @apiSuccessExample Answer (sample):
  *     HTTP/1.1 200 OK
  *     {
@@ -87,8 +87,39 @@
 // Errors definitions.
 // ------------------------------------------------------------------------------------------
 /**
- * @apiDefineErrorStructure NotFoundError
+ * @apiErrorTitle (400) Error (400 - Bad request)
+ * @apiErrorTitle (403) Error (403 - Forbidden Error)
  * @apiErrorTitle (404) Error (404 - NOT FOUND)
+ * @apiErrorTitle (500) Error (500 - Server Error)
+ */
+
+/**
+ * @apiDefineErrorStructure BadRequestError
+ * @apiError (400) {Object[]} errors Contenu de(s) erreur(s).
+ * @apiError (400) {String} errors.message Message de l'erreur.
+ * @apiError (400) {String} errors.code Code de l'erreur.
+ * @apiErrorExample Answer (wrong params sample):
+ *     HTTP/1.1 400 BAD REQUEST
+ *     {
+ *       "errors": {
+ *          "message": "This user doesn't exist",
+ *          "code": "modelNotFound"
+ *       },
+ *       "status": "400"
+ *     }
+ * @apiErrorExample Answer (validation params fail sample):
+ *     HTTP/1.1 400 BAD REQUEST
+ *     {
+ *       "errors": {
+ *          "message": "This user doesn't exist",
+ *          "code": "modelNotFound"
+ *       },
+ *       "status": "400"
+ *     }
+ */
+
+/**
+ * @apiDefineErrorStructure NotFoundError
  * @apiError (404) {Object[]} errors Contenu de(s) erreur(s).
  * @apiError (404) {String} errors.message Message de l'erreur.
  * @apiError (404) {String} errors.code Code de l'erreur.
@@ -105,7 +136,6 @@
 
 /**
  * @apiDefineErrorStructure forbiddenError
- * @apiErrorTitle (403) Error (403 - Forbidden Error)
  * @apiError (403) {Object[]} errors Contenu de(s) erreur(s).
  * @apiError (403) {String} errors.message Message de l'erreur.
  * @apiError (403) {String} errors.code Code de l'erreur.
@@ -126,7 +156,6 @@
 
 /**
  * @apiDefineErrorStructure serverError
- * @apiErrorTitle (500) Error (500 - Server Error)
  * @apiError (500) {Object[]} errors Contenu de(s) erreur(s).
  * @apiError (500) {String} errors.message Message de l'erreur.
  * @apiError (500) {String} errors.code Code de l'erreur.
@@ -156,7 +185,7 @@
 
 
 // ------------------------------------------------------------------------------------------
-// Current Header.
+// Header definitions.
 // ------------------------------------------------------------------------------------------
 /**
  * @apiDefineHeaderStructure MyHeader
