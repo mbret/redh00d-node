@@ -1,39 +1,45 @@
 
 /**
- * @api {} Détail des codes erreurs
+ * @api {} Errors codes
  * @apiName ErroCode
  * @apiGroup Errors
+ * @apiDescription redh00d use many way to tell whether an error occurs and what was the error. The most reliable and trustable way is the error code. Errors
+ *  codes are fixed and you can only manage with them to treat errors on customer side. Just read the code and display the messages you want.
  *
- * @apiHeaderTitle (Errors) Code d'erreurs.
- * @apiHeader (Errors) {String} error
- * @apiHeader (Errors) {String} error.code
- * @apiHeader (Errors) {String} error.code.resourceNotFound La ressource recherchée n'a pas été trouvée.
- * @apiHeader (Errors) {String} error.code.modelNotFound Le model / classe recherché(e) n'a pas été trouvé(e).
- * @apiHeader (Errors) {String} error.code.pageNotFound La page demandée n'a pas été trouvée.
+ * @apiHeaderTitle (Errors) Codes detailed.
+ * @apiHeader (Errors) {String} code
+ * @apiHeader (Errors) {String} code.resourceNotFound La ressource recherchée n'a pas été trouvée.
+ * @apiHeader (Errors) {String} code.modelNotFound Le model / classe recherché(e) n'a pas été trouvé(e).
+ * @apiHeader (Errors) {String} code.pageNotFound La page demandée n'a pas été trouvée.
+ * @apiHeader (Errors) {String} code.dbUnavailable .
+ * @apiHeader (Errors) {String} code.noAccessRights .
+ * @apiHeader (Errors) {String} code.emailArleadyTaken .
  *
  */
 
 /**
- * @api {} Erreur 401
- * @apiName Error401
+ * @api {} Errors responses
+ * @apiName ErrorResponse
  * @apiGroup Errors
+ * @apiDescription redh00d uses conventional HTTP response codes to indicate success or failure of an API request.
+ * <br/>In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error
+ * <br/>that resulted from the provided information (e.g. a required parameter was missing, a charge failed, etc.), and
+ * <br/>codes in the 5xx range indicate an error with redh00d servers.
  *
- * @apiErrorStructure authorizationError
- */
-
-/**
- * @api {} Erreur 403
- * @apiName Error403
- * @apiGroup Errors
- * @apiDescription The request is understood, but it has been refused or access is not allowed. An accompanying error message will explain why.
+ * <br/><b>HTTP Status Code Summary:</b>
+ * <br/>200 OK - Everything worked as expected.
+ * <br/>400 Bad Request - Often missing a required parameter.
+ * <br/>401 Unauthorized - No valid API key provided.
+ * <br/>402 Request Failed - Parameters were valid but request failed.
+ * <br/>404 Not Found - The requested item doesn't exist.
+ * <br/>500, 502, 503, 504 Server errors - something went wrong on redh00d's end.
+ *
+ * @apiErrorStructure CommonError
+ * @apiErrorStructure BadRequestError
+ * @apiErrorStructure BadRequestErrorEmailTaken
+ * @apiErrorStructure NotFoundError
  * @apiErrorStructure forbiddenError
- */
-
-/**
- * @api {} Erreur 500
- * @apiName Error500
- * @apiGroup Errors
- *
  * @apiErrorStructure serverError
+ *
  */
 

@@ -36,6 +36,10 @@ module.exports.general = {
                 noAccessRights: {
                     label: "noAccessRights",
                     message: "No access rights"
+                },
+                emailArleadyTaken: {
+                    label: emailArleadyTaken,
+                    message: "Email already taken"
                 }
                 // ...
             }

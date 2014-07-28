@@ -1,3 +1,16 @@
+// ------------------------------------------------------------------------------------------
+// Shortcut for fetch events params
+// ------------------------------------------------------------------------------------------
+/**
+ * @apiDefineStructure fetchEventsParams
+ * @apiParam (urlParam) {String} [eventName]
+ * @apiParam (urlParam) {String} [eventDate]
+ * @apiParam (urlParam) {String} [sort] get the result sorted
+ */
+
+
+
+
 /**
  * @api {get} /events/:id Cherche un événement par ID
  * @apiName GetUser
