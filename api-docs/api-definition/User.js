@@ -94,3 +94,30 @@
  * @apiErrorStructure BadRequestError
  *
  */
+// ------------------------------------------------------------------------------------------
+// Delete one
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {delete} /users/:id Supprimer un utilisateur
+ * @apiName DeleteUser
+ * @apiGroup Users
+ *
+ */
+// ------------------------------------------------------------------------------------------
+// Fetch events from one user
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {get} /users/:id/events Chercher les événements d'un utilisateur
+ * @apiName FindUserEvents
+ * @apiGroup Users
+ *
+ */
+// ------------------------------------------------------------------------------------------
+// Delete events from one user
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {delete} /users/:id/events Supprimer les événements d'un utilisateur
+ * @apiName DeleteUserEvents
+ * @apiGroup Users
+ *
+ */
