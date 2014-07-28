@@ -6,6 +6,8 @@
     "//": "Not found",
     "Resource not found":           "Resource not found",
     "Resource (%s) doesn't exist":  "The requested resource (%s) doesn't exist",
+    "Model not found":              "The requested model was not found",
+    "Page not found":              "The requested page was not found",
 
     "//": "Bad request",
     "Bad request":                  "Bad request",

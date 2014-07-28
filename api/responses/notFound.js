@@ -22,14 +22,22 @@
  *
  */
 
-module.exports = function notFound (message, data) {
+module.exports = function notFound (errorCode, message, data) {
 
-    sails.log.debug('Sending 404 ("Not Found") response: \n', data);
+    sails.log.debug('Sending 404 ("Not Found") response: \n', errorCode, data);
 
-    var defaultMessage = this.res.__('Resource not found');
+    if(! errorCode || errorCode === null){
+        errorCode = sails.config.general.api.errors.codes.resourceNotFound;
+    }
+
     if( !data ) data = {};
-    if( message ) data.message = message;
-    else data.message = defaultMessage;
+    if( ! message ) data.message = this.res.__( errorCode.message );
+    else{ data.message = message }
+
+    data.errors = {
+        code: errorCode.label
+    };
+
     // Set status code
     this.res.status(404);
 

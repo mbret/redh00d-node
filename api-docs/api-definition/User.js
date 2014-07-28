@@ -11,10 +11,23 @@
  * @apiExample Example d'utilisation
  * get http://localhost/users/15
  *
- * @apiStructure MyName
  * @apiSuccessStructure FindSuccess
- *
  * @apiErrorStructure NotFoundError
+ */
+
+/**
+ * @api {get} /users Cherche des utilisateurs
+ * @apiName FindMultiple
+ * @apiGroup Users
+ * @apiPermission authenticated
+ * @apiDescription Cherche des utilisateurs
+ *
+ * @apiHeaderStructure MyHeader
+ *
+ * @apiExample Example d'utilisation
+ * get http://localhost/users
+ *
+ * @apiSuccessStructure FindMultipleSuccess
  */
 
 /**
@@ -24,29 +37,14 @@
  *
  * @apiParam {Number} id ID utilisateur.
  *
- * @apiSuccess {Object} user Utilisateur.
+ * @apiSuccessStructure CreateSuccess
  *
- * @apiSuccessExample Success-Response:
- *     HTTP/1.1 200 OK
- *     {
- *       "user": {
- *          "firstname": "Maxime",
- *          "lastname": "Bret",
- *          "email": "xmax54@gmail.com"
- *       },
- *     }
- *
- * @apiError UserNotFound The id of the User was not found.
- *
- * @apiErrorExample Error-Response:
- *     HTTP/1.1 404 Not Found
- *     {
- *       "error": "UserNotFound"
- *     }
  */
 
 /**
  * @api {post} /users Modifier un utilisateur
  * @apiName UpdateUser
  * @apiGroup Users
+ *
+ * @apiSuccessStructure UpdateSuccess
  */

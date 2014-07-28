@@ -30,7 +30,7 @@ module.exports = {
                 return res.serverError(err);
             }
             if(!user){
-                return res.notFound( res.i18n("Resource (%s) doesn't exist", res.i18n('user')) );
+                return res.notFound( sails.config.general.api.errors.codes.modelNotFound );
             }
             return res.ok({
                 user:user
