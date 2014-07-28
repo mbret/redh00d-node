@@ -3,8 +3,9 @@
 // ------------------------------------------------------------------------------------------
 /**
  * @apiDefineSuccessStructure FindSuccess
- * @apiSuccess {Object} object L'objet recherché.
- * @apiSuccess {String} status 200.
+ * @apiSuccessTitle (200) Success (200)
+ * @apiSuccess (200) {Object} object L'objet recherché.
+ * @apiSuccess (200) {String} status 200.
  * @apiSuccessExample Réponse (exemple):
  *     HTTP/1.1 200 OK
  *     {
@@ -19,8 +20,19 @@
 
 /**
  * @apiDefineSuccessStructure CreateSuccess
- * @apiSuccess {Object} object L'objet crée.
- * @apiSuccess {String} status 201.
+ * @apiSuccessTitle (201) Created (201)
+ * @apiSuccess (201) {Object} object L'objet crée.
+ * @apiSuccess (201) {String} status 201.
+ * @apiSuccessExample Réponse (exemple):
+ *     HTTP/1.1 201 CREATED
+ *     {
+ *       "object": {
+ *          "field1": "Foo",
+ *          "field2": "Bar",
+ *          ...
+ *       },
+ *       "status": 201
+ *     }
  */
 
 /**
@@ -37,6 +49,7 @@
 /**
  * @apiDefineStructure MyName
  * @apiParam {Number} id Users unique ID.
+ * @apiParam {Number} qsd Users unique ID.
  */
 
 // ------------------------------------------------------------------------------------------
@@ -44,13 +57,27 @@
 // ------------------------------------------------------------------------------------------
 /**
  * @apiDefineErrorStructure NotFoundError
- *
- * @apiError {Object[]} error Objet erreur.
- * @apiError {String} error.message Message résumé de l'erreur.
- * @apiError {String} error.code Code descriptif de l'erreur.
- * @apiSuccess {String} status 404.
- *
+ * @apiErrorTitle (404) Not found (404)
+ * @apiError (404) {Object[]} error Objet erreur.
+ * @apiError (404) {String} error.message Message résumé de l'erreur.
+ * @apiError (404) {String} error.code Code descriptif de l'erreur.
  * @apiErrorExample Réponse (exemple):
+ *     HTTP/1.1 404 Not Found
+ *     {
+ *       "error": {
+ *          "message": "This user doesn't exist",
+ *          "code": "modelNotFound"
+ *       },
+ *       "status": "404"
+ *     }
+ */
+
+/**
+ * @apiDefineStructure ServerError
+ * @apiParamTitle (Erreur serveur (500)) Erreur serveur (500)
+ * @apiError (Erreur serveur (500)) {Object[]} sdfsdf Objet erreur.
+ *
+ * @apiExample (ServerError) Réponse (exemple):
  *     HTTP/1.1 404 Not Found
  *     {
  *       "error": {

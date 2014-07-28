@@ -1,9 +1,9 @@
 /**
- * @api {get} /users/:id Cherche un utilisateur par ID
+ * @api {get} /users/:id Chercher un utilisateur par ID
  * @apiName Find
  * @apiGroup Users
  * @apiPermission authenticated
- * @apiDescription Cherche un utilisateur par ID
+ * @apiDescription Chercher un utilisateur par ID
  *
  * @apiHeaderStructure MyHeader
  *

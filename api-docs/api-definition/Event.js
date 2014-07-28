@@ -1,33 +1,37 @@
+
 /**
- * @api {get} /events/:id Cherche un événement par ID
- * @apiName GetUser
+ * @api {get} /events/:id Chercher un événement par ID
+ * @apiName GetEvent
  * @apiGroup Events
  *
- * @apiParam {Number} id Users unique ID.
+ * @apiHeaderStructure MyHeader
  *
- * @apiSuccess {String} firstname Firstname of the User.
- * @apiSuccess {String} lastname  Lastname of the User.
+ * @apiParamTitle (urlParam) Parameter (URL)
+ * @apiParam (urlParam) {Number} id ID événement.
+ * @apiExample Example d'utilisation
+ * get http://localhost/events/15
  *
- * @apiSuccessExample Success-Response:
- *     HTTP/1.1 200 OK
- *     {
- *       "firstname": "John",
- *       "lastname": "Doe"
- *     }
- *
- * @apiError UserNotFound The id of the User was not found.
- *
- * @apiErrorExample Error-Response:
- *     HTTP/1.1 404 Not Found
- *     {
- *       "error": "UserNotFound"
- *     }
+ * @apiSuccessStructure FindSuccess
+ * @apiErrorStructure NotFoundError
  */
 
 /**
  * @api {post} /events Modifier un événement
  * @apiName UpdateEvent
  * @apiGroup Events
+ *
+ * @apiHeaderStructure MyHeader
+ *
+ * @apiParamTitle (dataParam) Parameter (Form Data)
+ * @apiParam (dataParam) {Number} name ID événement.
+ * @apiParam (dataParam) {Number} place ID événement.
+ * @apiParam (dataParam) {Number} description ID événement.
+ * @apiParam (dataParam) {Number} date ID événement.
+ * @apiExample Example d'utilisation
+ * get http://localhost/events
+ * Form data : name=event&description=One+event&place=toul&date=2014-07-25...
+ *
+ * @apiSuccessStructure CreateSuccess
  */
 
 /**

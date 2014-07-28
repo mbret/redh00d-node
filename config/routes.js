@@ -44,15 +44,11 @@ module.exports.routes = {
     /**
      * EVENT relatives routes
      */
-    // only events
     'get    /api/events/:id':                   'EventController.find',
     'post   /api/events':                       'EventController.create',
     'delete /api/events/:id':                   'EventController.destroy',
     'put    /api/events/:id':                   'EventController.update',
-    // users from events
-    'get    /api/events/:eventid/users':        'UserController.findMultipleByEvent',
-    'get    /api/events/:eventid/users/:id':    'UserController.findUserByEvent',
-
+    'get    /api/events/:id/users':             'UserController.findMultipleByEvent',
     'get    /api/events*':                      'EventController.findMultiple',
 
     /**
@@ -67,8 +63,7 @@ module.exports.routes = {
     // only users
     'get   /api/users/:id':                     'UserController.find',
     'post  /api/users':                         'UserController.create',
-    // events from users
-    'get   /api/users/:userid/events':          'EventController.findMultipleByUser',
+    'get   /api/users/:id/events':              'EventController.findMultipleByUser',
     'get   /api/users*':                        'UserController.findMultiple'
 
 
