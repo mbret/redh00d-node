@@ -3,7 +3,7 @@
 // ------------------------------------------------------------------------------------------
 /**
  * @api {get} /users/:id Chercher un utilisateur par ID
- * @apiName Find
+ * @apiName FindUser
  * @apiGroup Users
  * @apiGroupDescription API relative aux utilisateurs
  *
@@ -24,7 +24,7 @@
 // ------------------------------------------------------------------------------------------
 /**
  * @api {get} /users Chercher des utilisateurs
- * @apiName FindMultiple
+ * @apiName FindMultipleUsers
  * @apiGroup Users
  * @apiPermission authenticated
  * @apiDescription Chercher des utilisateurs
@@ -47,7 +47,7 @@
 // ------------------------------------------------------------------------------------------
 /**
  * @api {post} /users Créer un utilisateur
- * @apiName Create
+ * @apiName CreateUser
  * @apiGroup Users
  * @apiDescription Créer un utilisateur et le récupère.
  *
@@ -77,7 +77,7 @@
 // ------------------------------------------------------------------------------------------
 /**
  * @api {put} /users Mettre à jour un utilisateur
- * @apiName Update
+ * @apiName UpdateUser
  * @apiGroup Users
  * @apiDescription Mets à jour un utilisateur et le récupère.
  *
