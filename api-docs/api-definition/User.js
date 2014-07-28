@@ -1,7 +1,12 @@
+// ------------------------------------------------------------------------------------------
+// Fetch one
+// ------------------------------------------------------------------------------------------
 /**
  * @api {get} /users/:id Chercher un utilisateur par ID
- * @apiName Find
+ * @apiName FindUser
  * @apiGroup Users
+ * @apiGroupDescription API relative aux utilisateurs
+ *
  * @apiPermission authenticated
  * @apiDescription Chercher un utilisateur par ID
  *
@@ -11,42 +16,126 @@
  * @apiExample Example d'utilisation
  * get http://localhost/users/15
  *
- * @apiStructure MyName
  * @apiSuccessStructure FindSuccess
- *
  * @apiErrorStructure NotFoundError
  */
-
+// ------------------------------------------------------------------------------------------
+// Fetch all
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {get} /users Chercher des utilisateurs
+ * @apiName FindMultipleUsers
+ * @apiGroup Users
+ * @apiPermission authenticated
+ * @apiDescription Chercher des utilisateurs
+ *
+ * @apiHeaderStructure MyHeader
+ *
+ * @apiParamTitle (url) Parameters (URL)
+ * @apiParam (url) {Number} [id]
+ * @apiParam (url) {String} [firstname]
+ * @apiParam (url) {String} [lastname]
+ * @apiParam (url) {String} [sort] Avoir les resultats dans l'ordre descendant ou ascendant
+ * @apiExample Example d'utilisation
+ * get http://localhost/users
+ * get http://localhost/users?sort=asc&firstname=maxime
+ *
+ * @apiSuccessStructure FindMultipleSuccess
+ */
+// ------------------------------------------------------------------------------------------
+// Create one
+// ------------------------------------------------------------------------------------------
 /**
  * @api {post} /users Créer un utilisateur
- * @apiName Create
+ * @apiName CreateUser
  * @apiGroup Users
+ * @apiDescription Créer un utilisateur et le récupère.
  *
- * @apiParam {Number} id ID utilisateur.
+ * @apiParamTitle (formData) Parameters (Form Data)
+ * @apiParam (formData) {String} email
+ * @apiParam (formData) {String} password
+ * @apiParam (formData) {String} [firstname]
+ * @apiParam (formData) {String} [lastname]
+ * @apiExample Example d'utilisation
+ * post http://localhost/users
+ * form-data: email=xmax54%40gmail.com&password=password
  *
- * @apiSuccess {Object} user Utilisateur.
+ * @apiSuccessStructure CreateSuccess
  *
- * @apiSuccessExample Success-Response:
- *     HTTP/1.1 200 OK
+ * @apiErrorStructure BadRequestError
+ * @apiErrorExample Answer (email taken sample):
+ *     HTTP/1.1 400 BAD REQUEST
  *     {
- *       "user": {
- *          "firstname": "Maxime",
- *          "lastname": "Bret",
- *          "email": "xmax54@gmail.com"
- *       },
+ *       "message": "This email was already taken",
+ *       "code": "emailArleadyTaken",
+ *       "status": "400"
  *     }
  *
- * @apiError UserNotFound The id of the User was not found.
- *
- * @apiErrorExample Error-Response:
- *     HTTP/1.1 404 Not Found
- *     {
- *       "error": "UserNotFound"
- *     }
  */
-
+// ------------------------------------------------------------------------------------------
+// Update one
+// ------------------------------------------------------------------------------------------
 /**
- * @api {post} /users Modifier un utilisateur
+ * @api {put} /users Mettre à jour un utilisateur
  * @apiName UpdateUser
  * @apiGroup Users
+ * @apiDescription Mets à jour un utilisateur et le récupère. Pour mettre à jour le mot de passe, une génération préalable d'un token est requise.
+ * le token doit ensuite être spécifié dans la requete.
+ *
+ * @apiParamTitle (formData) Parameters (Form Data)
+ * @apiParam (formData) {String} email
+ * @apiParam (formData) {String} [password] Un token est requis
+ * @apiParam (formData) {String} [password_token] Token requis pour modifier le mot de passe
+ * @apiParam (formData) {String} [firstname]
+ * @apiParam (formData) {String} [lastname]
+ * @apiExample Example d'utilisation
+ * put http://localhost/users
+ * form-data: email=xmax54%40gmail.com&firstname=pascal
+ *
+ * @apiSuccessStructure UpdateSuccess
+ *
+ * @apiErrorStructure BadRequestError
+ *
+ */
+// ------------------------------------------------------------------------------------------
+// Delete one
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {delete} /users/:id Supprimer un utilisateur
+ * @apiName DeleteUser
+ * @apiGroup Users
+ *
+ */
+// ------------------------------------------------------------------------------------------
+// Fetch events from one user
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {get} /users/:id/events Chercher les événements d'un utilisateur
+ * @apiName FindUserEvents
+ * @apiGroup Users
+ *
+ */
+// ------------------------------------------------------------------------------------------
+// Delete events from one user
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {delete} /users/:id/events Supprimer les événements d'un utilisateur
+ * @apiName DeleteUserEvents
+ * @apiGroup Users
+ *
+ */
+// ------------------------------------------------------------------------------------------
+// Send reset token password of one user
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {patch} /users/:id Générer un token de reset password
+ * @apiName GenerateUserResetTokenPassword
+ * @apiGroup Users
+ *
+ * @apiParamTitle (formData) Parameters (Form Data)
+ * @apiParam (formData) {Boolean} reset_password true / false
+ * @apiExample Example d'utilisation
+ * patch http://localhost/users/15
+ * form-data: reset_password=true
+ *
  */

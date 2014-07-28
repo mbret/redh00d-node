@@ -1,12 +1,16 @@
 // ------------------------------------------------------------------------------------------
-// Current Success.
+// Success definitions.
 // ------------------------------------------------------------------------------------------
 /**
+ * @apiSuccessTitle (200) Success (200 - OK)
+ * @apiSuccessTitle (201) Success (201 - CREATED)
+ */
+
+/**
  * @apiDefineSuccessStructure FindSuccess
- * @apiSuccessTitle (200) Success (200)
  * @apiSuccess (200) {Object} object L'objet recherché.
  * @apiSuccess (200) {String} status 200.
- * @apiSuccessExample Réponse (exemple):
+ * @apiSuccessExample Answer (sample):
  *     HTTP/1.1 200 OK
  *     {
  *       "object": {
@@ -19,11 +23,35 @@
  */
 
 /**
+ * @apiDefineSuccessStructure FindMultipleSuccess
+ * @apiSuccess (200) {Object[]} data La liste des objets.
+ * @apiSuccess (200) {String} status 200.
+ * @apiSuccessExample Answer (sample):
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "objects": [
+ *          "object": {
+ *              "field1": "Foo",
+ *              "field2": "Bar",
+ *              ...
+ *          },
+ *          ...
+ *       ],
+ *       "status": 200
+ *     }
+ * @apiSuccessExample Answer (empty sample):
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "objects": [ ],
+ *       "status": 200
+ *     }
+ */
+
+/**
  * @apiDefineSuccessStructure CreateSuccess
- * @apiSuccessTitle (201) Created (201)
  * @apiSuccess (201) {Object} object L'objet crée.
  * @apiSuccess (201) {String} status 201.
- * @apiSuccessExample Réponse (exemple):
+ * @apiSuccessExample Answer (sample):
  *     HTTP/1.1 201 CREATED
  *     {
  *       "object": {
@@ -37,8 +65,18 @@
 
 /**
  * @apiDefineSuccessStructure UpdateSuccess
- * @apiSuccess {Object} object L'objet mis à jour.
- * @apiSuccess {String} status 200.
+ * @apiSuccess (200) {Object} object L'objet modifié.
+ * @apiSuccess (200) {String} status 200.
+ * @apiSuccessExample Answer (sample):
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "object": {
+ *          "field1": "Foo",
+ *          "field2": "Bar",
+ *          ...
+ *       },
+ *       "status": 200
+ *     }
  */
 
 /**
@@ -46,48 +84,81 @@
  * @apiSuccess {String} status 204.
  */
 
+// ------------------------------------------------------------------------------------------
+// Errors definitions.
+// ------------------------------------------------------------------------------------------
 /**
- * @apiDefineStructure MyName
- * @apiParam {Number} id Users unique ID.
- * @apiParam {Number} qsd Users unique ID.
+ * @apiErrorTitle (400) Error (400 - Bad request)
+ * @apiErrorTitle (403) Error (403 - Forbidden Error)
+ * @apiErrorTitle (404) Error (404 - NOT FOUND)
+ * @apiErrorTitle (500) Error (500 - Server Error)
  */
 
-// ------------------------------------------------------------------------------------------
-// Current Errors.
-// ------------------------------------------------------------------------------------------
+/**
+ * @apiDefineErrorStructure BadRequestError
+ * @apiError (400) {String} message Message de l'erreur.
+ * @apiError (400) {String} code Code de l'erreur.
+ * @apiError (400) {String} status 400.
+ * @apiError (400) {Object[]} [errors] Erreurs supplémentaire. Ici les champs contenu dans Form Data.
+ * @apiErrorExample Answer (validation params fail sample):
+ *     HTTP/1.1 400 BAD REQUEST
+ *     {
+ *       "message": "The requested parameters are not correct",
+ *       "code": "invalidParams"
+ *       "errors": [
+ *          {
+ *            "message": "You should fill this field",
+ *            "code": "fieldEmpy"
+ *            "field": "name"
+ *          },
+ *          ...
+ *       ],
+ *       "status": "400"
+ *     }
+ */
+
 /**
  * @apiDefineErrorStructure NotFoundError
- * @apiErrorTitle (404) Not found (404)
- * @apiError (404) {Object[]} error Objet erreur.
- * @apiError (404) {String} error.message Message résumé de l'erreur.
- * @apiError (404) {String} error.code Code descriptif de l'erreur.
- * @apiErrorExample Réponse (exemple):
+ * @apiError (404) {String} message Message de l'erreur.
+ * @apiError (404) {String} code Code de l'erreur.
+ * @apiErrorExample Answer (sample):
  *     HTTP/1.1 404 Not Found
  *     {
- *       "error": {
- *          "message": "This user doesn't exist",
- *          "code": "modelNotFound"
- *       },
+ *       "message": "This user doesn't exist",
+ *       "code": "modelNotFound"
  *       "status": "404"
  *     }
  */
 
 /**
- * @apiDefineStructure ServerError
- * @apiParamTitle (Erreur serveur (500)) Erreur serveur (500)
- * @apiError (Erreur serveur (500)) {Object[]} sdfsdf Objet erreur.
- *
- * @apiExample (ServerError) Réponse (exemple):
- *     HTTP/1.1 404 Not Found
+ * @apiDefineErrorStructure forbiddenError
+ * @apiError (403) {String} message Message de l'erreur.
+ * @apiError (403) {String} code Code de l'erreur.
+ * @apiErrorExample Answer (sample):
+ *     HTTP/1.1 403 Forbidden Error
  *     {
- *       "error": {
- *          "message": "This user doesn't exist",
- *          "code": "modelNotFound"
- *       },
- *       "status": "404"
+ *       "message": "You do not have enough rights to access this resource",
+ *       "code": "noAccessRights"
+ *       "status": "403"
  *     }
  */
 
+/**
+ * @apiDefineErrorStructure authorizationError
+ */
+
+/**
+ * @apiDefineErrorStructure serverError
+ * @apiError (500) {String} message Message de l'erreur.
+ * @apiError (500) {String} code Code de l'erreur.
+ * @apiErrorExample Answer (sample):
+ *     HTTP/1.1 500 Serveur Error
+ *     {
+ *       "message": "Database unavailable",
+ *       "code": "dbUnavailable"
+ *       "status": "500"
+ *     }
+ */
 
 // ------------------------------------------------------------------------------------------
 // Current Permissions.
@@ -104,7 +175,7 @@
 
 
 // ------------------------------------------------------------------------------------------
-// Current Header.
+// Header definitions.
 // ------------------------------------------------------------------------------------------
 /**
  * @apiDefineHeaderStructure MyHeader
@@ -112,18 +183,3 @@
  */
 
 
-// ------------------------------------------------------------------------------------------
-// Errors codes.
-// ------------------------------------------------------------------------------------------
-/**
- * @api {} Code erreurs
- * @apiName qsd
- * @apiGroup Errors
- *
- *
- * @apiHeaderTitle (Errors) Code d'erreurs.
- * @apiHeader (Errors) {String} error
- * @apiHeader (Errors) {String} error.code
- * @apiHeader (Errors) {String} error.code.errormodelNotFound Le model / classe recherché(e) n'a pas été trouvé(e).
- * @apiHeader (Errors) {String} error.code.pageNotFound La page demandée n'a pas été trouvée.
- */

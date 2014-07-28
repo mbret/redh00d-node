@@ -30,7 +30,7 @@ module.exports = {
                 return res.serverError(err);
             }
             if(!user){
-                return res.notFound( res.i18n("Resource (%s) doesn't exist", res.i18n('user')) );
+                return res.notFound( sails.config.general.api.errors.codes.modelNotFound );
             }
             return res.ok({
                 user:user
@@ -61,7 +61,28 @@ module.exports = {
 
     // @todo
     findMultiple: function (req, res) {
-        res.notFound();
+        // Get optional parameters from URL to refine the search
+        var optionalData = {};
+        if( req.param('id') ){
+            optionalData.ID = req.param('id');
+        }
+        if( req.param('name') ){
+            optionalData.name = req.param('firstname');
+        }
+
+        // Get all events (with data)
+        User.find( optionalData ).exec( function(err, users){
+            if(err){
+                //@todo
+                return res.serverError(err);
+            }
+            if(!events){
+                return res.notFound("No events");
+            }
+            return res.ok({
+                users: users
+            });
+        });
     },
 
     /**

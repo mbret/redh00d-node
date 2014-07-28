@@ -16,11 +16,29 @@ module.exports.general = {
         version: '0.0.1',
 
         errors: {
-            codes: [
-                "modelNotFound",
-                "pageNotFound",
+            codes: {
+                resourceNotFound: {
+                    label: "resourceNotFound",
+                    message: "Resource not found"
+                },
+                modelNotFound: {
+                    label: "modelNotFound",
+                    message: "Model not found"
+                },
+                pageNotFound: {
+                    label: "pageNotFound",
+                    message: "Page not found"
+                },
+                dbUnavailable: {
+                    label: "dbUnavailable",
+                    message: "Database unavailable"
+                },
+                noAccessRights: {
+                    label: "noAccessRights",
+                    message: "No access rights"
+                }
                 // ...
-            ]
+            }
         }
     },
 
