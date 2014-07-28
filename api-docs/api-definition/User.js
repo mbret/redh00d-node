@@ -16,7 +16,7 @@
 // Fetch one
 // ------------------------------------------------------------------------------------------
 /**
- * @api {get} /users/:id Find one user by ID
+ * @api {get} /users/:id Find one user
  * @apiName FindUser
  * @apiGroup Users
  * @apiGroupDescription API relatives to users
