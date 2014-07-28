@@ -115,42 +115,6 @@
  * @apiSuccessStructure DeleteSuccess
  */
 // ------------------------------------------------------------------------------------------
-// Fetch events from one user
-// ------------------------------------------------------------------------------------------
-
-/**
- * @api {get} /users/:id/events Find user's events
- * @apiName FindUserEvents
- * @apiGroup Users
- * @apiPermission authenticated
- * @apiDescription Find user's events
- * <br/><b>Throw error:</b>
- *
- * @apiParam (urlParam) {Number} id User's ID
- * @apiStructure fetchEventsParams
- * @apiExample Use example
- * get http://localhost/users/15/events
- * get http://localhost/users/15/events?sort=asc&eventDate=204-12-24
- *
- * @apiSuccessStructure FindMultipleSuccess
- */
-// ------------------------------------------------------------------------------------------
-// Delete events from one user
-// ------------------------------------------------------------------------------------------
-/**
- * @api {delete} /users/:id/events Delete user's events
- * @apiName DeleteUserEvents
- * @apiGroup Users
- * @apiPermission authenticated author
- * @apiDescription Delete user's events
- * <br/><b>Throw error:</b>
- *
- * @apiExample Use example
- * delete http://localhost/users/15/events
- *
- * @apiSuccessStructure DeleteSuccess
- */
-// ------------------------------------------------------------------------------------------
 // Send reset token password of one user
 // ------------------------------------------------------------------------------------------
 /**
