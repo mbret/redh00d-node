@@ -79,10 +79,13 @@
  * @api {put} /users Mettre à jour un utilisateur
  * @apiName UpdateUser
  * @apiGroup Users
- * @apiDescription Mets à jour un utilisateur et le récupère.
+ * @apiDescription Mets à jour un utilisateur et le récupère. Pour mettre à jour le mot de passe, une génération préalable d'un token est requise.
+ * le token doit ensuite être spécifié dans la requete.
  *
  * @apiParamTitle (formData) Parameters (Form Data)
  * @apiParam (formData) {String} email
+ * @apiParam (formData) {String} [password] Un token est requis
+ * @apiParam (formData) {String} [password_token] Token requis pour modifier le mot de passe
  * @apiParam (formData) {String} [firstname]
  * @apiParam (formData) {String} [lastname]
  * @apiExample Example d'utilisation
@@ -119,5 +122,20 @@
  * @api {delete} /users/:id/events Supprimer les événements d'un utilisateur
  * @apiName DeleteUserEvents
  * @apiGroup Users
+ *
+ */
+// ------------------------------------------------------------------------------------------
+// Send reset token password of one user
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {patch} /users/:id Générer un token de reset password
+ * @apiName GenerateUserResetTokenPassword
+ * @apiGroup Users
+ *
+ * @apiParamTitle (formData) Parameters (Form Data)
+ * @apiParam (formData) {Boolean} reset_password true / false
+ * @apiExample Example d'utilisation
+ * patch http://localhost/users/15
+ * form-data: reset_password=true
  *
  */
