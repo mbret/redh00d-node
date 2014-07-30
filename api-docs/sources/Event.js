@@ -1,4 +1,7 @@
 // ------------------------------------------------------------------------------------------
+//                                      Events
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
 // Shortcut for fetch events params
 // ------------------------------------------------------------------------------------------
 /**
@@ -64,7 +67,7 @@
 // Create
 // ------------------------------------------------------------------------------------------
 /**
- * @api {post} /events Create an event
+ * @api {post} /users/:id/events Create an event
  * @apiName CreateEvent
  * @apiGroup Events
  * @apiDescription Create an event which is retrieve if creation was a success.
@@ -86,13 +89,73 @@
 // Update
 // ------------------------------------------------------------------------------------------
 /**
- * @api {put} /users Update an event
+ * @api {put} /users/:id/events Update an event
  * @apiName UpdateEvent
  * @apiGroup Events
  */
 
 /**
- * @api {delete} /events Delete an Event
+ * @api {delete} /users/:id/events/:id Delete an Event
  * @apiName DeleteEvent
  * @apiGroup Events
+ */
+// ------------------------------------------------------------------------------------------
+//                                      Members
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+// Send a project invitation
+//
+//  - UserController.createProjectMemberInvitation()
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {post} /events/:id/invitations Send event invitation
+ * @apiName ToDo
+ * @apiGroup Events
+ * @todo
+ */
+// ------------------------------------------------------------------------------------------
+// Update a project invitation
+//
+//  Description:    Allow accept/cancel/..
+//                  Note that target can cancel/accept and sender can only cancel
+//  Task:           UserController.updateProjectMemberInvitation()
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {put} /events/:id/invitations Update event invitation
+ * @apiName ToDo
+ * @apiGroup Events
+ * @todo
+ */
+// ------------------------------------------------------------------------------------------
+// Remove one project's member
+//
+//  - UserController.deleteProjectMember()
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {delete} /events/:id/members/:id Remove one user from an event
+ * @apiName ToDo
+ * @apiGroup Events
+ * @todo
+ */
+// ------------------------------------------------------------------------------------------
+// Fetch multiple project's members
+//
+//  - UserController.findProjectMembers()
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {get} /events/:id/members Find one project's member
+ * @apiName ToDo
+ * @apiGroup Events
+ * @todo
+ */
+// ------------------------------------------------------------------------------------------
+// Fetch one project members
+//
+//  - UserController.findProjectMember()
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {get} /events/:id/members/:id Find project's members
+ * @apiName ToDo
+ * @apiGroup Events
+ * @todo
  */

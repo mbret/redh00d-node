@@ -14,6 +14,8 @@
 
 // ------------------------------------------------------------------------------------------
 // Fetch one
+//
+//  - UserController.find()
 // ------------------------------------------------------------------------------------------
 /**
  * @api {get} /users/:id Find one user
@@ -33,6 +35,8 @@
  */
 // ------------------------------------------------------------------------------------------
 // Fetch all
+//
+//  - UserController.findMultiple()
 // ------------------------------------------------------------------------------------------
 /**
  * @api {get} /users Find users
@@ -51,6 +55,8 @@
  */
 // ------------------------------------------------------------------------------------------
 // Create one
+//
+//  - UserController.create()
 // ------------------------------------------------------------------------------------------
 /**
  * @api {post} /users Create one user
@@ -75,6 +81,9 @@
  */
 // ------------------------------------------------------------------------------------------
 // Update one
+//
+//  Description:    Allow to change user data. Preference should be changed here.
+//  Task:           UserController.update()
 // ------------------------------------------------------------------------------------------
 /**
  * @api {put} /users Update one user
@@ -90,6 +99,7 @@
  * @apiParam (dataParam) {String} [password_token] Required token to update password.
  * @apiParam (dataParam) {String} [firstname]
  * @apiParam (dataParam) {String} [lastname]
+ * @apiParam (dataParam) {String} [preference_foo] Change the preference foo
  * @apiExample Use example
  * put http://localhost/users
  * form-data: email=xmax54%40gmail.com&firstname=pascal
@@ -99,6 +109,8 @@
  */
 // ------------------------------------------------------------------------------------------
 // Delete one
+//
+//  - UserController.delete()
 // ------------------------------------------------------------------------------------------
 /**
  * @api {delete} /users/:id Delete one user
@@ -116,6 +128,8 @@
  */
 // ------------------------------------------------------------------------------------------
 // Send reset token password of one user
+//
+//  - UserController.todo()
 // ------------------------------------------------------------------------------------------
 /**
  * @api {patch} /users/:id Generate user's password reset token

@@ -32,7 +32,7 @@
 
 /**
  * @apiDefineSuccessStructure FindMultipleSuccess
- * @apiSuccess (200) {Object[]} objects La liste des objets.
+ * @apiSuccess (200) {Object[]} objects The list of objects.
  * @apiSuccess (200) {String} status 200.
  * @apiSuccessExample Success (200 OK) response sample:
  *     HTTP/1.1 200 OK
@@ -57,7 +57,7 @@
 
 /**
  * @apiDefineSuccessStructure CreateSuccess
- * @apiSuccess (201) {Object} object L'objet crée.
+ * @apiSuccess (201) {Object} object The created object.
  * @apiSuccess (201) {String} status 201.
  * @apiSuccessExample Success (201 CREATED) response sample:
  * HTTP/1.1 201 CREATED
@@ -73,7 +73,7 @@
 
 /**
  * @apiDefineSuccessStructure UpdateSuccess
- * @apiSuccess (200) {Object} object L'objet modifié.
+ * @apiSuccess (200) {Object} object The updated object.
  * @apiSuccess (200) {String} status 200.
  * @apiSuccessExample Success (200 OK) response sample:
  * HTTP/1.1 200 OK
