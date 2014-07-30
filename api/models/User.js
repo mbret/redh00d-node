@@ -186,7 +186,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 //            values.encryptedPassword = encryptedPassword;
 //            cb();
 //        });
-    },
+    }
 
     /**
      * Issue a session token for a user

@@ -80,7 +80,7 @@ module.exports = {
         Event.findOne( req.param('id')).exec(function(err, event){
             if(err){
                 //@todo
-                return res.noFound("This event doesn't exist");
+                return res.notFound("This event doesn't exist");
             }
 
             // Deletion
