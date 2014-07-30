@@ -90,10 +90,10 @@
  * @apiDescription Create an event which is retrieve if creation was a success.
  * <br/><b>Throw error:</b> 400.
  *
- * @apiParam (dataData) {String} name
- * @apiParam (dataData) {String} [description]
- * @apiParam (dataData) {String} [place]
- * @apiParam (dataData) {String} date
+ * @apiParam (dataParam) {String} name
+ * @apiParam (dataParam) {String} [description]
+ * @apiParam (dataParam) {String} [place]
+ * @apiParam (dataParam) {String} date
  * @apiExample Use example
  * post http://localhost/events
  * form-data: name=MyEvent&date=2014-12-24
