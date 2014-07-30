@@ -50,7 +50,6 @@
  * @apiPermission authenticated
  * @apiDescription look for Events
  *
- * @apiHeaderStructure MyHeader
  *
  * @apiParamTitle (url) Parameters (URL)
  * @apiParam (url) {Number} [id]
@@ -60,6 +59,25 @@
  * @apiExample Example 
  * get http://localhost/events
  * get http://localhost/users?sort=asc&eventDate=204-12-24
+ *
+ * @apiSuccessStructure FindMultipleSuccess
+ */
+// ------------------------------------------------------------------------------------------
+// Fetch all from user
+//
+//  Description:    Search events from a user. Redirect to GET /events and add a field for
+//                  the author filter.
+//  Task:           EventController.findFromUser()
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {get} /users/:id/events look for Events from a user
+ * @apiName FindMultipleUserEvents
+ * @apiGroup Events
+ * @apiPermission authenticated
+ * @apiDescription @todo
+ *
+ * @todo params
+ * @todo example
  *
  * @apiSuccessStructure FindMultipleSuccess
  */
@@ -92,12 +110,14 @@
  * @api {put} /users/:id/events Update an event
  * @apiName UpdateEvent
  * @apiGroup Events
+ * @todo
  */
 
 /**
  * @api {delete} /users/:id/events/:id Delete an Event
  * @apiName DeleteEvent
  * @apiGroup Events
+ * @todo
  */
 // ------------------------------------------------------------------------------------------
 //                                      Members

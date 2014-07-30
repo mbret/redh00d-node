@@ -31,14 +31,16 @@
  * <br/>400 Bad Request - Often missing a required parameter.
  * <br/>401 Unauthorized - No valid API key provided.
  * <br/>402 Request Failed - Parameters were valid but request failed.
+ * <br/>405 Method not allowed - Used to indicate that the requested URL exists, but the requested HTTP method is not applicable. For example, POST /users/12345 where the API doesn't support creation of resources this way (with a provided ID).
  * <br/>404 Not Found - The requested item doesn't exist.
- * <br/>500, 502, 503, 504 Server errors - something went wrong on redh00d's end.
+ * <br/>409 Conflict - Whenever a resource conflict would be caused by fulfilling the request. Duplicate entries, such as trying to create two customers with the same information, and deleting root objects when cascade-delete is not supported are a couple of examples.
+ * <br/>500, 502, 503, 504 Server errors - any general error on the system.
  *
  * @apiErrorStructure CommonError
  * @apiErrorStructure BadRequestError
- * @apiErrorStructure BadRequestErrorEmailTaken
  * @apiErrorStructure NotFoundError
  * @apiErrorStructure forbiddenError
+ * @apiErrorStructure ConflictError
  * @apiErrorStructure serverError
  *
  */

@@ -10,14 +10,13 @@
 // ------------------------------------------------------------------------------------------
 /**
  * @apiSuccessTitle (200) Success (200 OK) response parameters
- * @apiSuccessTitle (201) Success (201 CREATED) response parameters
- * @apiSuccessTitle (204) Success (204 NO CONTENT) response parameters
+ * @apiSuccessTitle (201) Success (201 Created) response parameters
+ * @apiSuccessTitle (204) Success (204 No content) response parameters
  */
 
 /**
  * @apiDefineSuccessStructure FindSuccess
  * @apiSuccess (200) {Object} object Requested object.
- * @apiSuccess (200) {String} status 200.
  * @apiSuccessExample Success (200 OK) response sample:
  *     HTTP/1.1 200 OK
  *     {
@@ -26,14 +25,12 @@
  *          "field2": "Bar",
  *          ...
  *       },
- *       "status": 200
  *     }
  */
 
 /**
  * @apiDefineSuccessStructure FindMultipleSuccess
  * @apiSuccess (200) {Object[]} objects The list of objects.
- * @apiSuccess (200) {String} status 200.
  * @apiSuccessExample Success (200 OK) response sample:
  *     HTTP/1.1 200 OK
  *     {
@@ -45,7 +42,6 @@
  *          },
  *          ...
  *       ],
- *       "status": 200
  *     }
  * @apiSuccessExample Success (200 OK) response sample (case of empty):
  *     HTTP/1.1 200 OK
@@ -58,23 +54,20 @@
 /**
  * @apiDefineSuccessStructure CreateSuccess
  * @apiSuccess (201) {Object} object The created object.
- * @apiSuccess (201) {String} status 201.
- * @apiSuccessExample Success (201 CREATED) response sample:
- * HTTP/1.1 201 CREATED
+ * @apiSuccessExample Success (201 Created) response sample:
+ * HTTP/1.1 201 Created
  * {
  *     "object": {
  *         "field1": "Foo",
  *         "field2": "Bar",
  *         ...
  *     },
- *     "status": 201
  * }
  */
 
 /**
  * @apiDefineSuccessStructure UpdateSuccess
  * @apiSuccess (200) {Object} object The updated object.
- * @apiSuccess (200) {String} status 200.
  * @apiSuccessExample Success (200 OK) response sample:
  * HTTP/1.1 200 OK
  * {
@@ -83,17 +76,14 @@
  *         "field2": "Bar",
  *         ...
  *     },
- *     "status": 200
  * }
  */
 
 /**
  * @apiDefineSuccessStructure DeleteSuccess
- * @apiSuccess (204) {String} status 204.
- * @apiSuccessExample Success (204 NO CONTENT) response sample:
- * HTTP/1.1 204 NO CONTENT
+ * @apiSuccessExample Success (204 No content) response sample:
+ * HTTP/1.1 204 No content
  * {
- *     "status": 204
  * }
  */
 
@@ -103,7 +93,8 @@
 /**
  * @apiErrorTitle (400) Error (400 Bad request) response parameters
  * @apiErrorTitle (403) Error (403 Forbidden Error) response parameters
- * @apiErrorTitle (404) Error (404 NOT FOUND) response parameters
+ * @apiErrorTitle (404) Error (404 Not found) response parameters
+ * @apiErrorTitle (409) Error (409 Conflict) response parameters
  * @apiErrorTitle (500) Error (500 Server Error) response parameters
  */
 
@@ -113,7 +104,6 @@
  * @apiError (errorResponse) {String} message Error message.
  * @apiError (errorResponse) {String} [description] More detailed error message.
  * @apiError (errorResponse) {String} code Error code (Check the section above).
- * @apiError (errorResponse) {String} status 400, 401, 500, ...
  * @apiError (errorResponse) {Object[]} [params] The parameters the error relates to if the error is parameter-specific.
  * @apiError (errorResponse) {Object[]} params.field The field name relatives to error.
  * @apiError (errorResponse) {Object[]} params.code The code error.
@@ -136,17 +126,6 @@
  *          },
  *          ...
  *       ],
- *       "status": "400"
- *     }
- */
-/**
- * @apiDefineErrorStructure BadRequestErrorEmailTaken
- * @apiErrorExample Error (400 Bad request) response sample (email taken case):
- *     HTTP/1.1 400 BAD REQUEST
- *     {
- *       "message": "This email was already taken",
- *       "code": "emailArleadyTaken",
- *       "status": "400"
  *     }
  */
 // 404 Not Found
@@ -157,7 +136,6 @@
  *     {
  *       "message": "This user doesn't exist",
  *       "code": "modelNotFound"
- *       "status": "404"
  *     }
  */
 
@@ -168,12 +146,23 @@
  *     {
  *       "message": "You do not have enough rights to access this resource",
  *       "code": "noAccessRights"
- *       "status": "403"
  *     }
  */
 
 /**
  * @apiDefineErrorStructure authorizationError
+ */
+
+// 409 Conflict
+/**
+ * @apiDefineErrorStructure ConflictError
+ * @apiErrorExample Error (409 Conflict Error) response sample:
+ *     HTTP/1.1 409 Conflict Error
+ *     {
+ *       "message": "Email already taken",
+ *       "description": "foo",
+ *       "code": "emailArleadyTaken"
+ *     }
  */
 
 /**
@@ -183,7 +172,6 @@
  *     {
  *       "message": "Database unavailable",
  *       "code": "dbUnavailable"
- *       "status": "500"
  *     }
  */
 
@@ -205,12 +193,5 @@
  * @apiDefinePermission accountOwner Is author.
  */
 
-// ------------------------------------------------------------------------------------------
-// Header definitions.
-// ------------------------------------------------------------------------------------------
-/**
- * @apiDefineHeaderStructure MyHeader
- * @apiHeader {String} [Accept-Language=Locale du navigateur] Langue de retour demandée. Exemple : fr-FR.
- */
 
 

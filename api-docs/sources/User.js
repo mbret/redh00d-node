@@ -64,7 +64,7 @@
  * @apiGroup Users
  * @apiPermission authenticated
  * @apiDescription Create one user and retrieve the created object.
- * <br/><b>Throw error:</b> 400.
+ * <br/><b>Throw error:</b> 400, 409.
  *
  * @apiParam (dataParam) {String} email
  * @apiParam (dataParam) {String} password
@@ -75,8 +75,6 @@
  * form-data: email=xmax54%40gmail.com&password=password
  *
  * @apiSuccessStructure CreateSuccess
- *
- * @apiErrorStructure BadRequestErrorEmailTaken
  *
  */
 // ------------------------------------------------------------------------------------------
