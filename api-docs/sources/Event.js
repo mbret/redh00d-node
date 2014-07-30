@@ -151,14 +151,24 @@
 //                                      Members
 // ------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------
-// Send a project invitation
+// Create an event invitation
 //
-//  - UserController.createProjectMemberInvitation()
+//  - EventController.createEventMemberInvitation()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {post} /events/:id/invitations Send event invitation
- * @apiName ToDo
+ * @api {post} /events/:id/invitations create an event invitation
+ * @apiName CreateEventInvitation
  * @apiGroup Events
+ * @apiPermission authenticated
+ * @apiDescription Create one event invitation.
+ * <br/><b>Throw error:</b> 400.
+ *
+ * @apiParam (dataParam) {Number} target_id
+ * @apiExample Use example
+ * post http://localhost/events/15/invitations
+ * form-data: target_id=36
+ *
+ * @apiSuccessStructure CreateSuccess
  * @todo
  */
 // ------------------------------------------------------------------------------------------
