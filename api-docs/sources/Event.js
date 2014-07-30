@@ -23,7 +23,7 @@
 // ------------------------------------------------------------------------------------------
 
 /**
- * @api {get} /events/:id Search for an Event by its ID
+ * @api {get} /events/:id Look for an Event by its ID
  * @apiName FindEvent
  * @apiGroup Events
  * @apiGroupDescription API corresponding to Event
@@ -44,7 +44,7 @@
 // - EventController.findMultiple()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {get} /events look for Events
+ * @api {get} /events Look for Events
  * @apiName FindMultipleEvents
  * @apiGroup Events
  * @apiPermission authenticated
@@ -66,7 +66,7 @@
 //  Task:           EventController.findFromUser()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {get} /users/:id/events look for Events from a user
+ * @api {get} /users/:id/events Look for Events from an user
  * @apiName FindMultipleUserEvents
  * @apiGroup Events
  * @apiPermission authenticated
@@ -156,7 +156,7 @@
 //  - EventController.createEventMemberInvitation()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {post} /events/:id/invitations create an event invitation
+ * @api {post} /events/:id/invitations Create an event invitation
  * @apiName CreateEventInvitation
  * @apiGroup Events
  * @apiPermission authenticated
