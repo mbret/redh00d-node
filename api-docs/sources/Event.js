@@ -3,45 +3,45 @@
 // ------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------
 // Shortcut for fetch events params
+// Include this structure if you need params used as filter
 // ------------------------------------------------------------------------------------------
 /**
  * @apiDefineStructure fetchEventsParams
+ * @apiParam (urlParam) {Number} [id] Use it to retrieve only one event with its ID.
  * @apiParam (urlParam) {String} [eventName]
  * @apiParam (urlParam) {String} [eventDate]
+ * @apiParam (urlParam) {String} [eventPlace]
  * @apiParam (urlParam) {String} [sort] get the result sorted
  */
 
 
 
+// ------------------------------------------------------------------------------------------
+// Fetch one
+//
+//  - EventController.find()
+// ------------------------------------------------------------------------------------------
 
 /**
- * @api {get} /events/:id Cherche un événement par ID
- * @apiName GetUser
+ * @api {get} /events/:id Search for an Event by its ID
+ * @apiName FindEvent
  * @apiGroup Events
  * @apiGroupDescription API corresponding to Event
+ * @apiDescription Find an event by its ID
+ * <br/><b>Throw error:</b> 404
  *
- * @apiParam {Number} id Users unique ID.
+ * @apiParam {Number} id Event unique ID.
+ * @apiExample Use example
+ * get http://localhost/events/15
  *
- * @apiSuccess {String} firstname Firstname of the User.
- * @apiSuccess {String} lastname  Lastname of the User.
+ * @apiSuccessStructure FindSuccess
  *
- * @apiSuccessExample Success-Response:
- *     HTTP/1.1 200 OK
- *     {
- *       "firstname": "John",
- *       "lastname": "Doe"
- *     }
- *
- * @apiError UserNotFound The id of the User was not found.
- *
- * @apiErrorExample Error-Response:
- *     HTTP/1.1 404 Not Found
- *     {
- *       "error": "UserNotFound"
- *     }
  */
+
 // ------------------------------------------------------------------------------------------
 // Fetch all
+//
+// - EventController.findMultiple()
 // ------------------------------------------------------------------------------------------
 /**
  * @api {get} /events look for Events
@@ -49,13 +49,9 @@
  * @apiGroup Events
  * @apiPermission authenticated
  * @apiDescription look for Events
+ * <br/><b>Throw error:</b>
  *
- *
- * @apiParamTitle (url) Parameters (URL)
- * @apiParam (url) {Number} [id]
- * @apiParam (url) {String} [eventName]
- * @apiParam (url) {String} [eventDate]
- * @apiParam (url) {String} [sort] get the result sorted
+ * @apiStructure fetchEventsParams
  * @apiExample Example 
  * get http://localhost/events
  * get http://localhost/users?sort=asc&eventDate=204-12-24
@@ -83,20 +79,23 @@
  */
 // ------------------------------------------------------------------------------------------
 // Create
+//
+//  - EventController.create()
 // ------------------------------------------------------------------------------------------
 /**
  * @api {post} /users/:id/events Create an event
  * @apiName CreateEvent
  * @apiGroup Events
+ * @apiPermission authenticated
  * @apiDescription Create an event which is retrieve if creation was a success.
+ * <br/><b>Throw error:</b> 400.
  *
- * @apiParamTitle (formData) Parameters (Form Data)
- * @apiParam (formData) {String} name
- * @apiParam (formData) {String} [description]
- * @apiParam (formData) {String} [place]
- * @apiParam (formData) {String} date
- * @apiExample Example d'utilisation
- * post http://localhost/event
+ * @apiParam (dataData) {String} name
+ * @apiParam (dataData) {String} [description]
+ * @apiParam (dataData) {String} [place]
+ * @apiParam (dataData) {String} date
+ * @apiExample Use example
+ * post http://localhost/events
  * form-data: name=MyEvent&date=2014-12-24
  *
  * @apiSuccessStructure CreateSuccess
@@ -105,19 +104,48 @@
  */
 // ------------------------------------------------------------------------------------------
 // Update
+//
+// EventController.update()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {put} /users/:id/events Update an event
+ * @api {put} /events Update an event
  * @apiName UpdateEvent
  * @apiGroup Events
- * @todo
+ * @apiPermission authenticated eventOwner
+ * @apiDescription update an event
+ * <br/><b>Throw error:</b> 400.
+ *
+ * @apiParam (dataParam) {String} name
+ * @apiParam (dataParam) {String} [description] A token is required to update password.
+ * @apiParam (dataParam) {String} [place] Required token to update password.
+ * @apiParam (dataParam) {String} date
+ * @apiExample Use example
+ * put http://localhost/events
+ * form-data: description=My_will_such_as_hell&place=toHome
+ *
+ * @apiSuccessStructure UpdateSuccess
+ *
  */
+
+// ------------------------------------------------------------------------------------------
+// Delete one
+//
+//  - EventController.delete()
+// ------------------------------------------------------------------------------------------
 
 /**
  * @api {delete} /users/:id/events/:id Delete an Event
  * @apiName DeleteEvent
- * @apiGroup Events
- * @todo
+ * @apiGroup Events 
+ * @apiPermission authenticated eventOwner
+ * @apiDescription Delete an event
+ * <br/><b>Throw error:</b> 404.
+ *
+ * @apiParam {Number} id Event's ID
+ * @apiExample Use example
+ * delete http://localhost/events/15
+ *
+ * @apiSuccessStructure DeleteSuccess
  */
 // ------------------------------------------------------------------------------------------
 //                                      Members
