@@ -23,7 +23,7 @@
 // ------------------------------------------------------------------------------------------
 
 /**
- * @api {get} /events/:id Look for an Event by its ID
+ * @api {get} /events/:id Find an event
  * @apiName FindEvent
  * @apiGroup Events
  * @apiGroupDescription API corresponding to Event
@@ -44,7 +44,7 @@
 // - EventController.findMultiple()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {get} /events Look for Events
+ * @api {get} /events Find events
  * @apiName FindMultipleEvents
  * @apiGroup Events
  * @apiPermission authenticated
@@ -66,16 +66,16 @@
 //  Task:           EventController.findFromUser()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {get} /users/:id/events Look for Events from an user
- * @apiName FindMultipleUserEvents
- * @apiGroup Events
- * @apiPermission authenticated
- * @apiDescription @todo
+ * @-api {get} /users/:id/events Find user's events
+ * @-apiName FindMultipleUserEvents
+ * @-apiGroup Events
+ * @-apiPermission authenticated
+ * @-apiDescription @todo
  *
  * @todo params
  * @todo example
  *
- * @apiSuccessStructure FindMultipleSuccess
+ * @-apiSuccessStructure FindMultipleSuccess
  */
 // ------------------------------------------------------------------------------------------
 // Create
@@ -148,21 +148,24 @@
  * @apiSuccessStructure DeleteSuccess
  */
 // ------------------------------------------------------------------------------------------
-//                                      Members
+
+//                                      Invitation
+
 // ------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------
 // Create an event invitation
 //
-//  - EventController.createEventMemberInvitation()
+//  - InvitationController.create()
 // ------------------------------------------------------------------------------------------
 /**
  * @api {post} /events/:id/invitations Create an event invitation
  * @apiName CreateEventInvitation
  * @apiGroup Events
- * @apiPermission authenticated
+ * @apiPermission authenticated author
  * @apiDescription Create one event invitation.
  * <br/><b>Throw error:</b> 400.
  *
+ * @apiParam (urlParam) {Number} id Event's ID
  * @apiParam (dataParam) {Number} target_id
  * @apiExample Use example
  * post http://localhost/events/15/invitations
@@ -172,26 +175,84 @@
  * @todo
  */
 // ------------------------------------------------------------------------------------------
+// Find one event invitation
+//
+//  - InvitationController.find()
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {post} /events/:id_event/invitations/:id_invitation Find an event invitation
+ * @apiName FindEventInvitation
+ * @apiGroup Events
+ * @apiPermission authenticated author
+ * @apiDescription Find and event invitation.
+ * <br/><b>Throw error:</b> 404.
+ *
+ * @apiParam (urlParam) {Number} id_event Event's ID
+ * @apiParam (urlParam) {Number} id_invitation Invitation's ID
+ * @apiExample Use example
+ * post http://localhost/events/15/invitations/15
+ *
+ * @apiSuccessStructure FindSuccess
+ * @todo
+ */
+// ------------------------------------------------------------------------------------------
+// Find event invitations
+//
+//  - InvitationController.findMultiple()
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {post} /events/:id_event/invitations/ Find event invitations
+ * @apiName FindEventInvitations
+ * @apiGroup Events
+ * @apiPermission authenticated author
+ * @apiDescription Find event invitations.
+ * <br/><b>Throw error:</b> 404.
+ *
+ * @apiParam (urlParam) {Number} id_event Event's ID
+ * @apiExample Use example
+ * post http://localhost/events/15/invitations
+ *
+ * @apiSuccessStructure FindMultipleSuccess
+ * @todo
+ */
+// ------------------------------------------------------------------------------------------
 // Update a project invitation
 //
 //  Description:    Allow accept/cancel/..
 //                  Note that target can cancel/accept and sender can only cancel
-//  Task:           UserController.updateProjectMemberInvitation()
+//  Task:           InvitationController.update()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {put} /events/:id/invitations Update event invitation
- * @apiName ToDo
+ * @api {put} /events/:id/invitations Update an event invitation
+ * @apiName UpdateEventInvitation
  * @apiGroup Events
  * @todo
  */
 // ------------------------------------------------------------------------------------------
-// Remove one project's member
+// Delete a project invitation
 //
-//  - UserController.deleteProjectMember()
+//  Description:
+//  Task:           InvitationController.delete()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {delete} /events/:id/members/:id Remove one user from an event
- * @apiName ToDo
+ * @api {delete} /events/:id/invitations Delete an event invitation
+ * @apiName DeleteEventInvitation
+ * @apiGroup Events
+ * @todo
+ */
+// ------------------------------------------------------------------------------------------
+//
+//                                      Members
+//
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+// Remove one project's member
+//
+//  - EventController.deleteMember()
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {delete} /events/:id/members/:id Delete an event member
+ * @apiName DeleteEventMember
  * @apiGroup Events
  * @todo
  */
@@ -201,8 +262,8 @@
 //  - UserController.findProjectMembers()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {get} /events/:id/members Find one project's member
- * @apiName ToDo
+ * @api {get} /events/:id/members Find event members
+ * @apiName FindEventMembers
  * @apiGroup Events
  * @todo
  */
@@ -212,8 +273,8 @@
 //  - UserController.findProjectMember()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {get} /events/:id/members/:id Find project's members
- * @apiName ToDo
+ * @api {get} /events/:id/members/:id Find an event member
+ * @apiName FindEventMember
  * @apiGroup Events
  * @todo
  */

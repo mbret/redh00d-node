@@ -40,16 +40,26 @@ module.exports.routes = {
     // Debug route
     'get /api/debug/db': 'DebugController.dumpDatabase',
 
-
     /**
      * EVENT relatives routes
      */
     'get    /api/events/:id':                   'EventController.find',
+    'get    /api/events/:id/members/:idmember': 'EventController.findMember',
     'post   /api/events':                       'EventController.create',
-    'delete /api/events/:id':                   'EventController.destroy',
+    'delete /api/events/:id':                   'EventController.delete',
+    'delete /api/events/:id/members/:idmember': 'EventController.deleteMember',
     'put    /api/events/:id':                   'EventController.update',
-    'get    /api/events/:id/users':             'UserController.findMultipleByEvent',
+    'get    /api/events/:id/members*':          'EventController.findMultipleMembers',
     'get    /api/events*':                      'EventController.findMultiple',
+
+    /**
+     * INVITATION relatives routes
+     */
+    'post    /api/events/:idevent/invitations':     'InvitationController.create',
+    'get     /api/events/:idevent/invitations/:id': 'InvitationController.find',
+    'put     /api/events/:idevents/invitations':    'InvitationController.update', // author can cancel / receiver can cancel, accept
+    'delete  /api/events/:idevent/invitations/:id': 'InvitationController.delete', // put state on cancel
+    'get     /api/events/:idevent/invitation*':     'InvitationController.findMultiple',
 
     /**
      * AUTHENTICATION relatives routes
@@ -61,21 +71,14 @@ module.exports.routes = {
      * USER relatives routes
      */
     // only users
-    'get   /api/users/:id':                     'UserController.find',
-    'post  /api/users':                         'UserController.create',
-    'get   /api/users/:id/events':              'EventController.findMultipleByUser',
-    'get   /api/users*':                        'UserController.findMultiple'
+    'get    /api/users/:id':                    'UserController.find',
+    'post   /api/users':                        'UserController.create',
+    'put    /api/users/:id':                    'UserController.update',
+    'patch  /api/users/:id':                    'UserController.patch', // password reset token
+    'delete /api/users/:id':                    'UserController.delete',
+    'get    /api/users*':                       'UserController.findMultiple'
 
 
-    //get an user by email
-//    "get /api/users/:email": 'UserController.findByEmail',
-   
- 
-    // ask for new password (required: email)
-    //'post /api/users/password-reset' : { controller: 'UserController', action: 'createPasswordReset' },
-
-    // update password (required: user id, reset token)
-    //'put /api/users/password-reset/:id?' : { controller: 'UserController', action: 'updatePassword' }
 
     // If a request to a URL doesn't match any of the custom routes above,
     // it is matched against Sails route blueprints.  See `config/blueprints.js`

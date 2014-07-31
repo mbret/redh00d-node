@@ -127,7 +127,7 @@
 // ------------------------------------------------------------------------------------------
 // Send reset token password of one user
 //
-//  - UserController.todo()
+//  - UserController.patch()
 // ------------------------------------------------------------------------------------------
 /**
  * @api {patch} /users/:id Generate user's password reset token
