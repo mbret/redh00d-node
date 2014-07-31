@@ -23,7 +23,7 @@
 // ------------------------------------------------------------------------------------------
 
 /**
- * @api {get} /events/:id Search for an Event by its ID
+ * @api {get} /events/:id Look for an Event by its ID
  * @apiName FindEvent
  * @apiGroup Events
  * @apiGroupDescription API corresponding to Event
@@ -44,7 +44,7 @@
 // - EventController.findMultiple()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {get} /events look for Events
+ * @api {get} /events Look for Events
  * @apiName FindMultipleEvents
  * @apiGroup Events
  * @apiPermission authenticated
@@ -66,7 +66,7 @@
 //  Task:           EventController.findFromUser()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {get} /users/:id/events look for Events from a user
+ * @api {get} /users/:id/events Look for Events from an user
  * @apiName FindMultipleUserEvents
  * @apiGroup Events
  * @apiPermission authenticated
@@ -151,14 +151,24 @@
 //                                      Members
 // ------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------
-// Send a project invitation
+// Create an event invitation
 //
-//  - UserController.createProjectMemberInvitation()
+//  - EventController.createEventMemberInvitation()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {post} /events/:id/invitations Send event invitation
- * @apiName ToDo
+ * @api {post} /events/:id/invitations Create an event invitation
+ * @apiName CreateEventInvitation
  * @apiGroup Events
+ * @apiPermission authenticated
+ * @apiDescription Create one event invitation.
+ * <br/><b>Throw error:</b> 400.
+ *
+ * @apiParam (dataParam) {Number} target_id
+ * @apiExample Use example
+ * post http://localhost/events/15/invitations
+ * form-data: target_id=36
+ *
+ * @apiSuccessStructure CreateSuccess
  * @todo
  */
 // ------------------------------------------------------------------------------------------
