@@ -76,7 +76,31 @@ module.exports.routes = {
     'put    /api/users/:id':                    'UserController.update',
     'patch  /api/users/:id':                    'UserController.patch', // password reset token
     'delete /api/users/:id':                    'UserController.delete',
-    'get    /api/users*':                       'UserController.findMultiple'
+    'get    /api/users*':                       'UserController.findMultiple',
+
+    /**
+     * USER friendships relatives routes
+     */
+    // only users
+    'get    /users/:userid/friendships-request/:id':    'UserFriendShipController.findRequest',
+    'get    /users/:userid/friends/:id':                'UserFriendShipController.FindFriend',
+    'post   /users/:userid/friendships-request':        'UserFriendShipController.createRequest', // Create a friendship request
+    'delete /users/:userid/friendships/:id':            'UserFriendShipController.delete', // cancel a friendship
+    'delete /users/:userid/friendships-request/:id':    'UserFriendShipController.deleteRequest', // cancel a friendship request
+    'get    /users/:userid/friendships-request*':       'UserFriendShipController.findMultiple',
+    'get    /users/:userid/friends*':                   'UserFriendShipController.FindFriends',
+
+    /**
+     * USER friendship group relatives routes
+     */
+    // only users
+    'get    /api/users/:iduser/friendshipgroup/:id':            'UserFriendshipGroupController.find',
+    'post   /api/users/:iduser/friendshipgroup':                'UserFriendshipGroupController.create',
+    'post   /api/users/:iduser/friendshipgroup/:id/members':    'UserFriendshipGroupController.addMember',
+    'put    /api/users/:iduser/friendshipgroup':                'UserFriendshipGroupController.update',
+    'delete /api/users/:iduser/friendshipgroup/:id':            'UserFriendshipGroupController.delete',
+    'delete /api/users/:iduser/friendshipgroup/:id/members/:id':'UserFriendshipGroupController.deleteMember',
+    'get    /api/users/:iduser/friendshipgroup*':               'UserFriendshipGroupController.findMultiple'
 
 
 

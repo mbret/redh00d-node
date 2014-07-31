@@ -79,23 +79,6 @@ passport.use(
 );
 
 /**
-* Passport Remember Me (cookie) Startegy
-*
-* This strategy consumes a remember me token, supplying the user the
-* token was originally issued to. The token is single-use, so a new
-* token is then issued to replace it.
-*/
-
-//passport.use(new RememberMeStrategy(
-//    function (token, cb) {
-//        User.consumeSessionToken(token, function (err, user) {
-//            cb(err, user);
-//        });
-//    },
-//    User.issueSessionToken
-//));
-
-/**
 * Passport Basic HTTP Auth Startegy
 */
 passport.use(

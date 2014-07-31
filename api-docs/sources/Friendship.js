@@ -12,12 +12,12 @@
  */
 
 // ------------------------------------------------------------------------------------------
-// Fetch one friendship
+// Fetch one friendship request
 //
 //  Task:   UserFriendShipController.find()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {get} /users/:user_id/friendships/:id Find a friendship request
+ * @api {get} /users/:user_id/friendships-request/:id Find a friendship request
  * @apiName FindFriendship
  * @apiGroup Friendships
  * @apiGroupDescription API relatives to friendships. Friendship are a relation between two user. These users are considered as friends. A friendship is not necessary valid.
@@ -30,7 +30,7 @@
  * @apiParam {Number} user_id User's ID
  * @apiParam {Number} id Friendship's ID
  * @apiExample Use example
- * get http://localhost/users/15/friendships/25
+ * get http://localhost/users/15/friendships-request/25
  *
  * @apiSuccessStructure FindSuccess
  */
@@ -40,7 +40,7 @@
 //  Task:   UserFriendShipController.findMultiple()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {get} /users/:id/friendships Find friendships requests
+ * @api {get} /users/:id/friendships-request Find friendships requests
  * @apiName FindFriendships
  * @apiGroup Friendships
  * @apiPermission authenticated author
@@ -49,18 +49,18 @@
  *
  * @apiStructure fetchFriendshipsParams
  * @apiExample Use example
- * get http://localhost/users/:id
- * get http://localhost/users/:id?sort=asc&state=accepted
+ * get /users/:id/friendships-request
+ * get /users/:id/friendships-request?sort=asc&state=accepted
  *
  * @apiSuccessStructure FindMultipleSuccess
  */
 // ------------------------------------------------------------------------------------------
-// Create one friendship
+// Create one friendship request
 //
 //  Task:   UserFriendShipController.create()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {post} /users/:id/friendships Create a friendship request
+ * @api {post} /users/:id/friendships-request Create a friendship request
  * @apiName CreateFriendship
  * @apiGroup Friendships
  * @apiPermission authenticated
@@ -69,41 +69,58 @@
  *
  * @apiParam (dataParam) {Number} target_id
  * @apiExample Use example
- * post http://localhost/users/15/friendships
+ * post http://localhost/users/15/friendships-request
  * form-data: target_id=36
  *
  * @apiSuccessStructure CreateSuccess
  */
 // ------------------------------------------------------------------------------------------
-// Cancel one friendship
+// Cancel one friendship request
 //
+//  Description: The applicant can cancel his request and the target can cancel the
+//               received request
 // ------------------------------------------------------------------------------------------
 /**
- * @api {delete} /users/:id/friendships/:id Cancel a friendship request
- * @apiName DeleteFriendship
+ * @api {delete} /users/:id/friendships-request/:id Cancel a friendship request
+ * @apiName DeleteFriendshipRequest
  * @apiGroup Friendships
+ * @todo
  */
 // ------------------------------------------------------------------------------------------
-// Update one friendship
+// Cancel one friendship
+//
+//  Description: Both applicant/target can cancel the friendship
 // ------------------------------------------------------------------------------------------
 /**
- * @api {put} users/:id/friendships/:id Update friendship
- * @apiName UpdateFriendship
+ * @api {delete} /users/:id_applicant/friendships/:id_target Cancel a friendship
+ * @apiName DeleteFriendship
  * @apiGroup Friendships
+ * @todo
+ */
+// ------------------------------------------------------------------------------------------
+// Update one friendship request
+// ------------------------------------------------------------------------------------------
+/**
+ * @-api {put} users/:id/friendships/:id Update friendship
+ * @-apiName UpdateFriendship
+ * @-apiGroup Friendships
+ * @todo
  */
 // ------------------------------------------------------------------------------------------
 // Fetch one friend
 // ------------------------------------------------------------------------------------------
 /**
  * @api {get} users/:id/friends/:id Find one user's friend
- * @apiName wxcCreateFriendship
+ * @apiName FindUserFriend
  * @apiGroup Friendships
+ * @todo
  */
 // ------------------------------------------------------------------------------------------
 // Fetch friends
 // ------------------------------------------------------------------------------------------
 /**
  * @api {get} users/:id/friends Find user's friends
- * @apiName wxcwxcCreateFriendship
+ * @apiName FindUserFriends
  * @apiGroup Friendships
+ * @todo
  */
