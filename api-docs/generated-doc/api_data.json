@@ -16,26 +16,57 @@
     "group": "API",
     "description": "<p>The header of all your request to the API has to / may include some useful parameters.</p>",
     "success": {
-      "examples": [
-        {
-          "title": "Use example",
-          "content": "Request Header:\n---------------\nGET /api/events HTTP/1.1\nHost: localhost:1337\nAccept-Language: fr-FR\n...\n"
-        }
-      ]
-    },
-    "header": {
       "fields": {
-        "Header": [
+        "Header request parameters": [
           {
-            "group": "Header",
+            "group": "headerRequest",
             "type": "String",
             "field": "Accept-Language",
             "defaultValue": "Locale du navigateur",
             "optional": true,
             "description": "<p>Langue de retour demandée. Exemple : fr-FR.</p>"
+          },
+          {
+            "group": "headerRequest",
+            "type": "String",
+            "field": "auth_api_key",
+            "optional": true,
+            "description": "<p>Use your api key with email to be authenticate. If no api key are provided then you act as a guest.</p>"
+          },
+          {
+            "group": "headerRequest",
+            "type": "String",
+            "field": "auth_email",
+            "optional": true,
+            "description": "<p>Use you email with api key to be authenticate. If no email are provided then you act as a guest.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Use example:",
+          "content": "Request Header:\n---------------\nGET /api/events HTTP/1.1\nHost: localhost:1337\nAccept-Language: fr-FR\n...\n"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Header response parameters": [
+          {
+            "group": "headerResponse",
+            "type": "String",
+            "field": "test",
+            "optional": false,
+            "description": "<p>qsd</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response sample:",
+          "content": "Response Header:\n---------------\n...\n"
+        }
+      ]
     },
     "version": "0.0.0",
     "filename": "sources/API.js"
@@ -111,7 +142,7 @@
     "title": "Errors responses",
     "name": "ErrorResponse",
     "group": "Errors",
-    "description": "<p>redh00d uses conventional HTTP response codes to indicate success or failure of an API request.<br/>In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error<br/>that resulted from the provided information (e.g. a required parameter was missing, a charge failed, etc.), and<br/>codes in the 5xx range indicate an error with redh00d servers.</p><p><br/><b>HTTP Status Code Summary:</b><br/>200 OK - Everything worked as expected.<br/>400 Bad Request - Often missing a required parameter.<br/>401 Unauthorized - No valid API key provided.<br/>402 Request Failed - Parameters were valid but request failed.<br/>404 Not Found - The requested item doesn&#39;t exist.<br/>500, 502, 503, 504 Server errors - something went wrong on redh00d&#39;s end.</p>",
+    "description": "<p>redh00d uses conventional HTTP response codes to indicate success or failure of an API request.<br/>In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error<br/>that resulted from the provided information (e.g. a required parameter was missing, a charge failed, etc.), and<br/>codes in the 5xx range indicate an error with redh00d servers.</p><p><br/><b>HTTP Status Code Summary:</b><br/>200 OK - Everything worked as expected.<br/>400 Bad Request - Often missing a required parameter.<br/>401 Unauthorized - No valid API key provided.<br/>402 Request Failed - Parameters were valid but request failed.<br/>405 Method not allowed - Used to indicate that the requested URL exists, but the requested HTTP method is not applicable. For example, POST /users/12345 where the API doesn&#39;t support creation of resources this way (with a provided ID).<br/>404 Not Found - The requested item doesn&#39;t exist.<br/>409 Conflict - Whenever a resource conflict would be caused by fulfilling the request. Duplicate entries, such as trying to create two customers with the same information, and deleting root objects when cascade-delete is not supported are a couple of examples.<br/>500, 502, 503, 504 Server errors - any general error on the system.</p>",
     "error": {
       "fields": {
         "Response attributes": [
@@ -135,13 +166,6 @@
             "field": "code",
             "optional": false,
             "description": "<p>Error code (Check the section above).</p>"
-          },
-          {
-            "group": "errorResponse",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>400, 401, 500, ...</p>"
           },
           {
             "group": "errorResponse",
@@ -183,23 +207,23 @@
       "examples": [
         {
           "title": "Error (400 Bad request) response sample (case of parameters validation failed):",
-          "content": "   HTTP/1.1 400 BAD REQUEST\n   {\n     \"message\": \"The requested parameters are not correct\",\n     \"code\": \"invalidParams\"\n     \"params\": [\n        {\n          \"message\": \"This field should contain at least 4 characters\",\n          \"code\": \"fieldTooShort\"\n          \"field\": \"foo\"\n        },\n        ...\n     ],\n     \"status\": \"400\"\n   }\n"
-        },
-        {
-          "title": "Error (400 Bad request) response sample (email taken case):",
-          "content": "   HTTP/1.1 400 BAD REQUEST\n   {\n     \"message\": \"This email was already taken\",\n     \"code\": \"emailArleadyTaken\",\n     \"status\": \"400\"\n   }\n"
+          "content": "   HTTP/1.1 400 BAD REQUEST\n   {\n     \"message\": \"The requested parameters are not correct\",\n     \"code\": \"invalidParams\"\n     \"params\": [\n        {\n          \"message\": \"This field should contain at least 4 characters\",\n          \"code\": \"fieldTooShort\"\n          \"field\": \"foo\"\n        },\n        ...\n     ],\n   }\n"
         },
         {
           "title": "Error (404 Not Found) response sample:",
-          "content": "   HTTP/1.1 404 Not Found\n   {\n     \"message\": \"This user doesn't exist\",\n     \"code\": \"modelNotFound\"\n     \"status\": \"404\"\n   }\n"
+          "content": "   HTTP/1.1 404 Not Found\n   {\n     \"message\": \"This user doesn't exist\",\n     \"code\": \"modelNotFound\"\n   }\n"
         },
         {
           "title": "Error (403 Forbidden Error) response sample:",
-          "content": "   HTTP/1.1 403 Forbidden Error\n   {\n     \"message\": \"You do not have enough rights to access this resource\",\n     \"code\": \"noAccessRights\"\n     \"status\": \"403\"\n   }\n"
+          "content": "   HTTP/1.1 403 Forbidden Error\n   {\n     \"message\": \"You do not have enough rights to access this resource\",\n     \"code\": \"noAccessRights\"\n   }\n"
+        },
+        {
+          "title": "Error (409 Conflict Error) response sample:",
+          "content": "   HTTP/1.1 409 Conflict Error\n   {\n     \"message\": \"Email already taken\",\n     \"description\": \"foo\",\n     \"code\": \"emailArleadyTaken\"\n   }\n"
         },
         {
           "title": "Error (500 Serveur Error) response sample:",
-          "content": "   HTTP/1.1 500 Serveur Error\n   {\n     \"message\": \"Database unavailable\",\n     \"code\": \"dbUnavailable\"\n     \"status\": \"500\"\n   }\n"
+          "content": "   HTTP/1.1 500 Serveur Error\n   {\n     \"message\": \"Database unavailable\",\n     \"code\": \"dbUnavailable\"\n   }\n"
         }
       ]
     },
@@ -256,7 +280,7 @@
   },
   {
     "type": "post",
-    "url": "/events",
+    "url": "/users/:id/events",
     "title": "Create an event",
     "name": "CreateEvent",
     "group": "Events",
@@ -268,30 +292,30 @@
     "description": "<p>Create an event which is retrieve if creation was a success.<br/><b>Throw error:</b> 400.</p>",
     "parameter": {
       "fields": {
-        "dataData": [
+        "Parameters (Form Data)": [
           {
-            "group": "dataData",
+            "group": "dataParam",
             "type": "String",
             "field": "name",
             "optional": false,
             "description": ""
           },
           {
-            "group": "dataData",
+            "group": "dataParam",
             "type": "String",
             "field": "description",
             "optional": true,
             "description": ""
           },
           {
-            "group": "dataData",
+            "group": "dataParam",
             "type": "String",
             "field": "place",
             "optional": true,
             "description": ""
           },
           {
-            "group": "dataData",
+            "group": "dataParam",
             "type": "String",
             "field": "date",
             "optional": false,
@@ -310,33 +334,26 @@
       "examples": [
         {
           "title": "Error (400 Bad request) response sample (case of parameters validation failed):",
-          "content": "   HTTP/1.1 400 BAD REQUEST\n   {\n     \"message\": \"The requested parameters are not correct\",\n     \"code\": \"invalidParams\"\n     \"params\": [\n        {\n          \"message\": \"This field should contain at least 4 characters\",\n          \"code\": \"fieldTooShort\"\n          \"field\": \"foo\"\n        },\n        ...\n     ],\n     \"status\": \"400\"\n   }\n"
+          "content": "   HTTP/1.1 400 BAD REQUEST\n   {\n     \"message\": \"The requested parameters are not correct\",\n     \"code\": \"invalidParams\"\n     \"params\": [\n        {\n          \"message\": \"This field should contain at least 4 characters\",\n          \"code\": \"fieldTooShort\"\n          \"field\": \"foo\"\n        },\n        ...\n     ],\n   }\n"
         }
       ]
     },
     "success": {
       "fields": {
-        "Success (201 CREATED) response parameters": [
+        "Success (201 Created) response parameters": [
           {
             "group": "201",
             "type": "Object",
             "field": "object",
             "optional": false,
             "description": "<p>The created object.</p>"
-          },
-          {
-            "group": "201",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>201.</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "Success (201 CREATED) response sample:",
-          "content": "HTTP/1.1 201 CREATED\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n   \"status\": 201\n}\n"
+          "title": "Success (201 Created) response sample:",
+          "content": "HTTP/1.1 201 Created\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n}\n"
         }
       ]
     },
@@ -345,7 +362,7 @@
   },
   {
     "type": "delete",
-    "url": "/events/:id",
+    "url": "/users/:id/events/:id",
     "title": "Delete an Event",
     "name": "DeleteEvent",
     "group": "Events",
@@ -371,21 +388,10 @@
       }
     ],
     "success": {
-      "fields": {
-        "Success (204 NO CONTENT) response parameters": [
-          {
-            "group": "204",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>204.</p>"
-          }
-        ]
-      },
       "examples": [
         {
-          "title": "Success (204 NO CONTENT) response sample:",
-          "content": "HTTP/1.1 204 NO CONTENT\n{\n   \"status\": 204\n}\n"
+          "title": "Success (204 No content) response sample:",
+          "content": "HTTP/1.1 204 No content\n{\n}\n"
         }
       ]
     },
@@ -428,20 +434,13 @@
             "field": "object",
             "optional": false,
             "description": "<p>Requested object.</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>200.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success (200 OK) response sample:",
-          "content": "   HTTP/1.1 200 OK\n   {\n     \"object\": {\n        \"field1\": \"Foo\",\n        \"field2\": \"Bar\",\n        ...\n     },\n     \"status\": 200\n   }\n"
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"object\": {\n        \"field1\": \"Foo\",\n        \"field2\": \"Bar\",\n        ...\n     },\n   }\n"
         }
       ]
     },
@@ -516,20 +515,13 @@
             "field": "objects",
             "optional": false,
             "description": "<p>The list of objects.</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>200.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success (200 OK) response sample:",
-          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n     \"status\": 200\n   }\n"
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
         },
         {
           "title": "Success (200 OK) response sample (case of empty):",
@@ -541,11 +533,40 @@
     "filename": "sources/Event.js"
   },
   {
-    "type": "post",
-    "url": "/events/:id/invitations",
-    "title": "Send event invitation",
-    "name": "ToDo",
+    "type": "get",
+    "url": "/users/:id/events",
+    "title": "look for Events from a user",
+    "name": "FindMultipleUserEvents",
     "group": "Events",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
+    "description": "<p>@todo</p>",
+    "success": {
+      "fields": {
+        "Success (200 OK) response parameters": [
+          {
+            "group": "200",
+            "type": "Object[]",
+            "field": "objects",
+            "optional": false,
+            "description": "<p>The list of objects.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success (200 OK) response sample:",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
+        },
+        {
+          "title": "Success (200 OK) response sample (case of empty):",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [ ],\n     \"status\": 200\n   }\n"
+        }
+      ]
+    },
     "version": "0.0.0",
     "filename": "sources/Event.js"
   },
@@ -559,9 +580,18 @@
     "filename": "sources/Event.js"
   },
   {
-    "type": "put",
+    "type": "post",
     "url": "/events/:id/invitations",
-    "title": "Update event invitation",
+    "title": "Send event invitation",
+    "name": "ToDo",
+    "group": "Events",
+    "version": "0.0.0",
+    "filename": "sources/Event.js"
+  },
+  {
+    "type": "delete",
+    "url": "/events/:id/members/:id",
+    "title": "Remove one user from an event",
     "name": "ToDo",
     "group": "Events",
     "version": "0.0.0",
@@ -577,9 +607,9 @@
     "filename": "sources/Event.js"
   },
   {
-    "type": "delete",
-    "url": "/events/:id/members/:id",
-    "title": "Remove one user from an event",
+    "type": "put",
+    "url": "/events/:id/invitations",
+    "title": "Update event invitation",
     "name": "ToDo",
     "group": "Events",
     "version": "0.0.0",
@@ -642,20 +672,13 @@
             "field": "object",
             "optional": false,
             "description": "<p>The updated object.</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>200.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success (200 OK) response sample:",
-          "content": "HTTP/1.1 200 OK\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n   \"status\": 200\n}\n"
+          "content": "HTTP/1.1 200 OK\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n}\n"
         }
       ]
     },
@@ -736,27 +759,20 @@
     ],
     "success": {
       "fields": {
-        "Success (201 CREATED) response parameters": [
+        "Success (201 Created) response parameters": [
           {
             "group": "201",
             "type": "Object",
             "field": "object",
             "optional": false,
             "description": "<p>The created object.</p>"
-          },
-          {
-            "group": "201",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>201.</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "Success (201 CREATED) response sample:",
-          "content": "HTTP/1.1 201 CREATED\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n   \"status\": 201\n}\n"
+          "title": "Success (201 Created) response sample:",
+          "content": "HTTP/1.1 201 Created\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n}\n"
         }
       ]
     },
@@ -816,20 +832,13 @@
             "field": "object",
             "optional": false,
             "description": "<p>Requested object.</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>200.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success (200 OK) response sample:",
-          "content": "   HTTP/1.1 200 OK\n   {\n     \"object\": {\n        \"field1\": \"Foo\",\n        \"field2\": \"Bar\",\n        ...\n     },\n     \"status\": 200\n   }\n"
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"object\": {\n        \"field1\": \"Foo\",\n        \"field2\": \"Bar\",\n        ...\n     },\n   }\n"
         }
       ]
     },
@@ -893,20 +902,13 @@
             "field": "objects",
             "optional": false,
             "description": "<p>The list of objects.</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>200.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success (200 OK) response sample:",
-          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n     \"status\": 200\n   }\n"
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
         },
         {
           "title": "Success (200 OK) response sample (case of empty):",
@@ -996,7 +998,7 @@
       "title": "Authentication requiered",
       "description": ""
     },
-    "description": "<p>Create one user and retrieve the created object.<br/><b>Throw error:</b> 400.</p>",
+    "description": "<p>Create one user and retrieve the created object.<br/><b>Throw error:</b> 400, 409.</p>",
     "parameter": {
       "fields": {
         "Parameters (Form Data)": [
@@ -1037,37 +1039,22 @@
         "content": "post http://localhost/users\nform-data: email=xmax54%40gmail.com&password=password\n"
       }
     ],
-    "error": {
-      "examples": [
-        {
-          "title": "Error (400 Bad request) response sample (email taken case):",
-          "content": "   HTTP/1.1 400 BAD REQUEST\n   {\n     \"message\": \"This email was already taken\",\n     \"code\": \"emailArleadyTaken\",\n     \"status\": \"400\"\n   }\n"
-        }
-      ]
-    },
     "success": {
       "fields": {
-        "Success (201 CREATED) response parameters": [
+        "Success (201 Created) response parameters": [
           {
             "group": "201",
             "type": "Object",
             "field": "object",
             "optional": false,
             "description": "<p>The created object.</p>"
-          },
-          {
-            "group": "201",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>201.</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "Success (201 CREATED) response sample:",
-          "content": "HTTP/1.1 201 CREATED\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n   \"status\": 201\n}\n"
+          "title": "Success (201 Created) response sample:",
+          "content": "HTTP/1.1 201 Created\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n}\n"
         }
       ]
     },
@@ -1102,21 +1089,10 @@
       }
     ],
     "success": {
-      "fields": {
-        "Success (204 NO CONTENT) response parameters": [
-          {
-            "group": "204",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>204.</p>"
-          }
-        ]
-      },
       "examples": [
         {
-          "title": "Success (204 NO CONTENT) response sample:",
-          "content": "HTTP/1.1 204 NO CONTENT\n{\n   \"status\": 204\n}\n"
+          "title": "Success (204 No content) response sample:",
+          "content": "HTTP/1.1 204 No content\n{\n}\n"
         }
       ]
     },
@@ -1184,20 +1160,13 @@
             "field": "objects",
             "optional": false,
             "description": "<p>The list of objects.</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>200.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success (200 OK) response sample:",
-          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n     \"status\": 200\n   }\n"
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
         },
         {
           "title": "Success (200 OK) response sample (case of empty):",
@@ -1249,20 +1218,13 @@
             "field": "object",
             "optional": false,
             "description": "<p>Requested object.</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>200.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success (200 OK) response sample:",
-          "content": "   HTTP/1.1 200 OK\n   {\n     \"object\": {\n        \"field1\": \"Foo\",\n        \"field2\": \"Bar\",\n        ...\n     },\n     \"status\": 200\n   }\n"
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"object\": {\n        \"field1\": \"Foo\",\n        \"field2\": \"Bar\",\n        ...\n     },\n   }\n"
         }
       ]
     },
@@ -1370,20 +1332,13 @@
             "field": "object",
             "optional": false,
             "description": "<p>The updated object.</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>200.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success (200 OK) response sample:",
-          "content": "HTTP/1.1 200 OK\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n   \"status\": 200\n}\n"
+          "content": "HTTP/1.1 200 OK\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n}\n"
         }
       ]
     },
@@ -1400,20 +1355,28 @@
             "field": "object",
             "optional": false,
             "description": "<p>Requested object.</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>200.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success (200 OK) response sample:",
-          "content": "   HTTP/1.1 200 OK\n   {\n     \"object\": {\n        \"field1\": \"Foo\",\n        \"field2\": \"Bar\",\n        ...\n     },\n     \"status\": 200\n   }\n"
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"object\": {\n        \"field1\": \"Foo\",\n        \"field2\": \"Bar\",\n        ...\n     },\n   }\n"
+        }
+      ]
+    },
+    "group": "_general.js",
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "sources/_general.js"
+  },
+  {
+    "error": {
+      "examples": [
+        {
+          "title": "Error (500 Serveur Error) response sample:",
+          "content": "   HTTP/1.1 500 Serveur Error\n   {\n     \"message\": \"Database unavailable\",\n     \"code\": \"dbUnavailable\"\n   }\n"
         }
       ]
     },
@@ -1426,54 +1389,22 @@
   {
     "success": {
       "fields": {
-        "Success (200 OK) response parameters": [
+        "Success (201 Created) response parameters": [
           {
-            "group": "200",
-            "type": "Object[]",
-            "field": "objects",
+            "group": "201",
+            "type": "Object",
+            "field": "object",
             "optional": false,
-            "description": "<p>The list of objects.</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>200.</p>"
+            "description": "<p>The created object.</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "Success (200 OK) response sample:",
-          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n     \"status\": 200\n   }\n"
-        },
-        {
-          "title": "Success (200 OK) response sample (case of empty):",
-          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [ ],\n     \"status\": 200\n   }\n"
+          "title": "Success (201 Created) response sample:",
+          "content": "HTTP/1.1 201 Created\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n}\n"
         }
       ]
-    },
-    "group": "_general.js",
-    "type": "",
-    "url": "",
-    "version": "0.0.0",
-    "filename": "sources/_general.js"
-  },
-  {
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "String",
-            "field": "Accept-Language",
-            "defaultValue": "Locale du navigateur",
-            "optional": true,
-            "description": "<p>Langue de retour demandée. Exemple : fr-FR.</p>"
-          }
-        ]
-      }
     },
     "group": "_general.js",
     "type": "",
@@ -1491,20 +1422,13 @@
             "field": "object",
             "optional": false,
             "description": "<p>The updated object.</p>"
-          },
-          {
-            "group": "200",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>200.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success (200 OK) response sample:",
-          "content": "HTTP/1.1 200 OK\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n   \"status\": 200\n}\n"
+          "content": "HTTP/1.1 200 OK\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n}\n"
         }
       ]
     },
@@ -1516,21 +1440,10 @@
   },
   {
     "success": {
-      "fields": {
-        "Success (204 NO CONTENT) response parameters": [
-          {
-            "group": "204",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>204.</p>"
-          }
-        ]
-      },
       "examples": [
         {
-          "title": "Success (204 NO CONTENT) response sample:",
-          "content": "HTTP/1.1 204 NO CONTENT\n{\n   \"status\": 204\n}\n"
+          "title": "Success (204 No content) response sample:",
+          "content": "HTTP/1.1 204 No content\n{\n}\n"
         }
       ]
     },
@@ -1564,13 +1477,6 @@
             "field": "code",
             "optional": false,
             "description": "<p>Error code (Check the section above).</p>"
-          },
-          {
-            "group": "errorResponse",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>400, 401, 500, ...</p>"
           },
           {
             "group": "errorResponse",
@@ -1621,22 +1527,7 @@
       "examples": [
         {
           "title": "Error (400 Bad request) response sample (case of parameters validation failed):",
-          "content": "   HTTP/1.1 400 BAD REQUEST\n   {\n     \"message\": \"The requested parameters are not correct\",\n     \"code\": \"invalidParams\"\n     \"params\": [\n        {\n          \"message\": \"This field should contain at least 4 characters\",\n          \"code\": \"fieldTooShort\"\n          \"field\": \"foo\"\n        },\n        ...\n     ],\n     \"status\": \"400\"\n   }\n"
-        }
-      ]
-    },
-    "group": "_general.js",
-    "type": "",
-    "url": "",
-    "version": "0.0.0",
-    "filename": "sources/_general.js"
-  },
-  {
-    "error": {
-      "examples": [
-        {
-          "title": "Error (400 Bad request) response sample (email taken case):",
-          "content": "   HTTP/1.1 400 BAD REQUEST\n   {\n     \"message\": \"This email was already taken\",\n     \"code\": \"emailArleadyTaken\",\n     \"status\": \"400\"\n   }\n"
+          "content": "   HTTP/1.1 400 BAD REQUEST\n   {\n     \"message\": \"The requested parameters are not correct\",\n     \"code\": \"invalidParams\"\n     \"params\": [\n        {\n          \"message\": \"This field should contain at least 4 characters\",\n          \"code\": \"fieldTooShort\"\n          \"field\": \"foo\"\n        },\n        ...\n     ],\n   }\n"
         }
       ]
     },
@@ -1651,7 +1542,7 @@
       "examples": [
         {
           "title": "Error (404 Not Found) response sample:",
-          "content": "   HTTP/1.1 404 Not Found\n   {\n     \"message\": \"This user doesn't exist\",\n     \"code\": \"modelNotFound\"\n     \"status\": \"404\"\n   }\n"
+          "content": "   HTTP/1.1 404 Not Found\n   {\n     \"message\": \"This user doesn't exist\",\n     \"code\": \"modelNotFound\"\n   }\n"
         }
       ]
     },
@@ -1666,7 +1557,7 @@
       "examples": [
         {
           "title": "Error (403 Forbidden Error) response sample:",
-          "content": "   HTTP/1.1 403 Forbidden Error\n   {\n     \"message\": \"You do not have enough rights to access this resource\",\n     \"code\": \"noAccessRights\"\n     \"status\": \"403\"\n   }\n"
+          "content": "   HTTP/1.1 403 Forbidden Error\n   {\n     \"message\": \"You do not have enough rights to access this resource\",\n     \"code\": \"noAccessRights\"\n   }\n"
         }
       ]
     },
@@ -1680,8 +1571,8 @@
     "error": {
       "examples": [
         {
-          "title": "Error (500 Serveur Error) response sample:",
-          "content": "   HTTP/1.1 500 Serveur Error\n   {\n     \"message\": \"Database unavailable\",\n     \"code\": \"dbUnavailable\"\n     \"status\": \"500\"\n   }\n"
+          "title": "Error (409 Conflict Error) response sample:",
+          "content": "   HTTP/1.1 409 Conflict Error\n   {\n     \"message\": \"Email already taken\",\n     \"description\": \"foo\",\n     \"code\": \"emailArleadyTaken\"\n   }\n"
         }
       ]
     },
@@ -1694,27 +1585,24 @@
   {
     "success": {
       "fields": {
-        "Success (201 CREATED) response parameters": [
+        "Success (200 OK) response parameters": [
           {
-            "group": "201",
-            "type": "Object",
-            "field": "object",
+            "group": "200",
+            "type": "Object[]",
+            "field": "objects",
             "optional": false,
-            "description": "<p>The created object.</p>"
-          },
-          {
-            "group": "201",
-            "type": "String",
-            "field": "status",
-            "optional": false,
-            "description": "<p>201.</p>"
+            "description": "<p>The list of objects.</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "Success (201 CREATED) response sample:",
-          "content": "HTTP/1.1 201 CREATED\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n   \"status\": 201\n}\n"
+          "title": "Success (200 OK) response sample:",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
+        },
+        {
+          "title": "Success (200 OK) response sample (case of empty):",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [ ],\n     \"status\": 200\n   }\n"
         }
       ]
     },
