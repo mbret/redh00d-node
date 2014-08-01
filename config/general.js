@@ -38,7 +38,7 @@ module.exports.general = {
                     message: "No access rights"
                 },
                 emailArleadyTaken: {
-                    label: emailArleadyTaken,
+                    label: "emailArleadyTaken",
                     message: "Email already taken"
                 }
                 // ...
