@@ -7,7 +7,7 @@
  * return res.unauthorized( 'Your are not allowed ...' )
  * return res.unauthorized( 'Your are not allowed ...', { additional data } );
  *
- * Exemple of Unauthorized response:
+ * Example of Unauthorized response:
  *
  *  {
  *      message: 'Your are not allowed ...',
