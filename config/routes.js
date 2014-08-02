@@ -26,8 +26,7 @@ module.exports.routes = {
     // We could have call a controller which implement function(req, res, next) and call at last next()
     // but due to short logic/code a function placed here is more practice.
     '*': function preDispatch(req, res, next) {
-        // simple log of http request
-        sails.log.info(req.method, req.url);
+
 
         // If request does not accept application/json then block request
         if( !req.wantsJSON ){
@@ -64,8 +63,8 @@ module.exports.routes = {
     /**
      * AUTHENTICATION relatives routes
      */
-    'post   /api/auth':                         'AuthController.login',
-    'delete /api/auth':                         'AuthController.logout',
+//    'post   /api/auth':                         'AuthController.login',
+//    'delete /api/auth':                         'AuthController.logout',
 
     /**
      * USER relatives routes

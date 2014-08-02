@@ -27,18 +27,18 @@ exports.helper = {
         // add debug dump
         if( sails.config.environment === 'development' ){
             var session = req.session;
-            session.ID = req.sessionID;
+//            session.ID = req.sessionID;
             data._debug = {
                 api_version: sails.config.general.api.version,
                 request_locale: res.locale,
-                request_signed_cookies: req.signedCookies,
-                request_unsigned_cookies: req.cookies,
+//                request_signed_cookies: req.signedCookies,
+//                request_unsigned_cookies: req.cookies,
                 request_host: req.host,
                 request_ip: req.ip,
                 request_connection_secure: req.secure,
                 request_ajax: req.xhr,
-                current_session: req.session,
-                sessionStore: req.sessionStore
+//                current_session: req.session,
+//                sessionStore: req.sessionStore
 
             }
         }

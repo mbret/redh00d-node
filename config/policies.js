@@ -23,16 +23,16 @@ module.exports.policies = {
     DebugController: {
         '*': true
     },
-
-    AuthController: {
-        'login': ['isUnAuthenticated'],
-        'logout': ['isAuthenticated']
-    },
+//
+//    AuthController: {
+//        'login': ['isUnAuthenticated'],
+//        'logout': ['isAuthenticated']
+//    },
 
     UserController: {
-        find: true,
+        find:                       ['isAuthenticated'],
         create: true,
-        findMultiple: true,
+        findMultiple:               ['isAuthenticated'],
         update:                     ['isAuthenticated','preventApiKeyUpdate'],
         createPasswordResetToken:   ['isAuthenticated','preventApiKeyUpdate'],
         resetPassword:              ['isAuthenticated','preventApiKeyUpdate'],
@@ -40,12 +40,11 @@ module.exports.policies = {
     },
 
     EventController: {
-        find: true,
-        findMultiple: true,
-        create:     ['isAuthenticated'],
-        update:     ['isAuthenticated'],
-        destroy:    ['isAuthenticated'],
-        findUser: true
+        find:           ['isAuthenticated'],
+        findMultiple:   ['isAuthenticated'],
+        create:         ['isAuthenticated'],
+        update:         ['isAuthenticated'],
+        destroy:        ['isAuthenticated']
     }
 
 	// Here's an example of mapping some policies to run before
