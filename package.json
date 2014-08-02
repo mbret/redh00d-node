@@ -6,7 +6,6 @@
     "keywords": ["api","social"],
     "dependencies": {
 
-        "//": "Sails related dependencies",
         "sails": "~0.10.1",
         "sails-disk": "~0.10.0",
         "sails-memory": "~0.10.0",
@@ -26,15 +25,14 @@
         "grunt-contrib-less": "0.11.1",
         "grunt-contrib-coffee": "~0.10.1",
 
-        "//": "redh00d dependencies",
-        "passport": "0.2.x", "//": "http://passportjs.org/guide/ module which handle authentication and more",
-        "lodash": "2.4.x", "//": "http://lodash.com/ A utility library delivering consistency, customization, performance, & extras.",
+        "passport": "0.2.x",
+        "lodash": "~2.4.0",
         "passport-http": "0.2.x",
         "passport-remember-me": "0.0.x",
         "passport-local": "0.1.x",
         "nodemailer": "0.5.x",
         "node-uuid": "1.4.x",
-        "email-templates": "0.1.x"
+        "email-templates": "~1.1.0"
     },
     "devDependencies": {
         "mocha": "1.13.x",
