@@ -9,8 +9,11 @@
  * Any policy file (e.g. `api/policies/authenticated.js`) can be accessed
  * below by its filename, minus the extension, (e.g. "authenticated")
  *
+ * For more information on how policies work, see:
+ * http://sailsjs.org/#/documentation/concepts/Policies
+ *
  * For more information on configuring policies, check out:
- * http://sailsjs.org/#!documentation/
+ * http://sailsjs.org/#/documentation/reference/sails.config/sails.config.policies.html
  */
 
 
@@ -23,16 +26,16 @@ module.exports.policies = {
     DebugController: {
         '*': true
     },
-
-    AuthController: {
-        'login': ['isUnAuthenticated'],
-        'logout': ['isAuthenticated']
-    },
+//
+//    AuthController: {
+//        'login': ['isUnAuthenticated'],
+//        'logout': ['isAuthenticated']
+//    },
 
     UserController: {
-        find: true,
+        find:                       ['isAuthenticated'],
         create: true,
-        findMultiple: true,
+        findMultiple:               ['isAuthenticated'],
         update:                     ['isAuthenticated','preventApiKeyUpdate'],
         createPasswordResetToken:   ['isAuthenticated','preventApiKeyUpdate'],
         resetPassword:              ['isAuthenticated','preventApiKeyUpdate'],
@@ -40,12 +43,11 @@ module.exports.policies = {
     },
 
     EventController: {
-        find: true,
-        findMultiple: true,
-        create:     ['isAuthenticated'],
-        update:     ['isAuthenticated'],
-        destroy:    ['isAuthenticated'],
-        findUser: true
+        find:           ['isAuthenticated'],
+        findMultiple:   ['isAuthenticated'],
+        create:         ['isAuthenticated'],
+        update:         ['isAuthenticated'],
+        destroy:        ['isAuthenticated']
     }
 
 	// Here's an example of mapping some policies to run before
