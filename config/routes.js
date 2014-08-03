@@ -16,8 +16,8 @@
  * flat files from `assets` to `.tmp/public`.  This allows you to do things like compile LESS or
  * CoffeeScript for the front-end.
  *
- * For more information on routes, check out:
- * http://links.sailsjs.org/docs/config/routes
+ * For more information on configuring custom routes, check out:
+ * http://sailsjs.org/#/documentation/concepts/Routes/RouteTargetSyntax.html
  */
 
 module.exports.routes = {
@@ -26,7 +26,6 @@ module.exports.routes = {
     // We could have call a controller which implement function(req, res, next) and call at last next()
     // but due to short logic/code a function placed here is more practice.
     '*': function preDispatch(req, res, next) {
-
 
         // If request does not accept application/json then block request
         if( !req.wantsJSON ){
