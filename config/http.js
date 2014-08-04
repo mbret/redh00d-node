@@ -9,6 +9,7 @@
  * http://sailsjs.org/#/documentation/reference/sails.config/sails.config.http.html
  */
 var passport = require( "passport" );
+var fs = require('fs');
 
 module.exports = {
 
