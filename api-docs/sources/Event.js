@@ -172,7 +172,6 @@
  * form-data: target_id=36
  *
  * @apiSuccessStructure CreateSuccess
- * @todo
  */
 // ------------------------------------------------------------------------------------------
 // Find one event invitation
@@ -193,10 +192,9 @@
  * post http://localhost/events/15/invitations/15
  *
  * @apiSuccessStructure FindSuccess
- * @todo
  */
 // ------------------------------------------------------------------------------------------
-// Find event invitations
+// Find an event invitations
 //
 //  - InvitationController.findMultiple()
 // ------------------------------------------------------------------------------------------
@@ -213,32 +211,50 @@
  * post http://localhost/events/15/invitations
  *
  * @apiSuccessStructure FindMultipleSuccess
- * @todo
  */
 // ------------------------------------------------------------------------------------------
-// Update a project invitation
+// Update an event invitation
 //
 //  Description:    Allow accept/cancel/..
 //                  Note that target can cancel/accept and sender can only cancel
 //  Task:           InvitationController.update()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {put} /events/:id/invitations Update an event invitation
+ * @api {put} /events/:idEvent/invitations/:idInvitation Update an event invitation
  * @apiName UpdateEventInvitation
  * @apiGroup Events
+ * @apiPermission authenticated
+ * @apiDescription Update an invitation
+ * <br/><b>Throw error:</b> 404.
+ *
+ * @apiParam {Number} idEvent Event's ID
+ * @apiParam {Number} idInvitation Invitation's ID
+ * @apiExample Use example
+ * put http://localhost/events/9/invitations/4
+ *
+ * @apiSuccessStructure UpdateSuccess
  * @todo
  */
 // ------------------------------------------------------------------------------------------
-// Delete a project invitation
+// Delete an event invitation
 //
 //  Description:
 //  Task:           InvitationController.delete()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {delete} /events/:id/invitations Delete an event invitation
+ * @api {delete} /events/:idEvent/invitations/:idInvitation Delete an event invitation
  * @apiName DeleteEventInvitation
  * @apiGroup Events
- * @todo
+ * @apiPermission authenticated
+ * @apiDescription Delete an invitation
+ * <br/><b>Throw error:</b> 404.
+ *
+ * @apiParam {Number} idEvent Event's ID
+ * @apiParam {Number} idInvitation Invitation's ID
+ * @apiExample Use example
+ * delete http://localhost/events/5/invitations/10
+ *
+ * @apiSuccessStructure DeleteSuccess
  */
 // ------------------------------------------------------------------------------------------
 //
