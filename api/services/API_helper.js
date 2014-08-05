@@ -7,7 +7,7 @@ exports.helper = {
 
     foo: function(){
         // `sails` object is available here:
-    },
+    }
 
 
 };

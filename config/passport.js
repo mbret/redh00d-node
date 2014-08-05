@@ -12,13 +12,21 @@ passport.use(
     new BasicStrategy(
         function (email, password, done) {
             console.log(email, password);
+
             User.findOne( {email: email}, function (err, user) {
                 if( err) return done(err);
                 if( !user) return done( null, false );
 
                 user.validatePassword(password, function(err, valid){
+                    if(err) return done(err);
                     if( !valid ) return done(null, false);
-                    done(null, user);
+
+                    // load grade for futur test
+                    user.loadGrade( function(err){
+                        if(err) return done(err);
+                        return done(null, user);
+                    } );
+
                 });
             });
     })

@@ -1,11 +1,20 @@
 module.exports = {
 
     attributes: {
-        name : 'STRING',
-        age  : 'INTEGER'
+
+
+        toJSON: function() {
+            var model = this.toObject();
+            return model;
+        }
     },
 
-    foo: function() {
-        console.log("Hey salut");
+    beforeCreate: function( cb ){
+        return cb();
+    },
+
+    beforeUpdate: function( cb ){
+        return cb();
     }
+
 }

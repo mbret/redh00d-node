@@ -28,17 +28,21 @@ module.exports.permissions = {
 
 
     acl: {
-        allow: {
-            guest: {
-                user: [ 'create' ]
-            },
-            user: {
-
-            },
-            admin: {
-
+        guest: {
+            allow: {
+                user: ['create']
             }
         },
-        deny: {}
+        user: {
+            allow: {
+                user: ['find']
+            },
+            deny: {
+                user: ['create']
+            }
+        },
+        admin: {
+
+        }
     }
 };

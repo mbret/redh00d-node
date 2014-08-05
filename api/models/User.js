@@ -58,12 +58,31 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             unique: true,
             columnName: 'userApiKey'
         },
+        roleID: {
+            type: 'integer',
+            columnName: 'FK_userRoleID'
+        },
+        role: {
+            type: Role
+        },
 
         /**
          * Get user's full name
          */
         fullName: function() {
             return _.compact([this.firstName, this.lastName]).join(' ');
+        },
+
+        /**
+         * Load the user grade as a complete object
+         * @param cb
+         */
+        loadGrade: function( cb ){
+            UserGrade.findOne({ id: this.gradeID }, function(err, grade){
+                if(err) return cb(err);
+                if(!grade) return cb( new Error("Grade doesn't exist") );
+                return cb();
+            });
         },
 
         /**
