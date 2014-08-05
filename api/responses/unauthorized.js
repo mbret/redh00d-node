@@ -3,29 +3,20 @@
  *
  * @description Mean that the server doesn't know who you are and you must be authenticated
  *
- * Usage:
- * return res.unauthorized( 'Your are not allowed ...' )
- * return res.unauthorized( 'Your are not allowed ...', { additional data } );
  *
- * Example of Unauthorized response:
- *
- *  {
- *      message: 'Your are not allowed ...',
- *      status: 401,
- *      ... optional data ...
- *  }
  */
 
-module.exports = function forbidden (message, data) {
+module.exports = function forbidden (code, data) {
 
     sails.log.debug('Sending 401 ("Unauthorized") response: \n',message, data);
 
     // init
-    var defaultMessage = this.res.__('Authentication error');
+    var defaultMessage = this.res.__('Bad authentication');
+    var defaultDescription = this.res.__('Please use valid username/password');
     this.res.status(401);
     if( !data ) data = {};
-    if( message ) data.message = message;
-    else data.message = defaultMessage;
+    if( !data.message ) data.message = defaultMessage;
+    if( !data.description ) data.description = defaultDescription;
 
     // send response
     return ResponseHelper.helper.handleSend( this.req, this.res, data );

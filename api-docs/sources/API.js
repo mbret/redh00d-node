@@ -1,4 +1,20 @@
 /**
+ * @api {} Summary
+ * @apiName Summary
+ * @apiGroup API
+ * @apiDescription
+ * HTTP Status Code Summary:</b>
+ * <br/><b>200 OK</b> - Everything worked as expected.
+ * <br/><b>400 Bad Request</b> - Often missing a required parameter.
+ * <br/><b>401 Unauthorized</b> - No valid API key provided.
+ * <br/><b>402 Request Failed</b> - Parameters were valid but request failed.
+ * <br/><b>405 Method not allowed</b> - Used to indicate that the requested URL exists, but the requested HTTP method is not applicable. For example, POST /users/12345 where the API doesn't support creation of resources this way (with a provided ID).
+ * <br/><b>404 Not Found</b> - The requested item doesn't exist.
+ * <br/><b>409 Conflict</b> - Whenever a resource conflict would be caused by fulfilling the request. Duplicate entries, such as trying to create two customers with the same information, and deleting root objects when cascade-delete is not supported are a couple of examples.
+ * <br/><b>500, 502, 503, 504 Server errors</b> - any general error on the system.
+ */
+
+/**
  * @api {} Authentication
  * @apiName Authenticate
  * @apiGroup API

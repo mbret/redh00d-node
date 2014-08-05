@@ -141,6 +141,16 @@
 
 /**
  * @apiDefineErrorStructure forbiddenError
+ * @apiErrorExample Error (401 Unauthorized Error) response sample (case of authentication parameters are missing):
+ *     HTTP/1.1 401 Unauthorized Error
+ *     {
+ *       "message": "You are not authorized",
+ *       "code": "unauthorized"
+ *     }
+ */
+
+/**
+ * @apiDefineErrorStructure forbiddenError
  * @apiErrorExample Error (403 Forbidden Error) response sample:
  *     HTTP/1.1 403 Forbidden Error
  *     {

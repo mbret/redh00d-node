@@ -6,15 +6,6 @@
  * return res.badRequest( 'Hey man your email is invalid', { errors } )
  * return res.badRequest( 'hey man your email is invalid', { errors } , { additional data } );
  *
- * Exemple of badRequest response:
- *
- *  {
- *      message: 'A message which says more or less why bad request',
- *      errors: {
- *                  errors ...
- *              },
- *      ... optional data ...
- *  }
  *
  */
 module.exports = function badRequest(message, errors, data) {

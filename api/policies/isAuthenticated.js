@@ -18,7 +18,7 @@ module.exports = function(req, res, next) {
 
         // Authentication failed (bad params, no user)
         if (!user){
-            return res.unauthorized( res.i18n("You must be authenticate") );
+            return res.unauthorized();
         }
 
         req.user = user;
