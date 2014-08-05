@@ -52,23 +52,7 @@ module.exports = {
             ],
 
             initTestSetDatabase: function(req, res, next){
-                // Create roles
-                Role.create({ name: 'admin', displayName: 'Administrator' }).done(function(err, role){
-                    if(err) next(err);
-                    Role.create({ name: 'user', displayName: 'User' }).done(function(err, role){
-                        if(err) next(err);
 
-                        // Create users
-                        User.create({email:'admin@admin.com', password: 'password'}).done(function(err, role){
-                            if(err) next(err);
-                            User.create({email:'user@user.com', password: 'password'}).done(function(err, role){
-                                if(err) next(err);
-
-                                next();
-                            });
-                        });
-                    });
-                });
             },
 
             // simple log of http request

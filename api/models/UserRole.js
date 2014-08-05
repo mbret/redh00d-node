@@ -36,11 +36,11 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
     },
 
-    beforeCreate: function( cb ){
+    beforeCreate: function( values, cb ){
         return cb();
     },
 
-    beforeUpdate: function( cb ){
+    beforeUpdate: function( values, cb ){
         return cb();
     }
 

@@ -78,6 +78,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         /**
          * Load the user role as a complete object
          * @param cb
+         * @todo use promises here
          */
         loadRole: function( cb ){
             UserRole.findOne({ id: this.roleID }, function(err, role){

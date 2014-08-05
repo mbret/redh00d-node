@@ -23,9 +23,6 @@ module.exports.policies = {
     // (`true` allows public access)
     '*': ['rejectAll'], // nothing allowed by default
 
-    DebugController: {
-        '*': true
-    },
 //
 //    AuthController: {
 //        'login': ['isUnAuthenticated'],

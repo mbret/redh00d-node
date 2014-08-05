@@ -45,7 +45,7 @@ module.exports.connections = {
         user: 'YOUR_MYSQL_USER',
         password: 'YOUR_MYSQL_PASSWORD',
         database: 'YOUR_MYSQL_DB'
-    },
+    }
 
 
 };

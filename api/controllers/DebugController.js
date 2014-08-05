@@ -5,8 +5,18 @@
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
 
+var Promise = require("bluebird");
+var async = require("async");
+var Q = require("q");
+
 module.exports = {
 
+    /**
+     * Display some info from database.
+     * Use this method for debug only
+     * @param req
+     * @param res
+     */
     dumpDatabase: function(req, res){
 
         var data = {};
@@ -14,24 +24,23 @@ module.exports = {
             data.loggedUser = req.user;
         }
 
-        console.log(req);
-        data.session = req.session;
+        /*
+         * Load data in parallel
+         */
+        Q.all([
+            UserRole.find(),
+            User.find(),
+            Event.find()
 
-        // retrieve users
-        User.find().exec(function(err, users){
+        ]).spread(function(roles, users, events){
+            data.roles = roles;
+            data.users = users;
+            data.events = events;
+            return res.ok(data);
 
-            data.users = users
-            // retrieve events
-            Event.find().exec(function(err, events){
-
-                data.events = events;
-                return res.ok(data);
-            });
-
-        });
-
-
-
+        }).fail(function(err){
+            return res.serverError(err);
+        })
 
     }
 
