@@ -3,22 +3,18 @@
     "Welcome":                      "Welcome",
     "event":                        "event",
 
-    "//": "Not found",
-    "Resource not found":           "Resource not found",
-    "Resource (%s) doesn't exist":  "The requested resource (%s) doesn't exist",
-    "Model not found":              "The requested model was not found",
-    "Page not found":              "The requested page was not found",
-
-    "//": "Bad request",
-    "Bad request":                  "Bad request",
-    "Email already taken":          "This email is already taken",
-    "Parameters invalid":           "The given parameters are invalid",
-
-    "//": "Forbidden",
-    "Access denied":                "Access denied",
-    "You must be authenticate":    "You must be authenticate",
-    "You cannot access this resource": "You cannot access this resource",
-
-    "//": "500 series",
-    "An internal error occurred":   "An internal error occurred"
+    "//": "Error response",
+    "Resource not found":                   "Resource not found",
+    "Resource (%s) doesn't exist":          "The requested resource (%s) doesn't exist",
+    "Model not found":                      "The requested model was not found",
+    "Page not found":                       "The requested page was not found",
+    "Bad request":                          "Bad request",
+    "Email already taken":                  "This email is already taken",
+    "Parameters invalid":                   "The given parameters are invalid",
+    "Access denied":                        "Access denied",
+    "Bad authentication":                   "Bad authentication",
+    "You must be authenticate":             "You must be authenticate",
+    "You cannot access this resource":      "You cannot access this resource",
+    "An internal error occurred":           "An internal error occurred",
+    "Please use valid username/password":   "Please use a valid username/password couple to be authenticated"
 }

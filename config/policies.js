@@ -36,9 +36,9 @@ module.exports.policies = {
         find:                       ['isAuthenticated'],
         create: true,
         findMultiple:               ['isAuthenticated'],
-        update:                     ['isAuthenticated','preventApiKeyUpdate'],
-        createPasswordResetToken:   ['isAuthenticated','preventApiKeyUpdate'],
-        resetPassword:              ['isAuthenticated','preventApiKeyUpdate'],
+        update:                     ['isAuthenticated'],
+        createPasswordResetToken:   ['isAuthenticated'],
+        resetPassword:              ['isAuthenticated'],
         createEvent:                ['isAuthenticated']
     },
 

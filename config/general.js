@@ -40,6 +40,10 @@ module.exports.general = {
                 emailArleadyTaken: {
                     label: "emailArleadyTaken",
                     message: "Email already taken"
+                },
+                badAuthentication: {
+                    label: "badAuthentication",
+                    message: "Bad authentication"
                 }
                 // ...
             }

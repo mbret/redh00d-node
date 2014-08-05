@@ -11,6 +11,7 @@ var passport = require( "passport" ),
 passport.use(
     new BasicStrategy(
         function (email, password, done) {
+            if( email)
             console.log(email, password);
             User.findOne( {email: email}, function (err, user) {
                 if( err) return done(err);
