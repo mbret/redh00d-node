@@ -60,10 +60,12 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         },
         roleID: {
             type: 'integer',
-            columnName: 'FK_userRoleID'
+            required: false,
+            columnName: 'FK_userRoleID',
+            defaultsTo: sails.config.general.defaultUserRoleName
         },
         role: {
-            type: Role
+            type: 'UserRole'
         },
 
         /**
@@ -74,13 +76,16 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         },
 
         /**
-         * Load the user grade as a complete object
+         * Load the user role as a complete object
          * @param cb
          */
-        loadGrade: function( cb ){
-            UserGrade.findOne({ id: this.gradeID }, function(err, grade){
+        loadRole: function( cb ){
+            UserRole.findOne({ id: this.roleID }, function(err, role){
                 if(err) return cb(err);
-                if(!grade) return cb( new Error("Grade doesn't exist") );
+                if(!role){
+                    sails.log.error("Unable to load role " + this.roleID);
+                    return cb( new Error("Role doesn't exist") );
+                }
                 return cb();
             });
         },

@@ -22,7 +22,7 @@ passport.use(
                     if( !valid ) return done(null, false);
 
                     // load grade for futur test
-                    user.loadGrade( function(err){
+                    user.loadRole( function(err){
                         if(err) return done(err);
                         return done(null, user);
                     } );

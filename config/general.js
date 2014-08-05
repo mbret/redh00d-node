@@ -12,6 +12,8 @@ module.exports.general = {
         "Baptiste Mulot"
     ],
 
+    defaultUserRoleName: 'user',
+
     api: {
         version: '0.0.1',
 
