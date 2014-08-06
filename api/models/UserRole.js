@@ -18,19 +18,22 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
         ID: {
             type: 'integer',
-            autoIncrement: true,
+            required: true,
+//            autoIncrement: true,
             unique: true,
             index: true,
             primaryKey: true,
-            columnName: 'userGradeID'
+            columnName: 'userRoleID'
         },
         name: {
             type: 'string',
-            columnName: 'userGradeName'
+            required: true,
+            columnName: 'userRoleName'
         },
         displayName: {
             type: 'string',
-            columnName: 'userGradeDisplayName'
+            required: true,
+            columnName: 'userRoleDisplayName'
         }
 
 

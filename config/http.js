@@ -45,15 +45,11 @@ module.exports = {
                 'passportInit',
                 'router',
                 'www',
-                'initTestSetDatabase', // @todo remove for production
                 'favicon',
                 '404',
                 '500'
             ],
 
-            initTestSetDatabase: function(req, res, next){
-
-            },
 
             // simple log of http request
             myRequestLogger: function (req, res, next) {

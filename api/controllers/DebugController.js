@@ -17,32 +17,51 @@ module.exports = {
      * @param req
      * @param res
      */
-    dumpDatabase: function(req, res){
+    dumpDatabase: function(req, res) {
 
         var data = {};
-        if( req.user ){
+        if (req.user) {
             data.loggedUser = req.user;
         }
 
         /*
-         * Load data in parallel
+         * This is an example of how structure code when using promises
+         * Some code is executed in parallel and other in sequential
+         * Always use "return" for a promises otherwise values and error will not be catchable
          */
-        Q.all([
-            UserRole.find(),
-            User.find(),
-            Event.find()
+        Q().then(function () {
+            //Load some data in parallel
+            return Q.all([
+                UserRole.find(),
+                Event.find()
 
-        ]).spread(function(roles, users, events){
-            data.roles = roles;
-            data.users = users;
-            data.events = events;
+            ]).spread(function (roles, events) {
+                data.roles = roles;
+                data.events = events;
+
+            });
+
+        }).then(function () {
+            // load users and their roles
+            return User.find().then(function (users) {
+                // for each users load roles
+                var promises = [];
+                for( var i in users ){
+                    promises.push(users[i].loadRole());
+                }
+                return Q.all(promises).then(function(){
+                    data.users = users;
+                })
+            });
+
+        }).then(function () {
             return res.ok(data);
 
-        }).fail(function(err){
+        }).fail(function (err) {
             return res.serverError(err);
-        })
+        });
 
     }
 
-};
+}
 

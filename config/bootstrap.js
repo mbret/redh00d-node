@@ -27,24 +27,30 @@ module.exports.bootstrap = function(cb) {
          */
         initDatabase: function _initDatabase(){
             if(sails.config.initDatabase) {
-                async.parallel({
+                async.series({
 
                     /*
                      * Init roles (using Q promises inside waterline)
                      * They are run synchronously
                      */
                     initRoles: function (cb) {
-                        UserRole.create({ name: 'admin', displayName: 'Administrator' }).then(function (role) {
+
+                        UserRole.create({ name: 'admin', displayName: 'Administrator', ID: 0 }).then(function (role) {
                             var roles = [role];
-                            var newRole = UserRole.create({ name: 'user', displayName: 'User' }).then(function (role) {
+                            var newRole = UserRole.create({ name: 'user', displayName: 'User', ID: 1 }).then(function (role) {
                                 return role;
                             })
                             roles.push(newRole);
                             return roles;
-                        }).spread(function (roles) {
-                            cb(null, 'task1');
+                        }).spread(function (role1, role2) {
+                            console.log(role1);
+                            console.log(role2);
+
+                        }).then(function(){
+                            return cb(null, 'task1');
+
                         }).fail(function (err) {
-                            cb(err);
+                            return cb(err);
                         });
                     },
 
@@ -63,7 +69,7 @@ module.exports.bootstrap = function(cb) {
                         }).done(function () {
                             // clean up
                         });
-                    },
+                    }
 
                 }, function (err) {
                     if (err) return cb(err);

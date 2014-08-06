@@ -60,9 +60,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         },
         roleID: {
             type: 'integer',
-            required: false,
             columnName: 'FK_userRoleID',
-            defaultsTo: sails.config.general.defaultUserRoleName
         },
         role: {
             type: 'UserRole'
@@ -78,16 +76,12 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         /**
          * Load the user role as a complete object
          * @param cb
-         * @todo use promises here
          */
-        loadRole: function( cb ){
-            UserRole.findOne({ id: this.roleID }, function(err, role){
-                if(err) return cb(err);
-                if(!role){
-                    sails.log.error("Unable to load role " + this.roleID);
-                    return cb( new Error("Role doesn't exist") );
-                }
-                return cb();
+        loadRole: function(){
+            var vthis = this;
+            return UserRole.findOne({ ID: vthis.roleID }).then(function(role){
+                if(!role) throw new Error("Trying to load a nonexistent role (role=" + vthis.roleID +")");
+                vthis.role = role;
             });
         },
 
@@ -181,7 +175,24 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             values.apiKey = uuid.v4();
             sails.log.debug("User: Class.beforeCreate: API key generated '%s'", values.apiKey);
             cb();
+        },
+
+        // Set default role
+        function( values, cb){
+            if( ! values.roleID ){
+                sails.log.debug("User.beforeCreate no roleID provided, default is set (default=" + sails.config.general.defaultUserRoleName +")");
+                UserRole.findOne({ name: sails.config.general.defaultUserRoleName }, function(err, role){
+                    if(role){
+                        values.roleID = role.ID;
+                    }
+                    else{
+                        return cb( new Error("Unable to load the role") );
+                    }
+                    return cb(err);
+                })
+            }
         }
+
     ],
 
     beforeUpdate: [
