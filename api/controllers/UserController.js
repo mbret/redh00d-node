@@ -18,69 +18,40 @@
 module.exports = {
 
     /**
-     * find an user.
-     *
+     * Find one user.
+     * Data returned are protected
      * @description :: try to find an user by id
      * @route /users/:id
      * @return {user}
      */
     find: function (req, res) {
-        User.findOne(req.param('id')).exec(function(err,user){
-            if(err){
-                return res.serverError(err);
-            }
-            if(!user){
-                return res.notFound( sails.config.general.api.errors.codes.modelNotFound );
-            }
+        User.findOne(req.param('id'), function(err,user){
+            if(err) return res.serverError(err);
+            if(!user) return res.notFound( sails.config.general.errors.codes.modelNotFound );
             return res.ok({
-                user:user
+                user:user.toCustomer()
             });
         });
-     },
-     
-    /**
-     * find an user.
-     *
-     * @description : try to find an user by email
-     * @route /users/:email
-     * @return {user}
-     */
-    findByEmail: function (req, res) {
-        User.findOne(req.param('email')).exec(function(err,user){
-            if(err){
-                return res.serverError(err);
-            }
-            if(!user){
-                return res.notFound( res.i18n("Resource (%s) doesn't exist", res.i18n('user')) );
-            }
-            return res.ok({
-                user:user
-            });
-        });
-     },
+    },
 
-    // @todo
+    /**
+     * Find multiple users
+     * @todo complete this method (params)
+     * @param req
+     * @param res
+     */
     findMultiple: function (req, res) {
+
         // Get optional parameters from URL to refine the search
         var optionalData = {};
-        if( req.param('id') ){
-            optionalData.ID = req.param('id');
-        }
-        if( req.param('name') ){
-            optionalData.name = req.param('firstname');
-        }
+        if( req.param('id') ) optionalData.ID = req.param('id');
+        if( req.param('name') ) optionalData.name = req.param('firstname');
 
         // Get all events (with data)
-        User.find( optionalData ).exec( function(err, users){
-            if(err){
-                //@todo
-                return res.serverError(err);
-            }
-            if(!events){
-                return res.notFound("No events");
-            }
+        User.find( optionalData, function(err, users){
+            if(err) return res.serverError(err);
             return res.ok({
-                users: users
+                users: User.toCustomer( users )
             });
         });
     },

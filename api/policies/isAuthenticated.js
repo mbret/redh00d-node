@@ -10,7 +10,7 @@
  */
 var passport = require('passport');
 
-module.exports = function(req, res, next) {
+module.exports = function isAuthenticated(req, res, next) {
 
     // Try to authenticate user with basic auth (rest api)
     passport.authenticate( 'basic', { session: false }, function (err, user, info) {

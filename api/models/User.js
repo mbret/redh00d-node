@@ -60,11 +60,11 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         },
         roleID: {
             type: 'integer',
-            columnName: 'FK_userRoleID',
+            columnName: 'FK_userRoleID'
         },
-        role: {
-            type: 'UserRole'
-        },
+//        role: {
+//            type: 'UserRole'
+//        },
 
         /**
          * Get user's full name
@@ -86,15 +86,18 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         },
 
         /**
-         * Custom toJSON() implementation. Removes unwanted attributes.
+         * This method protect sensitive data before sending to customers
+         * Return everything for development
          */
-        toJSON: function() {
+        toCustomer: function() {
             var user = this.toObject();
-            if(sails.config.environment !== 'development') {
-                delete user.password;
-                delete user.encryptedPassword;
-                delete user.sessionTokens;
-                delete user._csrf;
+            if( sails.config.general.protectJsonData ) {
+                user.password = "***";
+                user.email = "***";
+                user.encryptedPassword = "***";
+                user.sessionTokens = "***";
+                user._csrf = "***";
+                user.apiKey = "***";
             }
             return user;
         },
@@ -160,6 +163,18 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             });
         }
     },
+
+    /**
+     * Call .toCustomer() to all user inside the given array and return it
+     */
+    toCustomer: function( users ){
+        var customerUsers = [];
+        for( var i in users ){
+            customerUsers.push( users[i].toCustomer() );
+        }
+        return customerUsers;
+    },
+
 
     beforeCreate: [
         // Encrypt user's password

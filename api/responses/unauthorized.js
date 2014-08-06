@@ -8,7 +8,7 @@
 
 module.exports = function forbidden (code, data) {
 
-    sails.log.debug('Sending 401 ("Unauthorized") response: \n',message, data);
+    sails.log.debug('Sending 401 ("Unauthorized") response: \n',code, data);
 
     // init
     var defaultMessage = this.res.__('Bad authentication');

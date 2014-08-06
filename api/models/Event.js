@@ -23,9 +23,9 @@ module.exports = {
             primaryKey: true,
             columnName: 'eventID'
         },
-        user: {
-            model: 'User'
-        },
+//        user: {
+//            model: 'User'
+//        },
         userID: {
             type: 'integer',
             index: true,

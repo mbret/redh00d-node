@@ -1,5 +1,5 @@
 /**
- * isAuthenticated
+ * isAllowed
  *
  * @module      :: Policy
  * @description :: Simple policy to allow any authenticated user.
@@ -8,18 +8,24 @@
  * @docs        :: http://sailsjs.org/#!documentation/policies, https://github.com/jaredhanson/passport
  *
  */
-var passport = require('passport');
 
-module.exports = function(req, res, next) {
+module.exports = function isAllowed(req, res, next) {
 
     var user = req.user;
     var controllerName = req.options.controller;
     var actionName = req.options.action;
 
-    if( PermissionsService.isAllowed( user.grade.name, controllerName, actionName ) ){
-        return true;
-    }
-    else{
-        return res.forbidden();
-    }
+    // get role
+    UserRole.findOne({ID:user.roleID}).then(function(role){
+        if(!role) throw new Error("Unable to load role");
+        if( PermissionsService.isAllowed( role.name, controllerName, actionName ) ){
+            return next();
+        }
+        else{
+            return res.forbidden();
+        }
+    }).fail(function(err){
+        return next(err);
+    })
+
 };
