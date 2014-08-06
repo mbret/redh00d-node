@@ -22,7 +22,7 @@ module.exports.permissions = {
 
     // They match routes and controller. Ex: /users -> UserController is converted to "user" from req.options.controller
     resources: {
-        user: ['create', 'find', 'findmultiple']
+        user: ['create', 'find', 'findmultiple', 'destroy']
     },
 
     // ACL must use correct roles and resources as defined above
@@ -34,14 +34,16 @@ module.exports.permissions = {
         },
         user: {
             allow: {
-                user: ['find','findmultiple']
+                user: ['find','findmultiple','delete','deleteOthers']
             },
             deny: {
                 user: ['create']
             }
         },
         admin: {
-
+            allow: {
+                user: ['destroy']
+            }
         }
     }
 

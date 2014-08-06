@@ -21,8 +21,9 @@ module.exports = {
   // 'info'	: Display calls from `.error()`, `.warn()`, `.debug()` to `.info()`
   // 'verbose': Display calls from `.error()`, `.warn()`, `.debug()`, `.info()` to `.verbose()`
   //
-  log: {
-    level: 'info'
-  }
+   // Set in local config
+//  log: {
+//    level: 'info'
+//  }
 
 };

@@ -12,19 +12,6 @@ var passport = require('passport');
 
 module.exports = function isAuthenticated(req, res, next) {
 
-    // Try to authenticate user with basic auth (rest api)
-    passport.authenticate( 'basic', { session: false }, function (err, user, info) {
-        if (err) return res.serverError(err);
-
-        // Authentication failed (bad params, no user)
-        if (!user){
-            return res.unauthorized();
-        }
-
-        req.user = user;
-        return next();
-
-    })(req, res, next);
-
+    return req.user.isAuthenticated ? next() : res.unauthorized();
 
 };

@@ -32,7 +32,7 @@ module.exports = {
         var isAllowed = false;
 
         // Continue while hierarchy is not over or access is not explicitly denied!
-        while( currentRole || rightFound === false ){
+        while( currentRole && rightFound !== true ){
 
             var acl = permissions.acl[currentRole];
             // Check if this current role is denied

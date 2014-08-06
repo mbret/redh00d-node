@@ -25,7 +25,7 @@ module.exports.policies = {
 
     UserController: {
         '*':        ['isAuthenticated', 'isAllowed'],
-        create:     true
+        'create':   ['isAllowed'] // let guest pass through authentication
     },
 
     EventController: {
