@@ -19,13 +19,11 @@ module.exports.permissions = {
         }
     },
 
-
     resources: {
         user: {
             controller: 'UserController'
         }
     },
-
 
     acl: {
         guest: {
