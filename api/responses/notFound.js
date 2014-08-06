@@ -27,7 +27,7 @@ module.exports = function notFound (errorCode, message, data) {
     sails.log.debug('Sending 404 ("Not Found") response: \n', errorCode, data);
 
     if(! errorCode || errorCode === null){
-        errorCode = sails.config.general.api.errors.codes.resourceNotFound;
+        errorCode = sails.config.general.errors.codes.resourceNotFound;
     }
 
     if( !data ) data = {};

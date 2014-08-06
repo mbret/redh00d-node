@@ -26,7 +26,7 @@ module.exports.bootstrap = function(cb) {
          * @private
          */
         initDatabase: function _initDatabase(){
-            if(sails.config.initDatabase) {
+            if(sails.config.general.initDatabase) {
 
                 Q().then(function(){
 
@@ -48,6 +48,16 @@ module.exports.bootstrap = function(cb) {
                     return Q.all([
                         User.create({email: 'admin@admin.com', password: 'password'}),
                         User.create({email: 'user@user.com', password: 'password'})
+                    ]);
+
+                }).then(function() {
+
+                    /*
+                     * Init events
+                     */
+                    return Q.all([
+                        Event.create({name:'Soirée pyjama', description:'Venez tous nue', userID: 2, place: 'Toul', date: '2014-12-31'}),
+                        Event.create({name:'Meeting redh00d', description:'On va fumer de la bonne grosse beu !!', userID: 2, place: 'Coloc', date: '2014-12-01'})
                     ]);
 
                 }).then(function() {

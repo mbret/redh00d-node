@@ -21,7 +21,7 @@ passport.use(
                 user.validatePassword(password, function(err, valid){
                     if(err) return done(err);
                     if( !valid ) return done(null, false);
-
+                    return done(null, user);
                     // load grade for futur test
 //                    user.loadRole( function(err){
 //                        if(err) return done(err);

@@ -5,6 +5,7 @@
 
 module.exports.permissions = {
 
+    // They match the role inside database
     roles: {
         guest: {
             parent: null
@@ -19,12 +20,12 @@ module.exports.permissions = {
         }
     },
 
+    // They match routes and controller. Ex: /users -> UserController is converted to "user" from req.options.controller
     resources: {
-        user: {
-            controller: 'UserController'
-        }
+        user: ['create', 'find', 'findmultiple']
     },
 
+    // ACL must use correct roles and resources as defined above
     acl: {
         guest: {
             allow: {
@@ -33,7 +34,7 @@ module.exports.permissions = {
         },
         user: {
             allow: {
-                user: ['find']
+                user: ['find','findmultiple']
             },
             deny: {
                 user: ['create']
@@ -43,4 +44,10 @@ module.exports.permissions = {
 
         }
     }
+
+//    extractResourceNameFromController: function( controllerName ){
+//        var tmp = controllerName.toLowerCase();
+//        tmp = tmp.substr(0, tmp.indexOf("controller"));
+//        return tmp;
+//    }
 };

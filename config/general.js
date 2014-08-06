@@ -14,41 +14,39 @@ module.exports.general = {
 
     defaultUserRoleName: 'user',
 
-    api: {
-        version: '0.0.1',
+    version: '0.0.1',
 
-        errors: {
-            codes: {
-                resourceNotFound: {
-                    label: "resourceNotFound",
-                    message: "Resource not found"
-                },
-                modelNotFound: {
-                    label: "modelNotFound",
-                    message: "Model not found"
-                },
-                pageNotFound: {
-                    label: "pageNotFound",
-                    message: "Page not found"
-                },
-                dbUnavailable: {
-                    label: "dbUnavailable",
-                    message: "Database unavailable"
-                },
-                noAccessRights: {
-                    label: "noAccessRights",
-                    message: "No access rights"
-                },
-                emailArleadyTaken: {
-                    label: "emailArleadyTaken",
-                    message: "Email already taken"
-                },
-                badAuthentication: {
-                    label: "badAuthentication",
-                    message: "Bad authentication"
-                }
-                // ...
+    errors: {
+        codes: {
+            resourceNotFound: {
+                label: "resourceNotFound",
+                message: "Resource not found"
+            },
+            modelNotFound: {
+                label: "modelNotFound",
+                message: "Model not found"
+            },
+            pageNotFound: {
+                label: "pageNotFound",
+                message: "Page not found"
+            },
+            dbUnavailable: {
+                label: "dbUnavailable",
+                message: "Database unavailable"
+            },
+            noAccessRights: {
+                label: "noAccessRights",
+                message: "No access rights"
+            },
+            emailArleadyTaken: {
+                label: "emailArleadyTaken",
+                message: "Email already taken"
+            },
+            badAuthentication: {
+                label: "badAuthentication",
+                message: "Bad authentication"
             }
+            // ...
         }
     },
 

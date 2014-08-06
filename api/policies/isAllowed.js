@@ -17,12 +17,13 @@ module.exports = function isAllowed(req, res, next) {
 
     // get role
     UserRole.findOne({ID:user.roleID}).then(function(role){
-//        if( PermissionsService.isAllowed( role.name, controllerName, actionName ) ){
+        if(!role) throw new Error("Unable to load role");
+        if( PermissionsService.isAllowed( role.name, controllerName, actionName ) ){
             return next();
-//        }
-//        else{
-//            return res.forbidden();
-//        }
+        }
+        else{
+            return res.forbidden();
+        }
     }).fail(function(err){
         return next(err);
     })
