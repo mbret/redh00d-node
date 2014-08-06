@@ -27,54 +27,36 @@ module.exports.bootstrap = function(cb) {
          */
         initDatabase: function _initDatabase(){
             if(sails.config.initDatabase) {
-                async.series({
+
+                Q().then(function(){
 
                     /*
-                     * Init roles (using Q promises inside waterline)
-                     * They are run synchronously
+                     * Init roles (using Q promises)
+                     * They are run in parallel
                      */
-                    initRoles: function (cb) {
+                    return Q.all([
+                        UserRole.create({ name: 'admin', displayName: 'Administrator', ID: 0 }),
+                        UserRole.create({ name: 'user', displayName: 'User', ID: 1 })
+                    ]);
 
-                        UserRole.create({ name: 'admin', displayName: 'Administrator', ID: 0 }).then(function (role) {
-                            var roles = [role];
-                            var newRole = UserRole.create({ name: 'user', displayName: 'User', ID: 1 }).then(function (role) {
-                                return role;
-                            })
-                            roles.push(newRole);
-                            return roles;
-                        }).spread(function (role1, role2) {
-                            console.log(role1);
-                            console.log(role2);
-
-                        }).then(function(){
-                            return cb(null, 'task1');
-
-                        }).fail(function (err) {
-                            return cb(err);
-                        });
-                    },
+                }).then(function(){
 
                     /*
                      * Init users (using Q library)
-                     * They are run asynchronously
+                     * They are run in parallel
                      */
-                    initUsers: function (cb) {
-                        Q.all([
-                            User.create({email: 'admin@admin.com', password: 'password'}),
-                            User.create({email: 'user@user.com', password: 'password'})
-                        ]).spread(function () {
-                            return cb(null, 'task2');
-                        }).catch(function (err) {
-                            return cb(err);
-                        }).done(function () {
-                            // clean up
-                        });
-                    }
+                    return Q.all([
+                        User.create({email: 'admin@admin.com', password: 'password'}),
+                        User.create({email: 'user@user.com', password: 'password'})
+                    ]);
 
-                }, function (err) {
-                    if (err) return cb(err);
-                    return cb();
+                }).then(function() {
+                    return cb(null, 'task1');
+
+                }).fail(function (err) {
+                    return cb(err);
                 });
+
             }
             else{
                 return cb();
