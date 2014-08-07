@@ -35,14 +35,15 @@ module.exports = {
                 'startRequestTimer',
                 'cookieParser',
                 'session',
-                'myRequestLogger',
+                'myRequestLogger', // custom
                 'bodyParser',
                 'handleBodyParserError',
                 'compress',
                 'methodOverride',
                 'poweredBy',
                 '$custom',
-                'passportInit',
+                'passportInit', // custom
+                'authenticateUser', // custom
                 'router',
                 'www',
                 'favicon',
@@ -50,6 +51,39 @@ module.exports = {
                 '500'
             ],
 
+            /**
+             * This function authenticate a user from his request each request time.
+             * The user is guest or (one role of this application)
+             * @param req
+             * @param res
+             * @param next
+             */
+            authenticateUser: function(req, res, next){
+                // Try to authenticate user with basic auth (rest api)
+                passport.authenticate( 'basic', { session: false }, function (err, user, info) {
+                    if (err) return next(err);
+                    // Authentication failed (bad params, no user)
+                    if (!user){
+                        req.user = {};
+                        req.user.isAuthenticated = false;
+                        req.user.isGuest = true;
+                        req.user.role = 'guest';
+                        return next();
+                    }
+                    else{
+                        req.user = user;
+                        req.user.isAuthenticated = true;
+                        req.user.isGuest = false;
+                        req.user.role = 'guest';
+                        // get role of user
+                        return UserRole.findOne({ID:req.user.roleID}).then(function(role){
+                            if(!role) throw new Error("Unable to load role");
+                            req.user.role = role.name;
+                            return next();
+                        });
+                    }
+                })(req, res, next);
+            },
 
             // simple log of http request
             myRequestLogger: function (req, res, next) {

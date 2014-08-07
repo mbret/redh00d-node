@@ -27,7 +27,7 @@ module.exports = {
     find: function (req, res) {
         User.findOne(req.param('id'), function(err,user){
             if(err) return res.serverError(err);
-            if(!user) return res.notFound( sails.config.general.errors.codes.modelNotFound );
+            if(!user) return res.notFound();
             return res.ok({
                 user:user.toCustomer()
             });
@@ -45,7 +45,7 @@ module.exports = {
         // Get optional parameters from URL to refine the search
         var optionalData = {};
         if( req.param('id') ) optionalData.ID = req.param('id');
-        if( req.param('name') ) optionalData.name = req.param('firstname');
+        if( req.param('name') ) optionalData.name = req.param('name');
 
         // Get all events (with data)
         User.find( optionalData, function(err, users){
@@ -166,9 +166,24 @@ module.exports = {
 
     },
 
-    // @todo
-    destroy: function (req, res) {
-
+    /**
+     * Delete an user
+     * @todo complete it
+     * @param req
+     * @param res
+     */
+    delete: function (req, res) {
+        // Case of user try to update an other account
+        if( req.param('id') != req.user.ID && ! PermissionsService.isAllowed( req.user.role, req.options.controller, 'deleteOthers') ){
+            return res.forbidden();
+        }
+        else{
+            // @todo if not our account isAllowed( role, user, deleteOther) ?
+            User.destroy({ID:req.param('id')}, function(err){
+                if(err) return res.serverError(err);
+                return res.noContent();
+            });
+        }
     },
 
     /**

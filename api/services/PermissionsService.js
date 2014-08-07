@@ -11,12 +11,10 @@ module.exports = {
      * @param actionName
      * @returns {boolean}
      */
-    isAllowed: function( roleName, controllerName, actionName ){
+    isAllowed: function( roleName, resource, action ){
         // `sails` object is available here:
 
         var permissions = sails.config.permissions;
-        var resource = controllerName.toLowerCase();
-        var action = actionName.toLowerCase();
 
         // Reject if ACL is not register for this action/resource
         if( ! permissions.resources[resource] || ! permissions.resources[resource].indexOf(action) < 0 ){
@@ -32,7 +30,7 @@ module.exports = {
         var isAllowed = false;
 
         // Continue while hierarchy is not over or access is not explicitly denied!
-        while( currentRole || rightFound === false ){
+        while( currentRole && rightFound !== true ){
 
             var acl = permissions.acl[currentRole];
             // Check if this current role is denied

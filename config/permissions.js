@@ -34,14 +34,16 @@ module.exports.permissions = {
         },
         user: {
             allow: {
-                user: ['find','findmultiple']
+                user: ['find','findmultiple','delete','deleteOthers']
             },
             deny: {
                 user: ['create']
             }
         },
         admin: {
-
+            allow: {
+                user: ['destroy']
+            }
         }
     }
 

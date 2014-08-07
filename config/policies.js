@@ -24,7 +24,7 @@ module.exports.policies = {
     '*': ['rejectAll'], // nothing allowed by default
 
     UserController: {
-        '*':        ['isAllowed'],
+        '*':        ['isAllowed']
     },
 
     EventController: {

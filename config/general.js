@@ -18,6 +18,10 @@ module.exports.general = {
 
     errors: {
         codes: {
+            notFound: {
+                label: "notFound",
+                message: "Not found"
+            },
             resourceNotFound: {
                 label: "resourceNotFound",
                 message: "Resource not found"
@@ -34,9 +38,9 @@ module.exports.general = {
                 label: "dbUnavailable",
                 message: "Database unavailable"
             },
-            noAccessRights: {
-                label: "noAccessRights",
-                message: "No access rights"
+            accessForbidden: {
+                label: "accessForbidden",
+                message: "Access forbidden"
             },
             emailArleadyTaken: {
                 label: "emailArleadyTaken",
@@ -45,6 +49,10 @@ module.exports.general = {
             badAuthentication: {
                 label: "badAuthentication",
                 message: "Bad authentication"
+            },
+            serverError: {
+                label: "serverError",
+                message: "Server error"
             }
             // ...
         }

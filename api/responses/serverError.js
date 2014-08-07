@@ -1,40 +1,16 @@
 /**
  * 500 (Server Error) Response
  *
- * Usage:
- * return res.serverError()
- * return res.serverError( 'An internal error occurred')
- * return res.serverError( 'An internal error occurred', { errors } )
- * return res.serverError( 'An internal error occurred', { errors } , { additional data } );
  *
- * Exemple of serverError response:
- *
- *  {
- *      message: 'An internal error occurred',
- *      errors: {
- *                  errors ...
- *              },
- *      ... optional data ...
- *  }
  *
  */
 
-module.exports = function serverError (message, errors, data) {
+module.exports = function serverError (err, data) {
 
-    sails.log.error('Sending 500 ("Server Error") response: \n',message, errors, data);
-
-    // Set status code
+    sails.log.error("Server error: ", err);
     this.res.status(500);
 
-    // init
-    var defaultMessage = this.res.__('An internal error occurred');
-    if( !data ) data = {};
-    if( message ) data.message = message;
-    else data.message = defaultMessage;
-    data.errors = errors;
-
-    // send response
-    return ResponseHelper.helper.handleSend( this.req, this.res, data );
+    return ResponseHelper.helper.handleErrorResponse( this.req, this.res, data, sails.config.general.errors.codes.serverError );
 
 };
 
