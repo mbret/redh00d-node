@@ -24,6 +24,7 @@ module.exports = function isAllowed(req, res, next) {
         else{
             return res.forbidden();
         }
+
     }).fail(function(err){
         return next(err);
     })

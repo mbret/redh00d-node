@@ -24,12 +24,11 @@ module.exports.policies = {
     '*': ['rejectAll'], // nothing allowed by default
 
     UserController: {
-        '*':        ['isAuthenticated', 'isAllowed'],
-        create:     true
+        '*':        ['isAllowed'],
     },
 
     EventController: {
-        '*':        ['isAuthenticated','isAllowed']
+        '*':        ['isAllowed']
     }
 
 	// Here's an example of mapping some policies to run before

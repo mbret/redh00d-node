@@ -50,10 +50,13 @@ module.exports = {
         }
 
         return isAllowed;
+    },
+
+
+
+    hasResource: function( resourceName ){
+        return true;
     }
-
-
-
 };
 
 // `sails` is not available out here

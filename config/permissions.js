@@ -21,9 +21,9 @@ module.exports.permissions = {
     },
 
     // They match routes and controller. Ex: /users -> UserController is converted to "user" from req.options.controller
-    resources: {
-        user: ['create', 'find', 'findmultiple']
-    },
+    resources: [
+        'user'
+    ],
 
     // ACL must use correct roles and resources as defined above
     acl: {
@@ -45,9 +45,4 @@ module.exports.permissions = {
         }
     }
 
-//    extractResourceNameFromController: function( controllerName ){
-//        var tmp = controllerName.toLowerCase();
-//        tmp = tmp.substr(0, tmp.indexOf("controller"));
-//        return tmp;
-//    }
 };
