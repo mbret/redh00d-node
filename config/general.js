@@ -14,6 +14,8 @@ module.exports.general = {
 
     defaultUserRoleName: 'user',
 
+    initDatabase: false,
+
     version: '0.0.1',
 
     errors: {

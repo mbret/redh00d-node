@@ -8,7 +8,6 @@
 
 //var bcrypt = require('bcrypt');
 var uuid = require("node-uuid");
-var  _ = require("lodash");
 
 // use this method https://groups.google.com/forum/#!topic/sailsjs/GTGoOGHAEvE to emulate inheritance of object
 // The base model is cloned and then merged with this model. This model is a child of the clone so not a child of ./BaseModel itself

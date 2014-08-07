@@ -10,7 +10,6 @@
  */
 
 var Promise = require("bluebird");
-var async = require("async");
 var Q = require("q");
 
 module.exports.bootstrap = function(cb) {

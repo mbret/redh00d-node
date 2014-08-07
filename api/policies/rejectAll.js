@@ -13,6 +13,6 @@ var passport = require('passport');
 
 module.exports = function rejectAll(req, res, next) {
 
-    return res.forbidden( res.i18n("You cannot access this resource") );
+    return res.forbidden();
 
 };

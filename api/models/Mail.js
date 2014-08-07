@@ -7,7 +7,6 @@
  */
 
 var sails = require("sails");
-var _ = require("lodash");
 
 module.exports = {
 

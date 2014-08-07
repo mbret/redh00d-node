@@ -1,7 +1,6 @@
 /**
  *
  */
-var  _ = require("lodash");
 module.exports = {
 
     /**
@@ -16,8 +15,8 @@ module.exports = {
 
         var permissions = sails.config.permissions;
 
-        // Reject if ACL is not register for this action/resource
-        if( ! permissions.resources[resource] || ! permissions.resources[resource].indexOf(action) < 0 ){
+        // Reject if ACL is not register for this resource
+        if( ! this._hasResource(resource) ){
             sails.log.debug("Permission policy, trying to get a unknown resource or action [resource="+resource+"][action="+action+"]");
             return false;
         }
@@ -50,11 +49,10 @@ module.exports = {
         return isAllowed;
     },
 
-
-
-    hasResource: function( resourceName ){
-        return true;
+    _hasResource: function( resource ){
+        return sails.config.permissions.resources.indexOf(resource) < 0 ? false : true;
     }
+
 };
 
 // `sails` is not available out here
