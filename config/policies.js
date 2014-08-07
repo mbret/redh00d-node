@@ -21,14 +21,14 @@ module.exports.policies = {
 
     // Default policy for all controllers and actions
     // (`true` allows public access)
-    '*': ['rejectAll'], // nothing allowed by default
+    '*': ['onlyJSON','rejectAll'], // nothing allowed by default
 
     UserController: {
-        '*':        ['isAllowed']
+        '*':        ['onlyJSON','isAllowed']
     },
 
     EventController: {
-        '*':        ['isAllowed']
+        '*':        ['onlyJSON','isAllowed']
     }
 
 	// Here's an example of mapping some policies to run before

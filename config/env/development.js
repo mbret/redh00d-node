@@ -20,13 +20,12 @@ module.exports = {
         connection: 'memoryDb'
     },
 
-
     general: {
         initDatabase: true
     },
 
     policies: {
-        DebugController: true
+        DevController: true
     }
 
 };
