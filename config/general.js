@@ -14,7 +14,8 @@ module.exports.general = {
 
     defaultUserRoleName: 'user',
 
-    initDatabase: false,
+    // Set this variable to true to initialize default values
+//    initDatabase: false,
 
     version: '0.0.1',
 
