@@ -23,28 +23,12 @@ module.exports.policies = {
     // (`true` allows public access)
     '*': ['rejectAll'], // nothing allowed by default
 
-//
-//    AuthController: {
-//        'login': ['isUnAuthenticated'],
-//        'logout': ['isAuthenticated']
-//    },
-
     UserController: {
-        find:                       ['isAuthenticated'],
-        create: true,
-        findMultiple:               ['isAuthenticated'],
-        update:                     ['isAuthenticated'],
-        createPasswordResetToken:   ['isAuthenticated'],
-        resetPassword:              ['isAuthenticated'],
-        createEvent:                ['isAuthenticated']
+        '*':        ['isAllowed'],
     },
 
     EventController: {
-        find:           ['isAuthenticated'],
-        findMultiple:   ['isAuthenticated'],
-        create:         ['isAuthenticated'],
-        update:         ['isAuthenticated'],
-        destroy:        ['isAuthenticated']
+        '*':        ['isAllowed']
     }
 
 	// Here's an example of mapping some policies to run before

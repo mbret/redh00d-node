@@ -29,7 +29,7 @@ exports.helper = {
             var session = req.session;
 //            session.ID = req.sessionID;
             data._debug = {
-                api_version: sails.config.general.api.version,
+                api_version: sails.config.general.version,
                 request_locale: res.locale,
 //                request_signed_cookies: req.signedCookies,
 //                request_unsigned_cookies: req.cookies,

@@ -45,13 +45,13 @@ module.exports = {
             // load users and their roles
             return User.find().then(function (users) {
                 // for each users load roles
-                var promises = [];
-                for( var i in users ){
-                    promises.push(users[i].loadRole());
-                }
-                return Q.all(promises).then(function(){
+//                var promises = [];
+//                for( var i in users ){
+//                    promises.push(users[i].loadRole());
+//                }
+//                return Q.all(promises).then(function(){
                     data.users = users;
-                })
+//                })
             });
 
         }).then(function () {
