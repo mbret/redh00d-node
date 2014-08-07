@@ -36,7 +36,8 @@ module.exports.routes = {
     },
 
     // Debug route
-    'get /api/debug/db': 'DebugController.dumpDatabase',
+    'get  /api/debug/db': 'DebugController.dumpDatabase',
+    'post /api/debug/db': 'DebugController.initDatabase',
 
     /**
      * EVENT relatives routes
