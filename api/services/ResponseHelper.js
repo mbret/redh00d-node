@@ -74,7 +74,15 @@ exports.helper = {
             }
         }
 
-        return res.jsonx( data );
+        // If request does not accept application/json then display special page
+        console.log(req.options);
+        if( !req.wantsJSON ){
+            return res.view('wronguse');
+        }
+        else{
+            return res.jsonx( data );
+        }
+
     }
 
 
