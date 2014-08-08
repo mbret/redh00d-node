@@ -32,7 +32,7 @@ module.exports.routes = {
     },
 
     'get /api/doc': function(req, res, next){
-        return res.view('doc/index');
+        return res.view('doc');
     },
 
     // Debug route
