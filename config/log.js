@@ -10,16 +10,16 @@
  * http://sailsjs.org/#/documentation/concepts/Logging
  */
 
-var winston = require('winston');
-//    Sentry = require('winston-sentry');
-var customLogger = new winston.Logger({
-//    transports: [//
-//        new Sentry({
-//            level: 'info',
-//            dsn: 'dsn'
-//        })
-//    ],
-});
+//var winston = require('winston');
+////    Sentry = require('winston-sentry');
+//var customLogger = new winston.Logger({
+////    transports: [//
+////        new Sentry({
+////            level: 'info',
+////            dsn: 'dsn'
+////        })
+////    ],
+//});
 
 module.exports.log = {
 
@@ -35,7 +35,7 @@ module.exports.log = {
      *                                                                          *
      ***************************************************************************/
 
-    custom: customLogger
+//    custom: customLogger
     // level: 'info'
 
 };
