@@ -13,8 +13,7 @@
 var winston = require('winston');
 //    Sentry = require('winston-sentry');
 var customLogger = new winston.Logger({
-//    transports: [
-//
+//    transports: [//
 //        new Sentry({
 //            level: 'info',
 //            dsn: 'dsn'

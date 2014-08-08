@@ -106,6 +106,15 @@ module.exports = {
         }).fail(function (err) {
             return res.serverError(err);
         });
+    },
+
+    /**
+     * Display logs
+     * @param req
+     * @param res
+     */
+    logs: function(req, res){
+        res.ok();
     }
 
 }

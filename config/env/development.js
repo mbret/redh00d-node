@@ -26,7 +26,7 @@ module.exports = {
     },
 
     policies: {
-        DebugController: true
+        DevController: true
     },
 
     log: {

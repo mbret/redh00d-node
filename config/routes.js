@@ -25,6 +25,8 @@ module.exports.routes = {
     // This path is used to do some stuff in any way before all controllers
     // We could have call a controller which implement function(req, res, next) and call at last next()
     // but due to short logic/code a function placed here is more practice.
+    // It's not possible to use middleware because before router we should have to hard check the request (no req.wantsJson available)
+    // and after router all these routes has been checked !
     '*': function preDispatch(req, res, next) {
 
         // If request does not accept application/json then block request
@@ -36,8 +38,9 @@ module.exports.routes = {
     },
 
     // Debug route
-    'get  /api/debug/db': 'DebugController.dumpDatabase',
-    'post /api/debug/db': 'DebugController.initDatabase',
+    'get  /api/dev/db': 'DevController.dumpDatabase',
+    'post /api/dev/db': 'DevController.initDatabase',
+    'get  /api/dev/logs':'DevController.logs',
 
     /**
      * EVENT relatives routes
