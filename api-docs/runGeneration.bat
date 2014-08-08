@@ -1,2 +1,2 @@
 
-apidoc -i ./sources -o ./generated-doc
+apidoc -i ./sources -o "./generated-doc"

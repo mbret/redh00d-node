@@ -160,7 +160,7 @@
  */
 
 /**
- * @apiDefineErrorStructure authorizationError
+ * @apiDefineErrorStructure unauthorizedError
  */
 
 // 409 Conflict

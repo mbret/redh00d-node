@@ -28,13 +28,11 @@ module.exports.routes = {
     // It's not possible to use middleware because before router we should have to hard check the request (no req.wantsJson available)
     // and after router all these routes has been checked !
     '*': function preDispatch(req, res, next) {
-
-        // If request does not accept application/json then block request
-        if( !req.wantsJSON ){
-            return res.view('layout');
-        }
-
         return next();
+    },
+
+    'get /api/doc': function(req, res, next){
+        return res.view('doc/index');
     },
 
     // Debug route
