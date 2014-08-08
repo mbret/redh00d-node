@@ -27,6 +27,10 @@ module.exports = {
 
     policies: {
         DebugController: true
+    },
+
+    log: {
+        filePath: __dirname + '../../logs.log'
     }
 
 };

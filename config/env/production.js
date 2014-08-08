@@ -32,8 +32,9 @@ module.exports = {
    ***************************************************************************/
 
     log: {
-        level: "silent"
-    },
+        level: "warn",
+        filePath: __dirname + '../../logs.log'
+    }
 
 
 };
