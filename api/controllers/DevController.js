@@ -108,13 +108,58 @@ module.exports = {
         });
     },
 
+    deleteLogs: function(req, res){
+        var fs = require('fs');
+        var input = __dirname + '../../../data/logs.log';
+        fs.truncate(input, 0, function () {
+            res.set('Content-Type', 'text/html');
+            return res.send(200, "removed");
+        });
+
+    },
+
     /**
      * Display logs
      * @param req
      * @param res
      */
     logs: function(req, res){
-        res.ok();
+
+        var fs = require('fs');
+        var logs = "";
+        var input = fs.createReadStream(__dirname + '../../../data/logs.log');
+
+        function readLines(input, func, cb) {
+            var remaining = '';
+
+            input.on('data', function(data) {
+                remaining += data;
+                var index = remaining.indexOf('\n');
+                while (index > -1) {
+                    var line = remaining.substring(0, index);
+                    remaining = remaining.substring(index + 1);
+                    func(line);
+                    index = remaining.indexOf('\n');
+                }
+            });
+
+            input.on('end', function() {
+                if (remaining.length > 0) {
+                    func(remaining);
+                }
+                else{
+                    cb();
+                }
+            });
+        }
+
+        readLines(input, function (data) {
+            logs = logs + data + "<br/>";
+        }, function(){
+            logs += '<div id="end" ></div>';
+            res.set('Content-Type', 'text/html');
+            return res.send(200, logs);
+        })
     }
 
 }

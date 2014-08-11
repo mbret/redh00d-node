@@ -11,7 +11,7 @@
 
 module.exports.bootstrap = function(cb) {
 
-    console.log(sails.log);
+    sails.log(sails.log);
     return cb();
 
 };

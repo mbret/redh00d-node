@@ -31,7 +31,7 @@ module.exports = {
     },
 
     log: {
-        filePath: __dirname + '../../logs.log'
+        //
     }
 
 };

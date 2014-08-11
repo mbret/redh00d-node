@@ -33,7 +33,6 @@ module.exports = {
 
     log: {
         level: "warn",
-        filePath: __dirname + '../../logs.log'
     }
 
 

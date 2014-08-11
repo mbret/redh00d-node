@@ -39,6 +39,7 @@ module.exports.routes = {
     'get  /api/dev/db': 'DevController.dumpDatabase',
     'post /api/dev/db': 'DevController.initDatabase',
     'get  /api/dev/logs':'DevController.logs',
+    'get  /api/dev/delete-logs':'DevController.deleteLogs',
 
     /**
      * EVENT relatives routes
