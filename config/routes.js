@@ -31,7 +31,7 @@ module.exports.routes = {
         return next();
     },
 
-    'get /api/doc': function(req, res, next){
+    'get /api/doc': function(req, res){
         return res.view('doc');
     },
 
