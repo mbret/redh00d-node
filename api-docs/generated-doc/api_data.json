@@ -87,6 +87,71 @@
     "filename": "sources/API.js"
   },
   {
+    "type": "post",
+    "url": "/dev/db",
+    "title": "Display some database info",
+    "name": "displayDB",
+    "group": "Dev",
+    "description": "<p>Display some database info</p>",
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "get http://localhost/dev/db\n"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "sources/Development.js"
+  },
+  {
+    "type": "get",
+    "url": "/dev/logs",
+    "title": "Display logs",
+    "name": "displayLogs",
+    "group": "Dev",
+    "groupDescription": "<p>Documentation relative to dev only purpose</p>",
+    "description": "<p>Display logs</p>",
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "get http://localhost/dev/logs\n"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "sources/Development.js"
+  },
+  {
+    "type": "post",
+    "url": "/dev/db",
+    "title": "Initialize database",
+    "name": "initDB",
+    "group": "Dev",
+    "description": "<p>Initialize database</p>",
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "post http://localhost/dev/db\n"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "sources/Development.js"
+  },
+  {
+    "type": "get",
+    "url": "/dev/delete-logs",
+    "title": "Reset logs",
+    "name": "resetLogs",
+    "group": "Dev",
+    "description": "<p>Reset logs</p>",
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "get http://localhost/dev/delete-logs\n"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "sources/Development.js"
+  },
+  {
     "type": "",
     "url": "{}",
     "title": "Errors codes",
@@ -1644,22 +1709,11 @@
     "filename": "sources/User.js"
   },
   {
-    "success": {
-      "fields": {
-        "Success (200 OK) response parameters": [
-          {
-            "group": "200",
-            "type": "Object",
-            "field": "object",
-            "optional": false,
-            "description": "<p>Requested object.</p>"
-          }
-        ]
-      },
+    "error": {
       "examples": [
         {
-          "title": "Success (200 OK) response sample:",
-          "content": "   HTTP/1.1 200 OK\n   {\n     \"object\": {\n        \"field1\": \"Foo\",\n        \"field2\": \"Bar\",\n        ...\n     },\n   }\n"
+          "title": "Error (500 Serveur Error) response sample:",
+          "content": "   HTTP/1.1 500 Serveur Error\n   {\n     \"message\": \"Database unavailable\",\n     \"code\": \"dbUnavailable\"\n   }\n"
         }
       ]
     },
@@ -1700,11 +1754,22 @@
     "filename": "sources/_general.js"
   },
   {
-    "error": {
+    "success": {
+      "fields": {
+        "Success (201 Created) response parameters": [
+          {
+            "group": "201",
+            "type": "Object",
+            "field": "object",
+            "optional": false,
+            "description": "<p>The created object.</p>"
+          }
+        ]
+      },
       "examples": [
         {
-          "title": "Error (500 Serveur Error) response sample:",
-          "content": "   HTTP/1.1 500 Serveur Error\n   {\n     \"message\": \"Database unavailable\",\n     \"code\": \"dbUnavailable\"\n   }\n"
+          "title": "Success (201 Created) response sample:",
+          "content": "HTTP/1.1 201 Created\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n}\n"
         }
       ]
     },
@@ -1902,20 +1967,20 @@
   {
     "success": {
       "fields": {
-        "Success (201 Created) response parameters": [
+        "Success (200 OK) response parameters": [
           {
-            "group": "201",
+            "group": "200",
             "type": "Object",
             "field": "object",
             "optional": false,
-            "description": "<p>The created object.</p>"
+            "description": "<p>Requested object.</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "Success (201 Created) response sample:",
-          "content": "HTTP/1.1 201 Created\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n}\n"
+          "title": "Success (200 OK) response sample:",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"object\": {\n        \"field1\": \"Foo\",\n        \"field2\": \"Bar\",\n        ...\n     },\n   }\n"
         }
       ]
     },
