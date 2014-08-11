@@ -77,6 +77,7 @@ exports.helper = {
         // If request does not accept application/json then display special page
         console.log(req.options);
         if( !req.wantsJSON ){
+            sails.log.debug("Request " + req.options.controller + " " + req.options.action + " does not accept json");
             res.status(200);
             return res.view('wronguse');
         }
