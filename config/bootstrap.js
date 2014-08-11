@@ -11,8 +11,9 @@
 
 module.exports.bootstrap = function(cb) {
 
+    // @todo create and init data/access.log if it doesnt exist
     // @todo create and init data/logs.log if it doesnt exist
-    sails.log(sails.log);
+
     return cb();
 
 };

@@ -54,27 +54,19 @@ module.exports = {
             /**
              * This function authenticate a user from his request each request time.
              * The user is guest or (one role of this application)
-             * @param req
-             * @param res
-             * @param next
              */
             authenticateUser: function(req, res, next){
                 // Try to authenticate user with basic auth (rest api)
                 passport.authenticate( 'basic', { session: false }, function (err, user, info) {
                     if (err) return next(err);
-                    // Authentication failed (bad params, no user)
-                    if (!user){
-                        req.user = {};
-                        req.user.isAuthenticated = false;
-                        req.user.isGuest = true;
-                        req.user.role = 'guest';
-                        return next();
-                    }
+
+                    req.user = (!user)? {}: user;
+                    req.user.isAuthenticated = (!user)? false: true;
+                    req.user.isGuest = (!user)? true: false;
+                    req.user.role = (!user)? 'guest': 'something' /* find later*/ ;
+
+                    if(!user) return next();
                     else{
-                        req.user = user;
-                        req.user.isAuthenticated = true;
-                        req.user.isGuest = false;
-                        req.user.role = 'guest';
                         // get role of user
                         return UserRole.findOne({ID:req.user.roleID}).then(function(role){
                             if(!role) throw new Error("Unable to load role");
@@ -82,12 +74,21 @@ module.exports = {
                             return next();
                         });
                     }
+
                 })(req, res, next);
             },
 
             // simple log of http request
             myRequestLogger: function (req, res, next) {
                 sails.log.info(req.method, req.url);
+
+                // Log access in a more detailed way
+                var accessLogger = new (require('winston').Logger)({
+                    transports: [
+                        new (require('winston').transports.File)({ filename: 'data/access.log', json:false })
+                    ]
+                });
+                accessLogger.info("[" + req.ip, req.host + "] " + req.protocol, req.method, req.url);
                 return next();
             },
 
