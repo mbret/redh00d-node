@@ -17,8 +17,8 @@ module.exports = {
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
     models: {
-        connection: 'memoryDb',
-        migrate: 'drop'
+        connection: 'localDiskDb',
+        migrate: 'drop' // erase database before each launch
     },
 
 
@@ -31,7 +31,7 @@ module.exports = {
     },
 
     log: {
-        //
+        level: 'info'
     }
 
 };

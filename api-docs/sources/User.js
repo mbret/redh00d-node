@@ -4,10 +4,10 @@
 // ------------------------------------------------------------------------------------------
 /**
  * @apiDefineStructure fetchUsersParams
- * @apiParam (urlParam) {Number} [id] Use it to retrieve only one user with its ID.
+ * @apiParam (urlParam) {Number} [id]
  * @apiParam (urlParam) {String} [firstname]
  * @apiParam (urlParam) {String} [lastname]
- * @apiParam (urlParam) {String} [sort] Sort results in differant way.
+ * @apiParam (urlParam) {String} [firstname_sort] (asc/desc)
  * @todo write more here
  */
 

@@ -3,36 +3,7 @@
  *
  * @type {{handleSend: handleSend}}
  */
-exports.helper = {
-
-
-    /**
-     * Handle error responses.
-     * - log response
-     * - affect the default error information if something is missing
-     * - call normal response handler
-     * @param req
-     * @param res
-     * @param data
-     * @param defaultErrorCode
-     * @returns {*}
-     */
-    handleErrorResponse: function(req, res, data, defaultErrorCode){
-        if( !data ) data = {};
-
-        if( !data.message ){
-            if( data.code ){
-                data.message = res.__( sails.config.general.errors[data.code].message );
-            }
-            else{
-                data.message = res.__( defaultErrorCode.message );
-            }
-        }
-        if( !data.code ) data.code = defaultErrorCode.label;
-
-        sails.log.info('Sending ' + res.statusCode + ' response: \n', data);
-        return this.handleSend(req, res, data);
-    },
+module.exports = {
 
     /**
      * This method handle the response sending.
@@ -75,7 +46,6 @@ exports.helper = {
         }
 
         // If request does not accept application/json then display special page
-        console.log(req.options);
         if( !req.wantsJSON ){
             sails.log.debug("Request " + req.options.controller + " " + req.options.action + " does not accept json");
             res.status(200);
@@ -85,6 +55,36 @@ exports.helper = {
             return res.jsonx( data );
         }
 
+    },
+
+
+    /**
+     * Handle error responses.
+     * - log response
+     * - affect the default error information if something is missing
+     * - call normal response handler
+     * @param req
+     * @param res
+     * @param data
+     * @param defaultErrorCode
+     * @returns {*}
+     */
+    handleErrorSend: function(req, res, data, defaultErrorCode){
+        var defaultMessage = sails.config.general.errors.codes[defaultErrorCode];
+
+        if( !data ) data = {};
+
+        if( !data.message ){
+            if( data.code ){
+                data.message = res.__( sails.config.general.errors.codes[data.code] );
+            }
+            else{
+                data.message = res.__( defaultMessage );
+            }
+        }
+        if( !data.code ) data.code = defaultErrorCode;
+
+        return this.handleSend(req, res, data);
     }
 
 

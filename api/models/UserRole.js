@@ -17,7 +17,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         ID: {
             type: 'integer',
             required: true,
-//            autoIncrement: true,
+            autoIncrement: true,
             unique: true,
             index: true,
             primaryKey: true,

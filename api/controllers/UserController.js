@@ -20,12 +20,11 @@ module.exports = {
     /**
      * Find one user.
      * Data returned are protected
-     * @description :: try to find an user by id
      * @route /users/:id
-     * @return {user}
+     * @return {user|500|404}
      */
     find: function (req, res) {
-        User.findOne(req.param('id'), function(err,user){
+        User.findOne({'s':req.param('id')}, function(err,user){
             if(err) return res.serverError(err);
             if(!user) return res.notFound();
             return res.ok({
@@ -36,42 +35,32 @@ module.exports = {
 
     /**
      * Find multiple users
-     * @todo complete this method (params)
-     * @param req
-     * @param res
+     * @todo complete this method (params). Add a request like 'name like %' which return user which match a part of string
+     * @return {users|500}
      */
     findMultiple: function (req, res) {
 
         // Get optional parameters from URL to refine the search
         var optionalData = {};
-        if( req.param('id') ) optionalData.ID = req.param('id');
-        if( req.param('name') ) optionalData.name = req.param('name');
+        var optionalSortData = {};
+        if( req.param('id') ) optionalData.ID = req.param('ID');
+        if( req.param('firstname') ) optionalData.firstName = req.param('firstname');
+        if( req.param('lastname') ) optionalData.lastName = req.param('lastname');
+        if( req.param('firstname_sort') ) optionalSortData.firstName = req.param('firstname_sort');
 
-        // Get all events (with data)
-        User.find( optionalData, function(err, users){
+        // Build query with sort, etc
+        var findQuery = User.find(optionalData);
+        if( optionalSortData !== {} ) {
+            findQuery.sort(optionalSortData);
+        }
+
+        // Run job
+        findQuery.exec(function callback(err, users){
             if(err) return res.serverError(err);
             return res.ok({
                 users: User.toCustomer( users )
             });
         });
-    },
-
-    /**
-     * GET /events/:event-id/users
-     * @param req
-     * @param res
-     */
-    findMultipleByEvent: function(req, res){
-
-    },
-
-    /**
-     * GET /events/:event-id/users/:id
-     * @param req
-     * @param res
-     */
-    findUserByEvent: function(req, res){
-
     },
 
     /**
@@ -109,7 +98,6 @@ module.exports = {
                     if(err){
                         // Validation error
                         if(err.ValidationError){
-                            console.log(res.i18n);
                             return res.badRequest( res.i18n('Parameters invalid'), err.ValidationError );
                         }
                         else{
@@ -245,12 +233,6 @@ module.exports = {
             });
         });
     },
-
-    /**
-    * Overrides for the settings in `config/controllers.js`
-    * (specific to UserController)
-    */
-    _config: {}
 
   
 };

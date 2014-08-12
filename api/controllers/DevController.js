@@ -32,12 +32,15 @@ module.exports = {
             //Load some data in parallel
             return Q.all([
                 UserRole.find(),
-                Event.find()
+                Event.find(),
+                Product.find(),
+                ProductCategory.find()
 
-            ]).spread(function (roles, events) {
+            ]).spread(function (roles, events, products, productCategory) {
                 data.roles = roles;
                 data.events = events;
-
+                data.products = products;
+                data.product_category = productCategory;
             });
 
         }).then(function () {
@@ -62,51 +65,6 @@ module.exports = {
 
     },
 
-    /**
-     * Init database with test set values
-     * @param req
-     * @param res
-     */
-    initDatabase: function(req, res){
-        Q().then(function(){
-
-            /*
-             * Init roles (using Q promises)
-             * They are run in parallel
-             */
-            return Q.all([
-                UserRole.create({ name: 'admin', displayName: 'Administrator', ID: 0 }),
-                UserRole.create({ name: 'user', displayName: 'User', ID: 1 })
-            ]);
-
-        }).then(function(){
-
-            /*
-             * Init users (using Q library)
-             * They are run in parallel
-             */
-            return Q.all([
-                User.create({email: 'admin@admin.com', password: 'password'}),
-                User.create({email: 'user@user.com', password: 'password'})
-            ]);
-
-        }).then(function() {
-
-            /*
-             * Init events
-             */
-            return Q.all([
-                Event.create({name:'Soirée pyjama', description:'Venez tous nue', userID: 2, place: 'Toul', date: '2014-12-31'}),
-                Event.create({name:'Meeting redh00d', description:'On va fumer de la bonne grosse beu !!', userID: 2, place: 'Coloc', date: '2014-12-01'})
-            ]);
-
-        }).then(function() {
-            return res.created();
-
-        }).fail(function (err) {
-            return res.serverError(err);
-        });
-    },
 
     deleteLogs: function(req, res){
         var fs = require('fs');

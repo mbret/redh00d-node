@@ -21,42 +21,16 @@ module.exports.general = {
 
     errors: {
         codes: {
-            notFound: {
-                label: "notFound",
-                message: "Not found"
-            },
-            resourceNotFound: {
-                label: "resourceNotFound",
-                message: "Resource not found"
-            },
-            modelNotFound: {
-                label: "modelNotFound",
-                message: "Model not found"
-            },
-            pageNotFound: {
-                label: "pageNotFound",
-                message: "Page not found"
-            },
-            dbUnavailable: {
-                label: "dbUnavailable",
-                message: "Database unavailable"
-            },
-            accessForbidden: {
-                label: "accessForbidden",
-                message: "Access forbidden"
-            },
-            emailArleadyTaken: {
-                label: "emailArleadyTaken",
-                message: "Email already taken"
-            },
-            badAuthentication: {
-                label: "badAuthentication",
-                message: "Bad authentication"
-            },
-            serverError: {
-                label: "serverError",
-                message: "Server error"
-            }
+            badRequest: "Bad request",
+            notFound:   "Not found",
+            resourceNotFound: "Resource not found",
+            modelNotFound: "Model not found",
+            pageNotFound: "Page not found",
+            dbUnavailable: "Database unavailable",
+            accessForbidden: "Access forbidden",
+            emailArleadyTaken: "Email already taken",
+            badAuthentication: "Bad authentication",
+            serverError: "Server error"
             // ...
         }
     },

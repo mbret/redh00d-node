@@ -9,12 +9,25 @@ module.exports = {
         }
     },
 
-    beforeCreate: function( cb ){
-        return cb();
+    // Modifies user input before validation
+    beforeValidation: function(event, next){
+        next();
     },
 
-    beforeUpdate: function( cb ){
-        return cb();
+    beforeCreate: function(event, next){
+        next();
+    },
+
+    afterCreate: function(newlyInsertedEvent, next){
+        next();
+    },
+
+    beforeUpdate: function(event, next){
+        next();
+    },
+
+    afterUpdate: function(newlyUpdatedEvent, next){
+        next();
     }
 
 }

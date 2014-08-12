@@ -13,7 +13,7 @@
  *  }
  */
 
-module.exports = function sendOK () {
+module.exports = function noContent () {
 
     sails.log.debug('res.noContent() :: Sending 204 ("NO CONTENT") response');
 
