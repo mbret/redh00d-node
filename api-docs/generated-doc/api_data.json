@@ -87,7 +87,7 @@
     "filename": "sources/API.js"
   },
   {
-    "type": "post",
+    "type": "get",
     "url": "/dev/db",
     "title": "Display some database info",
     "name": "displayDB",
@@ -125,7 +125,7 @@
     "title": "Initialize database",
     "name": "initDB",
     "group": "Dev",
-    "description": "<p>Initialize database</p>",
+    "description": "<p>Initialize some basic necessary entries in database</p>",
     "examples": [
       {
         "title": "Use example",
@@ -595,6 +595,31 @@
     "filename": "sources/Event.js"
   },
   {
+    "type": "delete",
+    "url": "/events/:id_event/products/:id_product",
+    "title": "Delete an event product",
+    "name": "DeleteEventProduct",
+    "group": "Events",
+    "permission": "authenticated @todo",
+    "description": "<p>Delete an event product.<br/><b>Throw error:</b> @todo</p>",
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "delete http://localhost/events/15/products/10\n"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success (204 No content) response sample:",
+          "content": "HTTP/1.1 204 No content\n{\n}\n"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sources/Event.js"
+  },
+  {
     "type": "get",
     "url": "/events/:id",
     "title": "Find an event",
@@ -767,6 +792,90 @@
     "title": "Find event members",
     "name": "FindEventMembers",
     "group": "Events",
+    "version": "0.0.0",
+    "filename": "sources/Event.js"
+  },
+  {
+    "type": "get",
+    "url": "/events/:id_event/products/:id_product",
+    "title": "Find an event product",
+    "name": "FindEventProduct",
+    "group": "Events",
+    "description": "<p>Find an event product<br/><b>Throw error:</b> 404</p>",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "get http://localhost/events/15/products/10\n"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success (200 OK) response parameters": [
+          {
+            "group": "200",
+            "type": "Object",
+            "field": "object",
+            "optional": false,
+            "description": "<p>Requested object.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success (200 OK) response sample:",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"object\": {\n        \"field1\": \"Foo\",\n        \"field2\": \"Bar\",\n        ...\n     },\n   }\n"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sources/Event.js"
+  },
+  {
+    "type": "get",
+    "url": "/events/:id_event/products",
+    "title": "Find event products",
+    "name": "FindEventProducts",
+    "group": "Events",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
+    "description": "<p>Find event products<br/><b>Throw error:</b> @todo</p>",
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "get http://localhost/events/15/products\n"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success (200 OK) response parameters": [
+          {
+            "group": "200",
+            "type": "Object[]",
+            "field": "objects",
+            "optional": false,
+            "description": "<p>The list of objects.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success (200 OK) response sample:",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
+        },
+        {
+          "title": "Success (200 OK) response sample (case of empty):",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [ ],\n     \"status\": 200\n   }\n"
+        }
+      ]
+    },
     "version": "0.0.0",
     "filename": "sources/Event.js"
   },
@@ -1318,7 +1427,7 @@
             "type": "Number",
             "field": "id",
             "optional": true,
-            "description": "<p>Use it to retrieve only one user with its ID.</p>"
+            "description": ""
           },
           {
             "group": "urlParam",
@@ -1337,9 +1446,9 @@
           {
             "group": "urlParam",
             "type": "String",
-            "field": "sort",
+            "field": "firstname_sort",
             "optional": true,
-            "description": "<p>Sort results in differant way.</p>"
+            "description": "<p>(asc/desc)</p>"
           }
         ]
       }
@@ -1488,7 +1597,7 @@
             "type": "Number",
             "field": "id",
             "optional": true,
-            "description": "<p>Use it to retrieve only one user with its ID.</p>"
+            "description": ""
           },
           {
             "group": "urlParam",
@@ -1507,9 +1616,9 @@
           {
             "group": "urlParam",
             "type": "String",
-            "field": "sort",
+            "field": "firstname_sort",
             "optional": true,
-            "description": "<p>Sort results in differant way.</p>"
+            "description": "<p>(asc/desc)</p>"
           }
         ]
       }

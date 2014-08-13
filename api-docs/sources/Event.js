@@ -26,7 +26,8 @@
  * @api {get} /events/:id Find an event
  * @apiName FindEvent
  * @apiGroup Events
- * @apiGroupDescription API corresponding to Event
+ * @apiGroupDescription API corresponding to Event. Everything here is related to events. You can
+ * retrieves users or products but they are from events and the resource name is different. For example users are members.
  * @apiDescription Find an event by its ID
  * <br/><b>Throw error:</b> 404
  *
@@ -148,9 +149,9 @@
  * @apiSuccessStructure DeleteSuccess
  */
 // ------------------------------------------------------------------------------------------
-
+//
 //                                      Invitation
-
+//
 // ------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------
 // Create an event invitation
@@ -259,6 +260,7 @@
 // ------------------------------------------------------------------------------------------
 //
 //                                      Members
+//              (Events members are not users they are another resource)
 //
 // ------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------
@@ -275,7 +277,7 @@
 // ------------------------------------------------------------------------------------------
 // Fetch multiple project's members
 //
-//  - UserController.findProjectMembers()
+//  - EventController.findMembers()
 // ------------------------------------------------------------------------------------------
 /**
  * @api {get} /events/:id/members Find event members
@@ -286,11 +288,92 @@
 // ------------------------------------------------------------------------------------------
 // Fetch one project members
 //
-//  - UserController.findProjectMember()
+//  - EventController.findMember()
 // ------------------------------------------------------------------------------------------
 /**
  * @api {get} /events/:id/members/:id Find an event member
  * @apiName FindEventMember
  * @apiGroup Events
  * @todo
+ */
+// ------------------------------------------------------------------------------------------
+//
+//                                      Products
+//              (Events products are not products they are another resource)
+//
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+// Remove one event's product
+//
+//  - EventController.deleteProduct()
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {delete} /events/:id_event/products/:id_product Delete an event product
+ * @apiName DeleteEventProduct
+ * @apiGroup Events
+ * @apiPermission authenticated @todo
+ * @apiDescription Delete an event product.
+ * <br/><b>Throw error:</b> @todo
+ *
+ * @apiExample Use example
+ * delete http://localhost/events/15/products/10
+ *
+ * @apiSuccessStructure DeleteSuccess
+ */
+// ------------------------------------------------------------------------------------------
+// Fetch multiple event's products
+//
+//  - EventController.findProducts()
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {get} /events/:id_event/products Find event products
+ * @apiName FindEventProducts
+ * @apiGroup Events
+ * @apiPermission authenticated
+ * @apiDescription Find event products
+ * <br/><b>Throw error:</b> @todo
+ *
+ * @todo params
+ * @apiExample Use example
+ * get http://localhost/events/15/products
+ *
+ * @apiSuccessStructure FindMultipleSuccess
+ */
+// ------------------------------------------------------------------------------------------
+// Fetch one event product
+//
+//  - EventController.findProduct()
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {get} /events/:id_event/products/:id_product Find an event product
+ * @apiName FindEventProduct
+ * @apiGroup Events
+ * @apiDescription Find an event product
+ * <br/><b>Throw error:</b> 404
+ *
+ * @apiPermission authenticated
+ *
+ * @apiExample Use example
+ * get http://localhost/events/15/products/10
+ *
+ * @apiSuccessStructure FindSuccess
+ */
+// ------------------------------------------------------------------------------------------
+// Remove one event product
+//
+//  - EventController.DeleteProduct()
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {delete} /events/:id_event/products/:id_product Delete an event product
+ * @apiName DeleteEventProduct
+ * @apiGroup Events
+ * @apiDescription Delete the link between an event and a product. The product itself is not removed.
+ * <br/><b>Throw error:</b> @todo
+ *
+ * @apiPermission authenticated
+ *
+ * @apiExample Use example
+ * delete http://localhost/events/15/products/10
+ *
+ * @apiSuccessStructure DeleteSuccess
  */
