@@ -1,6 +1,6 @@
 var request = require('supertest');
 
-describe.only('UserController', function() {
+describe('UserController', function() {
 
     // var ...
 

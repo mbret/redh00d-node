@@ -192,7 +192,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         },
 
         // Set default role
-        function( values, cb){
+        function(values, cb){
             if( ! values.roleID ){
                 sails.log.debug("User.beforeCreate no roleID provided, default is set (default=" + sails.config.general.defaultUserRoleName +")");
                 UserRole.findOne({ name: sails.config.general.defaultUserRoleName }, function(err, role){

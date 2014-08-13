@@ -21,7 +21,6 @@ module.exports = {
         migrate: 'drop' // erase database before each launch
     },
 
-
     general: {
         initDatabase: true
     },
@@ -32,6 +31,6 @@ module.exports = {
 
     log: {
         level: 'info'
-    }
+    },
 
 };
