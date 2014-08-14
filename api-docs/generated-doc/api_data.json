@@ -600,6 +600,35 @@
     "title": "Delete an event product",
     "name": "DeleteEventProduct",
     "group": "Events",
+    "description": "<p>Delete the link between an event and a product. The product itself is not removed.<br/><b>Throw error:</b> @todo</p>",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "delete http://localhost/events/15/products/10\n"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success (204 No content) response sample:",
+          "content": "HTTP/1.1 204 No content\n{\n}\n"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sources/Event.js"
+  },
+  {
+    "type": "delete",
+    "url": "/events/:id_event/products/:id_product",
+    "title": "Delete an event product",
+    "name": "DeleteEventProduct",
+    "group": "Events",
     "permission": "authenticated @todo",
     "description": "<p>Delete an event product.<br/><b>Throw error:</b> @todo</p>",
     "examples": [
@@ -625,7 +654,7 @@
     "title": "Find an event",
     "name": "FindEvent",
     "group": "Events",
-    "groupDescription": "<p>API corresponding to Event</p>",
+    "groupDescription": "<p>API corresponding to Event. Everything here is related to events. You canretrieves users or products but they are from events and the resource name is different. For example users are members.</p>",
     "description": "<p>Find an event by its ID<br/><b>Throw error:</b> 404</p>",
     "parameter": {
       "fields": {
@@ -1930,67 +1959,24 @@
     "filename": "sources/_general.js"
   },
   {
-    "error": {
+    "success": {
       "fields": {
-        "Response attributes": [
+        "Success (200 OK) response parameters": [
           {
-            "group": "errorResponse",
-            "type": "String",
-            "field": "message",
+            "group": "200",
+            "type": "Object",
+            "field": "object",
             "optional": false,
-            "description": "<p>Error message.</p>"
-          },
-          {
-            "group": "errorResponse",
-            "type": "String",
-            "field": "description",
-            "optional": true,
-            "description": "<p>More detailed error message.</p>"
-          },
-          {
-            "group": "errorResponse",
-            "type": "String",
-            "field": "code",
-            "optional": false,
-            "description": "<p>Error code (Check the section above).</p>"
-          },
-          {
-            "group": "errorResponse",
-            "type": "Object[]",
-            "field": "params",
-            "optional": true,
-            "description": "<p>The parameters the error relates to if the error is parameter-specific.</p>"
-          },
-          {
-            "group": "errorResponse",
-            "type": "Object[]",
-            "field": "params.field",
-            "optional": false,
-            "description": "<p>The field name relatives to error.</p>"
-          },
-          {
-            "group": "errorResponse",
-            "type": "Object[]",
-            "field": "params.code",
-            "optional": false,
-            "description": "<p>The code error.</p>"
-          },
-          {
-            "group": "errorResponse",
-            "type": "Object[]",
-            "field": "params.message",
-            "optional": false,
-            "description": "<p>.</p>"
-          },
-          {
-            "group": "errorResponse",
-            "type": "Object[]",
-            "field": "params.description",
-            "optional": true,
-            "description": "<p>.</p>"
+            "description": "<p>Requested object.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Success (200 OK) response sample:",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"object\": {\n        \"field1\": \"Foo\",\n        \"field2\": \"Bar\",\n        ...\n     },\n   }\n"
+        }
+      ]
     },
     "group": "_general.js",
     "type": "",
@@ -2074,24 +2060,67 @@
     "filename": "sources/_general.js"
   },
   {
-    "success": {
+    "error": {
       "fields": {
-        "Success (200 OK) response parameters": [
+        "Response attributes": [
           {
-            "group": "200",
-            "type": "Object",
-            "field": "object",
+            "group": "errorResponse",
+            "type": "String",
+            "field": "message",
             "optional": false,
-            "description": "<p>Requested object.</p>"
+            "description": "<p>Error message.</p>"
+          },
+          {
+            "group": "errorResponse",
+            "type": "String",
+            "field": "description",
+            "optional": true,
+            "description": "<p>More detailed error message.</p>"
+          },
+          {
+            "group": "errorResponse",
+            "type": "String",
+            "field": "code",
+            "optional": false,
+            "description": "<p>Error code (Check the section above).</p>"
+          },
+          {
+            "group": "errorResponse",
+            "type": "Object[]",
+            "field": "params",
+            "optional": true,
+            "description": "<p>The parameters the error relates to if the error is parameter-specific.</p>"
+          },
+          {
+            "group": "errorResponse",
+            "type": "Object[]",
+            "field": "params.field",
+            "optional": false,
+            "description": "<p>The field name relatives to error.</p>"
+          },
+          {
+            "group": "errorResponse",
+            "type": "Object[]",
+            "field": "params.code",
+            "optional": false,
+            "description": "<p>The code error.</p>"
+          },
+          {
+            "group": "errorResponse",
+            "type": "Object[]",
+            "field": "params.message",
+            "optional": false,
+            "description": "<p>.</p>"
+          },
+          {
+            "group": "errorResponse",
+            "type": "Object[]",
+            "field": "params.description",
+            "optional": true,
+            "description": "<p>.</p>"
           }
         ]
-      },
-      "examples": [
-        {
-          "title": "Success (200 OK) response sample:",
-          "content": "   HTTP/1.1 200 OK\n   {\n     \"object\": {\n        \"field1\": \"Foo\",\n        \"field2\": \"Bar\",\n        ...\n     },\n   }\n"
-        }
-      ]
+      }
     },
     "group": "_general.js",
     "type": "",

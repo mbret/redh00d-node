@@ -24,7 +24,7 @@ module.exports = {
      * @return {user|500|404}
      */
     find: function (req, res) {
-        User.findOne({'s':req.param('id')}, function(err,user){
+        User.findOne({'ID':req.param('id')}, function(err,user){
             if(err) return res.serverError(err);
             if(!user) return res.notFound();
             return res.ok({

@@ -25,21 +25,20 @@ module.exports.bootstrap = function(cb) {
              * They are run in parallel
              */
             return Q.all([
-                User.create({email: 'admin@admin.com', password: 'password', firstName: 'Admin', lastName: 'Admin'}),
-                UserRole.create({ name: 'admin', displayName: 'Administrator', ID: 0 }),
-                UserRole.create({ name: 'user', displayName: 'User', ID: 1 }),
+                UserRole.create({ name: 'admin', displayName: 'Administrator', ID: 1 }),
+                UserRole.create({ name: 'user', displayName: 'User', ID: 2 }),
 
-                ProductCategory.create({name: 'food', displayName: 'Food', ID: 0}),
-                ProductCategory.create({name: 'drink', displayName: 'Drink', ID: 1}),
+                ProductCategory.create({name: 'food', displayName: 'Food', ID: 1}),
+                ProductCategory.create({name: 'drink', displayName: 'Drink', ID: 2}),
             ]);
 
         }).then(function(){
             return Q.all([
-                User.create({email: 'admin@admin.com', password: 'password', firstName: 'Admin', lastName: 'Admin'}),
-                User.create({email: 'user@user.com', password: 'password', firstName: 'User', lastName: 'User'}),
+                User.create({email: 'admin@admin.com', password: 'password', firstName: 'Admin', lastName: 'Admin', ID:1}),
+                User.create({email: 'user@user.com', password: 'password', firstName: 'User', lastName: 'User', ID:2}),
 
-                Product.create({isOfficial: true, name: 'Coca Cola', logo: 'coca_cola', categoryID: 1}),
-                Product.create({isOfficial: false, name: 'Chips', logo: null, categoryID: 0})
+                Product.create({isOfficial: true, name: 'Coca Cola', logo: 'coca_cola', categoryID: 2}),
+                Product.create({isOfficial: false, name: 'Chips', logo: null, categoryID: 1})
             ]);
 
         }).then(function() {
@@ -52,8 +51,8 @@ module.exports.bootstrap = function(cb) {
         }).then(function() {
             return Q.all([
                 // products of events
-                EventProduct.create({eventID:1, userID: 2, productID: 1, quantity: 2}),
-                EventProduct.create({eventID:1, userID: 2, productID: 0, quantity: 1})
+                EventProduct.create({eventID:1, userID: 2, productID: 2, quantity: 2}),
+                EventProduct.create({eventID:1, userID: 2, productID: 1, quantity: 1})
             ]);
 
         }).then(function() {

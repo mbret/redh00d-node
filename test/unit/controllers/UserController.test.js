@@ -2,7 +2,7 @@ var request = require('supertest');
 
 describe('UserController', function() {
 
-    // var ...
+    var authorization = "Basic dXNlckB1c2VyLmNvbTpwYXNzd29yZA=="; // user@user.com / password
 
     before(function(done){
         done();
@@ -21,18 +21,37 @@ describe('UserController', function() {
     })
 
     describe("GET /users", function(){
-        it('should respond with json', function(done){
+
+        it('should respond one user', function(done){
             request(sails.hooks.http.app)
-                .get('/users')
-                .set('Accept', 'application/json')
+                .get('/api/users/1').set('Accept', 'application/json').set('Authorization', authorization)
                 .expect('Content-Type', /json/)
-                .expect(200, done);
+                .expect(function(res){
+                    if( !res.body.user ) throw new Error("No user");
+                })
+                .end(done);
+        });
+
+        it('should respond 404', function(done){
+            request(sails.hooks.http.app)
+                .get('/api/users/x').set('Accept', 'application/json').set('Authorization', authorization)
+                .expect('Content-Type', /json/)
+                .expect(404)
+                .end(done);
+        });
+
+        it('should respond list of users', function(done){
+            request(sails.hooks.http.app)
+                .get('/api/users').set('Accept', 'application/json').set('Authorization', authorization)
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .expect(function(res){
+                    if( !res.body.users ) throw new Error("No users");
+                })
+                .end(done);
         })
 
-        it('should return list of json users', function(done){
-            // ...
-            done();
-        })
+
     })
 
     describe("DELETE /users", function(){
