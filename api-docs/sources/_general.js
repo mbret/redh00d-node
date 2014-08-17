@@ -35,7 +35,12 @@
  *     HTTP/1.1 200 OK
  *     {
  *       "objects": [
- *          "object": {
+ *          "object1": {
+ *              "field1": "Foo",
+ *              "field2": "Bar",
+ *              ...
+ *          },
+ *          "object2": {
  *              "field1": "Foo",
  *              "field2": "Bar",
  *              ...
@@ -78,6 +83,14 @@
  *     },
  * }
  */
+
+ /**
+  * @apiDefineSuccessStructure PatchSuccess
+  * @apiSuccessExample Success (204 No content) response sample:
+  * HTTP/1.1 204 No content
+  * {
+  * }
+  */
 
 /**
  * @apiDefineSuccessStructure DeleteSuccess
@@ -194,6 +207,9 @@
  * @apiDefinePermission admin Admin access rights needed.
  */
 /**
+ * @apiDefinePermission guest Guest access rights needed.
+ */
+/**
  * @apiDefinePermission authenticated Authentication requiered
  */
 /**
@@ -202,6 +218,3 @@
 /**
  * @apiDefinePermission accountOwner Is author.
  */
-
-
-

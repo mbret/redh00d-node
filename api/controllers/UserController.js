@@ -69,8 +69,8 @@ module.exports = {
      * @description :: Create a simple user with the required fields.
      *                 This is a two time function, try to retrieve the user and only if the user doesn't exist then he is created.
      * @todo try to make a better handle of (already exist) maybe handle this error after User.create for more logic and less spaghetti
+     * @todo use 409 conflict for same email
      * @param req the params email & password should be present.
-     * @param res
      * @returns {*}
      */
     create: function (req, res) {
@@ -83,7 +83,7 @@ module.exports = {
             }
             if( user ){
                 // If an user was found it's because email is taken
-                return res.badRequest( res.i18n('email already taken') );
+                return res.conflict( res.i18n('email already taken') );
             }
             else{
 
@@ -120,6 +120,7 @@ module.exports = {
      * @param req
      */
     update: function (req, res) {
+        return res.send(501);
         var dataToUpdate = {};
         if ( req.param('firstname') ) dataToUpdate.firstname = req.param('firstname');
         if ( req.param('lastname') ) dataToUpdate.lastname = req.param('lastname');
@@ -149,18 +150,76 @@ module.exports = {
         });
     },
 
-    // @todo
     patch: function (req, res) {
+        return res.send(501);
 
+        /**
+         * Create a new password reset token and send
+         * an email with instructions to user
+         */
+        // createPasswordResetToken: function(req, res, next) {
+        //     if (!req.body.email) return res.badRequest({ email: "required" });
+        //
+        //     User.findOneByEmail(req.body.email, function (err, user) {
+        //         if(err) return res.serverError(err);
+        //
+        //         if(!user) return res.badRequest({ user: "not found" });
+        //
+        //         Jobs.create('sendPasswordResetEmail', { user: user.toObject() }).save(function (err) {
+        //             if(err) return res.serverError(err);
+        //             res.send({ info: "Password reset instructions sent" });
+        //         });
+        //     });
+        // },
+        //
+        // /**
+        //  * Update user password
+        //  * Expects and consumes a password reset token
+        //  */
+        // resetPassword: function(req, res, next) {
+        //     if (!req.params.id) return res.notFound();
+        //
+        //     if (!req.body.token) return res.badRequest({ token: "required" });
+        //
+        //     User.findOneById(req.params.id, function (err, user) {
+        //         if (err) return next(err);
+        //
+        //         // Check if the token is valid
+        //         if (!user.passwordResetToken || user.passwordResetToken.value !== req.body.token)
+        //             return res.badRequest({ token: "invalid" });
+        //
+        //         // Check if token is expired
+        //         var expires = new Date().setHours( new Date().getHours() - 2 );
+        //
+        //         if (user.passwordResetToken.issuedAt.getTime() <= expires)
+        //             return res.badRequest({ token: "expired" });
+        //
+        //         // Check if password has been provided
+        //         if (!req.body.password)
+        //             return res.badRequest({ password: "required" });
+        //
+        //         // Check if password matches confirmation
+        //         if (req.body.password !== req.body.passwordConfirmation)
+        //             return res.badRequest({ passwordConfirmation: "invalid" });
+        //
+        //         // Update user with new password
+        //         user.password = req.body.password;
+        //         user.save(function (err) {
+        //             if (err) return next(err);
+        //
+        //             // Send user data back to client
+        //             res.send( user.toJSON() );
+        //         });
+        //     });
+        // },
     },
 
     /**
      * Delete an user
      * @todo complete it
-     * @param req
-     * @param res
      */
     delete: function (req, res) {
+        return res.send(501);
         // Case of user try to update an other account
         if( req.param('id') != req.user.ID && ! PermissionsService.isAllowed( req.user.role, req.options.controller, 'deleteOthers') ){
             return res.forbidden();
@@ -174,65 +233,7 @@ module.exports = {
         }
     },
 
-    /**
-     * Create a new password reset token and send
-     * an email with instructions to user
-     */
-    createPasswordResetToken: function(req, res, next) {
-        if (!req.body.email) return res.badRequest({ email: "required" });
 
-        User.findOneByEmail(req.body.email, function (err, user) {
-            if(err) return res.serverError(err);
 
-            if(!user) return res.badRequest({ user: "not found" });
 
-            Jobs.create('sendPasswordResetEmail', { user: user.toObject() }).save(function (err) {
-                if(err) return res.serverError(err);
-                res.send({ info: "Password reset instructions sent" });
-            });
-        });
-    },
-
-    /**
-     * Update user password
-     * Expects and consumes a password reset token
-     */
-    resetPassword: function(req, res, next) {
-        if (!req.params.id) return res.notFound();
-
-        if (!req.body.token) return res.badRequest({ token: "required" });
-
-        User.findOneById(req.params.id, function (err, user) {
-            if (err) return next(err);
-
-            // Check if the token is valid
-            if (!user.passwordResetToken || user.passwordResetToken.value !== req.body.token)
-                return res.badRequest({ token: "invalid" });
-
-            // Check if token is expired
-            var expires = new Date().setHours( new Date().getHours() - 2 );
-
-            if (user.passwordResetToken.issuedAt.getTime() <= expires)
-                return res.badRequest({ token: "expired" });
-
-            // Check if password has been provided
-            if (!req.body.password)
-                return res.badRequest({ password: "required" });
-
-            // Check if password matches confirmation
-            if (req.body.password !== req.body.passwordConfirmation)
-                return res.badRequest({ passwordConfirmation: "invalid" });
-
-            // Update user with new password
-            user.password = req.body.password;
-            user.save(function (err) {
-                if (err) return next(err);
-
-                // Send user data back to client
-                res.send( user.toJSON() );
-            });
-        });
-    },
-
-  
 };
