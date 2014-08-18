@@ -56,15 +56,20 @@ describe('UserController', function() {
 
     describe("DELETE /users", function(){
 
-        it('should delete the specified user', function(done){
+        it('should delete the user with ID 1', function(done){
             // ...
             done();
-        })
+        });
 
-        it('should block access to delete this user', function(done){
+        it('should not be allowed to delete other account', function(done){
             // ...
             done();
-        })
+        });
+
+        it('should be allowed to delete other account', function(done){
+            // ...
+            done();
+        });
     })
 
 });

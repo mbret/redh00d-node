@@ -37,7 +37,7 @@ module.exports.cors = {
      *                                                                          *
      ***************************************************************************/
 
-    // allRoutes: false,
+     allRoutes: false // disabled because various ip/domain will access the api
 
     /***************************************************************************
      *                                                                          *
