@@ -2,7 +2,8 @@
  * @api {get} /dev/logs Display logs
  * @apiName displayLogs
  * @apiGroup Dev
- * @apiGroupDescription Documentation relative to dev only purpose
+ * @apiGroupDescription Documentation relative to dev only purpose. This part is always on working so some method might not be correct or available.
+ * <br/>Moreover these methods do not follow REST principle, it's just for development purpose.
  * @apiDescription Display logs
  *
  * @apiExample Use example

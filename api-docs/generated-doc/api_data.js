@@ -44,6 +44,20 @@ define({ api: [
             "defaultValue": "Locale du navigateur",
             "optional": true,
             "description": "<p>Langue de retour demandée. Exemple : fr-FR.</p>"
+          },
+          {
+            "group": "headerRequest",
+            "type": "String",
+            "field": "auth_api_key",
+            "optional": true,
+            "description": "<p>Use your api key with email to be authenticate. If no api key are provided then you act as a guest.</p>"
+          },
+          {
+            "group": "headerRequest",
+            "type": "String",
+            "field": "auth_email",
+            "optional": true,
+            "description": "<p>Use you email with api key to be authenticate. If no email are provided then you act as a guest.</p>"
           }
         ]
       },
@@ -82,7 +96,8 @@ define({ api: [
     "title": "Summary",
     "name": "Summary",
     "group": "API",
-    "description": "<p>HTTP Status Code Summary:</b><br/><b>200 OK</b> - Everything worked as expected.<br/><b>400 Bad Request</b> - Often missing a required parameter.<br/><b>401 Unauthorized</b> - No valid API key provided.<br/><b>402 Request Failed</b> - Parameters were valid but request failed.<br/><b>405 Method not allowed</b> - Used to indicate that the requested URL exists, but the requested HTTP method is not applicable. For example, POST /users/12345 where the API doesn&#39;t support creation of resources this way (with a provided ID).<br/><b>404 Not Found</b> - The requested item doesn&#39;t exist.<br/><b>409 Conflict</b> - Whenever a resource conflict would be caused by fulfilling the request. Duplicate entries, such as trying to create two customers with the same information, and deleting root objects when cascade-delete is not supported are a couple of examples.<br/><b>500, 502, 503, 504 Server errors</b> - any general error on the system.</p>",
+    "groupDescription": "<p>Welcome to the redh00d API also called Web Service. This documentation will list all the available methods to interract with database.<br/>Please read all section to understand. If you get an error response you can refer to the error section.<br/><b>The web service is now under development, means that some method may have changed or may not be correctly functionnal.</b></p><p>",
+    "description": "<p>HTTP Status Code Summary:</b>   <br/><b>200 OK</b> - Everything worked as expected.   <br/><b>400 Bad Request</b> - Often missing a required parameter. The client SHOULD NOT repeat the request without modifications.   <br/><b>401 Unauthorized</b> - No valid API key provided.   <br/><b>402 Request Failed</b> - Parameters were valid but request failed.   <br/><b>403 Forbidden</b> - The server understood the request, but is refusing to fulfill it. Authorization will not help and the request SHOULD NOT be repeated.   <br/><b>405 Method not allowed</b> - Used to indicate that the requested URL exists, but the requested HTTP method is not applicable. For example, POST /users/12345 where the API doesn&#39;t support creation of resources this way (with a provided ID).   <br/><b>404 Not Found</b> - The requested item doesn&#39;t exist.   <br/><b>409 Conflict</b> - Whenever a resource conflict would be caused by fulfilling the request. Duplicate entries, such as trying to create two customers with the same information, and deleting root objects when cascade-delete is not supported are a couple of examples.   <br/><b>500, 502, 503, 504 Server errors</b> - any general error on the system.</p></p><p><hr/></p><p>   <b>Password salt:</b> MojoTime   <br/>Put this salt at the end of the clear password and then hash with md5.</p>",
     "version": "0.0.0",
     "filename": "sources/API.js"
   },
@@ -108,7 +123,7 @@ define({ api: [
     "title": "Display logs",
     "name": "displayLogs",
     "group": "Dev",
-    "groupDescription": "<p>Documentation relative to dev only purpose</p>",
+    "groupDescription": "<p>Documentation relative to dev only purpose. This part is always on working so some method might not be correct or available.<br/>Moreover these methods do not follow REST principle, it&#39;s just for development purpose.</p>",
     "description": "<p>Display logs</p>",
     "examples": [
       {
@@ -352,7 +367,7 @@ define({ api: [
         ]
       }
     },
-    "group": "Event.js",
+    "group": "Event_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -587,25 +602,12 @@ define({ api: [
   },
   {
     "type": "delete",
-    "url": "/events/:id/members/:id",
-    "title": "Delete an event member",
-    "name": "DeleteEventMember",
-    "group": "Events",
-    "version": "0.0.0",
-    "filename": "sources/Event.js"
-  },
-  {
-    "type": "delete",
     "url": "/events/:id_event/products/:id_product",
     "title": "Delete an event product",
     "name": "DeleteEventProduct",
     "group": "Events",
-    "description": "<p>Delete the link between an event and a product. The product itself is not removed.<br/><b>Throw error:</b> @todo</p>",
-    "permission": {
-      "name": "authenticated",
-      "title": "Authentication requiered",
-      "description": ""
-    },
+    "permission": "authenticated @todo",
+    "description": "<p>Delete an event product.<br/><b>Throw error:</b> @todo</p>",
     "examples": [
       {
         "title": "Use example",
@@ -629,8 +631,12 @@ define({ api: [
     "title": "Delete an event product",
     "name": "DeleteEventProduct",
     "group": "Events",
-    "permission": "authenticated @todo",
-    "description": "<p>Delete an event product.<br/><b>Throw error:</b> @todo</p>",
+    "description": "<p>Delete the link between an event and a product. The product itself is not removed.<br/><b>Throw error:</b> @todo</p>",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
     "examples": [
       {
         "title": "Use example",
@@ -795,7 +801,7 @@ define({ api: [
       "examples": [
         {
           "title": "Success (200 OK) response sample:",
-          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object1\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        \"object2\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
         },
         {
           "title": "Success (200 OK) response sample (case of empty):",
@@ -803,24 +809,6 @@ define({ api: [
         }
       ]
     },
-    "version": "0.0.0",
-    "filename": "sources/Event.js"
-  },
-  {
-    "type": "get",
-    "url": "/events/:id/members/:id",
-    "title": "Find an event member",
-    "name": "FindEventMember",
-    "group": "Events",
-    "version": "0.0.0",
-    "filename": "sources/Event.js"
-  },
-  {
-    "type": "get",
-    "url": "/events/:id/members",
-    "title": "Find event members",
-    "name": "FindEventMembers",
-    "group": "Events",
     "version": "0.0.0",
     "filename": "sources/Event.js"
   },
@@ -858,50 +846,6 @@ define({ api: [
         {
           "title": "Success (200 OK) response sample:",
           "content": "   HTTP/1.1 200 OK\n   {\n     \"object\": {\n        \"field1\": \"Foo\",\n        \"field2\": \"Bar\",\n        ...\n     },\n   }\n"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "sources/Event.js"
-  },
-  {
-    "type": "get",
-    "url": "/events/:id_event/products",
-    "title": "Find event products",
-    "name": "FindEventProducts",
-    "group": "Events",
-    "permission": {
-      "name": "authenticated",
-      "title": "Authentication requiered",
-      "description": ""
-    },
-    "description": "<p>Find event products<br/><b>Throw error:</b> @todo</p>",
-    "examples": [
-      {
-        "title": "Use example",
-        "content": "get http://localhost/events/15/products\n"
-      }
-    ],
-    "success": {
-      "fields": {
-        "Success (200 OK) response parameters": [
-          {
-            "group": "200",
-            "type": "Object[]",
-            "field": "objects",
-            "optional": false,
-            "description": "<p>The list of objects.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success (200 OK) response sample:",
-          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
-        },
-        {
-          "title": "Success (200 OK) response sample (case of empty):",
-          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [ ],\n     \"status\": 200\n   }\n"
         }
       ]
     },
@@ -982,7 +926,7 @@ define({ api: [
       "examples": [
         {
           "title": "Success (200 OK) response sample:",
-          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object1\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        \"object2\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
         },
         {
           "title": "Success (200 OK) response sample (case of empty):",
@@ -1064,33 +1008,44 @@ define({ api: [
     "filename": "sources/Event.js"
   },
   {
-    "type": "put",
-    "url": "/events/:idEvent/invitations/:idInvitation",
-    "title": "Update an event invitation",
-    "name": "UpdateEventInvitation",
-    "group": "Events",
-    "permission": {
-      "name": "authenticated",
-      "title": "Authentication requiered",
-      "description": ""
-    },
-    "description": "<p>Update an invitation<br/><b>Throw error:</b> 404.</p>",
+    "type": "post",
+    "url": "/users/:id_user/friendsgroups/:id_group/members",
+    "title": "Add a group member",
+    "name": "AddUserGroupMember",
+    "group": "Friends_Groups",
+    "description": "<p><br/><b style=\"color:green;\">Throw valid response:</b> 201.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403, 409.</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Parameters (URL)": [
           {
-            "group": "Parameter",
+            "group": "urlParam",
             "type": "Number",
-            "field": "idEvent",
+            "field": "id_user",
             "optional": false,
-            "description": "<p>Event&#39;s ID</p>"
+            "description": "<p>Friends group&#39;s ID.</p>"
           },
           {
-            "group": "Parameter",
+            "group": "urlParam",
             "type": "Number",
-            "field": "idInvitation",
+            "field": "id_group",
             "optional": false,
-            "description": "<p>Invitation&#39;s ID</p>"
+            "description": "<p>Friends group&#39;s ID.</p>"
+          },
+          {
+            "group": "urlParam",
+            "type": "Number",
+            "field": "id_member",
+            "optional": false,
+            "description": "<p>The user ID you want to add.</p>"
+          }
+        ],
+        "Parameters (Form Data)": [
+          {
+            "group": "dataParam",
+            "type": "String",
+            "field": "name",
+            "optional": false,
+            "description": "<p>New name of the group</p>"
           }
         ]
       }
@@ -1098,9 +1053,368 @@ define({ api: [
     "examples": [
       {
         "title": "Use example",
-        "content": "put http://localhost/events/9/invitations/4\n"
+        "content": "POST http://localhost/users/15/friendsgroups/10/members\nform-data:\n----------\nid_member: 25\n"
       }
     ],
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
+    "success": {
+      "fields": {
+        "Success (201 Created) response parameters": [
+          {
+            "group": "201",
+            "type": "Object",
+            "field": "object",
+            "optional": false,
+            "description": "<p>The created object.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success (201 Created) response sample:",
+          "content": "HTTP/1.1 201 Created\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n}\n"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sources/FriendsGroup.js"
+  },
+  {
+    "type": "post",
+    "url": "/users/:id_id/friendsgroups",
+    "title": "Create a group",
+    "name": "CreateUserGroup",
+    "group": "Friends_Groups",
+    "description": "<p><br/><b style=\"color:green;\">Throw valid response:</b> 201.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403, 409.</p>",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "field": "id_user",
+            "optional": false,
+            "description": "<p>Friends group&#39;s ID.</p>"
+          }
+        ],
+        "Parameters (Form Data)": [
+          {
+            "group": "dataParam",
+            "type": "String",
+            "field": "name",
+            "optional": false,
+            "description": "<p>Name of the group.</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "POST http://localhost/users/15/friendsgroups\nform-data:\n----------\nname: Family\n"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success (201 Created) response parameters": [
+          {
+            "group": "201",
+            "type": "Object",
+            "field": "object",
+            "optional": false,
+            "description": "<p>The created object.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success (201 Created) response sample:",
+          "content": "HTTP/1.1 201 Created\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n}\n"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sources/FriendsGroup.js"
+  },
+  {
+    "type": "delete",
+    "url": "/users/:id_user/friendsgroups/:id_group",
+    "title": "Delete a group",
+    "name": "DeleteUserGroup",
+    "group": "Friends_Groups",
+    "description": "<p><br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "field": "id_user",
+            "optional": false,
+            "description": "<p>Friends group&#39;s ID.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "field": "id_group",
+            "optional": false,
+            "description": "<p>Friends group&#39;s ID.</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "DELETE http://localhost/users/15/friendsgroups/10\n"
+      }
+    ],
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success (204 No content) response sample:",
+          "content": "HTTP/1.1 204 No content\n{\n}\n"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sources/FriendsGroup.js"
+  },
+  {
+    "type": "delete",
+    "url": "/users/:id_user/friendsgroups/:id_group/members/:id_member",
+    "title": "Delete a group member",
+    "name": "DeleteUserGroupMember",
+    "group": "Friends_Groups",
+    "description": "<p><br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
+    "parameter": {
+      "fields": {
+        "Parameters (URL)": [
+          {
+            "group": "urlParam",
+            "type": "Number",
+            "field": "id_user",
+            "optional": false,
+            "description": "<p>Friends group&#39;s ID.</p>"
+          },
+          {
+            "group": "urlParam",
+            "type": "Number",
+            "field": "id_group",
+            "optional": false,
+            "description": "<p>Friends group&#39;s ID.</p>"
+          },
+          {
+            "group": "urlParam",
+            "type": "Number",
+            "field": "id_member",
+            "optional": false,
+            "description": "<p>Member&#39;s ID.</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "DELETE http://localhost/users/15/friendsgroups/10/members/25\n"
+      }
+    ],
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success (204 No content) response sample:",
+          "content": "HTTP/1.1 204 No content\n{\n}\n"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sources/FriendsGroup.js"
+  },
+  {
+    "type": "get",
+    "url": "/users/:id_user/friendsgroups/:id_group",
+    "title": "Find a group",
+    "name": "FindUserGroup",
+    "group": "Friends_Groups",
+    "groupDescription": "<p>Friends groups are simple group of users that one user can make. They are personal and private to each user.</p>",
+    "description": "<p><br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403, 404.</p>",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "field": "id_user",
+            "optional": false,
+            "description": "<p>Friends group&#39;s ID.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "field": "id_group",
+            "optional": false,
+            "description": "<p>Friends group&#39;s ID.</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "GET http://localhost/users/15/friendsgroups/10\n"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success (200 OK) response parameters": [
+          {
+            "group": "200",
+            "type": "Object",
+            "field": "object",
+            "optional": false,
+            "description": "<p>Requested object.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success (200 OK) response sample:",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"object\": {\n        \"field1\": \"Foo\",\n        \"field2\": \"Bar\",\n        ...\n     },\n   }\n"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sources/FriendsGroup.js"
+  },
+  {
+    "type": "get",
+    "url": "/users/:id_user/friendsgroups",
+    "title": "Find groups",
+    "name": "FindUserGroups",
+    "group": "Friends_Groups",
+    "description": "<p><br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403, 404.</p>",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "field": "id_user",
+            "optional": false,
+            "description": "<p>Friends group&#39;s ID.</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "GET http://localhost/users/15/friendsgroups\n"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success (200 OK) response parameters": [
+          {
+            "group": "200",
+            "type": "Object[]",
+            "field": "objects",
+            "optional": false,
+            "description": "<p>The list of objects.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success (200 OK) response sample:",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object1\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        \"object2\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
+        },
+        {
+          "title": "Success (200 OK) response sample (case of empty):",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [ ],\n     \"status\": 200\n   }\n"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sources/FriendsGroup.js"
+  },
+  {
+    "type": "put",
+    "url": "/users/:id_user/friendsgroups/:id_group",
+    "title": "Update a group",
+    "name": "UpdateUserGroup",
+    "group": "Friends_Groups",
+    "description": "<p><br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "field": "id_user",
+            "optional": false,
+            "description": "<p>Friends group&#39;s ID.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "field": "id_group",
+            "optional": false,
+            "description": "<p>Friends group&#39;s ID.</p>"
+          }
+        ],
+        "Parameters (Form Data)": [
+          {
+            "group": "dataParam",
+            "type": "String",
+            "field": "name",
+            "optional": false,
+            "description": "<p>New name of the group</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "PUT http://localhost/users/15/friendsgroups\nform-data:\n----------\nname: Family\n"
+      }
+    ],
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
     "success": {
       "fields": {
         "Success (200 OK) response parameters": [
@@ -1121,7 +1435,7 @@ define({ api: [
       ]
     },
     "version": "0.0.0",
-    "filename": "sources/Event.js"
+    "filename": "sources/FriendsGroup.js"
   },
   {
     "parameter": {
@@ -1158,7 +1472,12 @@ define({ api: [
         ]
       }
     },
-    "group": "Friendship.js",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
+    "group": "Friendship_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -1166,71 +1485,8 @@ define({ api: [
   },
   {
     "type": "post",
-    "url": "/users/:id/friendshipgroups/:id/members",
-    "title": "Add a member to a group",
-    "name": "AddUserGroupMember",
-    "group": "Friendship_groups",
-    "version": "0.0.0",
-    "filename": "sources/FriendshipGroup.js"
-  },
-  {
-    "type": "post",
-    "url": "/users/:id/friendshipgroups",
-    "title": "Create a user friends group",
-    "name": "CreateUserGroup",
-    "group": "Friendship_groups",
-    "version": "0.0.0",
-    "filename": "sources/FriendshipGroup.js"
-  },
-  {
-    "type": "delete",
-    "url": "/users/:id/friendshipgroups/:id",
-    "title": "Delete a user friends group",
-    "name": "DeleteUserGroup",
-    "group": "Friendship_groups",
-    "version": "0.0.0",
-    "filename": "sources/FriendshipGroup.js"
-  },
-  {
-    "type": "delete",
-    "url": "/users/:id/friendshipgroups/:id/members/:id",
-    "title": "Delete a member from a group",
-    "name": "DeleteUserGroupMember",
-    "group": "Friendship_groups",
-    "version": "0.0.0",
-    "filename": "sources/FriendshipGroup.js"
-  },
-  {
-    "type": "get",
-    "url": "/users/:id/friendshipgroups/:id",
-    "title": "Find a user friends group",
-    "name": "FindUserGroup",
-    "group": "Friendship_groups",
-    "version": "0.0.0",
-    "filename": "sources/FriendshipGroup.js"
-  },
-  {
-    "type": "get",
-    "url": "/users/:id/friendshipgroups/:id",
-    "title": "Find user friends groups",
-    "name": "FindUserGroups",
-    "group": "Friendship_groups",
-    "version": "0.0.0",
-    "filename": "sources/FriendshipGroup.js"
-  },
-  {
-    "type": "put",
-    "url": "/users/:id/friendshipgroups/:id",
-    "title": "Update a user friends group",
-    "name": "UpdateUserGroup",
-    "group": "Friendship_groups",
-    "version": "0.0.0",
-    "filename": "sources/FriendshipGroup.js"
-  },
-  {
-    "type": "post",
-    "url": "/users/:id/friendships-request",
-    "title": "Create a friendship request",
+    "url": "/users/:id_user/friendships",
+    "title": "Ask a new friend",
     "name": "CreateFriendship",
     "group": "Friendships",
     "permission": {
@@ -1238,16 +1494,32 @@ define({ api: [
       "title": "Authentication requiered",
       "description": ""
     },
-    "description": "<p>Create one user friendships.<br/><b>Throw error:</b> 400.</p>",
+    "description": "<p>This will create a new friend request for the specified user. The friendship will only have the state &quot;wait for response&quot;.<br/><b style=\"color:green;\">Throw valid response:</b> 201.<br/><b style=\"color:red;\">Throw error response:</b> 400, 409.</p>",
     "parameter": {
       "fields": {
-        "Parameters (Form Data)": [
+        "urlParams": [
           {
-            "group": "dataParam",
+            "group": "urlParams",
             "type": "Number",
-            "field": "target_id",
+            "field": "id_user",
             "optional": false,
-            "description": ""
+            "description": "<p>User&#39;s ID.</p>"
+          }
+        ],
+        "dataParams": [
+          {
+            "group": "dataParams",
+            "type": "Number",
+            "field": "id_friend",
+            "optional": false,
+            "description": "<p>ID of the user to ask as friend.</p>"
+          },
+          {
+            "group": "dataParams",
+            "type": "boolean",
+            "field": "force_accept",
+            "optional": false,
+            "description": "<p><b>Admin.</b> Force the acceptance. (true/false).</p>"
           }
         ]
       }
@@ -1255,7 +1527,7 @@ define({ api: [
     "examples": [
       {
         "title": "Use example",
-        "content": "post http://localhost/users/15/friendships-request\nform-data: target_id=36\n"
+        "content": "POST http://localhost/users/10/friends\nform-data:\n----------\nid_friend: 27\n"
       }
     ],
     "success": {
@@ -1282,30 +1554,57 @@ define({ api: [
   },
   {
     "type": "delete",
-    "url": "/users/:id_applicant/friendships/:id_target",
-    "title": "Cancel a friendship",
+    "url": "/users/:id_user/friendships/:id_friendship",
+    "title": "Delete a friendship",
     "name": "DeleteFriendship",
     "group": "Friendships",
-    "version": "0.0.0",
-    "filename": "sources/Friendship.js"
-  },
-  {
-    "type": "delete",
-    "url": "/users/:id/friendships-request/:id",
-    "title": "Cancel a friendship request",
-    "name": "DeleteFriendshipRequest",
-    "group": "Friendships",
+    "permission": "accountOwner admin",
+    "description": "<p><br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
+    "parameter": {
+      "fields": {
+        "urlParams": [
+          {
+            "group": "urlParams",
+            "type": "Number",
+            "field": "id_user",
+            "optional": false,
+            "description": "<p>User&#39;s ID.</p>"
+          },
+          {
+            "group": "urlParams",
+            "type": "Number",
+            "field": "id_friendship",
+            "optional": false,
+            "description": "<p>ID of the friendship to cancel.</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "DELETE http://localhost/users/15/friends/27\n"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success (204 No content) response sample:",
+          "content": "HTTP/1.1 204 No content\n{\n}\n"
+        }
+      ]
+    },
     "version": "0.0.0",
     "filename": "sources/Friendship.js"
   },
   {
     "type": "get",
-    "url": "/users/:user_id/friendships-request/:id",
+    "url": "/users/:user_id/friendships/:id",
     "title": "Find a friendship request",
     "name": "FindFriendship",
     "group": "Friendships",
-    "groupDescription": "<p>API relatives to friendships. Friendship are a relation between two user. These users are considered as friends. A friendship is not necessary valid.The friendship must be accepted by the target before being established, so the friendship can have several states like (waiting / cancelled / accepted / ...).</p>",
-    "description": "<p>Allow to find a friendship by its ID<br/><b>Throw error:</b> 404</p>",
+    "groupDescription": "<p>API relatives to friendships. Friendship are a relation between two user. These users are considered as friends. A friendship is not necessary valid.<br/>The friendship must be accepted by the target before being established, so the friendship can have several states like (waiting / cancelled / accepted / ...).</p>",
+    "description": "<p>Allow to find a friendship by its ID<br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403, 404.</p>",
     "permission": "authenticated author",
     "parameter": {
       "fields": {
@@ -1330,7 +1629,7 @@ define({ api: [
     "examples": [
       {
         "title": "Use example",
-        "content": "get http://localhost/users/15/friendships-request/25\n"
+        "content": "get http://localhost/users/15/friendships/25\n"
       }
     ],
     "success": {
@@ -1357,18 +1656,12 @@ define({ api: [
   },
   {
     "type": "get",
-    "url": "/users/:id/friendships-request",
+    "url": "/users/:id/friendships",
     "title": "Find friendships requests",
     "name": "FindFriendships",
     "group": "Friendships",
     "permission": "authenticated author",
-    "description": "<p>Fetch friendships<br/><b>Throw error:</b></p>",
-    "examples": [
-      {
-        "title": "Use example",
-        "content": "get /users/:id/friendships-request\nget /users/:id/friendships-request?sort=asc&state=accepted\n"
-      }
-    ],
+    "description": "<p>Fetch all friendships request with any states.<br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
     "parameter": {
       "fields": {
         "Parameters (URL)": [
@@ -1377,7 +1670,7 @@ define({ api: [
             "type": "Number",
             "field": "id",
             "optional": true,
-            "description": "<p>Use it to retrieve only one friendship with its ID.</p>"
+            "description": "<p>Search by ID.</p>"
           },
           {
             "group": "urlParam",
@@ -1403,6 +1696,12 @@ define({ api: [
         ]
       }
     },
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "GET http://localhost/users/10/friendships\nGET http://localhost/users/10/friendships?state=accepted\n"
+      }
+    ],
     "success": {
       "fields": {
         "Success (200 OK) response parameters": [
@@ -1418,7 +1717,7 @@ define({ api: [
       "examples": [
         {
           "title": "Success (200 OK) response sample:",
-          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object1\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        \"object2\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
         },
         {
           "title": "Success (200 OK) response sample (case of empty):",
@@ -1431,19 +1730,105 @@ define({ api: [
   },
   {
     "type": "get",
-    "url": "users/:id/friends/:id",
-    "title": "Find one user's friend",
-    "name": "FindUserFriend",
+    "url": "/users/:id/friends",
+    "title": "Find friends",
+    "name": "FindUserFriends",
     "group": "Friendships",
+    "description": "<p>Find a user&#39;s friends.<br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "GET http://localhost/users/15/friends\n"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success (200 OK) response parameters": [
+          {
+            "group": "200",
+            "type": "Object[]",
+            "field": "objects",
+            "optional": false,
+            "description": "<p>The list of objects.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success (200 OK) response sample:",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object1\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        \"object2\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
+        },
+        {
+          "title": "Success (200 OK) response sample (case of empty):",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [ ],\n     \"status\": 200\n   }\n"
+        }
+      ]
+    },
     "version": "0.0.0",
     "filename": "sources/Friendship.js"
   },
   {
-    "type": "get",
-    "url": "users/:id/friends",
-    "title": "Find user's friends",
-    "name": "FindUserFriends",
+    "type": "put",
+    "url": "users/:id_user/friendships/:id_friendship",
+    "title": "Respond a friend request",
+    "name": "UpdateFriendship",
     "group": "Friendships",
+    "permission": "authenticated accountOwner admin",
+    "description": "<p><br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
+    "parameter": {
+      "fields": {
+        "urlParams": [
+          {
+            "group": "urlParams",
+            "type": "Number",
+            "field": "id_user",
+            "optional": false,
+            "description": "<p>User&#39;s ID.</p>"
+          },
+          {
+            "group": "urlParams",
+            "type": "Number",
+            "field": "id_friendship",
+            "optional": false,
+            "description": "<p>ID of the concerned friendship.</p>"
+          }
+        ],
+        "Parameters (Form Data)": [
+          {
+            "group": "dataParam",
+            "type": "String",
+            "field": "accept",
+            "optional": false,
+            "description": "<p>(true/false)</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "PUT http://localhost/users/10/friendships/26\nform-data:\n----------\naccept: false (I don't give a shit about you dude!) or true (Come to share a bit of Mojo time bro <3)\n"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success (200 OK) response parameters": [
+          {
+            "group": "200",
+            "type": "Object",
+            "field": "object",
+            "optional": false,
+            "description": "<p>The updated object.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success (200 OK) response sample:",
+          "content": "HTTP/1.1 200 OK\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n}\n"
+        }
+      ]
+    },
     "version": "0.0.0",
     "filename": "sources/Friendship.js"
   },
@@ -1456,33 +1841,61 @@ define({ api: [
             "type": "Number",
             "field": "id",
             "optional": true,
-            "description": ""
+            "description": "<p>Search by ID.</p>"
+          },
+          {
+            "group": "urlParam",
+            "type": "String",
+            "field": "seniority_sort",
+            "optional": true,
+            "description": "<p>(asc/desc) Search by recent or old created accounts.</p>"
           },
           {
             "group": "urlParam",
             "type": "String",
             "field": "firstname",
             "optional": true,
-            "description": ""
+            "description": "<p>Search by firstname.</p>"
           },
           {
             "group": "urlParam",
             "type": "String",
             "field": "lastname",
             "optional": true,
-            "description": ""
+            "description": "<p>Search by lastname.</p>"
           },
           {
             "group": "urlParam",
             "type": "String",
             "field": "firstname_sort",
             "optional": true,
-            "description": "<p>(asc/desc)</p>"
+            "description": "<p>(asc/desc).</p>"
+          },
+          {
+            "group": "urlParam",
+            "type": "String",
+            "field": "lastname_sort",
+            "optional": true,
+            "description": "<p>(asc/desc).</p>"
+          },
+          {
+            "group": "urlParam",
+            "type": "String",
+            "field": "firstname_like",
+            "optional": true,
+            "description": "<p>Search by firstname with LIKE condition. Value example: &quot;ax&quot; will return &quot;maxime&quot; or &quot;max&quot;.</p>"
+          },
+          {
+            "group": "urlParam",
+            "type": "String",
+            "field": "lastname_like",
+            "optional": true,
+            "description": "<p>Search by lastname with LIKE condition. Value example: &quot;re&quot; will return &quot;bret&quot; or &quot;breton&quot;.</p>"
           }
         ]
       }
     },
-    "group": "User.js",
+    "group": "User_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -1495,11 +1908,11 @@ define({ api: [
     "name": "CreateUser",
     "group": "Users",
     "permission": {
-      "name": "authenticated",
-      "title": "Authentication requiered",
+      "name": "guest",
+      "title": "Guest access rights needed.",
       "description": ""
     },
-    "description": "<p>Create one user and retrieve the created object.<br/><b>Throw error:</b> 400, 409.</p>",
+    "description": "<p>Create one user and retrieve the created object. A user is designed by a unique email.If the user exist or one of primary field is already taken then the response will be 409.<br/><b style=\"color:green;\">Throw valid response:</b> 201.<br/><b style=\"color:red;\">Throw error response:</b> 400, 409.</p>",
     "parameter": {
       "fields": {
         "Parameters (Form Data)": [
@@ -1508,14 +1921,14 @@ define({ api: [
             "type": "String",
             "field": "email",
             "optional": false,
-            "description": ""
+            "description": "<p>Should be unique.</p>"
           },
           {
             "group": "dataParam",
             "type": "String",
             "field": "password",
             "optional": false,
-            "description": ""
+            "description": "<p>This password is the md5 hashed + salted password.</p>"
           },
           {
             "group": "dataParam",
@@ -1530,6 +1943,27 @@ define({ api: [
             "field": "lastname",
             "optional": true,
             "description": ""
+          },
+          {
+            "group": "dataParam",
+            "type": "String",
+            "field": "phone",
+            "optional": true,
+            "description": "<p>Must be in this form: +33656565656 with (+??) as the country identifier.</p>"
+          },
+          {
+            "group": "dataParam",
+            "type": "String",
+            "field": "api_key",
+            "optional": true,
+            "description": "<p><b>Admin.</b> Force api key value.</p>"
+          },
+          {
+            "group": "dataParam",
+            "type": "String",
+            "field": "role_id",
+            "optional": true,
+            "description": "<p><b>Admin.</b> force role ID value.</p>"
           }
         ]
       }
@@ -1537,7 +1971,7 @@ define({ api: [
     "examples": [
       {
         "title": "Use example",
-        "content": "post http://localhost/users\nform-data: email=xmax54%40gmail.com&password=password\n"
+        "content": "POST http://localhost/users\nform-data:\n----------\nemail: xmax54@gmail.com\npassword: password\n"
       }
     ],
     "success": {
@@ -1568,17 +2002,17 @@ define({ api: [
     "title": "Delete one user",
     "name": "DeleteUser",
     "group": "Users",
-    "permission": "authenticated accountOwner",
-    "description": "<p>Delete a user<br/><b>Throw error:</b> 404.</p>",
+    "permission": "accountOwner admin",
+    "description": "<p>To delete a user you must have correct rights.<br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "urlParams": [
           {
-            "group": "Parameter",
+            "group": "urlParams",
             "type": "Number",
             "field": "id",
             "optional": false,
-            "description": "<p>User&#39;s ID</p>"
+            "description": "<p>User&#39;s ID.</p>"
           }
         ]
       }
@@ -1586,7 +2020,7 @@ define({ api: [
     "examples": [
       {
         "title": "Use example",
-        "content": "delete http://localhost/users/15\n"
+        "content": "DELETE http://localhost/users/15\n"
       }
     ],
     "success": {
@@ -1611,11 +2045,11 @@ define({ api: [
       "title": "Authentication requiered",
       "description": ""
     },
-    "description": "<p>Fetch users<br/><b>Throw error:</b></p>",
+    "description": "<p>Fetch group of users with criterias. The response is never empty and in worst case you will get an empty object.<br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
     "examples": [
       {
         "title": "Use example",
-        "content": "get http://localhost/users\nget http://localhost/users?sort=asc&firstname=maxime\n"
+        "content": "GET http://localhost/users\nGET http://localhost/users?sort=asc&firstname=maxime\n"
       }
     ],
     "parameter": {
@@ -1626,28 +2060,56 @@ define({ api: [
             "type": "Number",
             "field": "id",
             "optional": true,
-            "description": ""
+            "description": "<p>Search by ID.</p>"
+          },
+          {
+            "group": "urlParam",
+            "type": "String",
+            "field": "seniority_sort",
+            "optional": true,
+            "description": "<p>(asc/desc) Search by recent or old created accounts.</p>"
           },
           {
             "group": "urlParam",
             "type": "String",
             "field": "firstname",
             "optional": true,
-            "description": ""
+            "description": "<p>Search by firstname.</p>"
           },
           {
             "group": "urlParam",
             "type": "String",
             "field": "lastname",
             "optional": true,
-            "description": ""
+            "description": "<p>Search by lastname.</p>"
           },
           {
             "group": "urlParam",
             "type": "String",
             "field": "firstname_sort",
             "optional": true,
-            "description": "<p>(asc/desc)</p>"
+            "description": "<p>(asc/desc).</p>"
+          },
+          {
+            "group": "urlParam",
+            "type": "String",
+            "field": "lastname_sort",
+            "optional": true,
+            "description": "<p>(asc/desc).</p>"
+          },
+          {
+            "group": "urlParam",
+            "type": "String",
+            "field": "firstname_like",
+            "optional": true,
+            "description": "<p>Search by firstname with LIKE condition. Value example: &quot;ax&quot; will return &quot;maxime&quot; or &quot;max&quot;.</p>"
+          },
+          {
+            "group": "urlParam",
+            "type": "String",
+            "field": "lastname_like",
+            "optional": true,
+            "description": "<p>Search by lastname with LIKE condition. Value example: &quot;re&quot; will return &quot;bret&quot; or &quot;breton&quot;.</p>"
           }
         ]
       }
@@ -1667,7 +2129,7 @@ define({ api: [
       "examples": [
         {
           "title": "Success (200 OK) response sample:",
-          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object1\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        \"object2\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
         },
         {
           "title": "Success (200 OK) response sample (case of empty):",
@@ -1684,8 +2146,8 @@ define({ api: [
     "title": "Find one user",
     "name": "FindUser",
     "group": "Users",
-    "groupDescription": "<p>API relatives to users</p>",
-    "description": "<p>Find a user by its ID<br/><b>Throw error:</b> 404</p>",
+    "groupDescription": "<p>API relatives to users and in more explicitly way accounts.</p>",
+    "description": "<p>Find a user by its ID<br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403, 404.</p>",
     "permission": {
       "name": "authenticated",
       "title": "Authentication requiered",
@@ -1707,7 +2169,7 @@ define({ api: [
     "examples": [
       {
         "title": "Use example",
-        "content": "get http://localhost/users/15\n"
+        "content": "GET http://localhost/users/15\n"
       }
     ],
     "success": {
@@ -1735,11 +2197,11 @@ define({ api: [
   {
     "type": "patch",
     "url": "/users/:id",
-    "title": "Generate user's password reset token",
+    "title": "Generate a user's pwd reset token",
     "name": "GenerateUserResetTokenPassword",
     "group": "Users",
-    "permission": "authenticated accountOwner",
-    "description": "<p><br/><b>Throw error:</b></p>",
+    "permission": "authenticated accountOwner admin",
+    "description": "<p>Generate a password reset token for the designed user. This token can be used later to update the user password.<br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
     "parameter": {
       "fields": {
         "Parameters (Form Data)": [
@@ -1755,10 +2217,18 @@ define({ api: [
     },
     "examples": [
       {
-        "title": "Example d'utilisation",
-        "content": "patch http://localhost/users/15\nform-data: reset_password=true\n"
+        "title": "Use example",
+        "content": "PATCH http://localhost/users/15\nform-data:\n----------\nreset_password=true\n"
       }
     ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success (204 No content) response sample:",
+          "content": "HTTP/1.1 204 No content\n{\n}\n"
+        }
+      ]
+    },
     "version": "0.0.0",
     "filename": "sources/User.js"
   },
@@ -1768,8 +2238,8 @@ define({ api: [
     "title": "Update one user",
     "name": "UpdateUser",
     "group": "Users",
-    "permission": "authenticated accountOwner",
-    "description": "<p>Mets à jour un utilisateur et le récupère. Pour mettre à jour le mot de passe, une génération préalable d&#39;un token est requise.le token doit ensuite être spécifié dans la requete.<br/><b>Throw error:</b> 400.</p>",
+    "permission": "authenticated accountOwner admin",
+    "description": "<p>Update an user and get it back. A generated reset token is needed to update password, see the designed method.<br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
     "parameter": {
       "fields": {
         "Parameters (Form Data)": [
@@ -1778,14 +2248,14 @@ define({ api: [
             "type": "String",
             "field": "email",
             "optional": false,
-            "description": ""
+            "description": "<p><b>Admin.</b></p>"
           },
           {
             "group": "dataParam",
             "type": "String",
             "field": "password",
             "optional": true,
-            "description": "<p>A token is required to update password.</p>"
+            "description": "<p>A token is required to update password. This password is the md5 hashed + salted password.</p>"
           },
           {
             "group": "dataParam",
@@ -1811,6 +2281,13 @@ define({ api: [
           {
             "group": "dataParam",
             "type": "String",
+            "field": "phone",
+            "optional": true,
+            "description": ""
+          },
+          {
+            "group": "dataParam",
+            "type": "String",
             "field": "preference_foo",
             "optional": true,
             "description": "<p>Change the preference foo</p>"
@@ -1821,7 +2298,7 @@ define({ api: [
     "examples": [
       {
         "title": "Use example",
-        "content": "put http://localhost/users\nform-data: email=xmax54%40gmail.com&firstname=pascal\n"
+        "content": "PUT http://localhost/users\nform-data:\n----------\nemail: xmax54@gmail.com\npassword: password\n"
       }
     ],
     "success": {
@@ -1847,15 +2324,26 @@ define({ api: [
     "filename": "sources/User.js"
   },
   {
-    "error": {
+    "success": {
+      "fields": {
+        "Success (200 OK) response parameters": [
+          {
+            "group": "200",
+            "type": "Object",
+            "field": "object",
+            "optional": false,
+            "description": "<p>Requested object.</p>"
+          }
+        ]
+      },
       "examples": [
         {
-          "title": "Error (500 Serveur Error) response sample:",
-          "content": "   HTTP/1.1 500 Serveur Error\n   {\n     \"message\": \"Database unavailable\",\n     \"code\": \"dbUnavailable\"\n   }\n"
+          "title": "Success (200 OK) response sample:",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"object\": {\n        \"field1\": \"Foo\",\n        \"field2\": \"Bar\",\n        ...\n     },\n   }\n"
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -1877,7 +2365,7 @@ define({ api: [
       "examples": [
         {
           "title": "Success (200 OK) response sample:",
-          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object1\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        \"object2\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
         },
         {
           "title": "Success (200 OK) response sample (case of empty):",
@@ -1885,7 +2373,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -1911,7 +2399,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -1937,7 +2425,22 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "sources/_general.js"
+  },
+  {
+    "error": {
+      "examples": [
+        {
+          "title": "Error (500 Serveur Error) response sample:",
+          "content": "   HTTP/1.1 500 Serveur Error\n   {\n     \"message\": \"Database unavailable\",\n     \"code\": \"dbUnavailable\"\n   }\n"
+        }
+      ]
+    },
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -1952,108 +2455,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
-    "type": "",
-    "url": "",
-    "version": "0.0.0",
-    "filename": "sources/_general.js"
-  },
-  {
-    "success": {
-      "fields": {
-        "Success (200 OK) response parameters": [
-          {
-            "group": "200",
-            "type": "Object",
-            "field": "object",
-            "optional": false,
-            "description": "<p>Requested object.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success (200 OK) response sample:",
-          "content": "   HTTP/1.1 200 OK\n   {\n     \"object\": {\n        \"field1\": \"Foo\",\n        \"field2\": \"Bar\",\n        ...\n     },\n   }\n"
-        }
-      ]
-    },
-    "group": "_general.js",
-    "type": "",
-    "url": "",
-    "version": "0.0.0",
-    "filename": "sources/_general.js"
-  },
-  {
-    "error": {
-      "examples": [
-        {
-          "title": "Error (400 Bad request) response sample (case of parameters validation failed):",
-          "content": "   HTTP/1.1 400 BAD REQUEST\n   {\n     \"message\": \"The requested parameters are not correct\",\n     \"code\": \"invalidParams\"\n     \"params\": [\n        {\n          \"message\": \"This field should contain at least 4 characters\",\n          \"code\": \"fieldTooShort\"\n          \"field\": \"foo\"\n        },\n        ...\n     ],\n   }\n"
-        }
-      ]
-    },
-    "group": "_general.js",
-    "type": "",
-    "url": "",
-    "version": "0.0.0",
-    "filename": "sources/_general.js"
-  },
-  {
-    "error": {
-      "examples": [
-        {
-          "title": "Error (404 Not Found) response sample:",
-          "content": "   HTTP/1.1 404 Not Found\n   {\n     \"message\": \"This user doesn't exist\",\n     \"code\": \"modelNotFound\"\n   }\n"
-        }
-      ]
-    },
-    "group": "_general.js",
-    "type": "",
-    "url": "",
-    "version": "0.0.0",
-    "filename": "sources/_general.js"
-  },
-  {
-    "error": {
-      "examples": [
-        {
-          "title": "Error (401 Unauthorized Error) response sample (case of authentication parameters are missing):",
-          "content": "   HTTP/1.1 401 Unauthorized Error\n   {\n     \"message\": \"You are not authorized\",\n     \"code\": \"unauthorized\"\n   }\n"
-        }
-      ]
-    },
-    "group": "_general.js",
-    "type": "",
-    "url": "",
-    "version": "0.0.0",
-    "filename": "sources/_general.js"
-  },
-  {
-    "error": {
-      "examples": [
-        {
-          "title": "Error (403 Forbidden Error) response sample:",
-          "content": "   HTTP/1.1 403 Forbidden Error\n   {\n     \"message\": \"You do not have enough rights to access this resource\",\n     \"code\": \"noAccessRights\"\n   }\n"
-        }
-      ]
-    },
-    "group": "_general.js",
-    "type": "",
-    "url": "",
-    "version": "0.0.0",
-    "filename": "sources/_general.js"
-  },
-  {
-    "error": {
-      "examples": [
-        {
-          "title": "Error (409 Conflict Error) response sample:",
-          "content": "   HTTP/1.1 409 Conflict Error\n   {\n     \"message\": \"Email already taken\",\n     \"description\": \"foo\",\n     \"code\": \"emailArleadyTaken\"\n   }\n"
-        }
-      ]
-    },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2122,7 +2524,97 @@ define({ api: [
         ]
       }
     },
-    "group": "_general.js",
+    "group": "_general_js",
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "sources/_general.js"
+  },
+  {
+    "error": {
+      "examples": [
+        {
+          "title": "Error (400 Bad request) response sample (case of parameters validation failed):",
+          "content": "   HTTP/1.1 400 BAD REQUEST\n   {\n     \"message\": \"The requested parameters are not correct\",\n     \"code\": \"invalidParams\"\n     \"params\": [\n        {\n          \"message\": \"This field should contain at least 4 characters\",\n          \"code\": \"fieldTooShort\"\n          \"field\": \"foo\"\n        },\n        ...\n     ],\n   }\n"
+        }
+      ]
+    },
+    "group": "_general_js",
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "sources/_general.js"
+  },
+  {
+    "error": {
+      "examples": [
+        {
+          "title": "Error (404 Not Found) response sample:",
+          "content": "   HTTP/1.1 404 Not Found\n   {\n     \"message\": \"This user doesn't exist\",\n     \"code\": \"modelNotFound\"\n   }\n"
+        }
+      ]
+    },
+    "group": "_general_js",
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "sources/_general.js"
+  },
+  {
+    "error": {
+      "examples": [
+        {
+          "title": "Error (401 Unauthorized Error) response sample (case of authentication parameters are missing):",
+          "content": "   HTTP/1.1 401 Unauthorized Error\n   {\n     \"message\": \"You are not authorized\",\n     \"code\": \"unauthorized\"\n   }\n"
+        }
+      ]
+    },
+    "group": "_general_js",
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "sources/_general.js"
+  },
+  {
+    "error": {
+      "examples": [
+        {
+          "title": "Error (403 Forbidden Error) response sample:",
+          "content": "   HTTP/1.1 403 Forbidden Error\n   {\n     \"message\": \"You do not have enough rights to access this resource\",\n     \"code\": \"noAccessRights\"\n   }\n"
+        }
+      ]
+    },
+    "group": "_general_js",
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "sources/_general.js"
+  },
+  {
+    "error": {
+      "examples": [
+        {
+          "title": "Error (409 Conflict Error) response sample:",
+          "content": "   HTTP/1.1 409 Conflict Error\n   {\n     \"message\": \"Email already taken\",\n     \"description\": \"foo\",\n     \"code\": \"emailArleadyTaken\"\n   }\n"
+        }
+      ]
+    },
+    "group": "_general_js",
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "sources/_general.js"
+  },
+  {
+    "success": {
+      "examples": [
+        {
+          "title": "Success (204 No content) response sample:",
+          "content": "HTTP/1.1 204 No content\n{\n}\n"
+        }
+      ]
+    },
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",

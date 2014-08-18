@@ -16,8 +16,8 @@ module.exports = {
         var permissions = sails.config.permissions;
 
         // Reject if ACL is not register for this resource
-        if( ! this._hasResource(resource) ){
-            sails.log.debug("Permission policy, trying to get a unknown resource or action [resource="+resource+"][action="+action+"]");
+        if( ! this._hasRole(roleName) || ! this._hasResource(resource)  ){
+            sails.log.debug("Permission policy, trying to get a unknown role or resource or action [role="+roleName+"][resource="+resource+"][action="+action+"]");
             return false;
         }
 
@@ -51,6 +51,10 @@ module.exports = {
 
     _hasResource: function( resource ){
         return sails.config.permissions.resources.indexOf(resource) < 0 ? false : true;
+    },
+
+    _hasRole: function( role ){
+        return sails.config.permissions.roles[role] ? true : false;
     }
 
 };

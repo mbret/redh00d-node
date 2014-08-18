@@ -8,7 +8,7 @@
  * @apiParam (urlParam) {String} [state]
  * @apiParam (urlParam) {String} [createdDate]
  * @apiParam (urlParam) {String} [sort] Sort results in differant way.
- * @todo write more here
+ *
  */
 
 // ------------------------------------------------------------------------------------------
@@ -17,20 +17,21 @@
 //  Task:   UserFriendShipController.find()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {get} /users/:user_id/friendships-request/:id Find a friendship request
+ * @api {get} /users/:user_id/friendships/:id Find a friendship request
  * @apiName FindFriendship
  * @apiGroup Friendships
  * @apiGroupDescription API relatives to friendships. Friendship are a relation between two user. These users are considered as friends. A friendship is not necessary valid.
- * The friendship must be accepted by the target before being established, so the friendship can have several states like (waiting / cancelled / accepted / ...).
+ * <br/>The friendship must be accepted by the target before being established, so the friendship can have several states like (waiting / cancelled / accepted / ...).
  * @apiDescription Allow to find a friendship by its ID
- * <br/><b>Throw error:</b> 404
+ * <br/><b style="color:green;">Throw valid response:</b> 200.
+ * <br/><b style="color:red;">Throw error response:</b> 400, 401, 403, 404.
  *
  * @apiPermission authenticated author
  *
  * @apiParam {Number} user_id User's ID
  * @apiParam {Number} id Friendship's ID
  * @apiExample Use example
- * get http://localhost/users/15/friendships-request/25
+ * get http://localhost/users/15/friendships/25
  *
  * @apiSuccessStructure FindSuccess
  */
@@ -40,87 +41,113 @@
 //  Task:   UserFriendShipController.findMultiple()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {get} /users/:id/friendships-request Find friendships requests
+ * @api {get} /users/:id/friendships Find friendships requests
  * @apiName FindFriendships
  * @apiGroup Friendships
  * @apiPermission authenticated author
- * @apiDescription Fetch friendships
- * <br/><b>Throw error:</b>
+ * @apiDescription Fetch all friendships request with any states.
+ * <br/><b style="color:green;">Throw valid response:</b> 200.
+ * <br/><b style="color:red;">Throw error response:</b> 400, 401, 403.
  *
+ * @apiParam (urlParam) {Number} [id] Search by ID.
  * @apiStructure fetchFriendshipsParams
  * @apiExample Use example
- * get /users/:id/friendships-request
- * get /users/:id/friendships-request?sort=asc&state=accepted
+ * GET http://localhost/users/10/friendships
+ * GET http://localhost/users/10/friendships?state=accepted
  *
  * @apiSuccessStructure FindMultipleSuccess
  */
+
+ // ------------------------------------------------------------------------------------------
+ // Respond one friendship request
+ //
+ //  Task:   UserFriendShipController.update()
+ // ------------------------------------------------------------------------------------------
+ /**
+  * @api {put} users/:id_user/friendships/:id_friendship Respond a friend request
+  * @apiName UpdateFriendship
+  * @apiGroup Friendships
+  * @apiPermission authenticated accountOwner admin
+  * @apiDescription
+  * <br/><b style="color:green;">Throw valid response:</b> 200.
+  * <br/><b style="color:red;">Throw error response:</b> 400, 401, 403.
+  *
+  * @apiParam (urlParams) {Number} id_user User's ID.
+  * @apiParam (urlParams) {Number} id_friendship ID of the concerned friendship.
+  * @apiParam (dataParam) {String} accept (true/false)
+  * @apiExample Use example
+  * PUT http://localhost/users/10/friendships/26
+  * form-data:
+  * ----------
+  * accept: false (I don't give a shit about you dude!) or true (Come to share a bit of Mojo time bro <3)
+  *
+  * @apiSuccessStructure UpdateSuccess
+  */
 // ------------------------------------------------------------------------------------------
-// Create one friendship request
+// Create friend request
 //
 //  Task:   UserFriendShipController.create()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {post} /users/:id/friendships-request Create a friendship request
- * @apiName CreateFriendship
- * @apiGroup Friendships
- * @apiPermission authenticated
- * @apiDescription Create one user friendships.
- * <br/><b>Throw error:</b> 400.
- *
- * @apiParam (dataParam) {Number} target_id
- * @apiExample Use example
- * post http://localhost/users/15/friendships-request
- * form-data: target_id=36
- *
- * @apiSuccessStructure CreateSuccess
- */
-// ------------------------------------------------------------------------------------------
-// Cancel one friendship request
-//
-//  Description: The applicant can cancel his request and the target can cancel the
-//               received request
-// ------------------------------------------------------------------------------------------
-/**
- * @api {delete} /users/:id/friendships-request/:id Cancel a friendship request
- * @apiName DeleteFriendshipRequest
- * @apiGroup Friendships
- * @todo
+  * @api {post} /users/:id_user/friendships Ask a new friend
+  * @apiName CreateFriendship
+  * @apiGroup Friendships
+  * @apiPermission authenticated
+  * @apiDescription This will create a new friend request for the specified user. The friendship will only have the state "wait for response".
+  * <br/><b style="color:green;">Throw valid response:</b> 201.
+  * <br/><b style="color:red;">Throw error response:</b> 400, 409.
+  *
+  * @apiParam (urlParams) {Number} id_user User's ID.
+  * @apiParam (dataParams) {Number} id_friend ID of the user to ask as friend.
+  * @apiParam (dataParams) {boolean} force_accept <b>Admin.</b> Force the acceptance. (true/false).
+  * @apiExample Use example
+  * POST http://localhost/users/10/friends
+  * form-data:
+  * ----------
+  * id_friend: 27
+  *
+  * @apiSuccessStructure CreateSuccess
  */
 // ------------------------------------------------------------------------------------------
 // Cancel one friendship
-//
-//  Description: Both applicant/target can cancel the friendship
+//   - UserFriendshipController.delete()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {delete} /users/:id_applicant/friendships/:id_target Cancel a friendship
+ * @api {delete} /users/:id_user/friendships/:id_friendship Delete a friendship
  * @apiName DeleteFriendship
  * @apiGroup Friendships
- * @todo
+ * @apiPermission accountOwner admin
+ * @apiDescription
+ * <br/><b style="color:green;">Throw valid response:</b> 204.
+ * <br/><b style="color:red;">Throw error response:</b> 400, 401, 403.
+ *
+ * @apiParam (urlParams) {Number} id_user User's ID.
+ * @apiParam (urlParams) {Number} id_friendship ID of the friendship to cancel.
+ * @apiExample Use example
+ * DELETE http://localhost/users/15/friends/27
+ *
+ * @apiSuccessStructure DeleteSuccess
  */
+
 // ------------------------------------------------------------------------------------------
-// Update one friendship request
+//
+//                    Work with Friend (as user) resources
+//
 // ------------------------------------------------------------------------------------------
-/**
- * @-api {put} users/:id/friendships/:id Update friendship
- * @-apiName UpdateFriendship
- * @-apiGroup Friendships
- * @todo
- */
-// ------------------------------------------------------------------------------------------
-// Fetch one friend
-// ------------------------------------------------------------------------------------------
-/**
- * @api {get} users/:id/friends/:id Find one user's friend
- * @apiName FindUserFriend
- * @apiGroup Friendships
- * @todo
- */
 // ------------------------------------------------------------------------------------------
 // Fetch friends
+//   - UserFriendshipController.findFriends()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {get} users/:id/friends Find user's friends
+ * @api {get} /users/:id/friends Find friends
  * @apiName FindUserFriends
  * @apiGroup Friendships
- * @todo
+ * @apiDescription Find a user's friends.
+ * <br/><b style="color:green;">Throw valid response:</b> 200.
+ * <br/><b style="color:red;">Throw error response:</b> 400, 401, 403.
+ *
+ * @apiExample Use example
+ * GET http://localhost/users/15/friends
+ *
+ * @apiSuccessStructure FindMultipleSuccess
  */

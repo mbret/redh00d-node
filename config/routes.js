@@ -78,29 +78,23 @@ module.exports.routes = {
     'delete /api/users/:id':                    'UserController.delete',
     'get    /api/users*':                       'UserController.findMultiple',
 
-    /**
-     * USER friendships relatives routes
-     */
-    // only users
-    'get    /users/:userid/friendships-request/:id':    'UserFriendShipController.findRequest',
-    'get    /users/:userid/friends/:id':                'UserFriendShipController.FindFriend',
-    'post   /users/:userid/friendships-request':        'UserFriendShipController.createRequest', // Create a friendship request
-    'delete /users/:userid/friendships/:id':            'UserFriendShipController.delete', // cancel a friendship
-    'delete /users/:userid/friendships-request/:id':    'UserFriendShipController.deleteRequest', // cancel a friendship request
-    'get    /users/:userid/friendships-request*':       'UserFriendShipController.findMultiple',
+    // USER friendships relatives routes
+    'get    /users/:userid/friendships/:id':            'UserFriendShipController.find',
+    'get    /users/:userid/friends/:idfriend':          'UserFriendShipController.FindFriend',
+    'delete /users/:userid/friends/:idfriend':          'UserFriendShipController.delete', // cancel a friendship request
+    'put    /users/:userid/friendships/:id':            'UserFriendShipController.update', // update request (a response for friends)
+    'get    /users/:userid/friendships*':               'UserFriendShipController.findMultiple',
+    'post   /users/:userid/friends':                    'UserFriendShipController.create', // Create a friendship request
     'get    /users/:userid/friends*':                   'UserFriendShipController.FindFriends',
 
-    /**
-     * USER friendship group relatives routes
-     */
-    // only users
-    'get    /api/users/:iduser/friendshipgroup/:id':            'UserFriendshipGroupController.find',
-    'post   /api/users/:iduser/friendshipgroup':                'UserFriendshipGroupController.create',
-    'post   /api/users/:iduser/friendshipgroup/:id/members':    'UserFriendshipGroupController.addMember',
-    'put    /api/users/:iduser/friendshipgroup':                'UserFriendshipGroupController.update',
-    'delete /api/users/:iduser/friendshipgroup/:id':            'UserFriendshipGroupController.delete',
-    'delete /api/users/:iduser/friendshipgroup/:id/members/:id':'UserFriendshipGroupController.deleteMember',
-    'get    /api/users/:iduser/friendshipgroup*':               'UserFriendshipGroupController.findMultiple'
+    // USER friends group relatives routes
+    'get    /api/users/:iduser/friendsgroup/:id':                  'UserFriendsGroupController.find',
+    'post   /api/users/:iduser/friendsgroup':                      'UserFriendsGroupController.create',
+    'post   /api/users/:iduser/friendsgroup/:id/members':          'UserFriendsGroupController.addMember',
+    'put    /api/users/:iduser/friendsgroup':                      'UserFriendsGroupController.update',
+    'delete /api/users/:iduser/friendsgroup/:id':                  'UserFriendsGroupController.delete',
+    'delete /api/users/:iduser/friendsgroup/:id/members/:idmember':'UserFriendsGroupController.deleteMember',
+    'get    /api/users/:iduser/friendsgroup*':                     'UserFriendsGroupController.findMultiple'
 
 
 

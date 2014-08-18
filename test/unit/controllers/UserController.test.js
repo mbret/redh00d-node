@@ -1,5 +1,4 @@
 var request = require('supertest');
-var async = require("async");
 
 describe('UserController', function() {
 
@@ -127,13 +126,16 @@ describe('UserController', function() {
                 .expect(204).end(done);
         })
 
-        /**
-         * User with email user@user.com ID:1 should not be able to delete another user
-         */
+        // User with email user@user.com ID:1 should not be able to delete another user
         it('should not be able to delete another user', function(done){
             request(sails.hooks.http.app).del('/api/users/3').set('Authorization', authorization)
                 .expect(403).end(done);
         })
+
+        it('should be allowed to delete other account', function(done){
+            // ...
+            done();
+        });
     })
 
 });
