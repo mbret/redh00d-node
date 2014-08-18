@@ -149,7 +149,6 @@ module.exports = {
         });
     },
 
-    // @todo
     patch: function (req, res) {
 
     },
@@ -166,7 +165,7 @@ module.exports = {
             return res.forbidden();
         }
         else{
-            // @todo if not our account isAllowed( role, user, deleteOther) ?
+
             User.destroy({ID:req.param('id')}, function(err){
                 if(err) return res.serverError(err);
                 return res.noContent();
@@ -232,7 +231,7 @@ module.exports = {
                 res.send( user.toJSON() );
             });
         });
-    },
+    }
 
   
 };

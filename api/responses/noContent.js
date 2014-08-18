@@ -19,8 +19,9 @@ module.exports = function noContent () {
 
     // Set status code
     this.res.status(204);
+    data = {};
 
     // send response
-    return ResponseHelper.helper.handleSend( this.req, this.res, data );
+    return ResponseHandlerService.handleSend( this.req, this.res, data );
 
 };
