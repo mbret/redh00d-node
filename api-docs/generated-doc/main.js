@@ -28,22 +28,8 @@ require.config({
 		}
 	},
 	urlArgs: "v=" + (new Date()).getTime(),
-	waitSeconds: 15
+	waitSeconds: 1
 });
-
-function loadGoogleFontCss($){
-    var host = document.location.hostname.toLowerCase();
-    var protocol = document.location.protocol.toLowerCase();
-    var googleCss = '//fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:400,600,700';
-    if (host == "localhost" || !host.length || protocol === 'file:'){
-        googleCss = 'http:' + googleCss;
-    }
-    $("<link/>", {
-        rel: "stylesheet",
-        type: "text/css",
-        href: googleCss
-    }).appendTo("head");
-}
 
 require([
 	"jquery",
@@ -55,9 +41,6 @@ require([
 	"prettify",
 	"bootstrap"
 ], function($, _, locale, Handlebars, apiProject, apiData, prettyPrint) {
-
-    loadGoogleFontCss($);
-
 
 	var api = apiData.api;
 
@@ -106,7 +89,7 @@ require([
 		var titles = {};
 		$.each(groupEntries, function(index, entries) {
 			var title = entries[0].title;
-			if(title !== undefined)
+			if(title)
 			{
 				title.toLowerCase().replace(/[äöüß]/g, function($0) { return umlauts[$0]; });
 				titles[title + " #~#" + index] = 1;
@@ -283,9 +266,6 @@ require([
 						versions: articleVersions[entry.group][entry.name]
 					};
 				}
-
-				// Add prefix URL for endpoint
-				if(apiProject.url) fields.article.url = apiProject.url + fields.article.url; 
 
 				addArticleSettings(fields, entry);
 
@@ -560,6 +540,9 @@ require([
 		if(entry.error && entry.error.fields)         fields._hasTypeInErrorFields = _hasTypeInFields(entry.error.fields);
 		if(entry.success && entry.success.fields)     fields._hasTypeInSuccessFields = _hasTypeInFields(entry.success.fields);
 		if(entry.info && entry.info.fields)           fields._hasTypeInInfoFields = _hasTypeInFields(entry.info.fields);
+
+		// Add prefix URL for endpoint
+		if(apiProject.url) fields.article.url = apiProject.url + fields.article.url; 
 
 		// Add template settings
 		fields.template = apiProject.template;

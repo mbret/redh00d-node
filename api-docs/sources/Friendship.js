@@ -101,7 +101,7 @@
   * @apiParam (dataParams) {Number} id_friend ID of the user to ask as friend.
   * @apiParam (dataParams) {boolean} force_accept <b>Admin.</b> Force the acceptance. (true/false).
   * @apiExample Use example
-  * POST http://localhost/users/10/friends
+  * POST http://localhost/users/10/friendships
   * form-data:
   * ----------
   * id_friend: 27

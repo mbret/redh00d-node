@@ -234,7 +234,6 @@
  * put http://localhost/events/9/invitations/4
  *
  * @apiSuccessStructure UpdateSuccess
- * @todo
  */
 // ------------------------------------------------------------------------------------------
 // Delete an event invitation
@@ -272,7 +271,6 @@
  * @api {delete} /events/:id/members/:id Delete an event member
  * @apiName DeleteEventMember
  * @apiGroup Events
- * @todo
  */
 // ------------------------------------------------------------------------------------------
 // Fetch multiple project's members
@@ -283,7 +281,6 @@
  * @api {get} /events/:id/members Find event members
  * @apiName FindEventMembers
  * @apiGroup Events
- * @todo
  */
 // ------------------------------------------------------------------------------------------
 // Fetch one project members
@@ -294,7 +291,6 @@
  * @api {get} /events/:id/members/:id Find an event member
  * @apiName FindEventMember
  * @apiGroup Events
- * @todo
  */
 // ------------------------------------------------------------------------------------------
 //
@@ -311,9 +307,9 @@
  * @api {delete} /events/:id_event/products/:id_product Delete an event product
  * @apiName DeleteEventProduct
  * @apiGroup Events
- * @apiPermission authenticated @todo
+ * @apiPermission authenticated
  * @apiDescription Delete an event product.
- * <br/><b>Throw error:</b> @todo
+ * <br/><b>Throw error:</b>
  *
  * @apiExample Use example
  * delete http://localhost/events/15/products/10
@@ -331,9 +327,8 @@
  * @apiGroup Events
  * @apiPermission authenticated
  * @apiDescription Find event products
- * <br/><b>Throw error:</b> @todo
+ * <br/><b>Throw error:</b>
  *
- * @todo params
  * @apiExample Use example
  * get http://localhost/events/15/products
  *
@@ -368,7 +363,7 @@
  * @apiName DeleteEventProduct
  * @apiGroup Events
  * @apiDescription Delete the link between an event and a product. The product itself is not removed.
- * <br/><b>Throw error:</b> @todo
+ * <br/><b>Throw error:</b>
  *
  * @apiPermission authenticated
  *

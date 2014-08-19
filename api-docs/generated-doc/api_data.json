@@ -367,7 +367,7 @@
         ]
       }
     },
-    "group": "Event_js",
+    "group": "Event.js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -602,12 +602,25 @@
   },
   {
     "type": "delete",
+    "url": "/events/:id/members/:id",
+    "title": "Delete an event member",
+    "name": "DeleteEventMember",
+    "group": "Events",
+    "version": "0.0.0",
+    "filename": "sources/Event.js"
+  },
+  {
+    "type": "delete",
     "url": "/events/:id_event/products/:id_product",
     "title": "Delete an event product",
     "name": "DeleteEventProduct",
     "group": "Events",
-    "permission": "authenticated @todo",
-    "description": "<p>Delete an event product.<br/><b>Throw error:</b> @todo</p>",
+    "description": "<p>Delete the link between an event and a product. The product itself is not removed.<br/><b>Throw error:</b></p>",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
     "examples": [
       {
         "title": "Use example",
@@ -631,12 +644,12 @@
     "title": "Delete an event product",
     "name": "DeleteEventProduct",
     "group": "Events",
-    "description": "<p>Delete the link between an event and a product. The product itself is not removed.<br/><b>Throw error:</b> @todo</p>",
     "permission": {
       "name": "authenticated",
       "title": "Authentication requiered",
       "description": ""
     },
+    "description": "<p>Delete an event product.<br/><b>Throw error:</b></p>",
     "examples": [
       {
         "title": "Use example",
@@ -814,6 +827,24 @@
   },
   {
     "type": "get",
+    "url": "/events/:id/members/:id",
+    "title": "Find an event member",
+    "name": "FindEventMember",
+    "group": "Events",
+    "version": "0.0.0",
+    "filename": "sources/Event.js"
+  },
+  {
+    "type": "get",
+    "url": "/events/:id/members",
+    "title": "Find event members",
+    "name": "FindEventMembers",
+    "group": "Events",
+    "version": "0.0.0",
+    "filename": "sources/Event.js"
+  },
+  {
+    "type": "get",
     "url": "/events/:id_event/products/:id_product",
     "title": "Find an event product",
     "name": "FindEventProduct",
@@ -846,6 +877,50 @@
         {
           "title": "Success (200 OK) response sample:",
           "content": "   HTTP/1.1 200 OK\n   {\n     \"object\": {\n        \"field1\": \"Foo\",\n        \"field2\": \"Bar\",\n        ...\n     },\n   }\n"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sources/Event.js"
+  },
+  {
+    "type": "get",
+    "url": "/events/:id_event/products",
+    "title": "Find event products",
+    "name": "FindEventProducts",
+    "group": "Events",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
+    "description": "<p>Find event products<br/><b>Throw error:</b></p>",
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "get http://localhost/events/15/products\n"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success (200 OK) response parameters": [
+          {
+            "group": "200",
+            "type": "Object[]",
+            "field": "objects",
+            "optional": false,
+            "description": "<p>The list of objects.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success (200 OK) response sample:",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object1\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        \"object2\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
+        },
+        {
+          "title": "Success (200 OK) response sample (case of empty):",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [ ],\n     \"status\": 200\n   }\n"
         }
       ]
     },
@@ -1008,6 +1083,66 @@
     "filename": "sources/Event.js"
   },
   {
+    "type": "put",
+    "url": "/events/:idEvent/invitations/:idInvitation",
+    "title": "Update an event invitation",
+    "name": "UpdateEventInvitation",
+    "group": "Events",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
+    "description": "<p>Update an invitation<br/><b>Throw error:</b> 404.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "field": "idEvent",
+            "optional": false,
+            "description": "<p>Event&#39;s ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "field": "idInvitation",
+            "optional": false,
+            "description": "<p>Invitation&#39;s ID</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "put http://localhost/events/9/invitations/4\n"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success (200 OK) response parameters": [
+          {
+            "group": "200",
+            "type": "Object",
+            "field": "object",
+            "optional": false,
+            "description": "<p>The updated object.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success (200 OK) response sample:",
+          "content": "HTTP/1.1 200 OK\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n}\n"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sources/Event.js"
+  },
+  {
     "type": "post",
     "url": "/users/:id_user/friendsgroups/:id_group/members",
     "title": "Add a group member",
@@ -1056,11 +1191,6 @@
         "content": "POST http://localhost/users/15/friendsgroups/10/members\nform-data:\n----------\nid_member: 25\n"
       }
     ],
-    "permission": {
-      "name": "authenticated",
-      "title": "Authentication requiered",
-      "description": ""
-    },
     "success": {
       "fields": {
         "Success (201 Created) response parameters": [
@@ -1178,11 +1308,6 @@
         "content": "DELETE http://localhost/users/15/friendsgroups/10\n"
       }
     ],
-    "permission": {
-      "name": "authenticated",
-      "title": "Authentication requiered",
-      "description": ""
-    },
     "success": {
       "examples": [
         {
@@ -1234,11 +1359,6 @@
         "content": "DELETE http://localhost/users/15/friendsgroups/10/members/25\n"
       }
     ],
-    "permission": {
-      "name": "authenticated",
-      "title": "Authentication requiered",
-      "description": ""
-    },
     "success": {
       "examples": [
         {
@@ -1410,11 +1530,6 @@
         "content": "PUT http://localhost/users/15/friendsgroups\nform-data:\n----------\nname: Family\n"
       }
     ],
-    "permission": {
-      "name": "authenticated",
-      "title": "Authentication requiered",
-      "description": ""
-    },
     "success": {
       "fields": {
         "Success (200 OK) response parameters": [
@@ -1472,12 +1587,7 @@
         ]
       }
     },
-    "permission": {
-      "name": "authenticated",
-      "title": "Authentication requiered",
-      "description": ""
-    },
-    "group": "Friendship_js",
+    "group": "Friendship.js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -1527,7 +1637,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "POST http://localhost/users/10/friends\nform-data:\n----------\nid_friend: 27\n"
+        "content": "POST http://localhost/users/10/friendships\nform-data:\n----------\nid_friend: 27\n"
       }
     ],
     "success": {
@@ -1833,6 +1943,274 @@
     "filename": "sources/Friendship.js"
   },
   {
+    "type": "post",
+    "url": "/products",
+    "title": "Create one product",
+    "name": "CreateProduct",
+    "group": "Products",
+    "permission": "todo",
+    "description": "<p><br/><b style=\"color:green;\">Throw valid response:</b> 201.<br/><b style=\"color:red;\">Throw error response:</b> 400, 409.</p>",
+    "parameter": {
+      "fields": {
+        "Parameters (Form Data)": [
+          {
+            "group": "dataParam",
+            "type": "Boolean",
+            "field": "official",
+            "optional": false,
+            "description": "<p><b>Admin.</b></p>"
+          },
+          {
+            "group": "dataParam",
+            "type": "String",
+            "field": "name",
+            "optional": false,
+            "description": ""
+          },
+          {
+            "group": "dataParam",
+            "type": "String",
+            "field": "logo",
+            "optional": true,
+            "description": ""
+          },
+          {
+            "group": "dataParam",
+            "type": "Number",
+            "field": "category_id",
+            "optional": false,
+            "description": ""
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "POST http://localhost/products\nform-data:\n----------\nofficial: true\nname: Chips\nlogo:\ncategory_id: 1\n"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success (201 Created) response parameters": [
+          {
+            "group": "201",
+            "type": "Object",
+            "field": "object",
+            "optional": false,
+            "description": "<p>The created object.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success (201 Created) response sample:",
+          "content": "HTTP/1.1 201 Created\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n}\n"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sources/Product.js"
+  },
+  {
+    "type": "delete",
+    "url": "/products/:id",
+    "title": "Delete one product",
+    "name": "DeleteProduct",
+    "group": "Products",
+    "permission": "todo",
+    "description": "<p><br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
+    "parameter": {
+      "fields": {
+        "urlParams": [
+          {
+            "group": "urlParams",
+            "type": "Number",
+            "field": "id",
+            "optional": false,
+            "description": "<p>Product&#39;s ID.</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "DELETE http://localhost/products/15\n"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success (204 No content) response sample:",
+          "content": "HTTP/1.1 204 No content\n{\n}\n"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sources/Product.js"
+  },
+  {
+    "type": "get",
+    "url": "/products",
+    "title": "Find products",
+    "name": "FindMultipleProduct",
+    "group": "Products",
+    "permission": "todo",
+    "description": "<p><br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "GET http://localhost/products\n"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success (200 OK) response parameters": [
+          {
+            "group": "200",
+            "type": "Object[]",
+            "field": "objects",
+            "optional": false,
+            "description": "<p>The list of objects.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success (200 OK) response sample:",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [\n        \"object1\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        \"object2\": {\n            \"field1\": \"Foo\",\n            \"field2\": \"Bar\",\n            ...\n        },\n        ...\n     ],\n   }\n"
+        },
+        {
+          "title": "Success (200 OK) response sample (case of empty):",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"objects\": [ ],\n     \"status\": 200\n   }\n"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sources/Product.js"
+  },
+  {
+    "type": "get",
+    "url": "/products/:id",
+    "title": "Find one product",
+    "name": "FindProduct",
+    "group": "Products",
+    "groupDescription": "<p>API relatives to products.</p>",
+    "description": "<p><br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403, 404.</p>",
+    "permission": "todo",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "field": "id",
+            "optional": false,
+            "description": "<p>Product&#39;s ID</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "GET http://localhost/products/15\n"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success (200 OK) response parameters": [
+          {
+            "group": "200",
+            "type": "Object",
+            "field": "object",
+            "optional": false,
+            "description": "<p>Requested object.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success (200 OK) response sample:",
+          "content": "   HTTP/1.1 200 OK\n   {\n     \"object\": {\n        \"field1\": \"Foo\",\n        \"field2\": \"Bar\",\n        ...\n     },\n   }\n"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sources/Product.js"
+  },
+  {
+    "type": "put",
+    "url": "/products",
+    "title": "Update one product",
+    "name": "UpdateProduct",
+    "group": "Products",
+    "permission": "todo",
+    "description": "<p><br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
+    "parameter": {
+      "fields": {
+        "Parameters (Form Data)": [
+          {
+            "group": "dataParam",
+            "type": "String",
+            "field": "name",
+            "optional": true,
+            "description": ""
+          },
+          {
+            "group": "dataParam",
+            "type": "Number",
+            "field": "category_id",
+            "optional": true,
+            "description": ""
+          },
+          {
+            "group": "dataParam",
+            "type": "String",
+            "field": "logo",
+            "optional": true,
+            "description": ""
+          },
+          {
+            "group": "dataParam",
+            "type": "String",
+            "field": "official",
+            "optional": true,
+            "description": "<p><b>Admin.</b></p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "PUT http://localhost/products\nform-data:\n----------\nofficial: true\nname: Chips\nlogo:\ncategory_id: 1\n"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success (200 OK) response parameters": [
+          {
+            "group": "200",
+            "type": "Object",
+            "field": "object",
+            "optional": false,
+            "description": "<p>The updated object.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success (200 OK) response sample:",
+          "content": "HTTP/1.1 200 OK\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n}\n"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sources/Product.js"
+  },
+  {
     "parameter": {
       "fields": {
         "Parameters (URL)": [
@@ -1895,7 +2273,7 @@
         ]
       }
     },
-    "group": "User_js",
+    "group": "User.js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2343,7 +2721,7 @@
         }
       ]
     },
-    "group": "_general_js",
+    "group": "_general.js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2373,7 +2751,7 @@
         }
       ]
     },
-    "group": "_general_js",
+    "group": "_general.js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2399,7 +2777,7 @@
         }
       ]
     },
-    "group": "_general_js",
+    "group": "_general.js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2425,22 +2803,7 @@
         }
       ]
     },
-    "group": "_general_js",
-    "type": "",
-    "url": "",
-    "version": "0.0.0",
-    "filename": "sources/_general.js"
-  },
-  {
-    "error": {
-      "examples": [
-        {
-          "title": "Error (500 Serveur Error) response sample:",
-          "content": "   HTTP/1.1 500 Serveur Error\n   {\n     \"message\": \"Database unavailable\",\n     \"code\": \"dbUnavailable\"\n   }\n"
-        }
-      ]
-    },
-    "group": "_general_js",
+    "group": "_general.js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2455,7 +2818,22 @@
         }
       ]
     },
-    "group": "_general_js",
+    "group": "_general.js",
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "sources/_general.js"
+  },
+  {
+    "error": {
+      "examples": [
+        {
+          "title": "Error (500 Serveur Error) response sample:",
+          "content": "   HTTP/1.1 500 Serveur Error\n   {\n     \"message\": \"Database unavailable\",\n     \"code\": \"dbUnavailable\"\n   }\n"
+        }
+      ]
+    },
+    "group": "_general.js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2524,7 +2902,7 @@
         ]
       }
     },
-    "group": "_general_js",
+    "group": "_general.js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2539,7 +2917,7 @@
         }
       ]
     },
-    "group": "_general_js",
+    "group": "_general.js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2554,7 +2932,7 @@
         }
       ]
     },
-    "group": "_general_js",
+    "group": "_general.js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2569,7 +2947,7 @@
         }
       ]
     },
-    "group": "_general_js",
+    "group": "_general.js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2584,7 +2962,7 @@
         }
       ]
     },
-    "group": "_general_js",
+    "group": "_general.js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2599,7 +2977,7 @@
         }
       ]
     },
-    "group": "_general_js",
+    "group": "_general.js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2614,7 +2992,7 @@
         }
       ]
     },
-    "group": "_general_js",
+    "group": "_general.js",
     "type": "",
     "url": "",
     "version": "0.0.0",

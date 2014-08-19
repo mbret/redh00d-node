@@ -94,7 +94,14 @@ module.exports.routes = {
     'put    /api/users/:iduser/friendsgroup':                      'UserFriendsGroupController.update',
     'delete /api/users/:iduser/friendsgroup/:id':                  'UserFriendsGroupController.delete',
     'delete /api/users/:iduser/friendsgroup/:id/members/:idmember':'UserFriendsGroupController.deleteMember',
-    'get    /api/users/:iduser/friendsgroup*':                     'UserFriendsGroupController.findMultiple'
+    'get    /api/users/:iduser/friendsgroup*':                     'UserFriendsGroupController.findMultiple',
+
+    // Products
+    'get    /api/products/:id':                  'ProductController.find',
+    'post   /api/products':                      'ProductController.create',
+    'put    /api/products':                      'ProductController.update',
+    'delete /api/products/:id':                  'ProductController.delete',
+    'get    /api/products*':                     'ProductController.findMultiple'
 
 
 
