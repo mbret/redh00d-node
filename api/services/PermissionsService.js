@@ -14,10 +14,9 @@ module.exports = {
         // `sails` object is available here:
 
         var permissions = sails.config.permissions;
-
         // Reject if ACL is not register for this resource
         if( ! this._hasRole(roleName) || ! this._hasResource(resource)  ){
-            sails.log.debug("Permission policy, trying to get a unknown role or resource or action [role="+roleName+"][resource="+resource+"][action="+action+"]");
+            sails.log.info("Permission policy, trying to get a unknown role or resource or action [role="+roleName+"][resource="+resource+"][action="+action+"]");
             return false;
         }
 
@@ -36,11 +35,13 @@ module.exports = {
             if( acl.deny && acl.deny[resource] && acl.deny[resource].indexOf(action) > -1 ){
                 rightFound = true;
                 isAllowed = false;
+                sails.log.info("Permission policy, Restrict access to [current role tested="+currentRole+"][resource="+resource+"][action="+action+"]");
             }
             // Otherwise check if this current role has rights
             else if( acl.allow && acl.allow[resource] && acl.allow[resource].indexOf(action) > -1 ){
                 rightFound = true;
                 isAllowed = true;
+                sails.log.info("Permission policy, Allow access to [current role tested="+currentRole+"][resource="+resource+"][action="+action+"]");
             }
 
             currentRole = permissions.roles[currentRole].parent;

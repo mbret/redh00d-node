@@ -3,6 +3,7 @@ var request = require('supertest');
 describe('UserController', function() {
 
     var authorization = "Basic dXNlckB1c2VyLmNvbTpwYXNzd29yZA=="; // user@user.com / password
+    var authorizationAdmin = 'Basic YWRtaW5AYWRtaW4uY29tOnBhc3N3b3Jk'; // admin@admin.com / password
 //    var request = request(sails.hooks.http.app);
 
     before(function(done){
@@ -96,7 +97,7 @@ describe('UserController', function() {
                 function(callback){
                     request(sails.hooks.http.app).post('/api/users').send({email: 'email@email.com'})
                         .expect(400).end(callback);
-                }
+                },
             ], function(err, results){
                 if(err) return done(err);
                 done();
@@ -105,36 +106,31 @@ describe('UserController', function() {
 
         it('should create the user with email email@email.com', function(done){
             request(sails.hooks.http.app).post('/api/users').send({email: 'email@email.com', password: 'password'})
-                .expect(201)
-                .expect(function(res){
+                .expect(201).expect(function(res){
                     if( !res.body.user || !res.body.user.email == 'email@email.com' ) throw new Error("User not created");
                 })
                 .end(done);
-        });
-
-        it('should not be able to create a new user', function(done){
-            // user logged not allowed
-            request(sails.hooks.http.app).post('/api/users').set('Authorization', authorization).expect(403).end(done);
         });
 
     })
 
     describe("DELETE /users", function(){
 
-        it('should delete the user with ID 3', function(done){
-            request(sails.hooks.http.app).del('/api/users/3').set('Authorization', authorization)
-                .expect(204).end(done);
-        })
+        it('should delete the user with ID 3 as admin', function(done){
+            request(sails.hooks.http.app).del('/api/users/3').set('Authorization', authorizationAdmin)
+                    .expect(204).end(done);
+        });
 
         // User with email user@user.com ID:1 should not be able to delete another user
-        it('should not be able to delete another user', function(done){
+        it('should not be able to delete another user as user', function(done){
             request(sails.hooks.http.app).del('/api/users/3').set('Authorization', authorization)
                 .expect(403).end(done);
-        })
+        });
 
-        it('should be allowed to delete other account', function(done){
-            // ...
-            done();
+        // User does not exist
+        it('should get 404', function(done){
+            request(sails.hooks.http.app).del('/api/users/10').set('Authorization', authorizationAdmin)
+                .expect(404).end(done);
         });
     })
 

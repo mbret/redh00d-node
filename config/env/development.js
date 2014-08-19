@@ -22,7 +22,9 @@ module.exports = {
     },
 
     general: {
-        initDatabase: true
+        initDatabase: true,
+        // Active protection of JSON returned data of each request
+        protectJsonData: false
     },
 
     policies: {

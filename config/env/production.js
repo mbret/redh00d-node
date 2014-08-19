@@ -33,7 +33,11 @@ module.exports = {
 
     log: {
         level: "warn"
-    }
+    },
 
+    general: {
+        // Active protection of JSON returned data of each request
+        protectJsonData: true
+    }
 
 };

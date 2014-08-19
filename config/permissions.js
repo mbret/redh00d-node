@@ -16,7 +16,7 @@ module.exports.permissions = {
         },
 
         admin: {
-            parent: 'guest'
+            parent: 'user'
         }
     },
 
@@ -34,7 +34,7 @@ module.exports.permissions = {
         },
         user: {
             allow: {
-                user: ['find','findmultiple','delete','deleteOthers']
+                user: ['find','findmultiple','delete']
             },
             deny: {
                 user: ['create']
@@ -42,7 +42,7 @@ module.exports.permissions = {
         },
         admin: {
             allow: {
-                user: ['destroy']
+                user: ['destroy', 'deleteOthers']
             }
         }
     }

@@ -33,6 +33,6 @@ module.exports.log = {
      ***************************************************************************/
 
     custom: customLogger
-    // level: 'info'
+//    level: 'debug'
 
 };

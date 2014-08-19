@@ -216,22 +216,25 @@ module.exports = {
 
     /**
      * Delete an user
-     * @todo complete it
      */
     delete: function (req, res) {
-        return res.send(501);
         // Case of user try to update an other account
-        if( req.param('id') != req.user.ID && ! PermissionsService.isAllowed( req.user.role, req.options.controller, 'deleteOthers') ){
+        if( (req.param('id') != req.user.ID) && ! PermissionsService.isAllowed( req.user.role, req.options.controller, 'deleteOthers') ){
             return res.forbidden();
         }
         else{
 
-            User.destroy({ID:req.param('id')}, function(err){
-                if(err) return res.serverError(err);
-                return res.noContent();
+            User.findOne({'ID':req.param('id')}).then(function(user){
+                if(!user) return res.notFound();
+                return User.destroy({ID:req.param('id')}).then(function(){
+                    return res.noContent();
+                });
+            }).fail(function(err){
+                return res.serverError(err);
             });
+
         }
-    },
+    }
 
 
   

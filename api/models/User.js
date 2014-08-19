@@ -73,18 +73,6 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         },
 
         /**
-         * Load the user role as a complete object
-         * @param cb
-         */
-        loadRole: function(){
-            var vthis = this;
-            return UserRole.findOne({ ID: vthis.roleID }).then(function(role){
-                if(!role) throw new Error("Trying to load a nonexistent role (role=" + vthis.roleID +")");
-                vthis.role = role;
-            });
-        },
-
-        /**
          * This method protect sensitive data before sending to customers
          * Return everything for development
          */
@@ -161,6 +149,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
                 });
             });
         }
+
     },
 
     /**
@@ -179,7 +168,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         // Encrypt user's password
         function (values, cb) {
             User.encryptPassword(values, function (err) {
-                cb(err);
+                return cb(err);
             });
         },
 
@@ -204,6 +193,9 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
                     }
                     return cb(err);
                 })
+            }
+            else{
+                return cb();
             }
         }
 

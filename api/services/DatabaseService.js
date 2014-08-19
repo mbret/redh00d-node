@@ -22,7 +22,7 @@ module.exports = {
 
         }).then(function(){
             return Q.all([
-                User.create({email: 'admin@admin.com', password: 'password', firstName: 'Admin', lastName: 'Admin', ID:1}),
+                User.create({email: 'admin@admin.com', password: 'password', firstName: 'Admin', lastName: 'Admin', ID:1, roleID: 1}),
                 User.create({email: 'user@user.com', password: 'password', firstName: 'User', lastName: 'User', ID:2}),
 
                 Product.create({isOfficial: true, name: 'Coca Cola', logo: 'coca_cola', categoryID: 2}),
@@ -61,8 +61,9 @@ module.exports = {
 
         }).then(function(){
             return Q.all([
-                User.create({email: 'admin@admin.com', password: 'password', firstName: 'Admin', lastName: 'Admin', ID:1}),
+                User.create({email: 'admin@admin.com', password: 'password', firstName: 'Admin', lastName: 'Admin', ID:1, roleID: 1}),
                 User.create({email: 'user@user.com', password: 'password', firstName: 'User', lastName: 'User', ID:2}),
+                User.create({email: 'user2@user2.com', password: 'password', firstName: 'User', lastName: 'User', ID:3}),
 
                 Product.create({isOfficial: true, name: 'Coca Cola', logo: 'coca_cola', categoryID: 2}),
                 Product.create({isOfficial: false, name: 'Chips', logo: null, categoryID: 1})
@@ -83,6 +84,11 @@ module.exports = {
             ]);
 
         });
+    },
+
+
+    resetUserForTest: function(){
+
     }
 
 }
