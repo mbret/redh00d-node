@@ -278,31 +278,38 @@ define({ api: [
           },
           {
             "group": "errorResponse",
-            "type": "Object[]",
-            "field": "params.code",
+            "type": "String",
+            "field": "params.field.code",
             "optional": false,
             "description": "<p>The code error.</p>"
           },
           {
             "group": "errorResponse",
-            "type": "Object[]",
-            "field": "params.message",
+            "type": "String",
+            "field": "params.field.message",
             "optional": false,
-            "description": "<p>.</p>"
+            "description": ""
           },
           {
             "group": "errorResponse",
-            "type": "Object[]",
-            "field": "params.description",
+            "type": "String",
+            "field": "params.field.description",
             "optional": true,
-            "description": "<p>.</p>"
+            "description": ""
+          },
+          {
+            "group": "errorResponse",
+            "type": "String",
+            "field": "params.field.value",
+            "optional": true,
+            "description": ""
           }
         ]
       },
       "examples": [
         {
           "title": "Error (400 Bad request) response sample (case of parameters validation failed):",
-          "content": "   HTTP/1.1 400 BAD REQUEST\n   {\n     \"message\": \"The requested parameters are not correct\",\n     \"code\": \"invalidParams\"\n     \"params\": [\n        {\n          \"message\": \"This field should contain at least 4 characters\",\n          \"code\": \"fieldTooShort\"\n          \"field\": \"foo\"\n        },\n        ...\n     ],\n   }\n"
+          "content": "   HTTP/1.1 400 BAD REQUEST\n   {\n     \"message\": \"The requested parameters are not correct\",\n     \"code\": \"invalidParams\"\n     \"params\": [\n        \"field1\": [\n            {\n                \"message\": \"This field should contain at least 4 characters\",\n                \"description\": \"This field should contain at least 4 characters motherfucker !!!\",\n                \"code\": \"fieldTooShort\"\n                \"value\": \"foo\"\n            }\n        ],\n        ...\n     ],\n   }\n"
         },
         {
           "title": "Error (404 Not Found) response sample:",
@@ -429,7 +436,7 @@ define({ api: [
       "examples": [
         {
           "title": "Error (400 Bad request) response sample (case of parameters validation failed):",
-          "content": "   HTTP/1.1 400 BAD REQUEST\n   {\n     \"message\": \"The requested parameters are not correct\",\n     \"code\": \"invalidParams\"\n     \"params\": [\n        {\n          \"message\": \"This field should contain at least 4 characters\",\n          \"code\": \"fieldTooShort\"\n          \"field\": \"foo\"\n        },\n        ...\n     ],\n   }\n"
+          "content": "   HTTP/1.1 400 BAD REQUEST\n   {\n     \"message\": \"The requested parameters are not correct\",\n     \"code\": \"invalidParams\"\n     \"params\": [\n        \"field1\": [\n            {\n                \"message\": \"This field should contain at least 4 characters\",\n                \"description\": \"This field should contain at least 4 characters motherfucker !!!\",\n                \"code\": \"fieldTooShort\"\n                \"value\": \"foo\"\n            }\n        ],\n        ...\n     ],\n   }\n"
         }
       ]
     },
@@ -2231,6 +2238,13 @@ define({ api: [
           {
             "group": "urlParam",
             "type": "String",
+            "field": "email",
+            "optional": true,
+            "description": ""
+          },
+          {
+            "group": "urlParam",
+            "type": "String",
             "field": "firstname",
             "optional": true,
             "description": "<p>Search by firstname.</p>"
@@ -2312,14 +2326,14 @@ define({ api: [
             "group": "dataParam",
             "type": "String",
             "field": "firstname",
-            "optional": true,
+            "optional": false,
             "description": ""
           },
           {
             "group": "dataParam",
             "type": "String",
             "field": "lastname",
-            "optional": true,
+            "optional": false,
             "description": ""
           },
           {
@@ -2381,7 +2395,7 @@ define({ api: [
     "name": "DeleteUser",
     "group": "Users",
     "permission": "accountOwner admin",
-    "description": "<p>To delete a user you must have correct rights.<br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
+    "description": "<p>To delete a user you must have correct rights.<br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403, 404.</p>",
     "parameter": {
       "fields": {
         "urlParams": [
@@ -2446,6 +2460,13 @@ define({ api: [
             "field": "seniority_sort",
             "optional": true,
             "description": "<p>(asc/desc) Search by recent or old created accounts.</p>"
+          },
+          {
+            "group": "urlParam",
+            "type": "String",
+            "field": "email",
+            "optional": true,
+            "description": ""
           },
           {
             "group": "urlParam",
@@ -2574,17 +2595,26 @@ define({ api: [
   },
   {
     "type": "patch",
-    "url": "/users/:id",
+    "url": "/users/:email",
     "title": "Generate a user's pwd reset token",
     "name": "GenerateUserResetTokenPassword",
     "group": "Users",
     "permission": "authenticated accountOwner admin",
-    "description": "<p>Generate a password reset token for the designed user. This token can be used later to update the user password.<br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
+    "description": "<p>Generate a password reset token for the designed user. This token can be used later to update the user password. Then send an email to the specified user.<br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
     "parameter": {
       "fields": {
+        "urlParams": [
+          {
+            "group": "urlParams",
+            "type": "String",
+            "field": "email",
+            "optional": false,
+            "description": "<p>User&#39;s email.</p>"
+          }
+        ],
         "Parameters (Form Data)": [
           {
-            "group": "formData",
+            "group": "dataParam",
             "type": "Boolean",
             "field": "reset_password",
             "optional": false,
@@ -2596,7 +2626,7 @@ define({ api: [
     "examples": [
       {
         "title": "Use example",
-        "content": "PATCH http://localhost/users/15\nform-data:\n----------\nreset_password=true\n"
+        "content": "PATCH http://localhost/users/user@user.com\nform-data:\n----------\nreset_password=true\n"
       }
     ],
     "success": {
@@ -2612,20 +2642,29 @@ define({ api: [
   },
   {
     "type": "put",
-    "url": "/users",
+    "url": "/users/:id",
     "title": "Update one user",
     "name": "UpdateUser",
     "group": "Users",
-    "permission": "authenticated accountOwner admin",
-    "description": "<p>Update an user and get it back. A generated reset token is needed to update password, see the designed method.<br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
+    "permission": "user admin",
+    "description": "<p>Update an user and get it back. A generated reset token is needed to update password, see the designed method. <b>An user can only update its own account</b>.<br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403, 404.</p>",
     "parameter": {
       "fields": {
+        "Parameters (URL)": [
+          {
+            "group": "urlParam",
+            "type": "Number",
+            "field": "id",
+            "optional": false,
+            "description": ""
+          }
+        ],
         "Parameters (Form Data)": [
           {
             "group": "dataParam",
             "type": "String",
             "field": "email",
-            "optional": false,
+            "optional": true,
             "description": "<p><b>Admin.</b></p>"
           },
           {
@@ -2676,7 +2715,7 @@ define({ api: [
     "examples": [
       {
         "title": "Use example",
-        "content": "PUT http://localhost/users\nform-data:\n----------\nemail: xmax54@gmail.com\npassword: password\n"
+        "content": "PUT http://localhost/users/1\nform-data:\n----------\nemail: xmax54@gmail.com\npassword: password\n"
       }
     ],
     "success": {
@@ -2880,24 +2919,31 @@ define({ api: [
           },
           {
             "group": "errorResponse",
-            "type": "Object[]",
-            "field": "params.code",
+            "type": "String",
+            "field": "params.field.code",
             "optional": false,
             "description": "<p>The code error.</p>"
           },
           {
             "group": "errorResponse",
-            "type": "Object[]",
-            "field": "params.message",
+            "type": "String",
+            "field": "params.field.message",
             "optional": false,
-            "description": "<p>.</p>"
+            "description": ""
           },
           {
             "group": "errorResponse",
-            "type": "Object[]",
-            "field": "params.description",
+            "type": "String",
+            "field": "params.field.description",
             "optional": true,
-            "description": "<p>.</p>"
+            "description": ""
+          },
+          {
+            "group": "errorResponse",
+            "type": "String",
+            "field": "params.field.value",
+            "optional": true,
+            "description": ""
           }
         ]
       }
@@ -2913,7 +2959,7 @@ define({ api: [
       "examples": [
         {
           "title": "Error (400 Bad request) response sample (case of parameters validation failed):",
-          "content": "   HTTP/1.1 400 BAD REQUEST\n   {\n     \"message\": \"The requested parameters are not correct\",\n     \"code\": \"invalidParams\"\n     \"params\": [\n        {\n          \"message\": \"This field should contain at least 4 characters\",\n          \"code\": \"fieldTooShort\"\n          \"field\": \"foo\"\n        },\n        ...\n     ],\n   }\n"
+          "content": "   HTTP/1.1 400 BAD REQUEST\n   {\n     \"message\": \"The requested parameters are not correct\",\n     \"code\": \"invalidParams\"\n     \"params\": [\n        \"field1\": [\n            {\n                \"message\": \"This field should contain at least 4 characters\",\n                \"description\": \"This field should contain at least 4 characters motherfucker !!!\",\n                \"code\": \"fieldTooShort\"\n                \"value\": \"foo\"\n            }\n        ],\n        ...\n     ],\n   }\n"
         }
       ]
     },

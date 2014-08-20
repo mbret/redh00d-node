@@ -10,6 +10,6 @@ define({
   "url": "https://localhost",
   "generator": {
     "version": "0.6.0",
-    "time": "2014-08-19T19:59:21.925Z"
+    "time": "2014-08-20T13:21:50.435Z"
   }
 });
