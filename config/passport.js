@@ -13,7 +13,7 @@ passport.use(
         function (email, password, done) {
             if( email)
 
-            User.findOne( {email: email}, function (err, user) {
+            User.findOne( {email: email}).populate('role').exec(function (err, user) {
                 if( err) return done(err);
                 if( !user) return done( null, false );
 

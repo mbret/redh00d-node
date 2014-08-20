@@ -34,26 +34,15 @@ module.exports = {
                 UserRole.find(),
                 Event.find(),
                 Product.find(),
-                ProductCategory.find()
+                ProductCategory.find(),
+                User.find()
 
-            ]).spread(function (roles, events, products, productCategory) {
+            ]).spread(function (roles, events, products, productCategory, users) {
                 data.roles = roles;
                 data.events = events;
                 data.products = products;
                 data.product_category = productCategory;
-            });
-
-        }).then(function () {
-            // load users and their roles
-            return User.find().then(function (users) {
-                // for each users load roles
-//                var promises = [];
-//                for( var i in users ){
-//                    promises.push(users[i].loadRole());
-//                }
-//                return Q.all(promises).then(function(){
-                    data.users = users;
-//                })
+                data.users = users;
             });
 
         }).then(function () {

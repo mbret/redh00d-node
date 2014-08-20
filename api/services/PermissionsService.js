@@ -16,8 +16,7 @@ module.exports = {
         var permissions = sails.config.permissions;
         // Reject if ACL is not register for this resource
         if( ! this._hasRole(roleName) || ! this._hasResource(resource)  ){
-            sails.log.info("Permission policy, trying to get a unknown role or resource or action [role="+roleName+"][resource="+resource+"][action="+action+"]");
-            return false;
+            throw new Error("Permission policy, trying to get a unknown role or resource or action [role="+roleName+"][resource="+resource+"][action="+action+"]");
         }
 
         // Loop over hierarchy. We check the lower level and if the acl is not satisfied we check then the parents

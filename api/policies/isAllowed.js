@@ -17,13 +17,15 @@ module.exports = function isAllowed(req, res, next) {
     var resource = req.options.controller;
     var action = req.options.action;
 
-
-    if( PermissionsService.isAllowed( req.user.role, resource, action ) ){
+    // test permission
+    if( PermissionsService.isAllowed( req.user.role.name + "sd", resource, action ) ){
         return next();
     }
     else{
-        if( ! req.user.isAuthenticated ) return res.unauthorized();
+        // case of reject maybe user is not authenticate ?
+        if( ! req.user.isAuthenticated ) return res.unauthorized
         else return res.forbidden();
     }
+
 
 };

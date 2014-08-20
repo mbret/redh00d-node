@@ -119,9 +119,10 @@
  * @apiError (errorResponse) {String} code Error code (Check the section above).
  * @apiError (errorResponse) {Object[]} [params] The parameters the error relates to if the error is parameter-specific.
  * @apiError (errorResponse) {Object[]} params.field The field name relatives to error.
- * @apiError (errorResponse) {Object[]} params.code The code error.
- * @apiError (errorResponse) {Object[]} params.message .
- * @apiError (errorResponse) {Object[]} [params.description] .
+ * @apiError (errorResponse) {String} params.field.code The code error.
+ * @apiError (errorResponse) {String} params.field.message
+ * @apiError (errorResponse) {String} [params.field.description]
+ * @apiError (errorResponse) {String} [params.field.value]
  */
 // 400 Bad Request
 /**
@@ -132,11 +133,14 @@
  *       "message": "The requested parameters are not correct",
  *       "code": "invalidParams"
  *       "params": [
- *          {
- *            "message": "This field should contain at least 4 characters",
- *            "code": "fieldTooShort"
- *            "field": "foo"
- *          },
+ *          "field1": [
+ *              {
+ *                  "message": "This field should contain at least 4 characters",
+ *                  "description": "This field should contain at least 4 characters motherfucker !!!",
+ *                  "code": "fieldTooShort"
+ *                  "value": "foo"
+ *              }
+ *          ],
  *          ...
  *       ],
  *     }

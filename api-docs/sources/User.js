@@ -6,6 +6,7 @@
  * @apiDefineStructure fetchUsersParams
  * @apiParam (urlParam) {Number} [id] Search by ID.
  * @apiParam (urlParam) {String} [seniority_sort] (asc/desc) Search by recent or old created accounts.
+ * @apiParam (urlParam) {String} [email]
  * @apiParam (urlParam) {String} [firstname] Search by firstname.
  * @apiParam (urlParam) {String} [lastname] Search by lastname.
  * @apiParam (urlParam) {String} [firstname_sort] (asc/desc).
@@ -75,8 +76,8 @@
  *
  * @apiParam (dataParam) {String} email Should be unique.
  * @apiParam (dataParam) {String} password This password is the md5 hashed + salted password.
- * @apiParam (dataParam) {String} [firstname]
- * @apiParam (dataParam) {String} [lastname]
+ * @apiParam (dataParam) {String} firstname
+ * @apiParam (dataParam) {String} lastname
  * @apiParam (dataParam) {String} [phone] Must be in this form: +33656565656 with (+??) as the country identifier.
  * @apiParam (dataParam) {String} [api_key] <b>Admin.</b> Force api key value.
  * @apiParam (dataParam) {String} [role_id] <b>Admin.</b> force role ID value.
@@ -97,15 +98,16 @@
 //  Task:           UserController.update()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {put} /users Update one user
+ * @api {put} /users/:id Update one user
  * @apiName UpdateUser
  * @apiGroup Users
- * @apiPermission authenticated accountOwner admin
- * @apiDescription Update an user and get it back. A generated reset token is needed to update password, see the designed method.
+ * @apiPermission user admin
+ * @apiDescription Update an user and get it back. A generated reset token is needed to update password, see the designed method. <b>An user can only update its own account</b>.
  * <br/><b style="color:green;">Throw valid response:</b> 200.
- * <br/><b style="color:red;">Throw error response:</b> 400, 401, 403.
+ * <br/><b style="color:red;">Throw error response:</b> 400, 401, 403, 404.
  *
- * @apiParam (dataParam) {String} email <b>Admin.</b>
+ * @apiParam (urlParam) {Number} id
+ * @apiParam (dataParam) {String} [email] <b>Admin.</b>
  * @apiParam (dataParam) {String} [password] A token is required to update password. This password is the md5 hashed + salted password.
  * @apiParam (dataParam) {String} [password_token] Required token to update password.
  * @apiParam (dataParam) {String} [firstname]
@@ -113,7 +115,7 @@
  * @apiParam (dataParam) {String} [phone]
  * @apiParam (dataParam) {String} [preference_foo] Change the preference foo
  * @apiExample Use example
- * PUT http://localhost/users
+ * PUT http://localhost/users/1
  * form-data:
  * ----------
  * email: xmax54@gmail.com
@@ -134,7 +136,7 @@
  * @apiPermission accountOwner admin
  * @apiDescription To delete a user you must have correct rights.
  * <br/><b style="color:green;">Throw valid response:</b> 204.
- * <br/><b style="color:red;">Throw error response:</b> 400, 401, 403.
+ * <br/><b style="color:red;">Throw error response:</b> 400, 401, 403, 404.
  *
  * @apiParam (urlParams) {Number} id User's ID.
  * @apiExample Use example
@@ -148,18 +150,18 @@
 //  - UserController.patch()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {patch} /users/:id Generate a user's pwd reset token
+ * @api {patch} /users/:email Generate a user's pwd reset token
  * @apiName GenerateUserResetTokenPassword
  * @apiGroup Users
  * @apiPermission authenticated accountOwner admin
- * @apiDescription Generate a password reset token for the designed user. This token can be used later to update the user password.
+ * @apiDescription Generate a password reset token for the designed user. This token can be used later to update the user password. Then send an email to the specified user.
  * <br/><b style="color:green;">Throw valid response:</b> 204.
  * <br/><b style="color:red;">Throw error response:</b> 400, 401, 403.
  *
- * @apiParamTitle (formData) Parameters (Form Data)
- * @apiParam (formData) {Boolean} reset_password true / false
+ * @apiParam (urlParams) {String} email User's email.
+ * @apiParam (dataParam) {Boolean} reset_password true / false
  * @apiExample Use example
- * PATCH http://localhost/users/15
+ * PATCH http://localhost/users/user@user.com
  * form-data:
  * ----------
  * reset_password=true

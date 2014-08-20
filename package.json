@@ -32,7 +32,9 @@
         "email-templates": "~1.1.0",
         "bluebird": "2.2.x",
         "q": "1.0.x",
-        "winston": "0.7.x"
+        "winston": "0.7.x",
+        "validator": "3.17.x"
+
     },
     "devDependencies": {
         "mocha": "1.13.x",

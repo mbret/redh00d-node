@@ -60,20 +60,19 @@ module.exports = {
                 passport.authenticate( 'basic', { session: false }, function (err, user, info) {
                     if (err) return next(err);
 
-                    req.user = (!user)? {}: user;
-                    req.user.isAuthenticated = (!user)? false: true;
-                    req.user.isGuest = (!user)? true: false;
-                    req.user.role = (!user)? 'guest': 'something' /* find later*/ ;
-
-                    if(!user) return next();
-                    else{
-                        // get role of user
-                        return UserRole.findOne({ID:req.user.roleID}).then(function(role){
-                            if(!role) throw new Error("Unable to load role");
-                            req.user.role = role.name;
-                            return next();
-                        });
+                    if(!user){
+                        req.user = {
+                            isAuthenticated: false,
+                            isGuest: true,
+                            role: {name: 'guest'}
+                        };
                     }
+                    else{
+                        req.user = user;
+                        req.user.isAuthenticated = true;
+                        req.user.isGuest = false;
+                    }
+                    return next();
 
                 })(req, res, next);
             },

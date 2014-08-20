@@ -42,10 +42,12 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         },
         firstName: {
             type: 'string',
+            required: true,
             columnName: 'userFirstName'
         },
         lastName: {
             type: 'string',
+            required: true,
             columnName: 'userLastName'
         },
         passwordResetToken: {
@@ -57,13 +59,9 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             unique: true,
             columnName: 'userApiKey'
         },
-        roleID: {
-            type: 'integer',
-            columnName: 'FK_userRoleID'
+        role: {
+            model: 'UserRole'
         },
-//        role: {
-//            type: 'UserRole'
-//        },
 
         /**
          * Get user's full name
@@ -148,7 +146,11 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
                     cb(err, res, msg, self.passwordResetToken);
                 });
             });
-        }
+        },
+
+        isAdmin: function(){
+            return this.role.name === "admin";
+        },
 
     },
 
@@ -182,11 +184,11 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
         // Set default role
         function(values, cb){
-            if( ! values.roleID ){
+            if( ! values.role ){
                 sails.log.debug("User.beforeCreate no roleID provided, default is set (default=" + sails.config.general.defaultUserRoleName +")");
                 UserRole.findOne({ name: sails.config.general.defaultUserRoleName }, function(err, role){
                     if(role){
-                        values.roleID = role.ID;
+                        values.role = role.ID;
                     }
                     else{
                         return cb( new Error("Unable to load the role") );

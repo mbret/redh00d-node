@@ -13,10 +13,10 @@ describe('isAllowedPolicies', function() {
                 parent: 'guest'
             },
             admin: {
-                parent: 'guest'
+                parent: 'user'
             }
         },
-        resources: [ 'user', 'event', 'product' ],
+        resources: [ 'r1', 'r2', 'r3' ],
         acl: {
             guest: {
                 allow: {
@@ -33,7 +33,7 @@ describe('isAllowedPolicies', function() {
             },
             admin: {
                 allow: {
-                    r1: ['destroy']
+                    r1: ['a10']
                 }
             }
         }
@@ -58,15 +58,16 @@ describe('isAllowedPolicies', function() {
 
     describe("Allowed", function(){
         it('should be allowed', function(){
-            assert.equal(PermissionsService.isAllowed('guest', 'user', 'a1'), true);
-            assert.equal(PermissionsService.isAllowed('admin', 'user', 'a1'), true);
+            assert.equal(PermissionsService.isAllowed('guest', 'r1', 'a1'), true);
+            assert.equal(PermissionsService.isAllowed('admin', 'r1', 'a10'), true);
         })
     })
 
     describe("Forbidden", function(){
         it('should be deny', function(){
-            assert.equal(PermissionsService.isAllowed('guest', 'user', 'a1'), true);
-            assert.equal(PermissionsService.isAllowed('user', 'user', 'a1'), false);
+            assert.equal(PermissionsService.isAllowed('guest', 'r1', 'a2'), false);
+            assert.equal(PermissionsService.isAllowed('user', 'r1', 'a1'), false);
+            assert.equal(PermissionsService.isAllowed('admin', 'r1', 'a1'), false); // even if guest is allow for r1->a1 admin does not because of user
 
             // Existence of data
             assert.equal(PermissionsService.isAllowed('admin', 'r5', 'a1'), false); // resource r5 doesnt exist

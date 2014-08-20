@@ -8,14 +8,14 @@
  *
  *
  */
-module.exports = function badRequest(message, errors) {
+module.exports = function badRequest(error) {
 
     // Log error to console
-    sails.log.debug('Sending 400 ("Bad Request") response: \n');
+    sails.log.info('Sending 400 ("Bad Request") response: \n', error);
     this.res.status(400);
 
     // send response
-    return ResponseHandlerService.handleErrorSend( this.req, this.res, {}, "badRequest" );
+    return ResponseHandlerService.handleErrorSend( this.req, this.res, error, "badRequest" );
 
 };
 

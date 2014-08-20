@@ -26,8 +26,6 @@
  * <br/>that resulted from the provided information (e.g. a required parameter was missing, a charge failed, etc.), and
  * <br/>codes in the 5xx range indicate an error with redh00d servers.
  *
- *
- *
  * @apiErrorStructure CommonError
  * @apiErrorStructure BadRequestError
  * @apiErrorStructure NotFoundError

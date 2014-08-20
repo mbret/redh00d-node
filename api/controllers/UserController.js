@@ -15,6 +15,8 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+var validator = require('validator');
+
 module.exports = {
 
     /**
@@ -45,6 +47,7 @@ module.exports = {
         var optionalSortData = {};
         if( req.param('id') ) optionalData.ID = req.param('ID');
         if( req.param('firstname') ) optionalData.firstName = req.param('firstname');
+        if( req.param('email') ) optionalData.email = req.param('email');
         if( req.param('lastname') ) optionalData.lastName = req.param('lastname');
         if( req.param('firstname_sort') ) optionalSortData.firstName = req.param('firstname_sort');
 
@@ -68,86 +71,67 @@ module.exports = {
      *
      * @description :: Create a simple user with the required fields.
      *                 This is a two time function, try to retrieve the user and only if the user doesn't exist then he is created.
-     * @todo try to make a better handle of (already exist) maybe handle this error after User.create for more logic and less spaghetti
-     * @todo use 409 conflict for same email
      * @param req the params email & password should be present.
      * @returns {*}
      */
     create: function (req, res) {
-
-        // Check user
-        User.findOne( {email: req.param('email') }).exec(function(err, user){
-
+        // Create user
+        User.create({
+            email: req.param('email'),
+            password: req.param('password'),
+            firstName: req.param('firstname'),
+            lastName: req.param('lastname')
+        })
+        .exec(function(err, user){
             if(err){
-                return res.serverError(err);
+                if(err.ValidationError) return res.badRequest( {params: ErrorValidationHandlerService.transformFromWaterline(err.ValidationError)} );
+                else return res.serverError(err);
             }
-            if( user ){
-                // If an user was found it's because email is taken
-                return res.conflict( res.i18n('email already taken') );
-            }
-            else{
-
-                // Create user
-                User.create({
-                    email: req.param('email'),
-                    password: req.param('password'),
-                    firstName: req.param('firstName'),
-                    lastName: req.param('lastName')
-                })
-                .exec(function(err, user){
-                    if(err){
-                        // Validation error
-                        if(err.ValidationError){
-                            return res.badRequest( res.i18n('Parameters invalid'), err.ValidationError );
-                        }
-                        else{
-                            return res.serverError(err);
-                        }
-                    }
-                    return res.created({
-                        user: user
-                    });
-                });
-            }
+            return res.created({
+                user: user.toCustomer()
+            });
         });
-
     },
 
     /**
      * Update an user
-     * Required parameters: id
-     * Optional parameters: firstname/lastname/email/password
+     * Check for updateOthers permission
+     * @todo password update with token
      * @param req
      */
     update: function (req, res) {
-        return res.send(501);
-        var dataToUpdate = {};
-        if ( req.param('firstname') ) dataToUpdate.firstname = req.param('firstname');
-        if ( req.param('lastname') ) dataToUpdate.lastname = req.param('lastname');
-        if ( req.param('email') ) dataToUpdate.email = req.param('email');
-        if ( req.param('password') ) dataToUpdate.password = req.param('password');
-        var query = {
-            'ID': req.param('id')
-        }
-        User.update(query, dataToUpdate, function(err, user) {
 
-            if (err) {
-                // Error due to validators
-                if (err.ValidationError) {
-                    return res.badRequest('The given parameters are invalid', err.ValidationError);
-                }
-                else {
-                    return res.serverError();
-                }
+        // Case of user try to update an other account
+        if( (req.param('id') != req.user.ID) && ! PermissionsService.isAllowed( req.user.role.name, req.options.controller, 'updateOthers') ){
+            return res.forbidden();
+        }
+        else{
+            var dataToUpdate = {};
+            if ( req.param('firstname') ) dataToUpdate.firstName = req.param('firstname');
+            if ( req.param('lastname') ) dataToUpdate.lastName = req.param('lastname');
+//            if ( req.param('password') ) dataToUpdate.password = req.param('password');
+            if ( req.param('phone') ) dataToUpdate.phone = req.param('phone');
+            // param only admina vailable
+            if ( req.param('email') ){
+                if(req.user.isAdmin()) dataToUpdate.email = req.param('email');
             }
-            if(!user || user.length < 1){
-                return res.notFound( res.i18n("Resource (%s) doesn't exist", res.i18n('user')) );
-            }else{
+
+            var query = {
+                'ID': req.param('id')
+            }
+            User.update(query, dataToUpdate, function(err, user) {
+
+                if (err) {
+                    if(err.ValidationError) return res.badRequest( {params: ErrorValidationHandlerService.transformFromWaterline(err.ValidationError)} );
+                    else return res.serverError(err);
+                }
+                if(!user || user.length < 1) return res.notFound();
+
                 return res.ok({
-                    user: user
+                    user: user[0].toCustomer()
                 });
-            }
-        });
+            });
+        }
     },
 
     patch: function (req, res) {
@@ -156,22 +140,22 @@ module.exports = {
         /**
          * Create a new password reset token and send
          * an email with instructions to user
+         * => req.param('id') should be an email here
          */
-        // createPasswordResetToken: function(req, res, next) {
-        //     if (!req.body.email) return res.badRequest({ email: "required" });
-        //
-        //     User.findOneByEmail(req.body.email, function (err, user) {
-        //         if(err) return res.serverError(err);
-        //
-        //         if(!user) return res.badRequest({ user: "not found" });
-        //
-        //         Jobs.create('sendPasswordResetEmail', { user: user.toObject() }).save(function (err) {
-        //             if(err) return res.serverError(err);
-        //             res.send({ info: "Password reset instructions sent" });
-        //         });
-        //     });
-        // },
-        //
+        if ( req.param('reset_password') && req.param('reset_password') === 'true' ){
+
+            User.findOne({email: req.param('id')}, function (err, user) {
+                if(err) return res.serverError(err);
+                if(!user) return res.notFound();
+
+                return res.ok();
+//                Jobs.create('sendPasswordResetEmail', { user: user.toObject() }).save(function (err) {
+//                    if(err) return res.serverError(err);
+//                    res.noContent();
+//                });
+            });
+        }
+
         // /**
         //  * Update user password
         //  * Expects and consumes a password reset token
@@ -216,10 +200,11 @@ module.exports = {
 
     /**
      * Delete an user
+     * Check for deleteOther permission
      */
     delete: function (req, res) {
-        // Case of user try to update an other account
-        if( (req.param('id') != req.user.ID) && ! PermissionsService.isAllowed( req.user.role, req.options.controller, 'deleteOthers') ){
+        // Case of user try to delete an other account
+        if( (req.param('id') != req.user.ID) && ! PermissionsService.isAllowed( req.user.role.name, req.options.controller, 'deleteOthers') ){
             return res.forbidden();
         }
         else{

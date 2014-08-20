@@ -22,34 +22,6 @@ describe('UserController', function() {
         done();
     })
 
-    describe("All", function(){
-
-        it('should respond with json', function(done){
-            async.series([
-                function(callback){
-                    request(sails.hooks.http.app).get('/api/users/1').set('Accept', 'application/json').set('Authorization', authorization)
-                        .expect('Content-Type', /json/).end(callback);
-                },
-                function(callback){
-                    request(sails.hooks.http.app).get('/api/users').set('Accept', 'application/json').set('Authorization', authorization)
-                        .expect('Content-Type', /json/).end(callback);
-                },
-                function(callback){
-                    request(sails.hooks.http.app).post('/api/users').set('Accept', 'application/json').set('Authorization', authorization)
-                        .expect('Content-Type', /json/).end(callback);
-                },
-//                function(callback){
-//                    request(sails.hooks.http.app).del('/api/users/10').set('Accept', 'application/json').set('Authorization', authorization)
-//                        .expect('Content-Type', /json/).end(callback);
-//                },
-            ], function(err, results){
-                if(err) return done(err);
-                done();
-            });
-        });
-
-    });
-
     describe("GET /users", function(){
 
         it('should respond user with ID 1', function(done){
@@ -105,13 +77,40 @@ describe('UserController', function() {
         });
 
         it('should create the user with email email@email.com', function(done){
-            request(sails.hooks.http.app).post('/api/users').send({email: 'email@email.com', password: 'password'})
+            request(sails.hooks.http.app).post('/api/users').send({email: 'email@email.com', password: 'password', firstname: 'Maxime', lastname: 'Bret'})
                 .expect(201).expect(function(res){
-                    if( !res.body.user || !res.body.user.email == 'email@email.com' ) throw new Error("User not created");
+                    if( !res.body.user || res.body.user.email != 'email@email.com' ) throw new Error("User not created");
                 })
                 .end(done);
         });
 
+    })
+
+    describe("PUT /users", function(){
+
+        it('should update the user with ID 3 as admin', function(done){
+            request(sails.hooks.http.app).put('/api/users/3').set('Authorization', authorizationAdmin)
+                .expect(200).end(done);
+        });
+
+        it('should update the firstname of account for its specific user', function(done){
+            request(sails.hooks.http.app).put('/api/users/2').send({firstname: 'barbapapa'}).set('Authorization', authorization)
+                .expect(200).expect(function(res){
+                    if( !res.body.user || res.body.user.firstName != 'barbapapa' ) throw new Error("User not updated correctly");
+                }).end(done);
+        });
+
+        // User with email user@user.com ID:1 should not be able to update another user
+        it('should not be able to delete another user as user', function(done){
+            request(sails.hooks.http.app).put('/api/users/3').set('Authorization', authorization)
+                .expect(403).end(done);
+        });
+
+        // User does not exist
+        it('should get 404', function(done){
+            request(sails.hooks.http.app).put('/api/users/10').set('Authorization', authorizationAdmin)
+                .expect(404).end(done);
+        });
     })
 
     describe("DELETE /users", function(){
