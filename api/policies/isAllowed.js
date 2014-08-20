@@ -18,7 +18,7 @@ module.exports = function isAllowed(req, res, next) {
     var action = req.options.action;
 
     // test permission
-    if( PermissionsService.isAllowed( req.user.role.name + "sd", resource, action ) ){
+    if( PermissionsService.isAllowed( req.user.role.name, resource, action ) ){
         return next();
     }
     else{
