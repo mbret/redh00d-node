@@ -1,0 +1,2 @@
+supervizer add --name redh00d --group redh00d --script E:\Workspace\redh00d-node\app.js --host localhost --port 1337 --watch E:\Workspace\redh00d-node --log E:\Workspace\redh00d-node\supervizer.log
+supervizer start --name redh00d

@@ -2218,93 +2218,13 @@ define({ api: [
     "filename": "sources/Product.js"
   },
   {
-    "parameter": {
-      "fields": {
-        "Parameters (URL)": [
-          {
-            "group": "urlParam",
-            "type": "Number",
-            "field": "id",
-            "optional": true,
-            "description": "<p>Search by ID.</p>"
-          },
-          {
-            "group": "urlParam",
-            "type": "String",
-            "field": "seniority_sort",
-            "optional": true,
-            "description": "<p>(asc/desc) Search by recent or old created accounts.</p>"
-          },
-          {
-            "group": "urlParam",
-            "type": "String",
-            "field": "email",
-            "optional": true,
-            "description": ""
-          },
-          {
-            "group": "urlParam",
-            "type": "String",
-            "field": "firstname",
-            "optional": true,
-            "description": "<p>Search by firstname.</p>"
-          },
-          {
-            "group": "urlParam",
-            "type": "String",
-            "field": "lastname",
-            "optional": true,
-            "description": "<p>Search by lastname.</p>"
-          },
-          {
-            "group": "urlParam",
-            "type": "String",
-            "field": "firstname_sort",
-            "optional": true,
-            "description": "<p>(asc/desc).</p>"
-          },
-          {
-            "group": "urlParam",
-            "type": "String",
-            "field": "lastname_sort",
-            "optional": true,
-            "description": "<p>(asc/desc).</p>"
-          },
-          {
-            "group": "urlParam",
-            "type": "String",
-            "field": "firstname_like",
-            "optional": true,
-            "description": "<p>Search by firstname with LIKE condition. Value example: &quot;ax&quot; will return &quot;maxime&quot; or &quot;max&quot;.</p>"
-          },
-          {
-            "group": "urlParam",
-            "type": "String",
-            "field": "lastname_like",
-            "optional": true,
-            "description": "<p>Search by lastname with LIKE condition. Value example: &quot;re&quot; will return &quot;bret&quot; or &quot;breton&quot;.</p>"
-          }
-        ]
-      }
-    },
-    "group": "User.js",
-    "type": "",
-    "url": "",
-    "version": "0.0.0",
-    "filename": "sources/User.js"
-  },
-  {
     "type": "post",
     "url": "/users",
     "title": "Create one user",
     "name": "CreateUser",
     "group": "Users",
-    "permission": {
-      "name": "guest",
-      "title": "Guest access rights needed.",
-      "description": ""
-    },
-    "description": "<p>Create one user and retrieve the created object. A user is designed by a unique email.If the user exist or one of primary field is already taken then the response will be 409.<br/><b style=\"color:green;\">Throw valid response:</b> 201.<br/><b style=\"color:red;\">Throw error response:</b> 400, 409.</p>",
+    "permission": "guest admin",
+    "description": "<p>Create one user and retrieve the created object. A user is designed by a unique email.If the user exist or one of primary field is already taken then the response will be 409.<br/><b style=\"color:green;\">Throw valid response:</b> 201.<br/><b style=\"color:red;\">Throw error response:</b> 400, 403, 409.</p>",
     "parameter": {
       "fields": {
         "Parameters (Form Data)": [
@@ -2363,7 +2283,7 @@ define({ api: [
     "examples": [
       {
         "title": "Use example",
-        "content": "POST http://localhost/users\nform-data:\n----------\nemail: xmax54@gmail.com\npassword: password\n"
+        "content": "POST http://localhost/users\nform-data:\n----------\nemail: xmax54@gmail.com\npassword: password\n...\n"
       }
     ],
     "success": {
@@ -2395,7 +2315,7 @@ define({ api: [
     "name": "DeleteUser",
     "group": "Users",
     "permission": "accountOwner admin",
-    "description": "<p>To delete a user you must have correct rights.<br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403, 404.</p>",
+    "description": "<p>To delete a user you must have correct rights.<br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 401, 403, 404.</p>",
     "parameter": {
       "fields": {
         "urlParams": [
@@ -2432,18 +2352,8 @@ define({ api: [
     "title": "Find users",
     "name": "FindMultipleUsers",
     "group": "Users",
-    "permission": {
-      "name": "authenticated",
-      "title": "Authentication requiered",
-      "description": ""
-    },
-    "description": "<p>Fetch group of users with criterias. The response is never empty and in worst case you will get an empty object.<br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
-    "examples": [
-      {
-        "title": "Use example",
-        "content": "GET http://localhost/users\nGET http://localhost/users?sort=asc&firstname=maxime\n"
-      }
-    ],
+    "permission": "user admin",
+    "description": "<p>Fetch group of users with criterias. The response is never empty and in worst case you will get an empty object.<br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 401, 403.</p>",
     "parameter": {
       "fields": {
         "Parameters (URL)": [
@@ -2487,14 +2397,14 @@ define({ api: [
             "type": "String",
             "field": "firstname_sort",
             "optional": true,
-            "description": "<p>(asc/desc).</p>"
+            "description": "<p>value: asc / desc.</p>"
           },
           {
             "group": "urlParam",
             "type": "String",
             "field": "lastname_sort",
             "optional": true,
-            "description": "<p>(asc/desc).</p>"
+            "description": "<p>value: asc / desc.</p>"
           },
           {
             "group": "urlParam",
@@ -2513,6 +2423,12 @@ define({ api: [
         ]
       }
     },
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "GET http://localhost/users\nGET http://localhost/users?sort=asc&firstname=maxime\n"
+      }
+    ],
     "success": {
       "fields": {
         "Success (200 OK) response parameters": [
@@ -2546,17 +2462,13 @@ define({ api: [
     "name": "FindUser",
     "group": "Users",
     "groupDescription": "<p>API relatives to users and in more explicitly way accounts.</p>",
-    "description": "<p>Find a user by its ID<br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403, 404.</p>",
-    "permission": {
-      "name": "authenticated",
-      "title": "Authentication requiered",
-      "description": ""
-    },
+    "description": "<p>Find a user by its ID. While request is not correct or no users exist you will get a 404 error.<br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 401, 403, 404.</p>",
+    "permission": "user admin",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Parameters (URL)": [
           {
-            "group": "Parameter",
+            "group": "urlParam",
             "type": "Number",
             "field": "id",
             "optional": false,
@@ -2618,7 +2530,7 @@ define({ api: [
             "type": "Boolean",
             "field": "reset_password",
             "optional": false,
-            "description": "<p>true / false</p>"
+            "description": "<p>true</p>"
           }
         ]
       }

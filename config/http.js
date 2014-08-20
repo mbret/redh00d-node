@@ -61,9 +61,11 @@ module.exports = {
                     if (err) return next(err);
 
                     if(!user){
+                        // build a partial user model (some method are tested even when user is guest)
                         req.user = {
-                            isAuthenticated: false,
-                            isGuest: true,
+                            isAuthenticated: false, // important
+                            isGuest: true, // important
+                            isAdmin: function(){return false}, // important
                             role: {name: 'guest'}
                         };
                     }

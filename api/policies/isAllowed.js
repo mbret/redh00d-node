@@ -13,6 +13,7 @@ var Q = require('q');
 
 module.exports = function isAllowed(req, res, next) {
 
+
     // They are already formatted from sails to match with permissions
     var resource = req.options.controller;
     var action = req.options.action;
@@ -23,7 +24,7 @@ module.exports = function isAllowed(req, res, next) {
     }
     else{
         // case of reject maybe user is not authenticate ?
-        if( ! req.user.isAuthenticated ) return res.unauthorized
+        if( ! req.user.isAuthenticated ) return res.unauthorized();
         else return res.forbidden();
     }
 

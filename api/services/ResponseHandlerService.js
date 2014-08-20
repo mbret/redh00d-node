@@ -30,6 +30,12 @@ module.exports = {
 //            session.ID = req.sessionID;
             data._debug = {
                 api_version: sails.config.general.version,
+                creators: sails.config.general.creators,
+                default_user_role: sails.config.general.defaultUserRoleName,
+                connection: sails.config.models.connection,
+                init_db_each_launch: sails.config.general.initDatabase,
+                protect_json_response: sails.config.general.protectJsonData,
+                environment: sails.config.environment,
                 request: {
                     locale: res.locale,
                     host: req.host,
