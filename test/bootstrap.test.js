@@ -17,8 +17,10 @@ before(function(done) {
         if (err) return done(err);
 
         // here you can load fixtures, etc.
-        DatabaseService.seedForTest().then(function() {
-            return done( null, sails );
+        DatabaseService.seedDefaultData().then(function() {
+            return DatabaseService.seedTestData().then(function() {
+                return done(null, sails);
+            });
 
         }).fail(function (err) {
             return done( new Error(err) );

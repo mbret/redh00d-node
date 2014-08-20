@@ -31,10 +31,12 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             unique: true,
             columnName: "userMail"
         },
+        // Password for bdd
         encryptedPassword: {
             type: 'string',
             columnName: "userPassword"
         },
+        // Password before bdd (validation)
         password: {
             type: 'string',
             minLength: 4,
@@ -50,6 +52,12 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             required: true,
             columnName: 'userLastName'
         },
+        phone: {
+            type: 'int',
+            required: false,
+            defaultTo: null,
+            columnName: 'userPhone'
+        },
         passwordResetToken: {
             type: 'json',
             columnName: 'userPasswordResetToken'
@@ -59,8 +67,21 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             unique: true,
             columnName: 'userApiKey'
         },
+        // Not required because it has a default value (see below)
         role: {
-            model: 'UserRole'
+            model: 'UserRole',
+            columnName: 'FK_userRoleID',
+            required: false
+        },
+        // Managed by waterline
+        createdAt: {
+            type: 'datetime',
+            columnName: 'userCreatedDate'
+        },
+        // Managed by waterline
+        updatedAt: {
+            type: 'datetime',
+            columnName: 'userUpdatedDate '
         },
 
         /**
@@ -76,15 +97,19 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
          */
         toCustomer: function() {
             var user = this.toObject();
-            if( sails.config.general.protectJsonData ) {
+            if( sails.config.general.protectJsonData === false ) {
+                return user;
+            }
+            else{
                 user.password = "***";
                 user.email = "***";
                 user.encryptedPassword = "***";
                 user.sessionTokens = "***";
                 user._csrf = "***";
                 user.apiKey = "***";
+                return user;
             }
-            return user;
+
         },
 
         /**
@@ -150,7 +175,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
         isAdmin: function(){
             return this.role.name === "admin";
-        },
+        }
 
     },
 
@@ -168,7 +193,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
     beforeCreate: [
         // Encrypt user's password
-        function (values, cb) {
+        function (values, cb){
             User.encryptPassword(values, function (err) {
                 return cb(err);
             });

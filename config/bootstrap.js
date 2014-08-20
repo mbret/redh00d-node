@@ -16,11 +16,13 @@ module.exports.bootstrap = function(cb) {
 
     /**
      * Init database
+     * and insert test data
      */
     if(sails.config.general.initDatabase){
-        DatabaseService.seed().then(function() {
-            return cb();
-
+        DatabaseService.seedDefaultData().then(function() {
+            return DatabaseService.seedTestData().then(function(){
+                return cb();
+            })
         }).fail(function (err) {
             return cb(err);
 

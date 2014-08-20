@@ -20,54 +20,31 @@ describe('UserModel', function() {
         done();
     })
 
-    describe('Foo model test', function () {
+    describe('Create test', function () {
 
-        it ('should create a Foo record', function (done) {
-            done();
-            return User.create({
-                nickname: "My Name"
+        it ('should create a correct minimal user record', function (done) {
+            User.create({
+                firstName: "Toto",
+                lastName: "Tata",
+                email: "toto@tata.com",
+                password: "password"
+            }).exec(function(err, user){
+                if(err) throw new Error(err);
+                if(!user) throw new Error('User not created');
+                if(user.firstName != "Toto"
+                    || user.lastName != 'Tata'
+                    || user.email != 'toto@tata.com'
+                    || user.password != 'password'
+                    || user.createdAt.length < 1
+                    || user.updatedAt.length < 1
+                    || user.apiKey.length < 1
+                    || user.role != 2 // default role
+                    ){
+                    throw new Error('User malformed or incomplete');
+                }
+                done();
             });
         });
-
-        it ('should be named "My name"', function (done) {
-            return done();
-            User.find()
-                .limit(1)
-                .then(function (foo) {
-//                    assert.equal(foo[0].nickname, "My Name");
-                    done();
-                }).fail(done);
-        });
-
-        it ('should have exactly one record', function () {
-//            User.count(function (err, cnt) {
-//                if(err) throw err;
-//                return assert.equal(cnt, 1);
-//            });
-        });
-
-    });
-
-    describe('#find()', function() {
-        it('should check find function', function (done) {
-            User.find().then(function(results) {
-                // some tests
-//                assert.equal(null, results);
-                return done();
-            }).fail(done);
-        });
-    });
-
-    describe('#save()', function(){
-
-
-
-        it('should save without error', function(done){
-            var user = {};
-            return done();
-            return User.save( user ); //  callback accepts an error, so we may use this directly:
-        });
-
 
     });
 
