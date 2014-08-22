@@ -28,6 +28,17 @@ module.exports = {
 
     afterUpdate: function(newlyUpdatedEvent, next){
         next();
+    },
+
+    /**
+     * Call .toCustomer() to all model inside the given array and return it
+     */
+    toCustomer: function( models ){
+        var customerModels = [];
+        for( var i in models ){
+            customerModels.push( models[i].toCustomer() );
+        }
+        return customerModels;
     }
 
 }

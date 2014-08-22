@@ -1,6 +1,4 @@
 /**
- *
- *
  * @module      :: Model
  * @description ::
  * @docs		:: http://sailsjs.org/#!documentation/models
@@ -11,12 +9,14 @@
 module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
     autoPK: true,
+    tableName: 'user_role',
+    autoUpdatedAt: false,
+    autoCreatedAt: false,
 
     attributes: {
 
         ID: {
             type: 'integer',
-            required: true,
             autoIncrement: true,
             unique: true,
             index: true,

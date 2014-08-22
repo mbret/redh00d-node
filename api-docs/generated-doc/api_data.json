@@ -64,7 +64,7 @@
       "examples": [
         {
           "title": "Use example:",
-          "content": "Request Header:\n---------------\nGET /api/events HTTP/1.1\nHost: localhost:1337\nAccept-Language: fr-FR\n...\n"
+          "content": "Request Header:\n---------------\nGET /api/events HTTP/1.1\nHost: 109.31.47.142:3000/api:1337\nAccept-Language: fr-FR\n...\n"
         }
       ]
     },
@@ -111,7 +111,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "get http://localhost/dev/db\n"
+        "content": "get http://109.31.47.142:3000/api/dev/db\n"
       }
     ],
     "version": "0.0.0",
@@ -128,7 +128,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "get http://localhost/dev/logs\n"
+        "content": "get http://109.31.47.142:3000/api/dev/logs\n"
       }
     ],
     "version": "0.0.0",
@@ -144,7 +144,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "post http://localhost/dev/db\n"
+        "content": "post http://109.31.47.142:3000/api/dev/db\n"
       }
     ],
     "version": "0.0.0",
@@ -160,7 +160,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "get http://localhost/dev/delete-logs\n"
+        "content": "get http://109.31.47.142:3000/api/dev/delete-logs\n"
       }
     ],
     "version": "0.0.0",
@@ -333,54 +333,6 @@
     "filename": "sources/Error.js"
   },
   {
-    "parameter": {
-      "fields": {
-        "Parameters (URL)": [
-          {
-            "group": "urlParam",
-            "type": "Number",
-            "field": "id",
-            "optional": true,
-            "description": "<p>Use it to retrieve only one event with its ID.</p>"
-          },
-          {
-            "group": "urlParam",
-            "type": "String",
-            "field": "eventName",
-            "optional": true,
-            "description": ""
-          },
-          {
-            "group": "urlParam",
-            "type": "String",
-            "field": "eventDate",
-            "optional": true,
-            "description": ""
-          },
-          {
-            "group": "urlParam",
-            "type": "String",
-            "field": "eventPlace",
-            "optional": true,
-            "description": ""
-          },
-          {
-            "group": "urlParam",
-            "type": "String",
-            "field": "sort",
-            "optional": true,
-            "description": "<p>get the result sorted</p>"
-          }
-        ]
-      }
-    },
-    "group": "Event.js",
-    "type": "",
-    "url": "",
-    "version": "0.0.0",
-    "filename": "sources/Event.js"
-  },
-  {
     "type": "post",
     "url": "/users/:id/events",
     "title": "Create an event",
@@ -429,7 +381,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "post http://localhost/events\nform-data: name=MyEvent&date=2014-12-24\n"
+        "content": "post http://109.31.47.142:3000/api/events\nform-data: name=MyEvent&date=2014-12-24\n"
       }
     ],
     "error": {
@@ -495,7 +447,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "post http://localhost/events/15/invitations\nform-data: target_id=36\n"
+        "content": "post http://109.31.47.142:3000/api/events/15/invitations\nform-data: target_id=36\n"
       }
     ],
     "success": {
@@ -544,7 +496,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "delete http://localhost/events/15\n"
+        "content": "delete http://109.31.47.142:3000/api/events/15\n"
       }
     ],
     "success": {
@@ -593,7 +545,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "delete http://localhost/events/5/invitations/10\n"
+        "content": "delete http://109.31.47.142:3000/api/events/5/invitations/10\n"
       }
     ],
     "success": {
@@ -622,16 +574,16 @@
     "title": "Delete an event product",
     "name": "DeleteEventProduct",
     "group": "Events",
-    "description": "<p>Delete the link between an event and a product. The product itself is not removed.<br/><b>Throw error:</b></p>",
     "permission": {
       "name": "authenticated",
       "title": "Authentication requiered",
       "description": ""
     },
+    "description": "<p>Delete an event product.<br/><b>Throw error:</b></p>",
     "examples": [
       {
         "title": "Use example",
-        "content": "delete http://localhost/events/15/products/10\n"
+        "content": "delete http://109.31.47.142:3000/api/events/15/products/10\n"
       }
     ],
     "success": {
@@ -651,16 +603,16 @@
     "title": "Delete an event product",
     "name": "DeleteEventProduct",
     "group": "Events",
+    "description": "<p>Delete the link between an event and a product. The product itself is not removed.<br/><b>Throw error:</b></p>",
     "permission": {
       "name": "authenticated",
       "title": "Authentication requiered",
       "description": ""
     },
-    "description": "<p>Delete an event product.<br/><b>Throw error:</b></p>",
     "examples": [
       {
         "title": "Use example",
-        "content": "delete http://localhost/events/15/products/10\n"
+        "content": "delete http://109.31.47.142:3000/api/events/15/products/10\n"
       }
     ],
     "success": {
@@ -681,16 +633,17 @@
     "name": "FindEvent",
     "group": "Events",
     "groupDescription": "<p>API corresponding to Event. Everything here is related to events. You canretrieves users or products but they are from events and the resource name is different. For example users are members.</p>",
-    "description": "<p>Find an event by its ID<br/><b>Throw error:</b> 404</p>",
+    "description": "<p>Find an event by its ID<br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 401, 403, 404.</p>",
+    "permission": "user admin",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Parameters (URL)": [
           {
-            "group": "Parameter",
+            "group": "urlParam",
             "type": "Number",
             "field": "id",
             "optional": false,
-            "description": "<p>Event unique ID.</p>"
+            "description": "<p>Event ID.</p>"
           }
         ]
       }
@@ -698,7 +651,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "get http://localhost/events/15\n"
+        "content": "get http://109.31.47.142:3000/api/events/15\n"
       }
     ],
     "success": {
@@ -754,7 +707,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "post http://localhost/events/15/invitations/15\n"
+        "content": "post http://109.31.47.142:3000/api/events/15/invitations/15\n"
       }
     ],
     "success": {
@@ -803,7 +756,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "post http://localhost/events/15/invitations\n"
+        "content": "post http://109.31.47.142:3000/api/events/15/invitations\n"
       }
     ],
     "success": {
@@ -865,7 +818,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "get http://localhost/events/15/products/10\n"
+        "content": "get http://109.31.47.142:3000/api/events/15/products/10\n"
       }
     ],
     "success": {
@@ -905,7 +858,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "get http://localhost/events/15/products\n"
+        "content": "get http://109.31.47.142:3000/api/events/15/products\n"
       }
     ],
     "success": {
@@ -940,18 +893,8 @@
     "title": "Find events",
     "name": "FindMultipleEvents",
     "group": "Events",
-    "permission": {
-      "name": "authenticated",
-      "title": "Authentication requiered",
-      "description": ""
-    },
-    "description": "<p>look for Events<br/><b>Throw error:</b></p>",
-    "examples": [
-      {
-        "title": "Example ",
-        "content": "get http://localhost/events\nget http://localhost/users?sort=asc&eventDate=204-12-24\n"
-      }
-    ],
+    "permission": "user admin",
+    "description": "<p>look for Events<br/><b style=\"color:green;\">Throw valid response:</b> 200.<br/><b style=\"color:red;\">Throw error response:</b> 401, 403.</p>",
     "parameter": {
       "fields": {
         "Parameters (URL)": [
@@ -965,34 +908,40 @@
           {
             "group": "urlParam",
             "type": "String",
-            "field": "eventName",
+            "field": "name",
             "optional": true,
             "description": ""
           },
           {
             "group": "urlParam",
             "type": "String",
-            "field": "eventDate",
+            "field": "date",
             "optional": true,
             "description": ""
           },
           {
             "group": "urlParam",
             "type": "String",
-            "field": "eventPlace",
+            "field": "place",
             "optional": true,
             "description": ""
           },
           {
             "group": "urlParam",
             "type": "String",
-            "field": "sort",
+            "field": "date_sort",
             "optional": true,
-            "description": "<p>get the result sorted</p>"
+            "description": "<p>value: asc / desc</p>"
           }
         ]
       }
     },
+    "examples": [
+      {
+        "title": "Example ",
+        "content": "get http://109.31.47.142:3000/api/events\nget http://109.31.47.142:3000/api/users?sort=asc&eventDate=204-12-24\n"
+      }
+    ],
     "success": {
       "fields": {
         "Success (200 OK) response parameters": [
@@ -1064,7 +1013,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "put http://localhost/events\nform-data: description=My_will_such_as_hell&place=toHome\n"
+        "content": "put http://109.31.47.142:3000/api/events\nform-data: description=My_will_such_as_hell&place=toHome\n"
       }
     ],
     "success": {
@@ -1124,7 +1073,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "put http://localhost/events/9/invitations/4\n"
+        "content": "put http://109.31.47.142:3000/api/events/9/invitations/4\n"
       }
     ],
     "success": {
@@ -1195,7 +1144,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "POST http://localhost/users/15/friendsgroups/10/members\nform-data:\n----------\nid_member: 25\n"
+        "content": "POST http://109.31.47.142:3000/api/users/15/friendsgroups/10/members\nform-data:\n----------\nid_member: 25\n"
       }
     ],
     "success": {
@@ -1257,7 +1206,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "POST http://localhost/users/15/friendsgroups\nform-data:\n----------\nname: Family\n"
+        "content": "POST http://109.31.47.142:3000/api/users/15/friendsgroups\nform-data:\n----------\nname: Family\n"
       }
     ],
     "success": {
@@ -1312,7 +1261,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "DELETE http://localhost/users/15/friendsgroups/10\n"
+        "content": "DELETE http://109.31.47.142:3000/api/users/15/friendsgroups/10\n"
       }
     ],
     "success": {
@@ -1363,7 +1312,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "DELETE http://localhost/users/15/friendsgroups/10/members/25\n"
+        "content": "DELETE http://109.31.47.142:3000/api/users/15/friendsgroups/10/members/25\n"
       }
     ],
     "success": {
@@ -1413,7 +1362,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "GET http://localhost/users/15/friendsgroups/10\n"
+        "content": "GET http://109.31.47.142:3000/api/users/15/friendsgroups/10\n"
       }
     ],
     "success": {
@@ -1466,7 +1415,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "GET http://localhost/users/15/friendsgroups\n"
+        "content": "GET http://109.31.47.142:3000/api/users/15/friendsgroups\n"
       }
     ],
     "success": {
@@ -1534,7 +1483,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "PUT http://localhost/users/15/friendsgroups\nform-data:\n----------\nname: Family\n"
+        "content": "PUT http://109.31.47.142:3000/api/users/15/friendsgroups\nform-data:\n----------\nname: Family\n"
       }
     ],
     "success": {
@@ -1644,7 +1593,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "POST http://localhost/users/10/friendships\nform-data:\n----------\nid_friend: 27\n"
+        "content": "POST http://109.31.47.142:3000/api/users/10/friendships\nform-data:\n----------\nid_friend: 27\n"
       }
     ],
     "success": {
@@ -1700,7 +1649,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "DELETE http://localhost/users/15/friends/27\n"
+        "content": "DELETE http://109.31.47.142:3000/api/users/15/friends/27\n"
       }
     ],
     "success": {
@@ -1746,7 +1695,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "get http://localhost/users/15/friendships/25\n"
+        "content": "get http://109.31.47.142:3000/api/users/15/friendships/25\n"
       }
     ],
     "success": {
@@ -1816,7 +1765,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "GET http://localhost/users/10/friendships\nGET http://localhost/users/10/friendships?state=accepted\n"
+        "content": "GET http://109.31.47.142:3000/api/users/10/friendships\nGET http://109.31.47.142:3000/api/users/10/friendships?state=accepted\n"
       }
     ],
     "success": {
@@ -1855,7 +1804,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "GET http://localhost/users/15/friends\n"
+        "content": "GET http://109.31.47.142:3000/api/users/15/friends\n"
       }
     ],
     "success": {
@@ -1924,7 +1873,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "PUT http://localhost/users/10/friendships/26\nform-data:\n----------\naccept: false (I don't give a shit about you dude!) or true (Come to share a bit of Mojo time bro <3)\n"
+        "content": "PUT http://109.31.47.142:3000/api/users/10/friendships/26\nform-data:\n----------\naccept: false (I don't give a shit about you dude!) or true (Come to share a bit of Mojo time bro <3)\n"
       }
     ],
     "success": {
@@ -1994,7 +1943,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "POST http://localhost/products\nform-data:\n----------\nofficial: true\nname: Chips\nlogo:\ncategory_id: 1\n"
+        "content": "POST http://109.31.47.142:3000/api/products\nform-data:\n----------\nofficial: true\nname: Chips\nlogo:\ncategory_id: 1\n"
       }
     ],
     "success": {
@@ -2043,7 +1992,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "DELETE http://localhost/products/15\n"
+        "content": "DELETE http://109.31.47.142:3000/api/products/15\n"
       }
     ],
     "success": {
@@ -2068,7 +2017,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "GET http://localhost/products\n"
+        "content": "GET http://109.31.47.142:3000/api/products\n"
       }
     ],
     "success": {
@@ -2122,7 +2071,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "GET http://localhost/products/15\n"
+        "content": "GET http://109.31.47.142:3000/api/products/15\n"
       }
     ],
     "success": {
@@ -2192,7 +2141,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "PUT http://localhost/products\nform-data:\n----------\nofficial: true\nname: Chips\nlogo:\ncategory_id: 1\n"
+        "content": "PUT http://109.31.47.142:3000/api/products\nform-data:\n----------\nofficial: true\nname: Chips\nlogo:\ncategory_id: 1\n"
       }
     ],
     "success": {
@@ -2283,7 +2232,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "POST http://localhost/users\nform-data:\n----------\nemail: xmax54@gmail.com\npassword: password\n...\n"
+        "content": "POST http://109.31.47.142:3000/api/users\nform-data:\n----------\nemail: xmax54@gmail.com\npassword: password\n...\n"
       }
     ],
     "success": {
@@ -2332,7 +2281,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "DELETE http://localhost/users/15\n"
+        "content": "DELETE http://109.31.47.142:3000/api/users/15\n"
       }
     ],
     "success": {
@@ -2426,7 +2375,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "GET http://localhost/users\nGET http://localhost/users?sort=asc&firstname=maxime\n"
+        "content": "GET http://109.31.47.142:3000/api/users\nGET http://109.31.47.142:3000/api/users?sort=asc&firstname=maxime\n"
       }
     ],
     "success": {
@@ -2480,7 +2429,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "GET http://localhost/users/15\n"
+        "content": "GET http://109.31.47.142:3000/api/users/15\n"
       }
     ],
     "success": {
@@ -2538,7 +2487,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "PATCH http://localhost/users/user@user.com\nform-data:\n----------\nreset_password=true\n"
+        "content": "PATCH http://109.31.47.142:3000/api/users/user@user.com\nform-data:\n----------\nreset_password=true\n"
       }
     ],
     "success": {
@@ -2627,7 +2576,7 @@
     "examples": [
       {
         "title": "Use example",
-        "content": "PUT http://localhost/users/1\nform-data:\n----------\nemail: xmax54@gmail.com\npassword: password\n"
+        "content": "PUT http://109.31.47.142:3000/api/users/1\nform-data:\n----------\nemail: xmax54@gmail.com\npassword: password\n"
       }
     ],
     "success": {
@@ -2761,11 +2710,11 @@
     "filename": "sources/_general.js"
   },
   {
-    "success": {
+    "error": {
       "examples": [
         {
-          "title": "Success (204 No content) response sample:",
-          "content": "HTTP/1.1 204 No content\n{\n}\n"
+          "title": "Error (500 Serveur Error) response sample:",
+          "content": "   HTTP/1.1 500 Serveur Error\n   {\n     \"message\": \"Database unavailable\",\n     \"code\": \"dbUnavailable\"\n   }\n"
         }
       ]
     },
@@ -2776,11 +2725,11 @@
     "filename": "sources/_general.js"
   },
   {
-    "error": {
+    "success": {
       "examples": [
         {
-          "title": "Error (500 Serveur Error) response sample:",
-          "content": "   HTTP/1.1 500 Serveur Error\n   {\n     \"message\": \"Database unavailable\",\n     \"code\": \"dbUnavailable\"\n   }\n"
+          "title": "Success (204 No content) response sample:",
+          "content": "HTTP/1.1 204 No content\n{\n}\n"
         }
       ]
     },

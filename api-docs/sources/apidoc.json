@@ -4,7 +4,7 @@
     "version": "0.0.1",
     "description": "Documentation de l'api redh00d",
     "title": "Documentation de l'api redh00d",
-    "url" : "https://localhost",
+    "url" : "https://109.31.47.142:3000/api",
     "header": {
         "title": "My own header title"
     },

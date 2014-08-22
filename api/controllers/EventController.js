@@ -2,15 +2,7 @@
  * EventController
  *
  * @module      :: Controller
- * @description	:: A set of functions called `actions`.
- *
- *                 Actions contain code telling Sails how to respond to a certain type of request.
- *                 (i.e. do stuff, then send some JSON, show an HTML page, or redirect to another URL)
- *
- *                 You can configure the blueprint URLs which trigger these actions (`config/controllers.js`)
- *                 and/or override them with custom routes (`config/routes.js`)
- *
- *                 NOTE: The code you write here supports both HTTP and Socket.io automatically.
+ * @description	::
  *
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
@@ -19,20 +11,13 @@ module.exports = {
 
     /**
      * Return an event by id
-     * @route /events/:id
-     * @return {event}
      */
     find: function (req, res) {
-        Event.findOne( req.param('id')).exec( function(err, event){
-            if(err){
-                return res.serverError(err);
-            }
-            if(!event){
-                return res.notFound( res.i18n("resource (%s) doesn't exist", res.i18n('event')) );
-            }
-            // Send a JSON response
+        Event.findOne({'ID':req.param('id')}).populate('author').exec(function(err,event){
+            if(err) return res.serverError(err);
+            if(!event) return res.notFound();
             return res.ok({
-                event: event
+                event:event.toCustomer()
             });
         });
     },
@@ -45,24 +30,30 @@ module.exports = {
 
         // Get optional parameters from URL to refine the search
         var optionalData = {};
-        if( req.param('id') ){
-            optionalData.ID = req.param('id');
-        }
-        if( req.param('name') ){
-            optionalData.name = req.param('name');
-        }
+        if( req.param('id') ) optionalData.ID = req.param('ID');
+        if( req.param('name') ) optionalData.name = req.param('name');
+        if( req.param('date') ) optionalData.date = req.param('date');
+        if( req.param('place') ) optionalData.place = req.param('place');
 
-        // Get all events (with data)
-        Event.find( optionalData ).exec( function(err, events){
-            if(err){
-                //@todo
-                return res.serverError(err);
-            }
-            if(!events){
-                return res.notFound("No events");
-            }
+        var optionalSortData = {};
+        if( req.param('date_sort') ) optionalSortData.date = req.param('date_sort');
+//        if( req.param('lastname_sort') ) optionalSortData.lastName = req.param('lastname_sort');
+
+        //@todo implement these criteria
+//        if( req.param('firstname_like') || req.param('lastname_like') ) res.send(501);
+
+        // Build query with sort, etc
+        var findQuery = Event.find(optionalData);
+        if( optionalSortData !== {} ) {
+            findQuery.sort(optionalSortData);
+        }
+        findQuery.populate('author');
+
+        // Run job
+        findQuery.exec(function callback(err, events){
+            if(err) return res.serverError(err);
             return res.ok({
-                events: events
+                events: Event.toCustomer( events )
             });
         });
     },

@@ -7,7 +7,7 @@
  * @apiDescription Display logs
  *
  * @apiExample Use example
- * get http://localhost/dev/logs
+ * get http://109.31.47.142:3000/api/dev/logs
  */
 /**
  * @api {get} /dev/delete-logs Reset logs
@@ -16,7 +16,7 @@
  * @apiDescription Reset logs
  *
  * @apiExample Use example
- * get http://localhost/dev/delete-logs
+ * get http://109.31.47.142:3000/api/dev/delete-logs
  */
 /**
  * @api {get} /dev/db Display some database info
@@ -25,7 +25,7 @@
  * @apiDescription Display some database info
  *
  * @apiExample Use example
- * get http://localhost/dev/db
+ * get http://109.31.47.142:3000/api/dev/db
  */
 /**
  * @api {post} /dev/db Initialize database
@@ -34,5 +34,5 @@
  * @apiDescription Initialize some basic necessary entries in database
  *
  * @apiExample Use example
- * post http://localhost/dev/db
+ * post http://109.31.47.142:3000/api/dev/db
  */

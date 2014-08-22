@@ -1,22 +1,4 @@
 // ------------------------------------------------------------------------------------------
-//                                      Events
-// ------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------
-// Shortcut for fetch events params
-// Include this structure if you need params used as filter
-// ------------------------------------------------------------------------------------------
-/**
- * @apiDefineStructure fetchEventsParams
- * @apiParam (urlParam) {Number} [id] Use it to retrieve only one event with its ID.
- * @apiParam (urlParam) {String} [eventName]
- * @apiParam (urlParam) {String} [eventDate]
- * @apiParam (urlParam) {String} [eventPlace]
- * @apiParam (urlParam) {String} [sort] get the result sorted
- */
-
-
-
-// ------------------------------------------------------------------------------------------
 // Fetch one
 //
 //  - EventController.find()
@@ -29,11 +11,14 @@
  * @apiGroupDescription API corresponding to Event. Everything here is related to events. You can
  * retrieves users or products but they are from events and the resource name is different. For example users are members.
  * @apiDescription Find an event by its ID
- * <br/><b>Throw error:</b> 404
+ * <br/><b style="color:green;">Throw valid response:</b> 200.
+ * <br/><b style="color:red;">Throw error response:</b> 401, 403, 404.
  *
- * @apiParam {Number} id Event unique ID.
+ * @apiPermission user admin
+ *
+ * @apiParam (urlParam) {Number} id Event ID.
  * @apiExample Use example
- * get http://localhost/events/15
+ * get http://109.31.47.142:3000/api/events/15
  *
  * @apiSuccessStructure FindSuccess
  *
@@ -48,14 +33,19 @@
  * @api {get} /events Find events
  * @apiName FindMultipleEvents
  * @apiGroup Events
- * @apiPermission authenticated
+ * @apiPermission user admin
  * @apiDescription look for Events
- * <br/><b>Throw error:</b>
+ * <br/><b style="color:green;">Throw valid response:</b> 200.
+ * <br/><b style="color:red;">Throw error response:</b> 401, 403.
  *
- * @apiStructure fetchEventsParams
+ * @apiParam (urlParam) {Number} [id] Use it to retrieve only one event with its ID.
+ * @apiParam (urlParam) {String} [name]
+ * @apiParam (urlParam) {String} [date]
+ * @apiParam (urlParam) {String} [place]
+ * @apiParam (urlParam) {String} [date_sort] value: asc / desc
  * @apiExample Example 
- * get http://localhost/events
- * get http://localhost/users?sort=asc&eventDate=204-12-24
+ * get http://109.31.47.142:3000/api/events
+ * get http://109.31.47.142:3000/api/users?sort=asc&eventDate=204-12-24
  *
  * @apiSuccessStructure FindMultipleSuccess
  */
@@ -96,7 +86,7 @@
  * @apiParam (dataParam) {String} [place]
  * @apiParam (dataParam) {String} date
  * @apiExample Use example
- * post http://localhost/events
+ * post http://109.31.47.142:3000/api/events
  * form-data: name=MyEvent&date=2014-12-24
  *
  * @apiSuccessStructure CreateSuccess
@@ -121,7 +111,7 @@
  * @apiParam (dataParam) {String} [place] Required token to update password.
  * @apiParam (dataParam) {String} date
  * @apiExample Use example
- * put http://localhost/events
+ * put http://109.31.47.142:3000/api/events
  * form-data: description=My_will_such_as_hell&place=toHome
  *
  * @apiSuccessStructure UpdateSuccess
@@ -144,7 +134,7 @@
  *
  * @apiParam {Number} id Event's ID
  * @apiExample Use example
- * delete http://localhost/events/15
+ * delete http://109.31.47.142:3000/api/events/15
  *
  * @apiSuccessStructure DeleteSuccess
  */
@@ -169,7 +159,7 @@
  * @apiParam (urlParam) {Number} id Event's ID
  * @apiParam (dataParam) {Number} target_id
  * @apiExample Use example
- * post http://localhost/events/15/invitations
+ * post http://109.31.47.142:3000/api/events/15/invitations
  * form-data: target_id=36
  *
  * @apiSuccessStructure CreateSuccess
@@ -190,7 +180,7 @@
  * @apiParam (urlParam) {Number} id_event Event's ID
  * @apiParam (urlParam) {Number} id_invitation Invitation's ID
  * @apiExample Use example
- * post http://localhost/events/15/invitations/15
+ * post http://109.31.47.142:3000/api/events/15/invitations/15
  *
  * @apiSuccessStructure FindSuccess
  */
@@ -209,7 +199,7 @@
  *
  * @apiParam (urlParam) {Number} id_event Event's ID
  * @apiExample Use example
- * post http://localhost/events/15/invitations
+ * post http://109.31.47.142:3000/api/events/15/invitations
  *
  * @apiSuccessStructure FindMultipleSuccess
  */
@@ -231,7 +221,7 @@
  * @apiParam {Number} idEvent Event's ID
  * @apiParam {Number} idInvitation Invitation's ID
  * @apiExample Use example
- * put http://localhost/events/9/invitations/4
+ * put http://109.31.47.142:3000/api/events/9/invitations/4
  *
  * @apiSuccessStructure UpdateSuccess
  */
@@ -252,7 +242,7 @@
  * @apiParam {Number} idEvent Event's ID
  * @apiParam {Number} idInvitation Invitation's ID
  * @apiExample Use example
- * delete http://localhost/events/5/invitations/10
+ * delete http://109.31.47.142:3000/api/events/5/invitations/10
  *
  * @apiSuccessStructure DeleteSuccess
  */
@@ -312,7 +302,7 @@
  * <br/><b>Throw error:</b>
  *
  * @apiExample Use example
- * delete http://localhost/events/15/products/10
+ * delete http://109.31.47.142:3000/api/events/15/products/10
  *
  * @apiSuccessStructure DeleteSuccess
  */
@@ -330,7 +320,7 @@
  * <br/><b>Throw error:</b>
  *
  * @apiExample Use example
- * get http://localhost/events/15/products
+ * get http://109.31.47.142:3000/api/events/15/products
  *
  * @apiSuccessStructure FindMultipleSuccess
  */
@@ -349,7 +339,7 @@
  * @apiPermission authenticated
  *
  * @apiExample Use example
- * get http://localhost/events/15/products/10
+ * get http://109.31.47.142:3000/api/events/15/products/10
  *
  * @apiSuccessStructure FindSuccess
  */
@@ -368,7 +358,7 @@
  * @apiPermission authenticated
  *
  * @apiExample Use example
- * delete http://localhost/events/15/products/10
+ * delete http://109.31.47.142:3000/api/events/15/products/10
  *
  * @apiSuccessStructure DeleteSuccess
  */

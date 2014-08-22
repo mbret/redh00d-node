@@ -17,6 +17,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
     attributes: {
 
+        // BDD fields
         ID: {
             type: 'integer',
             autoIncrement: true,
@@ -36,12 +37,6 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             type: 'string',
             columnName: "userPassword"
         },
-        // Password before bdd (validation)
-        password: {
-            type: 'string',
-            minLength: 4,
-            required: true
-        },
         firstName: {
             type: 'string',
             required: true,
@@ -51,6 +46,12 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             type: 'string',
             required: true,
             columnName: 'userLastName'
+        },
+        // Not required because it has a default value (see below)
+        role: {
+            model: 'UserRole',
+            columnName: 'FK_userRoleID',
+            required: false
         },
         phone: {
             type: 'int',
@@ -67,12 +68,6 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             unique: true,
             columnName: 'userApiKey'
         },
-        // Not required because it has a default value (see below)
-        role: {
-            model: 'UserRole',
-            columnName: 'FK_userRoleID',
-            required: false
-        },
         // Managed by waterline
         createdAt: {
             type: 'datetime',
@@ -83,6 +78,23 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             type: 'datetime',
             columnName: 'userUpdatedDate '
         },
+
+        // Other fields
+        // Password used before bdd for validation
+        password: {
+            type: 'string',
+            minLength: 4,
+            required: true
+        },
+//        events: {
+//
+//        },
+//        friends: {
+//
+//        },
+//        friendsGroups: {
+//
+//        },
 
         /**
          * Get user's full name
@@ -178,18 +190,6 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         }
 
     },
-
-    /**
-     * Call .toCustomer() to all user inside the given array and return it
-     */
-    toCustomer: function( users ){
-        var customerUsers = [];
-        for( var i in users ){
-            customerUsers.push( users[i].toCustomer() );
-        }
-        return customerUsers;
-    },
-
 
     beforeCreate: [
         // Encrypt user's password

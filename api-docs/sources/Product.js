@@ -16,7 +16,7 @@
  *
  * @apiParam {Number} id Product's ID
  * @apiExample Use example
- * GET http://localhost/products/15
+ * GET http://109.31.47.142:3000/api/products/15
  *
  * @apiSuccessStructure FindSuccess
  */
@@ -35,7 +35,7 @@
  * <br/><b style="color:red;">Throw error response:</b> 400, 401, 403.
  *
  * @apiExample Use example
- * GET http://localhost/products
+ * GET http://109.31.47.142:3000/api/products
  *
  * @apiSuccessStructure FindMultipleSuccess
  */
@@ -58,7 +58,7 @@
  * @apiParam (dataParam) {String} [logo]
  * @apiParam (dataParam) {Number} category_id
  * @apiExample Use example
- * POST http://localhost/products
+ * POST http://109.31.47.142:3000/api/products
  * form-data:
  * ----------
  * official: true
@@ -87,7 +87,7 @@
  * @apiParam (dataParam) {String} [logo]
  * @apiParam (dataParam) {String} [official] <b>Admin.</b>
  * @apiExample Use example
- * PUT http://localhost/products
+ * PUT http://109.31.47.142:3000/api/products
  * form-data:
  * ----------
  * official: true
@@ -113,7 +113,7 @@
  *
  * @apiParam (urlParams) {Number} id Product's ID.
  * @apiExample Use example
- * DELETE http://localhost/products/15
+ * DELETE http://109.31.47.142:3000/api/products/15
  *
  * @apiSuccessStructure DeleteSuccess
  */

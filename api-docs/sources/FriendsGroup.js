@@ -24,7 +24,7 @@
  * @apiParam {Number} id_user Friends group's ID.
  * @apiParam {Number} id_group Friends group's ID.
  * @apiExample Use example
- * GET http://localhost/users/15/friendsgroups/10
+ * GET http://109.31.47.142:3000/api/users/15/friendsgroups/10
  *
  * @apiSuccessStructure FindSuccess
  */
@@ -45,7 +45,7 @@
  *
  * @apiParam {Number} id_user Friends group's ID.
  * @apiExample Use example
- * GET http://localhost/users/15/friendsgroups
+ * GET http://109.31.47.142:3000/api/users/15/friendsgroups
  *
  * @apiSuccessStructure FindMultipleSuccess
  */
@@ -67,7 +67,7 @@
  * @apiParam {Number} id_user Friends group's ID.
  * @apiParam (dataParam) {String} name Name of the group.
  * @apiExample Use example
- * POST http://localhost/users/15/friendsgroups
+ * POST http://109.31.47.142:3000/api/users/15/friendsgroups
  * form-data:
  * ----------
  * name: Family
@@ -91,7 +91,7 @@
  * @apiParam {Number} id_group Friends group's ID.
  * @apiParam (dataParam) {String} name New name of the group
  * @apiExample Use example
- * PUT http://localhost/users/15/friendsgroups
+ * PUT http://109.31.47.142:3000/api/users/15/friendsgroups
  * form-data:
  * ----------
  * name: Family
@@ -114,7 +114,7 @@
  * @apiParam {Number} id_user Friends group's ID.
  * @apiParam {Number} id_group Friends group's ID.
  * @apiExample Use example
- * DELETE http://localhost/users/15/friendsgroups/10
+ * DELETE http://109.31.47.142:3000/api/users/15/friendsgroups/10
  *
  * @apiSuccessStructure DeleteSuccess
  */
@@ -136,7 +136,7 @@
  * @apiParam (urlParam) {Number} id_member The user ID you want to add.
  * @apiParam (dataParam) {String} name New name of the group
  * @apiExample Use example
- * POST http://localhost/users/15/friendsgroups/10/members
+ * POST http://109.31.47.142:3000/api/users/15/friendsgroups/10/members
  * form-data:
  * ----------
  * id_member: 25
@@ -160,7 +160,7 @@
  * @apiParam (urlParam) {Number} id_group Friends group's ID.
  * @apiParam (urlParam) {Number} id_member Member's ID.
  * @apiExample Use example
- * DELETE http://localhost/users/15/friendsgroups/10/members/25
+ * DELETE http://109.31.47.142:3000/api/users/15/friendsgroups/10/members/25
  *
  * @apiSuccessStructure DeleteSuccess
  */

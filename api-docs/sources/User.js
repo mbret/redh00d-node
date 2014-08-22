@@ -16,7 +16,7 @@
  *
  * @apiParam (urlParam) {Number} id User's ID
  * @apiExample Use example
- * GET http://localhost/users/15
+ * GET http://109.31.47.142:3000/api/users/15
  *
  * @apiSuccessStructure FindSuccess
  */
@@ -44,8 +44,8 @@
  * @apiParam (urlParam) {String} [firstname_like] Search by firstname with LIKE condition. Value example: "ax" will return "maxime" or "max".
  * @apiParam (urlParam) {String} [lastname_like] Search by lastname with LIKE condition. Value example: "re" will return "bret" or "breton".
  * @apiExample Use example
- * GET http://localhost/users
- * GET http://localhost/users?sort=asc&firstname=maxime
+ * GET http://109.31.47.142:3000/api/users
+ * GET http://109.31.47.142:3000/api/users?sort=asc&firstname=maxime
  *
  * @apiSuccessStructure FindMultipleSuccess
  */
@@ -72,7 +72,7 @@
  * @apiParam (dataParam) {String} [api_key] <b>Admin.</b> Force api key value.
  * @apiParam (dataParam) {String} [role_id] <b>Admin.</b> force role ID value.
  * @apiExample Use example
- * POST http://localhost/users
+ * POST http://109.31.47.142:3000/api/users
  * form-data:
  * ----------
  * email: xmax54@gmail.com
@@ -105,7 +105,7 @@
  * @apiParam (dataParam) {String} [phone]
  * @apiParam (dataParam) {String} [preference_foo] Change the preference foo
  * @apiExample Use example
- * PUT http://localhost/users/1
+ * PUT http://109.31.47.142:3000/api/users/1
  * form-data:
  * ----------
  * email: xmax54@gmail.com
@@ -130,7 +130,7 @@
  *
  * @apiParam (urlParams) {Number} id User's ID.
  * @apiExample Use example
- * DELETE http://localhost/users/15
+ * DELETE http://109.31.47.142:3000/api/users/15
  *
  * @apiSuccessStructure DeleteSuccess
  */
@@ -151,7 +151,7 @@
  * @apiParam (urlParams) {String} email User's email.
  * @apiParam (dataParam) {Boolean} reset_password true
  * @apiExample Use example
- * PATCH http://localhost/users/user@user.com
+ * PATCH http://109.31.47.142:3000/api/users/user@user.com
  * form-data:
  * ----------
  * reset_password=true

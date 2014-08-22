@@ -19,7 +19,7 @@ module.exports = {
      * @return {user|500|404}
      */
     find: function (req, res) {
-        User.findOne({'ID':req.param('id')}, function(err,user){
+        User.findOne({'ID':req.param('id')}).populate('role').exec(function(err,user){
             if(err) return res.serverError(err);
             if(!user) return res.notFound();
             return res.ok({
@@ -55,6 +55,7 @@ module.exports = {
         if( optionalSortData !== {} ) {
             findQuery.sort(optionalSortData);
         }
+        findQuery.populate('role');
 
         // Run job
         findQuery.exec(function callback(err, users){

@@ -7,9 +7,9 @@
     "withCompare": true,
     "withGenerator": true
   },
-  "url": "https://localhost",
+  "url": "https://109.31.47.142:3000/api",
   "generator": {
     "version": "0.6.0",
-    "time": "2014-08-20T22:08:21.014Z"
+    "time": "2014-08-22T08:33:21.179Z"
   }
 }

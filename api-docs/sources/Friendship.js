@@ -31,7 +31,7 @@
  * @apiParam {Number} user_id User's ID
  * @apiParam {Number} id Friendship's ID
  * @apiExample Use example
- * get http://localhost/users/15/friendships/25
+ * get http://109.31.47.142:3000/api/users/15/friendships/25
  *
  * @apiSuccessStructure FindSuccess
  */
@@ -52,8 +52,8 @@
  * @apiParam (urlParam) {Number} [id] Search by ID.
  * @apiStructure fetchFriendshipsParams
  * @apiExample Use example
- * GET http://localhost/users/10/friendships
- * GET http://localhost/users/10/friendships?state=accepted
+ * GET http://109.31.47.142:3000/api/users/10/friendships
+ * GET http://109.31.47.142:3000/api/users/10/friendships?state=accepted
  *
  * @apiSuccessStructure FindMultipleSuccess
  */
@@ -76,7 +76,7 @@
   * @apiParam (urlParams) {Number} id_friendship ID of the concerned friendship.
   * @apiParam (dataParam) {String} accept (true/false)
   * @apiExample Use example
-  * PUT http://localhost/users/10/friendships/26
+  * PUT http://109.31.47.142:3000/api/users/10/friendships/26
   * form-data:
   * ----------
   * accept: false (I don't give a shit about you dude!) or true (Come to share a bit of Mojo time bro <3)
@@ -101,7 +101,7 @@
   * @apiParam (dataParams) {Number} id_friend ID of the user to ask as friend.
   * @apiParam (dataParams) {boolean} force_accept <b>Admin.</b> Force the acceptance. (true/false).
   * @apiExample Use example
-  * POST http://localhost/users/10/friendships
+  * POST http://109.31.47.142:3000/api/users/10/friendships
   * form-data:
   * ----------
   * id_friend: 27
@@ -124,7 +124,7 @@
  * @apiParam (urlParams) {Number} id_user User's ID.
  * @apiParam (urlParams) {Number} id_friendship ID of the friendship to cancel.
  * @apiExample Use example
- * DELETE http://localhost/users/15/friends/27
+ * DELETE http://109.31.47.142:3000/api/users/15/friends/27
  *
  * @apiSuccessStructure DeleteSuccess
  */
@@ -147,7 +147,7 @@
  * <br/><b style="color:red;">Throw error response:</b> 400, 401, 403.
  *
  * @apiExample Use example
- * GET http://localhost/users/15/friends
+ * GET http://109.31.47.142:3000/api/users/15/friends
  *
  * @apiSuccessStructure FindMultipleSuccess
  */

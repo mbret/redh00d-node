@@ -6,7 +6,7 @@
  * @docs		:: http://sailsjs.org/#!documentation/models, https://github.com/balderdashy/waterline-docs/blob/master/models.md
  */
 
-module.exports = {
+module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
     tableName: 'event',
     autoCreatedAt: true,
@@ -15,6 +15,7 @@ module.exports = {
 
     attributes:{
 
+        // BDD fields
         ID: {
             type: 'integer',
             autoIncrement: true,
@@ -23,14 +24,11 @@ module.exports = {
             primaryKey: true,
             columnName: 'eventID'
         },
-//        user: {
-//            model: 'User'
-//        },
-        userID: {
-            type: 'integer',
-            index: true,
+        author: {
+            model: 'User',
+            columnName: 'FK_userApplicantID',
             required: true,
-            columnName: 'userID'
+            index: true
         },
         name: {
             type: 'string',
@@ -61,6 +59,22 @@ module.exports = {
         updatedAt: {
             type: 'datetime',
             columnName: 'eventUpdatedDate'
+        },
+
+        /**
+         * This method protect sensitive data before sending to customers
+         * Return everything for development
+         */
+        toCustomer: function() {
+            var event = this.toObject();
+            if( sails.config.general.protectJsonData === false ) {
+                return event;
+            }
+            else{
+
+                return event;
+            }
+
         }
     },
 
@@ -78,28 +92,9 @@ module.exports = {
     },
 
     beforeCreate: function(event, next){
-        console.log(event.date);
+//        console.log(event.date);
         //@todo convert date to database datetime
         next();
     },
 
-    afterCreate: function(newlyInsertedEvent, next){
-        next();
-    },
-
-    beforeUpdate: function(event, next){
-        next();
-    },
-
-    afterUpdate: function(newlyUpdatedEvent, next){
-        next();
-    },
-
-    validation_messages: {
-        place: {
-            string: 'undefined',
-            required: 'required'
-        }
-    }
-
-};
+});

@@ -35,8 +35,8 @@ describe('UserModel', function() {
                     || user.lastName != 'Tata'
                     || user.email != 'toto@tata.com'
                     || user.password != 'password'
-                    || user.createdAt.length < 1
-                    || user.updatedAt.length < 1
+                    || ! user.createdAt instanceof Date
+                    || ! user.updatedAt instanceof Date
                     || user.apiKey.length < 1
                     || user.role != 2 // default role
                     ){

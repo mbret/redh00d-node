@@ -56,7 +56,7 @@
  * Request Header:
  * ---------------
  * GET /api/events HTTP/1.1
- * Host: localhost:1337
+ * Host: 109.31.47.142:3000/api:1337
  * Accept-Language: fr-FR
  * ...
  *

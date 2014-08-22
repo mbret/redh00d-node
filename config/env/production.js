@@ -18,7 +18,8 @@ module.exports = {
    ***************************************************************************/
 
     models: {
-        connection: 'mysqlDb'
+        connection: 'mysqlDb',
+        migrate: 'safe' // never auto-migrate my database(s). I will do it myself (by hand)
     },
 
   /***************************************************************************
