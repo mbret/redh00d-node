@@ -54,16 +54,38 @@ module.exports = {
 
     },
 
-
+    /**
+     * Remove all logs
+     * @param req
+     * @param res
+     */
     deleteLogs: function(req, res){
         var fs = require('fs');
-        var input = __dirname + '../../../data/logs.log';
+        var input = sails.ROOT_PATH + '/data/logs.log';
+        var input2 = sails.ROOT_PATH + '/data/access.log';
         fs.truncate(input, 0, function () {
-            res.set('Content-Type', 'text/html');
-            return res.send(200, "removed");
+            fs.truncate(input2, 0, function () {
+                return res.send(200, "removed");
+            });
         });
 
     },
+
+    accessLogs: function(req, res){
+
+        var fs = require('fs');
+        var logs = "";
+        var input = fs.createReadStream(sails.ROOT_PATH + '/data/access.log');
+
+        FilesService.readLines(input, function (data) {
+            logs = logs + data + "<br/>";
+        }, function(){
+            logs += '<div id="end" ></div>';
+            res.set('Content-Type', 'text/html');
+            return res.send(200, logs);
+        })
+    },
+
 
     /**
      * Display logs
@@ -71,36 +93,11 @@ module.exports = {
      * @param res
      */
     logs: function(req, res){
-
         var fs = require('fs');
         var logs = "";
-        var input = fs.createReadStream(__dirname + '../../../data/logs.log');
+        var input = fs.createReadStream(sails.ROOT_PATH + '/data/logs.log');
 
-        function readLines(input, func, cb) {
-            var remaining = '';
-
-            input.on('data', function(data) {
-                remaining += data;
-                var index = remaining.indexOf('\n');
-                while (index > -1) {
-                    var line = remaining.substring(0, index);
-                    remaining = remaining.substring(index + 1);
-                    func(line);
-                    index = remaining.indexOf('\n');
-                }
-            });
-
-            input.on('end', function() {
-                if (remaining.length > 0) {
-                    func(remaining);
-                }
-                else{
-                    cb();
-                }
-            });
-        }
-
-        readLines(input, function (data) {
+        FilesService.readLines(input, function (data) {
             logs = logs + data + "<br/>";
         }, function(){
             logs += '<div id="end" ></div>';
@@ -109,5 +106,10 @@ module.exports = {
         })
     }
 
-}
+
+
+};
+
+
+
 

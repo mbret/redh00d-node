@@ -103,6 +103,21 @@ define({ api: [
   },
   {
     "type": "get",
+    "url": "/dev/access-logs",
+    "title": "Display access logs",
+    "name": "displayAccessLogs",
+    "group": "Dev",
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "get http://109.31.47.142:3000/api/dev/access-logs\n"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "sources/Development.js"
+  },
+  {
+    "type": "get",
     "url": "/dev/db",
     "title": "Display some database info",
     "name": "displayDB",
@@ -112,6 +127,21 @@ define({ api: [
       {
         "title": "Use example",
         "content": "get http://109.31.47.142:3000/api/dev/db\n"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "sources/Development.js"
+  },
+  {
+    "type": "get",
+    "url": "/dev/logs",
+    "title": "Display logs",
+    "name": "displayLogs",
+    "group": "Dev",
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "get http://109.31.47.142:3000/api/dev/logs\n"
       }
     ],
     "version": "0.0.0",
@@ -565,6 +595,11 @@ define({ api: [
     "title": "Delete an event member",
     "name": "DeleteEventMember",
     "group": "Events",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
     "version": "0.0.0",
     "filename": "sources/Event.js"
   },
@@ -574,12 +609,12 @@ define({ api: [
     "title": "Delete an event product",
     "name": "DeleteEventProduct",
     "group": "Events",
+    "description": "<p>Delete the link between an event and a product. The product itself is not removed.<br/><b>Throw error:</b></p>",
     "permission": {
       "name": "authenticated",
       "title": "Authentication requiered",
       "description": ""
     },
-    "description": "<p>Delete an event product.<br/><b>Throw error:</b></p>",
     "examples": [
       {
         "title": "Use example",
@@ -603,12 +638,12 @@ define({ api: [
     "title": "Delete an event product",
     "name": "DeleteEventProduct",
     "group": "Events",
-    "description": "<p>Delete the link between an event and a product. The product itself is not removed.<br/><b>Throw error:</b></p>",
     "permission": {
       "name": "authenticated",
       "title": "Authentication requiered",
       "description": ""
     },
+    "description": "<p>Delete an event product.<br/><b>Throw error:</b></p>",
     "examples": [
       {
         "title": "Use example",
@@ -791,6 +826,11 @@ define({ api: [
     "title": "Find an event member",
     "name": "FindEventMember",
     "group": "Events",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
     "version": "0.0.0",
     "filename": "sources/Event.js"
   },
@@ -800,6 +840,11 @@ define({ api: [
     "title": "Find event members",
     "name": "FindEventMembers",
     "group": "Events",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
     "version": "0.0.0",
     "filename": "sources/Event.js"
   },
@@ -1147,6 +1192,11 @@ define({ api: [
         "content": "POST http://109.31.47.142:3000/api/users/15/friendsgroups/10/members\nform-data:\n----------\nid_member: 25\n"
       }
     ],
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
     "success": {
       "fields": {
         "Success (201 Created) response parameters": [
@@ -1264,6 +1314,11 @@ define({ api: [
         "content": "DELETE http://109.31.47.142:3000/api/users/15/friendsgroups/10\n"
       }
     ],
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
     "success": {
       "examples": [
         {
@@ -1315,6 +1370,11 @@ define({ api: [
         "content": "DELETE http://109.31.47.142:3000/api/users/15/friendsgroups/10/members/25\n"
       }
     ],
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
     "success": {
       "examples": [
         {
@@ -1486,6 +1546,11 @@ define({ api: [
         "content": "PUT http://109.31.47.142:3000/api/users/15/friendsgroups\nform-data:\n----------\nname: Family\n"
       }
     ],
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
     "success": {
       "fields": {
         "Success (200 OK) response parameters": [
@@ -1543,7 +1608,12 @@ define({ api: [
         ]
       }
     },
-    "group": "Friendship.js",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
+    "group": "Friendship_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -1620,12 +1690,12 @@ define({ api: [
   },
   {
     "type": "delete",
-    "url": "/users/:id_user/friendships/:id_friendship",
+    "url": "/users/:id_user/friends/:id_friend",
     "title": "Delete a friendship",
     "name": "DeleteFriendship",
     "group": "Friendships",
     "permission": "accountOwner admin",
-    "description": "<p><br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
+    "description": "<p>Delete a friendship with the specified friend.<br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
     "parameter": {
       "fields": {
         "urlParams": [
@@ -1639,9 +1709,9 @@ define({ api: [
           {
             "group": "urlParams",
             "type": "Number",
-            "field": "id_friendship",
+            "field": "id_friend",
             "optional": false,
-            "description": "<p>ID of the friendship to cancel.</p>"
+            "description": "<p>ID of the friend to cancel.</p>"
           }
         ]
       }
@@ -2485,9 +2555,8 @@ define({ api: [
             "group": "dataParam",
             "type": "Boolean",
             "field": "silent",
-            "defaultValue": "false",
-            "optional": true,
-            "description": ""
+            "optional": false,
+            "description": "<p>=false</p>"
           }
         ]
       }
@@ -2629,7 +2698,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2659,7 +2728,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2685,7 +2754,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2711,22 +2780,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
-    "type": "",
-    "url": "",
-    "version": "0.0.0",
-    "filename": "sources/_general.js"
-  },
-  {
-    "error": {
-      "examples": [
-        {
-          "title": "Error (500 Serveur Error) response sample:",
-          "content": "   HTTP/1.1 500 Serveur Error\n   {\n     \"message\": \"Database unavailable\",\n     \"code\": \"dbUnavailable\"\n   }\n"
-        }
-      ]
-    },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2741,7 +2795,22 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "sources/_general.js"
+  },
+  {
+    "error": {
+      "examples": [
+        {
+          "title": "Error (500 Serveur Error) response sample:",
+          "content": "   HTTP/1.1 500 Serveur Error\n   {\n     \"message\": \"Database unavailable\",\n     \"code\": \"dbUnavailable\"\n   }\n"
+        }
+      ]
+    },
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2817,7 +2886,7 @@ define({ api: [
         ]
       }
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2832,7 +2901,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2847,7 +2916,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2862,7 +2931,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2877,7 +2946,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2892,7 +2961,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2907,7 +2976,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",

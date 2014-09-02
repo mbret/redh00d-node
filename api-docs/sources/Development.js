@@ -13,11 +13,30 @@
  * @api {get} /dev/delete-logs Reset logs
  * @apiName resetLogs
  * @apiGroup Dev
- * @apiDescription Reset logs
+ * @apiDescription Reset logs (access and general logs)
  *
  * @apiExample Use example
  * get http://109.31.47.142:3000/api/dev/delete-logs
  */
+
+/**
+ * @api {get} /dev/logs Display logs
+ * @apiName displayLogs
+ * @apiGroup Dev
+
+ * @apiExample Use example
+ * get http://109.31.47.142:3000/api/dev/logs
+ */
+
+/**
+ * @api {get} /dev/access-logs Display access logs
+ * @apiName displayAccessLogs
+ * @apiGroup Dev
+
+ * @apiExample Use example
+ * get http://109.31.47.142:3000/api/dev/access-logs
+ */
+
 /**
  * @api {get} /dev/db Display some database info
  * @apiName displayDB
@@ -27,6 +46,7 @@
  * @apiExample Use example
  * get http://109.31.47.142:3000/api/dev/db
  */
+
 /**
  * @api {post} /dev/db Initialize database
  * @apiName initDB

@@ -190,11 +190,11 @@ module.exports = {
         function doAction( user, action ) {
             switch (action) {
 
-            /**
-             * Create a new password reset token and send
-             * an email with instructions to user
-             * => req.param('id') should be an email here
-             */
+                /**
+                 * Create a new password reset token and send
+                 * an email with instructions to user
+                 * => req.param('id') should be an email here
+                 */
                 case 'generateResetPasswordToken':
 //                    return res.send(501);
                     user.generatePasswordResetToken(function( err ){
@@ -214,47 +214,6 @@ module.exports = {
                             });
                         }
                     })
-
-                    // /**
-                    //  * Update user password
-                    //  * Expects and consumes a password reset token
-                    //  */
-                    // resetPassword: function(req, res, next) {
-                    //     if (!req.params.id) return res.notFound();
-                    //
-                    //     if (!req.body.token) return res.badRequest({ token: "required" });
-                    //
-                    //     User.findOneById(req.params.id, function (err, user) {
-                    //         if (err) return next(err);
-                    //
-                    //         // Check if the token is valid
-                    //         if (!user.passwordResetToken || user.passwordResetToken.value !== req.body.token)
-                    //             return res.badRequest({ token: "invalid" });
-                    //
-                    //         // Check if token is expired
-                    //         var expires = new Date().setHours( new Date().getHours() - 2 );
-                    //
-                    //         if (user.passwordResetToken.issuedAt.getTime() <= expires)
-                    //             return res.badRequest({ token: "expired" });
-                    //
-                    //         // Check if password has been provided
-                    //         if (!req.body.password)
-                    //             return res.badRequest({ password: "required" });
-                    //
-                    //         // Check if password matches confirmation
-                    //         if (req.body.password !== req.body.passwordConfirmation)
-                    //             return res.badRequest({ passwordConfirmation: "invalid" });
-                    //
-                    //         // Update user with new password
-                    //         user.password = req.body.password;
-                    //         user.save(function (err) {
-                    //             if (err) return next(err);
-                    //
-                    //             // Send user data back to client
-                    //             res.send( user.toJSON() );
-                    //         });
-                    //     });
-                    // },
                     break;
 
                 default:
