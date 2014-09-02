@@ -33,6 +33,7 @@
         "bluebird": "2.2.x",
         "q": "1.0.x",
         "winston": "0.7.x",
+        "winston-mail": "~0.2.8",
         "validator": "3.17.x"
 
     },

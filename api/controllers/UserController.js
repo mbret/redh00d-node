@@ -166,7 +166,7 @@ module.exports = {
 
             // catch action
             var action = null;
-            if (req.param('reset_password') && req.param('reset_password') === 'true') {
+            if (req.param('reset_password') && (req.param('reset_password') === 'true' || req.param('reset_password') === true) ) {
                 action = 'generateResetPasswordToken';
             }
 
@@ -201,7 +201,7 @@ module.exports = {
                         if(err) return res.serverError(err);
 
                         // Case of silent do mail job in background and direct respond to customer
-                        if(req.param('silent') && req.param('silent') === 'true' ){
+                        if(req.param('silent') && (req.param('silent') === 'true' || req.param('silent') == true ) ){
                             user.sendPasswordResetEmail(function( err ) {
                                 // maybe if one error happens here do some job like another mail ...
                             });

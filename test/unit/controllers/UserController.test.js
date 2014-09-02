@@ -2,7 +2,7 @@ var request = require('supertest');
 
 describe('UserController', function() {
 
-    var authorization = "Basic dXNlckB1c2VyLmNvbTpwYXNzd29yZA=="; // user@user.com / password
+    var authorization = "Basic eG1heDU0QGdtYWlsLmNvbTpwYXNzd29yZA=="; // xmax54@gmail.com / password
     var authorizationAdmin = 'Basic YWRtaW5AYWRtaW4uY29tOnBhc3N3b3Jk'; // admin@admin.com / password
 //    var request = request(sails.hooks.http.app);
 
@@ -100,7 +100,7 @@ describe('UserController', function() {
                 }).end(done);
         });
 
-        // User with email user@user.com ID:1 should not be able to update another user
+        // User with email xmax54@gmail.com ID:1 should not be able to update another user
         it('should not be able to delete another user as user', function(done){
             request(sails.hooks.http.app).put('/api/users/3').set('Authorization', authorization)
                 .expect(403).end(done);
@@ -115,19 +115,7 @@ describe('UserController', function() {
 
     describe("PATCH /users", function(){
 
-        it('should generate unique token (password) for user with ID 3', function(done){
-            request(sails.hooks.http.app).patch('/api/users/user@user.com').set('Authorization', authorizationAdmin).send({reset_password: true})
-                .expect(204).end(done);
-        });
-
-//        it('should update the firstname of account for its specific user', function(done){
-//            request(sails.hooks.http.app).put('/api/users/2').send({firstname: 'barbapapa'}).set('Authorization', authorization)
-//                .expect(200).expect(function(res){
-//                    if( !res.body.user || res.body.user.firstName != 'barbapapa' ) throw new Error("User not updated correctly");
-//                }).end(done);
-//        });
-//
-        // User with email user@user.com ID:1 should not be able to patch another user
+        // User with email xmax54@gmail.com ID:1 should not be able to patch another user
         it('should not be able to patch another user as user', function(done){
             request(sails.hooks.http.app).patch('/api/users/user2@user.com').set('Authorization', authorization)
                 .expect(403).end(done);
@@ -138,6 +126,22 @@ describe('UserController', function() {
             request(sails.hooks.http.app).patch('/api/users/user50@user.com').set('Authorization', authorizationAdmin)
                 .expect(404).end(done);
         });
+
+        /*
+         * Reset password
+         */
+        it('should generate unique token (password) for user with ID 3', function(done){
+            request(sails.hooks.http.app).patch('/api/users/xmax54@gmail.com').set('Authorization', authorizationAdmin).send({reset_password: true, silent: true})
+                .expect(204)
+                .expect(function(res){
+                    return User.findOne({email: 'xmax54@gmail.com'}).exec(function(err, user){
+                        if(!user.passwordResetToken || user.passwordResetToken.value.length <= 0){
+                            throw new Error("Token not generated");
+                        }
+                    });
+                })
+                .end(done);
+        });
     })
 
     describe("DELETE /users", function(){
@@ -147,7 +151,7 @@ describe('UserController', function() {
                     .expect(204).end(done);
         });
 
-        // User with email user@user.com ID:1 should not be able to delete another user
+        // User with email xmax54@gmail.com ID:1 should not be able to delete another user
         it('should not be able to delete another user as user', function(done){
             request(sails.hooks.http.app).del('/api/users/3').set('Authorization', authorization)
                 .expect(403).end(done);

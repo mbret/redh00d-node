@@ -37,9 +37,14 @@
  * everything needed like user username/credential.
  *
  * @apiSuccessTitle (authRequest) Basic Auth parameters
- * @apiSuccess (authRequest) username
+ * @apiSuccess (authRequest) email
  * @apiSuccess (authRequest) password
  *
+ * @apiSuccessExample Use example:
+ * get http://109.31.47.142:3000/api
+ * Request Header:
+ * ---------------
+ * Authorization: Basic YWRtaW5AYWRtaW4uY29tOnBhc3N3b3Jk (for user@user.com / password)
  */
 
 /**

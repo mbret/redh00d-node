@@ -35,15 +35,21 @@ module.exports.routes = {
         return res.view('doc');
     },
 
-    // Debug & Dev route
+    /***************************
+     *
+     * Development relatives routes
+     *
+     ***************************/
     'get  /api/dev/db': 'DevController.dumpDatabase',
     'get  /api/dev/logs':'DevController.logs',
     'get  /api/dev/access-logs':'DevController.accessLogs',
     'get  /api/dev/delete-logs':'DevController.deleteLogs',
 
-    /*
+    /***************************
+     *
      * EVENT relatives routes
-     */
+     *
+     ***************************/
     'get     /api/events/:id':                   'EventController.find',
     'get     /api/events/:id/members/:idmember': 'EventController.findMember',
     'post    /api/events':                       'EventController.create',
@@ -54,15 +60,17 @@ module.exports.routes = {
     'get     /api/events*':                      'EventController.findMultiple',
 
     // Invitations
-    'post    /api/events/:idevent/invitations':     'InvitationController.create',
+    'post    /api/events/:idevent/invitations':     'EventController.createInvitation',
     'get     /api/events/:idevent/invitations/:id': 'InvitationController.find',
     'put     /api/events/:idevents/invitations':    'InvitationController.update', // author can cancel / receiver can cancel, accept
     'delete  /api/events/:idevent/invitations/:id': 'InvitationController.delete', // put state on cancel
     'get     /api/events/:idevent/invitation*':     'InvitationController.findMultiple',
 
-    /*
+    /***************************
+     *
      * USER relatives routes
-     */
+     *
+     ***************************/
     // only users
     'get    /api/users/:id':                    'UserController.find',
     'post   /api/users':                        'UserController.create',
@@ -90,9 +98,11 @@ module.exports.routes = {
     'get    /api/users/:iduser/friendsgroup*':                     'UserFriendsGroupController.findMultiple',
 
 
-    /*
+    /***************************
+     *
      * PRODUCTS relatives routes
-     */
+     *
+     ***************************/
     'get    /api/products/:id':                  'ProductController.find',
     'post   /api/products':                      'ProductController.create',
     'put    /api/products':                      'ProductController.update',

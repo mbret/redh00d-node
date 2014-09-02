@@ -29,6 +29,10 @@ module.exports.policies = {
 
     EventController: {
         '*':        ['isAllowed']
+    },
+
+    ProductController: {
+        '*':        ['isAllowed']
     }
 
 	// Here's an example of mapping some policies to run before

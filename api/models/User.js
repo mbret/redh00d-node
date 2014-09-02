@@ -13,7 +13,10 @@ var uuid = require("node-uuid");
 // The base model is cloned and then merged with this model. This model is a child of the clone so not a child of ./BaseModel itself
 module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
+    tableName: 'user',
     autoPK: true,
+    autoCreatedAt: true,
+    autoUpdatedAt: true,
 
     attributes: {
 
@@ -145,10 +148,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
          */
         generatePasswordResetToken: function(cb) {
             var token = TokenService.generate(); // get json object
-            User.update(
-                {'ID': this.ID},
-                {passwordResetToken: token},
-                function (err) {
+            User.update( {'ID': this.ID}, {passwordResetToken: token}, function (err, user) {
                     if(err) return cb(err);
                     this.passwordResetToken = token;
                     return cb();
@@ -164,7 +164,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
          */
         sendPasswordResetEmail: function(cb) {
             var mailOptions = {
-                from: sails.__(sails.config.general.mail.from.contact.name) + ' ' + '<' + sails.config.general.mail.from.contact.mail + '>', // sender address
+                from: sails.__(sails.config.general.mail.from.contact.name) + ' ' + '<' + sails.config.general.mail.from.contact.email + '>', // sender address
                 to: this.email, // list of receivers
                 subject: sails.__('Reset password'), // Subject line
 //                text: sails.__('Please click on this link to update your password'), // plaintext body

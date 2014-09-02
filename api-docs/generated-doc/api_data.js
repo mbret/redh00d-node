@@ -11,7 +11,7 @@ define({ api: [
         "Basic Auth parameters": [
           {
             "group": "authRequest",
-            "field": "username",
+            "field": "email",
             "optional": false,
             "description": ""
           },
@@ -22,7 +22,13 @@ define({ api: [
             "description": ""
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Use example:",
+          "content": "get http://109.31.47.142:3000/api\nRequest Header:\n---------------\nAuthorization: Basic YWRtaW5AYWRtaW4uY29tOnBhc3N3b3Jk (for user@user.com / password)\n"
+        }
+      ]
     },
     "version": "0.0.0",
     "filename": "sources/API.js"
@@ -304,6 +310,8 @@ define({ api: [
     "title": "Display logs",
     "name": "displayLogs",
     "group": "Dev",
+    "groupDescription": "<p>Documentation relative to dev only purpose. This part is always on working so some method might not be correct or available.<br/>Moreover these methods do not follow REST principle, it&#39;s just for development purpose.</p>",
+    "description": "<p>Display logs</p>",
     "examples": [
       {
         "title": "Use example",
@@ -319,8 +327,6 @@ define({ api: [
     "title": "Display logs",
     "name": "displayLogs",
     "group": "Dev",
-    "groupDescription": "<p>Documentation relative to dev only purpose. This part is always on working so some method might not be correct or available.<br/>Moreover these methods do not follow REST principle, it&#39;s just for development purpose.</p>",
-    "description": "<p>Display logs</p>",
     "examples": [
       {
         "title": "Use example",
@@ -363,6 +369,55 @@ define({ api: [
     "filename": "sources/Development.js"
   },
   {
+    "type": "delete",
+    "url": "/events/:id",
+    "title": "Cancel an Event",
+    "name": "CancelEvent",
+    "group": "Events",
+    "permission": "eventOwner admin",
+    "description": "<p>Cancel an event<br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 401, 403, 404.</p>",
+    "parameter": {
+      "fields": {
+        "Parameters (Form Data)": [
+          {
+            "group": "dataParam",
+            "type": "String",
+            "field": "state",
+            "optional": false,
+            "description": "<p>cancelled</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "put http://109.31.47.142:3000/api/events/10\nform-data: state=cancelled\n"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success (200 OK) response parameters": [
+          {
+            "group": "200",
+            "type": "Object",
+            "field": "object",
+            "optional": false,
+            "description": "<p>The updated object.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success (200 OK) response sample:",
+          "content": "HTTP/1.1 200 OK\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n}\n"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sources/Event.js"
+  },
+  {
     "type": "post",
     "url": "/users/:id/events",
     "title": "Create an event",
@@ -373,9 +428,18 @@ define({ api: [
       "title": "Authentication requiered",
       "description": ""
     },
-    "description": "<p>Create an event which is retrieve if creation was a success.<br/><b>Throw error:</b> 400.</p>",
+    "description": "<p>Create an event which is retrieve if creation was a success.<br/><b style=\"color:green;\">Throw valid response:</b> 201.<br/><b style=\"color:red;\">Throw error response:</b> 400, 403, 409.</p>",
     "parameter": {
       "fields": {
+        "Parameters (URL)": [
+          {
+            "group": "urlParam",
+            "type": "number",
+            "field": "id",
+            "optional": false,
+            "description": "<p>User&#39;s ID</p>"
+          }
+        ],
         "Parameters (Form Data)": [
           {
             "group": "dataParam",
@@ -411,7 +475,7 @@ define({ api: [
     "examples": [
       {
         "title": "Use example",
-        "content": "post http://109.31.47.142:3000/api/events\nform-data: name=MyEvent&date=2014-12-24\n"
+        "content": "post http://109.31.47.142:3000/api/users/10/events\nform-data: name=MyEvent&date=2014-12-24\n"
       }
     ],
     "error": {
@@ -450,8 +514,8 @@ define({ api: [
     "title": "Create an event invitation",
     "name": "CreateEventInvitation",
     "group": "Events",
-    "permission": "authenticated author",
-    "description": "<p>Create one event invitation.<br/><b>Throw error:</b> 400.</p>",
+    "permission": "eventOwner admin",
+    "description": "<p>Create one event invitation.<br/><b style=\"color:green;\">Throw valid response:</b> 201.<br/><b style=\"color:red;\">Throw error response:</b> 400, 403, 409.</p>",
     "parameter": {
       "fields": {
         "Parameters (URL)": [
@@ -504,12 +568,16 @@ define({ api: [
   },
   {
     "type": "delete",
-    "url": "/users/:id/events/:id",
+    "url": "/events/:id",
     "title": "Delete an Event",
     "name": "DeleteEvent",
     "group": "Events",
-    "permission": "authenticated eventOwner",
-    "description": "<p>Delete an event<br/><b>Throw error:</b> 404.</p>",
+    "permission": {
+      "name": "admin",
+      "title": "Admin access rights needed.",
+      "description": ""
+    },
+    "description": "<p>Delete an event<br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 401, 403, 404.</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -609,12 +677,12 @@ define({ api: [
     "title": "Delete an event product",
     "name": "DeleteEventProduct",
     "group": "Events",
-    "description": "<p>Delete the link between an event and a product. The product itself is not removed.<br/><b>Throw error:</b></p>",
     "permission": {
       "name": "authenticated",
       "title": "Authentication requiered",
       "description": ""
     },
+    "description": "<p>Delete an event product.<br/><b>Throw error:</b></p>",
     "examples": [
       {
         "title": "Use example",
@@ -638,12 +706,12 @@ define({ api: [
     "title": "Delete an event product",
     "name": "DeleteEventProduct",
     "group": "Events",
+    "description": "<p>Delete the link between an event and a product. The product itself is not removed.<br/><b>Throw error:</b></p>",
     "permission": {
       "name": "authenticated",
       "title": "Authentication requiered",
       "description": ""
     },
-    "description": "<p>Delete an event product.<br/><b>Throw error:</b></p>",
     "examples": [
       {
         "title": "Use example",

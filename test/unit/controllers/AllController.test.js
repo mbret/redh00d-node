@@ -2,7 +2,7 @@ var request = require('supertest');
 
 describe('AllController', function() {
 
-    var authorization = "Basic dXNlckB1c2VyLmNvbTpwYXNzd29yZA=="; // user@user.com / password
+    var authorization = "Basic dXNlckB1c2VyLmNvbTpwYXNzd29yZA=="; // xmax54@gmail.com / password
     var authorizationAdmin = 'Basic YWRtaW5AYWRtaW4uY29tOnBhc3N3b3Jk'; // admin@admin.com / password
 //    var request = request(sails.hooks.http.app);
 
