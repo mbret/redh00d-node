@@ -24,6 +24,7 @@
  * <p>
  *    <b>Password salt:</b> MojoTime
  *    <br/>Put this salt at the end of the clear password and then hash with md5.
+ *
  * </p>
  */
 
