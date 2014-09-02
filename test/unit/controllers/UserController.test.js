@@ -113,6 +113,33 @@ describe('UserController', function() {
         });
     })
 
+    describe("PATCH /users", function(){
+
+        it('should generate unique token (password) for user with ID 3', function(done){
+            request(sails.hooks.http.app).patch('/api/users/user@user.com').set('Authorization', authorizationAdmin).send({reset_password: true})
+                .expect(204).end(done);
+        });
+
+//        it('should update the firstname of account for its specific user', function(done){
+//            request(sails.hooks.http.app).put('/api/users/2').send({firstname: 'barbapapa'}).set('Authorization', authorization)
+//                .expect(200).expect(function(res){
+//                    if( !res.body.user || res.body.user.firstName != 'barbapapa' ) throw new Error("User not updated correctly");
+//                }).end(done);
+//        });
+//
+        // User with email user@user.com ID:1 should not be able to patch another user
+        it('should not be able to patch another user as user', function(done){
+            request(sails.hooks.http.app).patch('/api/users/user2@user.com').set('Authorization', authorization)
+                .expect(403).end(done);
+        });
+
+        // User does not exist
+        it('should get 404', function(done){
+            request(sails.hooks.http.app).patch('/api/users/user50@user.com').set('Authorization', authorizationAdmin)
+                .expect(404).end(done);
+        });
+    })
+
     describe("DELETE /users", function(){
 
         it('should delete the user with ID 3 as admin', function(done){

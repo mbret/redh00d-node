@@ -158,82 +158,109 @@ module.exports = {
      */
     patch: function (req, res) {
 
-        // catch action
-        var action = null;
-        if ( req.param('reset_password') && req.param('reset_password') === 'true' ){
-            action = 'generateResetPasswordToken';
-        }
-
-        // check permission
-        if( action != null && ! PermissionsService.isAllowed( req.user.role.name, req.options.controller, action) ){
+        // Case of user try to update an other account
+        if( (req.param('id') != req.user.email) && ! PermissionsService.isAllowed( req.user.role.name, req.options.controller, 'patchOthers') ){
             return res.forbidden();
         }
+        else{
+
+            // catch action
+            var action = null;
+            if (req.param('reset_password') && req.param('reset_password') === 'true') {
+                action = 'generateResetPasswordToken';
+            }
+
+            // check permission for specific action
+            if (action != null && !PermissionsService.isAllowed(req.user.role.name, req.options.controller, action)) {
+                return res.forbidden();
+            }
+
+            // Check user
+            User.findOne({email: req.param('id')}, function (err, user) {
+                if (err) return res.serverError(err);
+                if (!user) return res.notFound();
+
+                // Process action
+                doAction( user, action );
+            });
+        }
+
 
         // Process action
-        switch( action ){
+        function doAction( user, action ) {
+            switch (action) {
 
             /**
              * Create a new password reset token and send
              * an email with instructions to user
              * => req.param('id') should be an email here
              */
-            case 'generateResetPasswordToken':
-                return res.send(501);
-                User.findOne({email: req.param('id')}, function (err, user) {
-                    if(err) return res.serverError(err);
-                    if(!user) return res.notFound();
+                case 'generateResetPasswordToken':
+//                    return res.send(501);
+                    user.generatePasswordResetToken(function( err ){
+                        if(err) return res.serverError(err);
 
-                    return res.ok();
-//                Jobs.create('sendPasswordResetEmail', { user: user.toObject() }).save(function (err) {
-//                    if(err) return res.serverError(err);
-//                    res.noContent();
-//                });
-                });
-                // /**
-                //  * Update user password
-                //  * Expects and consumes a password reset token
-                //  */
-                // resetPassword: function(req, res, next) {
-                //     if (!req.params.id) return res.notFound();
-                //
-                //     if (!req.body.token) return res.badRequest({ token: "required" });
-                //
-                //     User.findOneById(req.params.id, function (err, user) {
-                //         if (err) return next(err);
-                //
-                //         // Check if the token is valid
-                //         if (!user.passwordResetToken || user.passwordResetToken.value !== req.body.token)
-                //             return res.badRequest({ token: "invalid" });
-                //
-                //         // Check if token is expired
-                //         var expires = new Date().setHours( new Date().getHours() - 2 );
-                //
-                //         if (user.passwordResetToken.issuedAt.getTime() <= expires)
-                //             return res.badRequest({ token: "expired" });
-                //
-                //         // Check if password has been provided
-                //         if (!req.body.password)
-                //             return res.badRequest({ password: "required" });
-                //
-                //         // Check if password matches confirmation
-                //         if (req.body.password !== req.body.passwordConfirmation)
-                //             return res.badRequest({ passwordConfirmation: "invalid" });
-                //
-                //         // Update user with new password
-                //         user.password = req.body.password;
-                //         user.save(function (err) {
-                //             if (err) return next(err);
-                //
-                //             // Send user data back to client
-                //             res.send( user.toJSON() );
-                //         });
-                //     });
-                // },
-                break;
+                        // Case of silent do mail job in background and direct respond to customer
+                        if(req.param('silent') && req.param('silent') === 'true' ){
+                            user.sendPasswordResetEmail(function( err ) {
+                                // maybe if one error happens here do some job like another mail ...
+                            });
+                            res.noContent();
+                        }
+                        else{
+                            user.sendPasswordResetEmail(function( err ) {
+                                if (err) return res.serverError(err);
+                                res.noContent();
+                            });
+                        }
+                    })
 
-            default:
-                return res.send(405); // Method Not Allowed The response MUST include an Allow header containing a list of valid methods for the requested resource. (but we dont care for now)
-                break;
+                    // /**
+                    //  * Update user password
+                    //  * Expects and consumes a password reset token
+                    //  */
+                    // resetPassword: function(req, res, next) {
+                    //     if (!req.params.id) return res.notFound();
+                    //
+                    //     if (!req.body.token) return res.badRequest({ token: "required" });
+                    //
+                    //     User.findOneById(req.params.id, function (err, user) {
+                    //         if (err) return next(err);
+                    //
+                    //         // Check if the token is valid
+                    //         if (!user.passwordResetToken || user.passwordResetToken.value !== req.body.token)
+                    //             return res.badRequest({ token: "invalid" });
+                    //
+                    //         // Check if token is expired
+                    //         var expires = new Date().setHours( new Date().getHours() - 2 );
+                    //
+                    //         if (user.passwordResetToken.issuedAt.getTime() <= expires)
+                    //             return res.badRequest({ token: "expired" });
+                    //
+                    //         // Check if password has been provided
+                    //         if (!req.body.password)
+                    //             return res.badRequest({ password: "required" });
+                    //
+                    //         // Check if password matches confirmation
+                    //         if (req.body.password !== req.body.passwordConfirmation)
+                    //             return res.badRequest({ passwordConfirmation: "invalid" });
+                    //
+                    //         // Update user with new password
+                    //         user.password = req.body.password;
+                    //         user.save(function (err) {
+                    //             if (err) return next(err);
+                    //
+                    //             // Send user data back to client
+                    //             res.send( user.toJSON() );
+                    //         });
+                    //     });
+                    // },
+                    break;
+
+                default:
+                    return res.send(405); // Method Not Allowed The response MUST include an Allow header containing a list of valid methods for the requested resource. (but we dont care for now)
+                    break;
+            }
         }
 
 

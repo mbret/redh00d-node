@@ -41,7 +41,7 @@ module.exports.permissions = {
         },
         admin: {
             allow: {
-                user: ['create', 'deleteOthers', 'updateOthers']
+                user: ['create', 'deleteOthers', 'updateOthers', 'patchOthers']
             }
         }
     }

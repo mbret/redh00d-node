@@ -2461,7 +2461,7 @@ define({ api: [
     "name": "GenerateUserResetTokenPassword",
     "group": "Users",
     "permission": "authenticated accountOwner admin",
-    "description": "<p>Generate a password reset token for the designed user. This token can be used later to update the user password. Then send an email to the specified user.<br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
+    "description": "<p>Generate a password reset token for the designed user. This token can be used later to update the user password. Then send an email to the specified user.If silent is set to false the method will respond 204 only after mail has been send. So this method may take some time to be processed.<br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
     "parameter": {
       "fields": {
         "urlParams": [
@@ -2479,7 +2479,15 @@ define({ api: [
             "type": "Boolean",
             "field": "reset_password",
             "optional": false,
-            "description": "<p>true</p>"
+            "description": ""
+          },
+          {
+            "group": "dataParam",
+            "type": "Boolean",
+            "field": "silent",
+            "defaultValue": "false",
+            "optional": true,
+            "description": ""
           }
         ]
       }
@@ -2487,7 +2495,7 @@ define({ api: [
     "examples": [
       {
         "title": "Use example",
-        "content": "PATCH http://109.31.47.142:3000/api/users/user@user.com\nform-data:\n----------\nreset_password=true\n"
+        "content": "PATCH http://109.31.47.142:3000/api/users/user@user.com\nform-data:\n----------\nreset_password=true\nsilent=false\n"
       }
     ],
     "success": {
