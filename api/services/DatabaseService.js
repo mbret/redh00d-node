@@ -3,6 +3,7 @@ var Q = require("q");
 module.exports = {
 
     /**
+     * Add to the database the default and minimal informations.
      * @return promise
      */
     seedDefaultData: function(){

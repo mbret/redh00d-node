@@ -39,6 +39,12 @@ module.exports = {
     general: {
         // Active protection of JSON returned data of each request
         protectJsonData: true
+    },
+
+    ssl: {
+//       ca: require('fs').readFileSync(__dirname + './ssl/server.crt'),
+        key: require('fs').readFileSync(__dirname + '/../ssl/server.key'),
+        cert: require('fs').readFileSync(__dirname + '/../ssl/server.crt')
     }
 
 };

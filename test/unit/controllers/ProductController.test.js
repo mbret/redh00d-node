@@ -76,7 +76,7 @@ describe('ProductController', function() {
                 }
             ], function(err, results){
                 if(err) return done(err);
-                done();
+                return done();
             });
         });
 
