@@ -11,7 +11,7 @@ define({ api: [
         "Basic Auth parameters": [
           {
             "group": "authRequest",
-            "field": "username",
+            "field": "email",
             "optional": false,
             "description": ""
           },
@@ -22,156 +22,23 @@ define({ api: [
             "description": ""
           }
         ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "sources/API.js"
-  },
-  {
-    "type": "",
-    "url": "{}",
-    "title": "Header parameters",
-    "name": "HeaderParams",
-    "group": "API",
-    "description": "<p>The header of all your request to the API has to / may include some useful parameters.</p>",
-    "success": {
-      "fields": {
-        "Header request parameters": [
-          {
-            "group": "headerRequest",
-            "type": "String",
-            "field": "Accept-Language",
-            "defaultValue": "Locale du navigateur",
-            "optional": true,
-            "description": "<p>Langue de retour demandée. Exemple : fr-FR.</p>"
-          },
-          {
-            "group": "headerRequest",
-            "type": "String",
-            "field": "auth_api_key",
-            "optional": true,
-            "description": "<p>Use your api key with email to be authenticate. If no api key are provided then you act as a guest.</p>"
-          },
-          {
-            "group": "headerRequest",
-            "type": "String",
-            "field": "auth_email",
-            "optional": true,
-            "description": "<p>Use you email with api key to be authenticate. If no email are provided then you act as a guest.</p>"
-          }
-        ]
       },
       "examples": [
         {
           "title": "Use example:",
-          "content": "Request Header:\n---------------\nGET /api/events HTTP/1.1\nHost: 109.31.47.142:3000/api:1337\nAccept-Language: fr-FR\n...\n"
-        }
-      ]
-    },
-    "error": {
-      "fields": {
-        "Header response parameters": [
-          {
-            "group": "headerResponse",
-            "type": "String",
-            "field": "test",
-            "optional": false,
-            "description": "<p>qsd</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Response sample:",
-          "content": "Response Header:\n---------------\n...\n"
+          "content": "get http://109.31.47.142:3000/api\nRequest Header:\n---------------\nAuthorization: Basic YWRtaW5AYWRtaW4uY29tOnBhc3N3b3Jk (for user@user.com / password)\n"
         }
       ]
     },
     "version": "0.0.0",
     "filename": "sources/API.js"
-  },
-  {
-    "type": "",
-    "url": "{}",
-    "title": "Summary",
-    "name": "Summary",
-    "group": "API",
-    "groupDescription": "<p>Welcome to the redh00d API also called Web Service. This documentation will list all the available methods to interract with database.<br/>Please read all section to understand. If you get an error response you can refer to the error section.<br/><b>The web service is now under development, means that some method may have changed or may not be correctly functionnal.</b></p><p>",
-    "description": "<p>HTTP Status Code Summary:</b>   <br/><b>200 OK</b> - Everything worked as expected.   <br/><b>400 Bad Request</b> - Often missing a required parameter. The client SHOULD NOT repeat the request without modifications.   <br/><b>401 Unauthorized</b> - No valid API key provided.   <br/><b>402 Request Failed</b> - Parameters were valid but request failed.   <br/><b>403 Forbidden</b> - The server understood the request, but is refusing to fulfill it. Authorization will not help and the request SHOULD NOT be repeated.   <br/><b>405 Method not allowed</b> - Used to indicate that the requested URL exists, but the requested HTTP method is not applicable. For example, POST /users/12345 where the API doesn&#39;t support creation of resources this way (with a provided ID).   <br/><b>404 Not Found</b> - The requested item doesn&#39;t exist.   <br/><b>409 Conflict</b> - Whenever a resource conflict would be caused by fulfilling the request. Duplicate entries, such as trying to create two customers with the same information, and deleting root objects when cascade-delete is not supported are a couple of examples.   <br/><b>500, 502, 503, 504 Server errors</b> - any general error on the system.</p></p><p><hr/></p><p>   <b>Password salt:</b> MojoTime   <br/>Put this salt at the end of the clear password and then hash with md5.</p>",
-    "version": "0.0.0",
-    "filename": "sources/API.js"
-  },
-  {
-    "type": "get",
-    "url": "/dev/db",
-    "title": "Display some database info",
-    "name": "displayDB",
-    "group": "Dev",
-    "description": "<p>Display some database info</p>",
-    "examples": [
-      {
-        "title": "Use example",
-        "content": "get http://109.31.47.142:3000/api/dev/db\n"
-      }
-    ],
-    "version": "0.0.0",
-    "filename": "sources/Development.js"
-  },
-  {
-    "type": "get",
-    "url": "/dev/logs",
-    "title": "Display logs",
-    "name": "displayLogs",
-    "group": "Dev",
-    "groupDescription": "<p>Documentation relative to dev only purpose. This part is always on working so some method might not be correct or available.<br/>Moreover these methods do not follow REST principle, it&#39;s just for development purpose.</p>",
-    "description": "<p>Display logs</p>",
-    "examples": [
-      {
-        "title": "Use example",
-        "content": "get http://109.31.47.142:3000/api/dev/logs\n"
-      }
-    ],
-    "version": "0.0.0",
-    "filename": "sources/Development.js"
-  },
-  {
-    "type": "post",
-    "url": "/dev/db",
-    "title": "Initialize database",
-    "name": "initDB",
-    "group": "Dev",
-    "description": "<p>Initialize some basic necessary entries in database</p>",
-    "examples": [
-      {
-        "title": "Use example",
-        "content": "post http://109.31.47.142:3000/api/dev/db\n"
-      }
-    ],
-    "version": "0.0.0",
-    "filename": "sources/Development.js"
-  },
-  {
-    "type": "get",
-    "url": "/dev/delete-logs",
-    "title": "Reset logs",
-    "name": "resetLogs",
-    "group": "Dev",
-    "description": "<p>Reset logs</p>",
-    "examples": [
-      {
-        "title": "Use example",
-        "content": "get http://109.31.47.142:3000/api/dev/delete-logs\n"
-      }
-    ],
-    "version": "0.0.0",
-    "filename": "sources/Development.js"
   },
   {
     "type": "",
     "url": "{}",
     "title": "Errors codes",
     "name": "ErroCode",
-    "group": "Errors",
+    "group": "API",
     "description": "<p>redh00d use many way to tell whether an error occurs and what was the error. The most reliable and trustable way is the error code. Errors codes are fixed and you can only manage with them to treat errors on customer side. Just read the code and display the messages you want.</p>",
     "header": {
       "fields": {
@@ -229,14 +96,14 @@ define({ api: [
       }
     },
     "version": "0.0.0",
-    "filename": "sources/Error.js"
+    "filename": "sources/API.js"
   },
   {
     "type": "",
     "url": "{}",
     "title": "Errors responses",
     "name": "ErrorResponse",
-    "group": "Errors",
+    "group": "API",
     "description": "<p>redh00d uses conventional HTTP response codes to indicate success or failure of an API request.<br/>In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error<br/>that resulted from the provided information (e.g. a required parameter was missing, a charge failed, etc.), and<br/>codes in the 5xx range indicate an error with redh00d servers.</p>",
     "error": {
       "fields": {
@@ -330,7 +197,225 @@ define({ api: [
       ]
     },
     "version": "0.0.0",
-    "filename": "sources/Error.js"
+    "filename": "sources/API.js"
+  },
+  {
+    "type": "",
+    "url": "{}",
+    "title": "Header parameters",
+    "name": "HeaderParams",
+    "group": "API",
+    "description": "<p>The header of all your request to the API has to / may include some useful parameters.</p>",
+    "success": {
+      "fields": {
+        "Header request parameters": [
+          {
+            "group": "headerRequest",
+            "type": "String",
+            "field": "Accept-Language",
+            "defaultValue": "Locale du navigateur",
+            "optional": true,
+            "description": "<p>Langue de retour demandée. Exemple : fr-FR.</p>"
+          },
+          {
+            "group": "headerRequest",
+            "type": "String",
+            "field": "auth_api_key",
+            "optional": true,
+            "description": "<p>Use your api key with email to be authenticate. If no api key are provided then you act as a guest.</p>"
+          },
+          {
+            "group": "headerRequest",
+            "type": "String",
+            "field": "auth_email",
+            "optional": true,
+            "description": "<p>Use you email with api key to be authenticate. If no email are provided then you act as a guest.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Use example:",
+          "content": "Request Header:\n---------------\nGET /api/events HTTP/1.1\nHost: 109.31.47.142:3000/api:1337\nAccept-Language: fr-FR\n...\n"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Header response parameters": [
+          {
+            "group": "headerResponse",
+            "type": "String",
+            "field": "test",
+            "optional": false,
+            "description": "<p>qsd</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Response sample:",
+          "content": "Response Header:\n---------------\n...\n"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sources/API.js"
+  },
+  {
+    "type": "",
+    "url": "{}",
+    "title": "1. Summary",
+    "name": "Summary",
+    "group": "API",
+    "groupDescription": "<p>Welcome to the redh00d API also called Web Service. This documentation will list all the available methods to interract with database.<br/>Please read all section to understand. If you get an error response you can refer to the error section.<br/><b>The web service is now under development, means that some method may have changed or may not be correctly functionnal.</b></p><p>",
+    "description": "<p>HTTP Status Code Summary:</b>   <br/><b>200 OK</b> - Everything worked as expected.   <br/><b>400 Bad Request</b> - Often missing a required parameter. The client SHOULD NOT repeat the request without modifications.   <br/><b>401 Unauthorized</b> - No valid API key provided.   <br/><b>402 Request Failed</b> - Parameters were valid but request failed.   <br/><b>403 Forbidden</b> - The server understood the request, but is refusing to fulfill it. Authorization will not help and the request SHOULD NOT be repeated.   <br/><b>405 Method not allowed</b> - Used to indicate that the requested URL exists, but the requested HTTP method is not applicable. For example, POST /users/12345 where the API doesn&#39;t support creation of resources this way (with a provided ID).   <br/><b>404 Not Found</b> - The requested item doesn&#39;t exist.   <br/><b>409 Conflict</b> - Whenever a resource conflict would be caused by fulfilling the request. Duplicate entries, such as trying to create two customers with the same information, and deleting root objects when cascade-delete is not supported are a couple of examples.   <br/><b>500, 502, 503, 504 Server errors</b> - any general error on the system.</p></p><p><hr/></p><p>   <b>Password salt:</b> MojoTime   <br/>Put this salt at the end of the clear password and then hash with md5.</p>",
+    "version": "0.0.0",
+    "filename": "sources/API.js"
+  },
+  {
+    "type": "get",
+    "url": "/dev/access-logs",
+    "title": "Display access logs",
+    "name": "displayAccessLogs",
+    "group": "Dev",
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "get http://109.31.47.142:3000/api/dev/access-logs\n"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "sources/Development.js"
+  },
+  {
+    "type": "get",
+    "url": "/dev/db",
+    "title": "Display some database info",
+    "name": "displayDB",
+    "group": "Dev",
+    "description": "<p>Display some database info</p>",
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "get http://109.31.47.142:3000/api/dev/db\n"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "sources/Development.js"
+  },
+  {
+    "type": "get",
+    "url": "/dev/logs",
+    "title": "Display logs",
+    "name": "displayLogs",
+    "group": "Dev",
+    "groupDescription": "<p>Documentation relative to dev only purpose. This part is always on working so some method might not be correct or available.<br/>Moreover these methods do not follow REST principle, it&#39;s just for development purpose.</p>",
+    "description": "<p>Display logs</p>",
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "get http://109.31.47.142:3000/api/dev/logs\n"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "sources/Development.js"
+  },
+  {
+    "type": "get",
+    "url": "/dev/logs",
+    "title": "Display logs",
+    "name": "displayLogs",
+    "group": "Dev",
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "get http://109.31.47.142:3000/api/dev/logs\n"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "sources/Development.js"
+  },
+  {
+    "type": "post",
+    "url": "/dev/db",
+    "title": "Initialize database",
+    "name": "initDB",
+    "group": "Dev",
+    "description": "<p>Initialize some basic necessary entries in database</p>",
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "post http://109.31.47.142:3000/api/dev/db\n"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "sources/Development.js"
+  },
+  {
+    "type": "get",
+    "url": "/dev/delete-logs",
+    "title": "Reset logs",
+    "name": "resetLogs",
+    "group": "Dev",
+    "description": "<p>Reset logs (access and general logs)</p>",
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "get http://109.31.47.142:3000/api/dev/delete-logs\n"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "sources/Development.js"
+  },
+  {
+    "type": "delete",
+    "url": "/events/:id",
+    "title": "Cancel an Event",
+    "name": "CancelEvent",
+    "group": "Events",
+    "permission": "eventOwner admin",
+    "description": "<p>Cancel an event<br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 401, 403, 404.</p>",
+    "parameter": {
+      "fields": {
+        "Parameters (Form Data)": [
+          {
+            "group": "dataParam",
+            "type": "String",
+            "field": "state",
+            "optional": false,
+            "description": "<p>cancelled</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Use example",
+        "content": "put http://109.31.47.142:3000/api/events/10\nform-data: state=cancelled\n"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success (200 OK) response parameters": [
+          {
+            "group": "200",
+            "type": "Object",
+            "field": "object",
+            "optional": false,
+            "description": "<p>The updated object.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success (200 OK) response sample:",
+          "content": "HTTP/1.1 200 OK\n{\n   \"object\": {\n       \"field1\": \"Foo\",\n       \"field2\": \"Bar\",\n       ...\n   },\n}\n"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "sources/Event.js"
   },
   {
     "type": "post",
@@ -343,9 +428,18 @@ define({ api: [
       "title": "Authentication requiered",
       "description": ""
     },
-    "description": "<p>Create an event which is retrieve if creation was a success.<br/><b>Throw error:</b> 400.</p>",
+    "description": "<p>Create an event which is retrieve if creation was a success.<br/><b style=\"color:green;\">Throw valid response:</b> 201.<br/><b style=\"color:red;\">Throw error response:</b> 400, 403, 409.</p>",
     "parameter": {
       "fields": {
+        "Parameters (URL)": [
+          {
+            "group": "urlParam",
+            "type": "number",
+            "field": "id",
+            "optional": false,
+            "description": "<p>User&#39;s ID</p>"
+          }
+        ],
         "Parameters (Form Data)": [
           {
             "group": "dataParam",
@@ -381,7 +475,7 @@ define({ api: [
     "examples": [
       {
         "title": "Use example",
-        "content": "post http://109.31.47.142:3000/api/events\nform-data: name=MyEvent&date=2014-12-24\n"
+        "content": "post http://109.31.47.142:3000/api/users/10/events\nform-data: name=MyEvent&date=2014-12-24\n"
       }
     ],
     "error": {
@@ -420,8 +514,8 @@ define({ api: [
     "title": "Create an event invitation",
     "name": "CreateEventInvitation",
     "group": "Events",
-    "permission": "authenticated author",
-    "description": "<p>Create one event invitation.<br/><b>Throw error:</b> 400.</p>",
+    "permission": "eventOwner admin",
+    "description": "<p>Create one event invitation.<br/><b style=\"color:green;\">Throw valid response:</b> 201.<br/><b style=\"color:red;\">Throw error response:</b> 400, 403, 409.</p>",
     "parameter": {
       "fields": {
         "Parameters (URL)": [
@@ -474,12 +568,16 @@ define({ api: [
   },
   {
     "type": "delete",
-    "url": "/users/:id/events/:id",
+    "url": "/events/:id",
     "title": "Delete an Event",
     "name": "DeleteEvent",
     "group": "Events",
-    "permission": "authenticated eventOwner",
-    "description": "<p>Delete an event<br/><b>Throw error:</b> 404.</p>",
+    "permission": {
+      "name": "admin",
+      "title": "Admin access rights needed.",
+      "description": ""
+    },
+    "description": "<p>Delete an event<br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 401, 403, 404.</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -565,6 +663,11 @@ define({ api: [
     "title": "Delete an event member",
     "name": "DeleteEventMember",
     "group": "Events",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
     "version": "0.0.0",
     "filename": "sources/Event.js"
   },
@@ -791,6 +894,11 @@ define({ api: [
     "title": "Find an event member",
     "name": "FindEventMember",
     "group": "Events",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
     "version": "0.0.0",
     "filename": "sources/Event.js"
   },
@@ -800,6 +908,11 @@ define({ api: [
     "title": "Find event members",
     "name": "FindEventMembers",
     "group": "Events",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
     "version": "0.0.0",
     "filename": "sources/Event.js"
   },
@@ -1147,6 +1260,11 @@ define({ api: [
         "content": "POST http://109.31.47.142:3000/api/users/15/friendsgroups/10/members\nform-data:\n----------\nid_member: 25\n"
       }
     ],
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
     "success": {
       "fields": {
         "Success (201 Created) response parameters": [
@@ -1264,6 +1382,11 @@ define({ api: [
         "content": "DELETE http://109.31.47.142:3000/api/users/15/friendsgroups/10\n"
       }
     ],
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
     "success": {
       "examples": [
         {
@@ -1315,6 +1438,11 @@ define({ api: [
         "content": "DELETE http://109.31.47.142:3000/api/users/15/friendsgroups/10/members/25\n"
       }
     ],
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
     "success": {
       "examples": [
         {
@@ -1486,6 +1614,11 @@ define({ api: [
         "content": "PUT http://109.31.47.142:3000/api/users/15/friendsgroups\nform-data:\n----------\nname: Family\n"
       }
     ],
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
     "success": {
       "fields": {
         "Success (200 OK) response parameters": [
@@ -1543,7 +1676,12 @@ define({ api: [
         ]
       }
     },
-    "group": "Friendship.js",
+    "permission": {
+      "name": "authenticated",
+      "title": "Authentication requiered",
+      "description": ""
+    },
+    "group": "Friendship_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -1620,12 +1758,12 @@ define({ api: [
   },
   {
     "type": "delete",
-    "url": "/users/:id_user/friendships/:id_friendship",
+    "url": "/users/:id_user/friends/:id_friend",
     "title": "Delete a friendship",
     "name": "DeleteFriendship",
     "group": "Friendships",
     "permission": "accountOwner admin",
-    "description": "<p><br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
+    "description": "<p>Delete a friendship with the specified friend.<br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
     "parameter": {
       "fields": {
         "urlParams": [
@@ -1639,9 +1777,9 @@ define({ api: [
           {
             "group": "urlParams",
             "type": "Number",
-            "field": "id_friendship",
+            "field": "id_friend",
             "optional": false,
-            "description": "<p>ID of the friendship to cancel.</p>"
+            "description": "<p>ID of the friend to cancel.</p>"
           }
         ]
       }
@@ -2461,7 +2599,7 @@ define({ api: [
     "name": "GenerateUserResetTokenPassword",
     "group": "Users",
     "permission": "authenticated accountOwner admin",
-    "description": "<p>Generate a password reset token for the designed user. This token can be used later to update the user password. Then send an email to the specified user.<br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
+    "description": "<p>Generate a password reset token for the designed user. This token can be used later to update the user password. Then send an email to the specified user.If silent is set to false the method will respond 204 only after mail has been send. So this method may take some time to be processed.<br/><b style=\"color:green;\">Throw valid response:</b> 204.<br/><b style=\"color:red;\">Throw error response:</b> 400, 401, 403.</p>",
     "parameter": {
       "fields": {
         "urlParams": [
@@ -2479,7 +2617,14 @@ define({ api: [
             "type": "Boolean",
             "field": "reset_password",
             "optional": false,
-            "description": "<p>true</p>"
+            "description": ""
+          },
+          {
+            "group": "dataParam",
+            "type": "Boolean",
+            "field": "silent",
+            "optional": false,
+            "description": "<p>=false</p>"
           }
         ]
       }
@@ -2487,7 +2632,7 @@ define({ api: [
     "examples": [
       {
         "title": "Use example",
-        "content": "PATCH http://109.31.47.142:3000/api/users/user@user.com\nform-data:\n----------\nreset_password=true\n"
+        "content": "PATCH http://109.31.47.142:3000/api/users/user@user.com\nform-data:\n----------\nreset_password=true\nsilent=false\n"
       }
     ],
     "success": {
@@ -2621,7 +2766,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2651,7 +2796,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2677,7 +2822,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2703,22 +2848,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
-    "type": "",
-    "url": "",
-    "version": "0.0.0",
-    "filename": "sources/_general.js"
-  },
-  {
-    "error": {
-      "examples": [
-        {
-          "title": "Error (500 Serveur Error) response sample:",
-          "content": "   HTTP/1.1 500 Serveur Error\n   {\n     \"message\": \"Database unavailable\",\n     \"code\": \"dbUnavailable\"\n   }\n"
-        }
-      ]
-    },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2733,7 +2863,22 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "sources/_general.js"
+  },
+  {
+    "error": {
+      "examples": [
+        {
+          "title": "Error (500 Serveur Error) response sample:",
+          "content": "   HTTP/1.1 500 Serveur Error\n   {\n     \"message\": \"Database unavailable\",\n     \"code\": \"dbUnavailable\"\n   }\n"
+        }
+      ]
+    },
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2809,7 +2954,7 @@ define({ api: [
         ]
       }
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2824,7 +2969,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2839,7 +2984,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2854,7 +2999,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2869,7 +3014,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2884,7 +3029,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",
@@ -2899,7 +3044,7 @@ define({ api: [
         }
       ]
     },
-    "group": "_general.js",
+    "group": "_general_js",
     "type": "",
     "url": "",
     "version": "0.0.0",

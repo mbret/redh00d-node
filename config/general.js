@@ -17,7 +17,7 @@ module.exports.general = {
     // Set this variable to true to initialize default values
 //    initDatabase: false,
 
-    version: '0.0.1',
+    version: 'September 01, 2014',
 
     errors: {
         codes: {
@@ -36,19 +36,27 @@ module.exports.general = {
     },
 
     mail: {
-        ssl: true,
-        port: 465,
-        host: 'host',
-        to: 'xmax54@gmail.com',
-        prepend_subject: 'Happy Contact Form | ',
-        user: 'user',
-        pass: 'pass',
-
+        smtp: {
+            ssl: false,
+//            port: 25, // 465
+            host: 'smtp.free.fr',
+            to: 'xmax54@gmail.com',
+            prepend_subject: 'Happy Contact Form | ',
+            user: 'bret.maxime@gmail.com',
+            pass: '08031990google'
+        },
         // Default sender name and address for transactional emails
         from: {
-            name: 'Maxime',
-            email: 'xmax54@gmail.com'
+            noReply: {
+                name: 'Redh00d no reply',
+                email: 'bret.maxime@gmail.com'
+            },
+            contact: {
+                name: 'Redh00d contact',
+                email: 'bret.maxime@gmail.com'
+            }
         }
+
     }
 
 };

@@ -3,6 +3,7 @@ var Q = require("q");
 module.exports = {
 
     /**
+     * Add to the database the default and minimal informations.
      * @return promise
      */
     seedDefaultData: function(){
@@ -26,11 +27,11 @@ module.exports = {
     seedTestData: function(){
         return Q().then(function(){
             return Q.all([
-                User.create({email: 'user@user.com', password: 'password', firstName: 'User', lastName: 'User', ID:2}),
+                User.create({email: 'xmax54@gmail.com', password: 'password', firstName: 'User', lastName: 'User', ID:2}),
                 User.create({email: 'user2@user2.com', password: 'password', firstName: 'User', lastName: 'User', ID:3}),
 
-                Product.create({isOfficial: true, name: 'Coca Cola', logo: 'coca_cola', categoryID: 2}),
-                Product.create({isOfficial: false, name: 'Chips', logo: null, categoryID: 1})
+                Product.create({isOfficial: true, name: 'Coca Cola', logo: 'coca_cola', category: 2, ID:1}),
+                Product.create({isOfficial: false, name: 'Chips', logo: null, category: 1, ID:2})
             ]);
 
         }).then(function() {

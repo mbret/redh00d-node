@@ -33,6 +33,12 @@ module.exports = {
 
     log: {
         level: 'info'
+    },
+
+    ssl: {
+//       ca: require('fs').readFileSync(__dirname + './ssl/server.crt'),
+       key: require('fs').readFileSync(__dirname + '/../ssl/server.key'),
+       cert: require('fs').readFileSync(__dirname + '/../ssl/server.crt')
     }
 
 };

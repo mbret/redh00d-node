@@ -35,41 +35,42 @@ module.exports.routes = {
         return res.view('doc');
     },
 
-    // Debug route
+    /***************************
+     *
+     * Development relatives routes
+     *
+     ***************************/
     'get  /api/dev/db': 'DevController.dumpDatabase',
     'get  /api/dev/logs':'DevController.logs',
+    'get  /api/dev/access-logs':'DevController.accessLogs',
     'get  /api/dev/delete-logs':'DevController.deleteLogs',
 
-    /**
+    /***************************
+     *
      * EVENT relatives routes
-     */
-    'get    /api/events/:id':                   'EventController.find',
-    'get    /api/events/:id/members/:idmember': 'EventController.findMember',
-    'post   /api/events':                       'EventController.create',
-    'delete /api/events/:id':                   'EventController.delete',
-    'delete /api/events/:id/members/:idmember': 'EventController.deleteMember',
-    'put    /api/events/:id':                   'EventController.update',
-    'get    /api/events/:id/members*':          'EventController.findMultipleMembers',
-    'get    /api/events*':                      'EventController.findMultiple',
+     *
+     ***************************/
+    'get     /api/events/:id':                   'EventController.find',
+    'get     /api/events/:id/members/:idmember': 'EventController.findMember',
+    'post    /api/events':                       'EventController.create',
+    'delete  /api/events/:id':                   'EventController.delete',
+    'delete  /api/events/:id/members/:idmember': 'EventController.deleteMember',
+    'put     /api/events/:id':                   'EventController.update',
+    'get     /api/events/:id/members*':          'EventController.findMultipleMembers',
+    'get     /api/events*':                      'EventController.findMultiple',
 
-    /**
-     * INVITATION relatives routes
-     */
-    'post    /api/events/:idevent/invitations':     'InvitationController.create',
+    // Invitations
+    'post    /api/events/:idevent/invitations':     'EventController.createInvitation',
     'get     /api/events/:idevent/invitations/:id': 'InvitationController.find',
     'put     /api/events/:idevents/invitations':    'InvitationController.update', // author can cancel / receiver can cancel, accept
     'delete  /api/events/:idevent/invitations/:id': 'InvitationController.delete', // put state on cancel
     'get     /api/events/:idevent/invitation*':     'InvitationController.findMultiple',
 
-    /**
-     * AUTHENTICATION relatives routes
-     */
-//    'post   /api/auth':                         'AuthController.login',
-//    'delete /api/auth':                         'AuthController.logout',
-
-    /**
+    /***************************
+     *
      * USER relatives routes
-     */
+     *
+     ***************************/
     // only users
     'get    /api/users/:id':                    'UserController.find',
     'post   /api/users':                        'UserController.create',
@@ -80,11 +81,11 @@ module.exports.routes = {
 
     // USER friendships relatives routes
     'get    /users/:userid/friendships/:id':            'UserFriendShipController.find',
-    'get    /users/:userid/friends/:idfriend':          'UserFriendShipController.FindFriend',
-    'delete /users/:userid/friends/:idfriend':          'UserFriendShipController.delete', // cancel a friendship request
     'put    /users/:userid/friendships/:id':            'UserFriendShipController.update', // update request (a response for friends)
+    'post   /users/:userid/friendships':                'UserFriendShipController.create', // Create a friendship request
     'get    /users/:userid/friendships*':               'UserFriendShipController.findMultiple',
-    'post   /users/:userid/friends':                    'UserFriendShipController.create', // Create a friendship request
+
+    'delete /users/:userid/friends/:idfriend':          'UserFriendShipController.delete', // cancel a friendship request
     'get    /users/:userid/friends*':                   'UserFriendShipController.FindFriends',
 
     // USER friends group relatives routes
@@ -96,7 +97,12 @@ module.exports.routes = {
     'delete /api/users/:iduser/friendsgroup/:id/members/:idmember':'UserFriendsGroupController.deleteMember',
     'get    /api/users/:iduser/friendsgroup*':                     'UserFriendsGroupController.findMultiple',
 
-    // Products
+
+    /***************************
+     *
+     * PRODUCTS relatives routes
+     *
+     ***************************/
     'get    /api/products/:id':                  'ProductController.find',
     'post   /api/products':                      'ProductController.create',
     'put    /api/products':                      'ProductController.update',

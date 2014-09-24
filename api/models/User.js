@@ -13,7 +13,10 @@ var uuid = require("node-uuid");
 // The base model is cloned and then merged with this model. This model is a child of the clone so not a child of ./BaseModel itself
 module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
+    tableName: 'user',
     autoPK: true,
+    autoCreatedAt: true,
+    autoUpdatedAt: true,
 
     attributes: {
 
@@ -144,44 +147,37 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
          * Generate password reset token
          */
         generatePasswordResetToken: function(cb) {
-            this.passwordResetToken = Token.generate();
-            this.save(function (err) {
-                if(err) return cb(err);
-                cb();
-            });
+            var token = TokenService.generate(); // get json object
+            User.update( {'ID': this.ID}, {passwordResetToken: token}, function (err, user) {
+                    if(err) return cb(err);
+                    this.passwordResetToken = token;
+                    return cb();
+                }
+            );
         },
 
         /**
          * Send password reset email
          *
-         * Generate a password reset token and send an email to the user with
+         * send an email to the user with
          * instructions to reset their password
          */
         sendPasswordResetEmail: function(cb) {
-            var self = this;
+            var mailOptions = {
+                from: sails.__(sails.config.general.mail.from.contact.name) + ' ' + '<' + sails.config.general.mail.from.contact.email + '>', // sender address
+                to: this.email, // list of receivers
+                subject: sails.__('Reset password'), // Subject line
+//                text: sails.__('Please click on this link to update your password'), // plaintext body
+                html: '<b>' + sails.__('Please click on this link to update your password') + '</b>' // html body
+            };
 
-            this.generatePasswordResetToken(function (err) {
-                if(err) return cb(err);
-
-                // Send email
-                var email = new Email._model({
-                    to: {
-                        name: self.fullName(),
-                        email: self.email
-                    },
-                    subject: "Reset your password",
-                    data: {
-                        resetURL: sails.config.localAppURL + '/api/users/reset-password/#/' + self.ID + '/' +self.passwordResetToken.value
-                    },
-                    tags: ['password-reset','transactional'],
-                    template: 'password-reset'
-                });
-
-                email.setDefaults();
-
-                email.send(function (err, res, msg) {
-                    cb(err, res, msg, self.passwordResetToken);
-                });
+            MailerService.sendMail(mailOptions, function(err, info){
+                if(err){
+                    return cb(err);
+                }else{
+                    console.log('Message sent: ' + info);
+                    return cb();
+                }
             });
         },
 

@@ -2,6 +2,10 @@
     "//": "Various",
     "Welcome":                      "Welcome",
     "event":                        "event",
+    "Hello":                        "Hello",
+    "Reset password":               "Reset password",
+    "Please click on this link to update your password": "Please click on this link to update your password",
+    "Redh00d contact":            "Redh00d contact",
 
     "//": "Error response",
     "Bad request":                          "Bad request",

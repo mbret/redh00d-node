@@ -12,7 +12,7 @@
  * <br/><b style="color:green;">Throw valid response:</b> 200.
  * <br/><b style="color:red;">Throw error response:</b> 400, 401, 403, 404.
  *
- * @apiPermission todo
+ * @apiPermission user admin
  *
  * @apiParam {Number} id Product's ID
  * @apiExample Use example
@@ -29,7 +29,7 @@
  * @api {get} /products Find products
  * @apiName FindMultipleProduct
  * @apiGroup Products
- * @apiPermission todo
+ * @apiPermission user admin
  * @apiDescription
  * <br/><b style="color:green;">Throw valid response:</b> 200.
  * <br/><b style="color:red;">Throw error response:</b> 400, 401, 403.
@@ -48,7 +48,7 @@
  * @api {post} /products Create one product
  * @apiName CreateProduct
  * @apiGroup Products
- * @apiPermission todo
+ * @apiPermission user admin
  * @apiDescription
  * <br/><b style="color:green;">Throw valid response:</b> 201.
  * <br/><b style="color:red;">Throw error response:</b> 400, 409.
