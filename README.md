@@ -1,25 +1,21 @@
 # Readme
 
 ## Prerequisites for correct running application:
-- install node.js
+- Install node.js.
+- Move terminal inside project dir and run `npm update`.
+- Run `forever -c node app.js --dev` for a development instance.
+- Or run `forever -c node app.js --prod` for a production instance.
+- Or (on windows) use the two batch scripts available in project dir.
+- Or use sails.js starter. Then you need to install sails.js `npm install -g sails` and run `sails lift` inside project dir.
+- Or run the app.js by yourself if you are smart enough :) `node app.js`.
+- You will probably need to visit the home page with the browser to accept easily the first time the certificate. Visit https://localhost:1337/.
 
 ## Prerequisites for correct application development:
-- All prerequisites for running application
-- install mocha globally: `npm install -g mocha`
-
-## First init of application:
-- `npm install`
+- All prerequisites for running application.
+- Install mocha globally: `npm install -g mocha`.
 
 ## Run test:
-- `mocha`
-
-## Run application for development:
-- node app.js // run one time
-- `_run-forever-development` // forever running (batch script)
-
-## Run application for production:
-- node app.js --prod // run one time
-- `_run-forever-production` // forever running (batch script)
+- Run `mocha` in terminal.
 
 ## (re)Generate documentation:
-- node api-docs/run-generation.js
+- Run `node api-docs/run-generation.js` in terminal.
