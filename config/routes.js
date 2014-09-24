@@ -31,8 +31,12 @@ module.exports.routes = {
         return next();
     },
 
-    'get /api/doc': function(req, res){
-        return res.view('doc');
+    'get /api/doc': function (req, res) {
+        return res.view('doc', {
+            version: sails.config.general.version,
+            docURL: sails.config.general.docURL,
+            url: sails.config.general.siteURL
+        })
     },
 
     /***************************

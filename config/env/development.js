@@ -22,9 +22,12 @@ module.exports = {
     },
 
     general: {
-        initDatabase: true,
-        // Active protection of JSON returned data of each request
-        protectJsonData: false
+        initDatabase: true, // init database each lift with default data
+
+        protectJsonData: false, // Active protection of JSON returned data of each request
+
+        siteURL: 'https://localhost:1337'
+        // docURL is not overwritten to keep protected link when deployed on server. If you want to use local doc, navigate inside api-docs folder.
     },
 
     policies: {

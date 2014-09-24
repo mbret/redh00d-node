@@ -14,10 +14,13 @@ module.exports.general = {
 
     defaultUserRoleName: 'user',
 
-    // Set this variable to true to initialize default values
-//    initDatabase: false,
+    initDatabase: false, // Set this variable to true to initialize default values in database each lift
 
-    version: 'September 01, 2014',
+    version: '0.0.1 (September 01, 2014)',
+
+    siteURL: 'https://redh00d.dnsalias.com:1337',
+
+    docURL: 'https://redh00d.dnsalias.com/redh00d-api-doc',
 
     errors: {
         codes: {
