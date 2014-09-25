@@ -2,6 +2,8 @@
 
 ## Prerequisites for correct running application:
 - Install node.js.
+- Install forever globally `npm isntall -g forever`.
+- Install node-gyp globally `npm isntall -g node-gyp` (read doc for installation).
 - Move terminal inside project dir and run `npm update`.
 - Run `forever -c node app.js --dev` for a development instance.
 - Or run `forever -c node app.js --prod` for a production instance.

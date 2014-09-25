@@ -129,6 +129,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
         /**
          * Check if the supplied password matches the stored password.
+         * - Useful when login action, change password ...
          */
         validatePassword: function( candidatePassword, cb ) {
             if( candidatePassword === this.encryptedPassword ){
@@ -188,6 +189,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
     },
 
     beforeCreate: [
+
         // Encrypt user's password
         function (values, cb){
             User.encryptPassword(values, function (err) {
