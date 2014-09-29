@@ -27,6 +27,7 @@ module.exports = {
     seedTestData: function(){
         return Q().then(function(){
             return Q.all([
+                User.create({email: 'user1@user.com', password: 'password', firstName: 'User', lastName: 'User', ID:4}),
                 User.create({email: 'xmax54@gmail.com', password: 'password', firstName: 'User', lastName: 'User', ID:2}),
                 User.create({email: 'user2@user2.com', password: 'password', firstName: 'User', lastName: 'User', ID:3}),
 

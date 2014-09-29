@@ -6,7 +6,7 @@
  * @docs		:: http://sailsjs.org/#!documentation/models
  */
 
-//var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt');
 var uuid = require("node-uuid");
 
 // use this method https://groups.google.com/forum/#!topic/sailsjs/GTGoOGHAEvE to emulate inheritance of object
@@ -132,16 +132,10 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
          * - Useful when login action, change password ...
          */
         validatePassword: function( candidatePassword, cb ) {
-            if( candidatePassword === this.encryptedPassword ){
-                return cb(null, true);
-            }
-            else{
-                return cb(null, false);
-            }
-//            bcrypt.compare( candidatePassword, this.encryptedPassword, function (err, valid) {
-//                if(err) return cb(err);
-//                cb(null, valid);
-//            });
+            bcrypt.compare( candidatePassword, this.encryptedPassword, function (err, valid) {
+                if(err) return cb(err);
+                cb(null, valid);
+            });
         },
 
         /**
@@ -242,14 +236,16 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
      * User password encryption. Uses bcrypt.
      */
     encryptPassword: function(values, cb) {
-        values.encryptedPassword = values.password;
-        sails.log.debug("User: Class.encryptPassword: Password encrypted from '%s' to '%s'", values.password, values.encryptedPassword);
-        cb();
-//        bcrypt.hash(values.password, 10, function (err, encryptedPassword) {
-//            if(err) return cb(err);
-//            values.encryptedPassword = encryptedPassword;
-//            cb();
-//        });
+//        values.encryptedPassword = values.password;
+//        cb();
+        bcrypt.hash(values.password, 10, function (err, encryptedPassword) {
+            if(err) return cb(err);
+            values.encryptedPassword = encryptedPassword;
+            sails.log.info("User: Class.encryptPassword: Password encrypted from '%s' to '%s'", values.password, values.encryptedPassword);
+            return cb();
+        });
+
+
     }
 
 });
