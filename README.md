@@ -1,9 +1,14 @@
 # Readme
 
+This document contain all basic stuff about installing and running application. For more complete information please visit redh00d team website at 
+https://sites.google.com/site/redh00dintern/API.
+
+This application is a RESTFUL web service which provide bridge between customer application and data. The entire code is under Node.js
+
 ## Prerequisites for correct running application:
 - Install node.js.
-- Install forever globally `npm isntall -g forever`.
-- Install node-gyp globally `npm isntall -g node-gyp` (read doc for installation).
+- Install forever globally `npm install -g forever`.
+- Install node-gyp globally `npm install -g node-gyp` (read doc for installation).
 - Move terminal inside project dir and run `npm update`.
 - Run `forever -c node app.js --dev` for a development instance.
 - Or run `forever -c node app.js --prod` for a production instance.
@@ -21,3 +26,9 @@
 
 ## (re)Generate documentation:
 - Run `node api-docs/run-generation.js` in terminal.
+
+## Troubleshooting:
+- Install of `node-gyp` fail: Please verify all requirements for the installation. Check official website page.
+- Install of `bcryt` fail on Windows: check these issues (http://goo.gl/v9APnG)
+
+## FAQ (Any questions that are not written above):
