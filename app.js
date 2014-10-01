@@ -49,7 +49,5 @@ try {
 }
 
 
-sails.ROOT_PATH = __dirname;
-
 // Start server
 sails.lift(rc('sails'));

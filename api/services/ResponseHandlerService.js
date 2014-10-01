@@ -47,7 +47,6 @@ module.exports = {
 //                request_unsigned_cookies: req.cookies,
 //                current_session: req.session,
 //                sessionStore: req.sessionStore
-
             }
         }
 

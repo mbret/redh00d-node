@@ -17,10 +17,10 @@ module.exports = {
 
         input.on('end', function() {
             if (remaining.length > 0) {
-                func(remaining);
+                return func(remaining);
             }
             else{
-                cb();
+                return cb();
             }
         });
     }

@@ -61,8 +61,8 @@ module.exports = {
      */
     deleteLogs: function(req, res){
         var fs = require('fs');
-        var input = sails.ROOT_PATH + '/data/logs.log';
-        var input2 = sails.ROOT_PATH + '/data/access.log';
+        var input = sails.config.appPath + '/data/logs.log';
+        var input2 = sails.config.appPath + '/data/access.log';
         fs.truncate(input, 0, function () {
             fs.truncate(input2, 0, function () {
                 return res.send(200, "removed");
@@ -75,7 +75,7 @@ module.exports = {
 
         var fs = require('fs');
         var logs = "";
-        var input = fs.createReadStream(sails.ROOT_PATH + '/data/access.log');
+        var input = fs.createReadStream(sails.config.appPath + '/data/access.log');
 
         FilesService.readLines(input, function (data) {
             logs = logs + data + "<br/>";
@@ -95,7 +95,7 @@ module.exports = {
     logs: function(req, res){
         var fs = require('fs');
         var logs = "";
-        var input = fs.createReadStream(sails.ROOT_PATH + '/data/logs.log');
+        var input = fs.createReadStream(sails.config.appPath + '/data/logs.log');
 
         FilesService.readLines(input, function (data) {
             logs = logs + data + "<br/>";
