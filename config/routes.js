@@ -48,6 +48,7 @@ module.exports.routes = {
     'get  /api/dev/logs':'DevController.logs',
     'get  /api/dev/access-logs':'DevController.accessLogs',
     'get  /api/dev/delete-logs':'DevController.deleteLogs',
+    'get  /api/dev/auth':        'DevController.auth', // use this action to perform first auth
 
     /***************************
      *
@@ -81,16 +82,16 @@ module.exports.routes = {
     'put    /api/users/:id':                    'UserController.update',
     'patch  /api/users/:id':                    'UserController.patch', // password reset token
     'delete /api/users/:id':                    'UserController.delete',
-    'get    /api/users*':                       'UserController.findMultiple',
+
 
     // USER friendships relatives routes
-    'get    /users/:userid/friendships/:id':            'UserFriendShipController.find',
-    'put    /users/:userid/friendships/:id':            'UserFriendShipController.update', // update request (a response for friends)
-    'post   /users/:userid/friendships':                'UserFriendShipController.create', // Create a friendship request
-    'get    /users/:userid/friendships*':               'UserFriendShipController.findMultiple',
+    'get    /api/users/:userid/friendships/:id':            'UserFriendShipController.find',
+    'put    /api/users/:userid/friendships/:id':            'UserFriendShipController.update', // update request (a response for friends)
+    'post   /api/users/:userid/friendships':                'UserFriendShipController.create', // Create a friendship request
+    'get    /api/users/:userid/friendships*':               'UserFriendShipController.findMultiple',
 
-    'delete /users/:userid/friends/:idfriend':          'UserFriendShipController.delete', // cancel a friendship request
-    'get    /users/:userid/friends*':                   'UserFriendShipController.FindFriends',
+    'delete /api/users/:userid/friends/:idfriend':          'UserFriendShipController.delete', // cancel a friendship request
+    'get    /api/users/:userid/friends*':                   'UserFriendShipController.FindFriends',
 
     // USER friends group relatives routes
     'get    /api/users/:iduser/friendsgroup/:id':                  'UserFriendsGroupController.find',
@@ -101,6 +102,7 @@ module.exports.routes = {
     'delete /api/users/:iduser/friendsgroup/:id/members/:idmember':'UserFriendsGroupController.deleteMember',
     'get    /api/users/:iduser/friendsgroup*':                     'UserFriendsGroupController.findMultiple',
 
+    'get    /api/users*':                       'UserController.findMultiple',
 
     /***************************
      *

@@ -31,7 +31,10 @@ module.exports = {
     },
 
     policies: {
-        DevController: true
+        DevController: {
+            '*': true,
+            'auth': ['isAllowed']
+        }
     },
 
     log: {

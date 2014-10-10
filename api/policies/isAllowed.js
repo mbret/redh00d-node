@@ -13,6 +13,7 @@ var Q = require('q');
 
 module.exports = function isAllowed(req, res, next) {
 
+    console.log("qsdsd");
 
     // They are already formatted from sails to match with permissions
     var resource = req.options.controller;
