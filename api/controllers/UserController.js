@@ -106,6 +106,7 @@ module.exports = {
      * @todo password update with token
      * @todo see about update collection ?
      * @param req
+     * @todo make id required because if there are no id in param it update all items
      */
     update: function (req, res) {
 
