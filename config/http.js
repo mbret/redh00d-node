@@ -80,16 +80,9 @@ module.exports = {
             },
 
             // simple log of http request
+            // Only in console, nginx take control on production environment
             myRequestLogger: function (req, res, next) {
                 sails.log.info(req.method, req.url);
-
-                // Log access in a more detailed way
-                var accessLogger = new (require('winston').Logger)({
-                    transports: [
-                        new (require('winston').transports.File)({ filename: 'data/access.log', json:false })
-                    ]
-                });
-                accessLogger.info("[" + req.ip, req.host + "] " + req.protocol, req.method, req.url);
                 return next();
             },
 
