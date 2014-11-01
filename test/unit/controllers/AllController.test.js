@@ -27,19 +27,19 @@ describe('AllController', function() {
         it('should respond with json', function(done){
             async.series([
                 function(callback){
-                    request(sails.hooks.http.app).get('/api/users/1').set('Accept', 'application/json').set('Authorization', authorization)
+                    request(sails.hooks.http.app).get('/users/1').set('Accept', 'application/json').set('Authorization', authorization)
                         .expect('Content-Type', /json/).end(callback);
                 },
                 function(callback){
-                    request(sails.hooks.http.app).get('/api/users').set('Accept', 'application/json').set('Authorization', authorization)
+                    request(sails.hooks.http.app).get('/users').set('Accept', 'application/json').set('Authorization', authorization)
                         .expect('Content-Type', /json/).end(callback);
                 },
                 function(callback){
-                    request(sails.hooks.http.app).post('/api/users').set('Accept', 'application/json').set('Authorization', authorization)
+                    request(sails.hooks.http.app).post('/users').set('Accept', 'application/json').set('Authorization', authorization)
                         .expect('Content-Type', /json/).end(callback);
                 },
 //                function(callback){
-//                    request(sails.hooks.http.app).del('/api/users/10').set('Accept', 'application/json').set('Authorization', authorization)
+//                    request(sails.hooks.http.app).del('/users/10').set('Accept', 'application/json').set('Authorization', authorization)
 //                        .expect('Content-Type', /json/).end(callback);
 //                },
             ], function(err, results){

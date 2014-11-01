@@ -18,10 +18,11 @@ module.exports.general = {
 
     version: '0.0.1 (September 01, 2014)',
 
-    siteURL: 'https://redh00d.dnsalias.com:1337',
+    siteURL: 'https://api.redh00d.unreachable.me',
 
-    docURL: 'https://redh00d.dnsalias.com/redh00d-api-doc',
+    docURL: 'https://api.redh00d.unreachable.me/doc',
 
+    // Error codes for api response
     errors: {
         codes: {
             badRequest: "Bad request",

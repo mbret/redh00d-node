@@ -50,20 +50,7 @@ module.exports = {
             }
         }
 
-        // If request does not accept application/json then display special page
-        if( !req.wantsJSON ){
-            sails.log.debug("Request " + req.options.controller + " " + req.options.action + " does not accept json");
-            res.status(200);
-            return res.view('wronguse', {
-                version: sails.config.general.version,
-                env: sails.config.environment,
-                url: sails.config.general.siteURL,
-                docURL: sails.config.general.docURL
-            });
-        }
-        else{
-            return res.jsonx( data );
-        }
+        return res.jsonx( data );
 
     },
 

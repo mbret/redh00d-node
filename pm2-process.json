@@ -1,0 +1,9 @@
+{
+    "name"        : "redh00d-node",
+    "script"      : "app.js",
+    "ignoreWatch" : [".tmp", "api-docs", "test", "node_modules"],
+    "watch"       : true,
+    "env": {
+        "NODE_ENV": "production"
+    }
+}
