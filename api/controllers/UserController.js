@@ -241,7 +241,7 @@ module.exports = {
                 return User.destroy({ID:req.param('id')}).then(function(){
                     return res.noContent();
                 });
-            }).fail(function(err){
+            }).catch(function(err){
                 return res.serverError(err);
             });
 

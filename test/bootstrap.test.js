@@ -1,5 +1,4 @@
 var Sails = require('sails');
-var Q = require('q');
 
 before(function(done) {
     Sails.lift({
@@ -22,7 +21,11 @@ before(function(done) {
                 return done(null, sails);
             });
 
-        }).fail(function (err) {
+        }).catch
+
+
+
+        (function (err) {
             return done( new Error(err) );
         });
 

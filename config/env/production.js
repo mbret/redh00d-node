@@ -18,8 +18,8 @@ module.exports = {
    ***************************************************************************/
 
     models: {
-        connection: 'mysqlDb',
-        migrate: 'safe' // never auto-migrate my database(s). I will do it myself (by hand)
+        connection: 'localDiskDb',
+        migrate: 'drop'
     },
 
   /***************************************************************************
@@ -33,12 +33,23 @@ module.exports = {
    ***************************************************************************/
 
     log: {
-        level: "warn"
+        level: "info"
     },
 
     general: {
-        // Active protection of JSON returned data of each request
-        protectJsonData: true
+        initDatabase: true, // init database each lift with default data
+
+        protectJsonData: false, // Active protection of JSON returned data of each request
+
+        siteURL: 'https://api.reh00d.unreachable.me'
+        // docURL is not overwritten to keep protected link when deployed on server. If you want to use local doc, navigate inside api-docs folder.
+    },
+
+    policies: {
+        DevController: {
+            '*': true,
+            'auth': ['isAllowed']
+        }
     },
 
     ssl: {

@@ -8,7 +8,6 @@
  * For more information on bootstrapping your app, check out:
  * http://links.sailsjs.org/docs/config/bootstrap
  */
-var Q = require('Q');
 module.exports.bootstrap = function(cb) {
 
     // @todo create and init data/access.log if it doesnt exist
@@ -23,7 +22,7 @@ module.exports.bootstrap = function(cb) {
             return DatabaseService.seedTestData().then(function(){
                 return cb();
             })
-        }).fail(function (err) {
+        }).catch(function (err) {
             return cb(err);
 
         });

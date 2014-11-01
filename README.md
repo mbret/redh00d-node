@@ -32,6 +32,7 @@ To use the api you can use many tools (Chrome console, Postman, etc) but also pr
 - If you use a specific tool like Postman it should be clear enough, no more help needed.
 
 ## Run test:
+- Run `npm update` in terminal.
 - Run `mocha` in terminal.
 
 ## (re)Generate documentation:
