@@ -16,16 +16,16 @@ var winstonMail = require('winston-mail').Mail;
 var customLogger = new winston.Logger({
     transports: [
         new (winston.transports.Console)(),
-        new (winston.transports.File)({
-            filename: 'data/logs.log',
-            json: false,
-            colorize: true,
-            timestamp: true}),
-        new (winstonMail)({
-            silent: true,
-            to: 'mail@mail.com'
-            // @todo write mail logs
-        })
+//        new (winston.transports.File)({
+//            filename: 'data/logs.log',
+//            json: false,
+//            colorize: true,
+//            timestamp: true}),
+//        new (winstonMail)({
+//            silent: true,
+//            to: 'mail@mail.com'
+//            // @todo write mail logs
+//        })
     ]
 });
 

@@ -38,6 +38,12 @@ To use the api you can use many tools (Chrome console, Postman, etc) but also pr
 ## (re)Generate documentation:
 - Run `node api-docs/run-generation.js` in terminal.
 
+## Deploy on server:
+Server run user for node is www-data over pm2. www-data must have right to write to correct folders.
+- Never upload .tmp, data, node_modules or read below
+- Make sure .tmp, data is owned by group www-data and has 664 chmod
+- The pm2 process should watch your change and restart app. Check online.
+
 ## Troubleshooting:
 - Install of `node-gyp` fail: Please verify all requirements for the installation. Check official website page.
 - Install of `bcryt` fail on Windows: check these issues (http://goo.gl/v9APnG).

@@ -85,7 +85,6 @@ module.exports = {
         })
     },
 
-
     /**
      * Display logs
      * @param req

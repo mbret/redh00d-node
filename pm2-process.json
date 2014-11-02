@@ -3,8 +3,7 @@
     "script"      : "app.js",
     "ignoreWatch" : [".tmp", "api-docs", "test", "node_modules"],
     "watch"       : true,
-    "error_file" : "./data/pm2-err.log",
-    "out_file"   : "./data/pm2-out.log",
+    "log_date_format"  : "YYYY-MM-DD HH:mm Z",
     "env": {
         "NODE_ENV": "production"
     }
