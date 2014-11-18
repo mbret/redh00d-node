@@ -67,7 +67,6 @@ module.exports = {
                 return res.send(200, "removed");
             });
         });
-
     },
 
     accessLogs: function(req, res){

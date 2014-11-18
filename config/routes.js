@@ -25,7 +25,7 @@ module.exports.routes = {
     // This path is used to do some stuff in any way before all controllers
     // We could have call a controller which implement function(req, res, next) and call at last next()
     // but due to short logic/code a function placed here is more practice.
-    // It's not possible to use middleware because before router we should have to hard check the request (no req.wantsJson available)
+    // It's not possible to use middleware instead because before router we should have to hard check the request and its pain (no req.wantsJson available)
     // and after router all these routes has been checked !
     '*': function preDispatch(req, res, next) {
         return next();
@@ -50,6 +50,7 @@ module.exports.routes = {
 
     },
 
+
     /***************************
      *
      * Development relatives routes
@@ -60,6 +61,16 @@ module.exports.routes = {
     'get  /dev/access-logs':'DevController.accessLogs',
     'get  /dev/delete-logs':'DevController.deleteLogs',
     'get  /dev/auth':        'DevController.auth', // use this action to perform first auth
+
+    /****************************************************
+     *
+     * Helpers relatives routes
+     *
+     * These routes are used by clients in order to help
+     * code logic (eg: check credential, etc)
+     * It allow to perform no REST actions
+     ****************************************************/
+    'post   /auth': 'HelperController.auth', // Simulate auth action (allow the client to know the validity of credential useful for futur requests)
 
     /***************************
      *
