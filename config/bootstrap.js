@@ -8,30 +8,41 @@
  * For more information on bootstrapping your app, check out:
  * http://links.sailsjs.org/docs/config/bootstrap
  */
-var Q = require('Q');
+
 module.exports.bootstrap = function(cb) {
 
     // @todo create and init data/access.log if it doesnt exist
     // @todo create and init data/logs.log if it doesnt exist
 
-    /**
-     * Init database
-     * and insert test data
-     */
-    if(sails.config.general.initDatabase){
-        DatabaseService.seedDefaultData().then(function() {
-            return DatabaseService.seedTestData().then(function(){
+    async.series([
+
+        // Init database
+        function(cb){
+
+            if(sails.config.fillDb === true){
+                switch(sails.config.environment){
+                    case 'production':
+                        DbService.init('production')
+                            .then(function(){ cb(); })
+                            .catch(cb);
+                        break;
+                    case 'development':
+                        DbService.init('development')
+                            .then(function(){ cb(); })
+                            .catch(cb);
+                        break;
+                    default:
+                        cb();
+                }
+            }
+            else{
                 return cb();
-            })
-        }).fail(function (err) {
-            return cb(err);
+            }
+        }
+    ], function(error){
+       return cb(error);
+    });
 
-        });
-    }
-    else{
-
-        return cb();
-    }
 
 
 };

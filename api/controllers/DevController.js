@@ -6,7 +6,6 @@
  */
 
 var Promise = require("bluebird");
-var Q = require("q");
 
 module.exports = {
 
@@ -28,25 +27,23 @@ module.exports = {
          * Some code is executed in parallel and other in sequential
          * Always use "return" for a promises otherwise values and error will not be catchable
          */
-        Q().then(function () {
-            //Load some data in parallel
-            return Q.all([
-                UserRole.find(),
-                Event.find(),
-                Product.find(),
-                ProductCategory.find(),
-                User.find()
-
-            ]).spread(function (roles, events, products, productCategory, users) {
-                data.roles = roles;
-                data.events = events;
-                data.products = products;
-                data.product_category = productCategory;
-                data.users = users;
-            });
-
-        }).then(function () {
-            return res.ok(data);
+        //Load some data in parallel
+        Promise.all([
+            UserRole.find(),
+            Event.find(),
+            Product.find(),
+            ProductCategory.find(),
+            User.find()
+        ])
+        .spread(function (roles, events, products, productCategory, users) {
+            data.roles = roles;
+            data.events = events;
+            data.products = products;
+            data.product_category = productCategory;
+            data.users = users;
+        })
+        .then(function () {
+        return res.ok(data);
 
         }).fail(function (err) {
             return res.serverError(err);

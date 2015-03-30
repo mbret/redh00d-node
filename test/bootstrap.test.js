@@ -1,31 +1,37 @@
 var Sails = require('sails');
-var Q = require('q');
+var sails;
 
 before(function(done) {
     Sails.lift({
+
         // configuration for testing purposes
         log:{
             level: "error"
         },
+
+        fillDb: true,
+        autoLogon: false,
+
         models: {
             migrate: 'drop' // erase database before each launch
         },
+
         general: {
             initDatabase: false
+        },
+
+        test: {
+            userEmail: '',
+            userPassword: '',
+            userAuth: "Basic dXNlckB1c2VyLmNvbTpwYXNzd29yZA==", // user@user.com / password
+            adminAuth: 'Basic YWRtaW5AYWRtaW4uY29tOnBhc3N3b3Jk', // admin@admin.com / password
+            toolsPath: __dirname + '/tools'
         }
-    }, function(err, sails) {
+    }, function(err, server) {
         if (err) return done(err);
+        sails = server;
 
-        // here you can load fixtures, etc.
-        DatabaseService.seedDefaultData().then(function() {
-            return DatabaseService.seedTestData().then(function() {
-                return done(null, sails);
-            });
-
-        }).fail(function (err) {
-            return done( new Error(err) );
-        });
-
+        done(null, sails);
     });
 });
 

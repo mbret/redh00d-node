@@ -50,7 +50,7 @@ module.exports.routes = {
     'delete /api/events/:id/members/:idmember': 'EventController.deleteMember',
     'put    /api/events/:id':                   'EventController.update',
     'get    /api/events/:id/members*':          'EventController.findMultipleMembers',
-    'get    /api/events*':                      'EventController.findMultiple',
+    'get    /events*':                      'EventController.findMultiple',
 
     /**
      * INVITATION relatives routes
@@ -102,8 +102,6 @@ module.exports.routes = {
     'put    /api/products':                      'ProductController.update',
     'delete /api/products/:id':                  'ProductController.delete',
     'get    /api/products*':                     'ProductController.findMultiple'
-
-
 
     // If a request to a URL doesn't match any of the custom routes above,
     // it is matched against Sails route blueprints.  See `config/blueprints.js`

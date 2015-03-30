@@ -21,8 +21,9 @@ module.exports = {
         migrate: 'drop' // erase database before each launch
     },
 
+    fillDb: true,
+
     general: {
-        initDatabase: true,
         // Active protection of JSON returned data of each request
         protectJsonData: false
     },

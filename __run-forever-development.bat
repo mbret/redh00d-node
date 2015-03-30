@@ -1,1 +1,0 @@
-forever -c node app.js --dev
