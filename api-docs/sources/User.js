@@ -145,16 +145,19 @@
  * @apiGroup Users
  * @apiPermission authenticated accountOwner admin
  * @apiDescription Generate a password reset token for the designed user. This token can be used later to update the user password. Then send an email to the specified user.
+ * If silent is set to false the method will respond 204 only after mail has been send. So this method may take some time to be processed.
  * <br/><b style="color:green;">Throw valid response:</b> 204.
  * <br/><b style="color:red;">Throw error response:</b> 400, 401, 403.
  *
  * @apiParam (urlParams) {String} email User's email.
- * @apiParam (dataParam) {Boolean} reset_password true
+ * @apiParam (dataParam) {Boolean} reset_password
+ * @apiParam (dataParam) {Boolean} silent=false
  * @apiExample Use example
  * PATCH http://109.31.47.142:3000/api/users/user@user.com
  * form-data:
  * ----------
  * reset_password=true
+ * silent=false
  *
  * @apiSuccessStructure PatchSuccess
  */

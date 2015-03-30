@@ -61,21 +61,6 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             columnName: 'eventUpdatedDate'
         },
 
-        /**
-         * This method protect sensitive data before sending to customers
-         * Return everything for development
-         */
-        toCustomer: function() {
-            var event = this.toObject();
-            if( sails.config.general.protectJsonData === false ) {
-                return event;
-            }
-            else{
-
-                return event;
-            }
-
-        }
     },
 
     // Modifies user input before validation
@@ -95,6 +80,6 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 //        console.log(event.date);
         //@todo convert date to database datetime
         next();
-    },
+    }
 
 });

@@ -11,9 +11,6 @@
 
 module.exports.bootstrap = function(cb) {
 
-    // @todo create and init data/access.log if it doesnt exist
-    // @todo create and init data/logs.log if it doesnt exist
-
     async.series([
 
         // Init database
@@ -22,12 +19,12 @@ module.exports.bootstrap = function(cb) {
             if(sails.config.fillDb === true){
                 switch(sails.config.environment){
                     case 'production':
-                        DbService.init('production')
+                        DbService.init(sails.config.environment)
                             .then(function(){ cb(); })
                             .catch(cb);
                         break;
                     case 'development':
-                        DbService.init('development')
+                        DbService.init(sails.config.environment)
                             .then(function(){ cb(); })
                             .catch(cb);
                         break;

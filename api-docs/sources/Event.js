@@ -3,7 +3,6 @@
 //
 //  - EventController.find()
 // ------------------------------------------------------------------------------------------
-
 /**
  * @api {get} /events/:id Find an event
  * @apiName FindEvent
@@ -79,14 +78,16 @@
  * @apiGroup Events
  * @apiPermission authenticated
  * @apiDescription Create an event which is retrieve if creation was a success.
- * <br/><b>Throw error:</b> 400.
+ * <br/><b style="color:green;">Throw valid response:</b> 201.
+ * <br/><b style="color:red;">Throw error response:</b> 400, 403, 409.
  *
+ * @apiParam (urlParam) {number} id User's ID
  * @apiParam (dataParam) {String} name
  * @apiParam (dataParam) {String} [description]
  * @apiParam (dataParam) {String} [place]
  * @apiParam (dataParam) {String} date
  * @apiExample Use example
- * post http://109.31.47.142:3000/api/events
+ * post http://109.31.47.142:3000/api/users/10/events
  * form-data: name=MyEvent&date=2014-12-24
  *
  * @apiSuccessStructure CreateSuccess
@@ -123,14 +124,14 @@
 //
 //  - EventController.delete()
 // ------------------------------------------------------------------------------------------
-
 /**
- * @api {delete} /users/:id/events/:id Delete an Event
+ * @api {delete} /events/:id Delete an Event
  * @apiName DeleteEvent
  * @apiGroup Events 
- * @apiPermission authenticated eventOwner
+ * @apiPermission admin
  * @apiDescription Delete an event
- * <br/><b>Throw error:</b> 404.
+ * <br/><b style="color:green;">Throw valid response:</b> 204.
+ * <br/><b style="color:red;">Throw error response:</b> 401, 403, 404.
  *
  * @apiParam {Number} id Event's ID
  * @apiExample Use example
@@ -138,6 +139,30 @@
  *
  * @apiSuccessStructure DeleteSuccess
  */
+
+// ------------------------------------------------------------------------------------------
+// Cancel one
+//
+//  - EventController.delete()
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {put} /events/:id Cancel an Event
+ * @apiName CancelEvent
+ * @apiGroup Events
+ * @apiPermission eventOwner admin
+ * @apiDescription Cancel an event
+ * <br/><b style="color:green;">Throw valid response:</b> 200.
+ * <br/><b style="color:red;">Throw error response:</b> 400, 401, 403, 404.
+ *
+ * @apiParam (urlParam) {Number} id
+ * @apiParam (dataParam) {String} state cancelled
+ * @apiExample Use example
+ * PUT http://109.31.47.142:3000/api/events/10
+ * form-data: state=cancelled
+ *
+ * @apiSuccessStructure UpdateSuccess
+ */
+
 // ------------------------------------------------------------------------------------------
 //
 //                                      Invitation
@@ -152,9 +177,10 @@
  * @api {post} /events/:id/invitations Create an event invitation
  * @apiName CreateEventInvitation
  * @apiGroup Events
- * @apiPermission authenticated author
+ * @apiPermission eventOwner admin
  * @apiDescription Create one event invitation.
- * <br/><b>Throw error:</b> 400.
+ * <br/><b style="color:green;">Throw valid response:</b> 201.
+ * <br/><b style="color:red;">Throw error response:</b> 400, 403, 409.
  *
  * @apiParam (urlParam) {Number} id Event's ID
  * @apiParam (dataParam) {Number} target_id

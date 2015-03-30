@@ -30,7 +30,6 @@ before(function(done) {
     }, function(err, server) {
         if (err) return done(err);
         sails = server;
-
         done(null, sails);
     });
 });

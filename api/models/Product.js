@@ -24,16 +24,20 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             columnName: 'productID'
         },
         isOfficial: {
-            type: 'boolean'
+            type: 'boolean',
+            defaultsTo: false
         },
         name: {
-            type: 'string'
+            type: 'string',
+            required: true
         },
         logo: {
             type: 'string'
         },
-        categoryID: {
-            type: 'integer'
+        category: {
+            model: 'ProductCategory',
+            columnName: 'FK_productCategoryID',
+            required: true
         }
 
     }

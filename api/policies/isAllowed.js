@@ -11,7 +11,6 @@
 
 module.exports = function isAllowed(req, res, next) {
 
-
     // They are already formatted from sails to match with permissions
     var resource = req.options.controller;
     var action = req.options.action;

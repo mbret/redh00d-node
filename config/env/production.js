@@ -18,8 +18,8 @@ module.exports = {
    ***************************************************************************/
 
     models: {
-        connection: 'mysqlDb',
-        migrate: 'safe' // never auto-migrate my database(s). I will do it myself (by hand)
+        connection: 'localDiskDb',
+        migrate: 'drop'
     },
 
   /***************************************************************************
@@ -33,12 +33,28 @@ module.exports = {
    ***************************************************************************/
 
     log: {
-        level: "warn"
+        level: "info"
     },
 
     general: {
-        // Active protection of JSON returned data of each request
-        protectJsonData: true
-    }
+        initDatabase: true, // init database each lift with default data
+
+        protectJsonData: false // Active protection of JSON returned data of each request
+    },
+
+    policies: {
+        DevController: {
+            '*': true,
+            'auth': ['isAllowed']
+        }
+    },
+
+    ssl: {
+//       ca: require('fs').readFileSync(__dirname + './ssl/server.crt'),
+        key: require('fs').readFileSync(__dirname + '/../ssl/server.key'),
+        cert: require('fs').readFileSync(__dirname + '/../ssl/server.crt')
+    },
+
+    environment: 'development' // for now still simulate dev
 
 };

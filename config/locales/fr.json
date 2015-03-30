@@ -1,22 +1,25 @@
 {
     "//": "Various",
-    "Welcome": "Bienvenue",
-    "event": "événement",
+    "Welcome":                      "Welcome",
+    "event":                        "event",
+    "Hello":                        "Hello",
+    "Reset password":               "Reset password",
+    "Please click on this link to update your password": "Please click on this link to update your password",
+    "Redh00d contact":            "Redh00d contact",
 
-    "//": "Not found",
-    "Resource not found":           "La ressource demandée n'existe pas",
-    "resource (%s) doesn't exist":  "La ressource (%s) demandée n'existe pas",
-
-    "//": "Bad request",
-    "Email already taken":      "Cet email est déjà pris",
-    "Parameters invalid":       "Les paramètres donnés sont invalides",
-
-    "//": "Forbidden",
-    "Access denied":                "Accès interdit",
-    "You must be authenticate":    "Vous devez vous être authentifié",
-    "You cannot access this resource": "Vous ne pouvez pas accéder à cette ressource",
-
-    "//": "500 series",
-    "An internal error occurred":   "Une erreur interne est apparu"
-
+    "//": "Error response",
+    "Bad request":                          "Bad request",
+    "Resource not found":                   "Resource not found",
+    "Resource (%s) doesn't exist":          "The requested resource (%s) doesn't exist",
+    "Model not found":                      "The requested model was not found",
+    "Page not found":                       "The requested page was not found",
+    "Bad request":                          "Bad request",
+    "Email already taken":                  "This email is already taken",
+    "Parameters invalid":                   "The given parameters are invalid",
+    "Access denied":                        "Access denied",
+    "Bad authentication":                   "Bad authentication",
+    "You must be authenticate":             "You must be authenticate",
+    "You cannot access this resource":      "You cannot access this resource",
+    "An internal error occurred":           "An internal error occurred",
+    "Please use valid username/password":   "Please use a valid username/password couple to be authenticated"
 }

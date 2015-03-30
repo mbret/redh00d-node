@@ -25,83 +25,119 @@ module.exports.routes = {
     // This path is used to do some stuff in any way before all controllers
     // We could have call a controller which implement function(req, res, next) and call at last next()
     // but due to short logic/code a function placed here is more practice.
-    // It's not possible to use middleware because before router we should have to hard check the request (no req.wantsJson available)
+    // It's not possible to use middleware instead because before router we should have to hard check the request and its pain (no req.wantsJson available)
     // and after router all these routes has been checked !
     '*': function preDispatch(req, res, next) {
         return next();
     },
 
-    'get /api/doc': function(req, res){
-        return res.view('doc');
+    'get /doc': function (req, res) {
+        return res.send('<iframe style="border:none;height:97%;width:100%;" src="'+sails.config.general.docURL+'"></iframe>');
     },
 
-    // Debug route
-    'get  /api/dev/db': 'DevController.dumpDatabase',
-    'get  /api/dev/logs':'DevController.logs',
-    'get  /api/dev/delete-logs':'DevController.deleteLogs',
+    'get /': function(req, res){
+        require('http').get('http://api.icndb.com/jokes/random?firstName=Chuck&amp;lastName=Norris', function(resp){
+            var str = '';
+            resp.on('data', function(chunk){
+                str += chunk;
+            });
+            resp.on('end', function(){
+                res.send(JSON.parse(str).value.joke);
+            })
+        }).on("error", function(e){
+            res.send('It works!');
+        });
 
-    /**
+    },
+
+
+    /***************************
+     *
+     * Development relatives routes
+     *
+     ***************************/
+    'get  /dev/db': 'DevController.dumpDatabase',
+    'get  /dev/logs':'DevController.logs',
+    'get  /dev/access-logs':'DevController.accessLogs',
+    'get  /dev/delete-logs':'DevController.deleteLogs',
+    'get  /dev/auth':        'DevController.auth', // use this action to perform first auth
+
+    /****************************************************
+     *
+     * Helpers relatives routes
+     *
+     * These routes are used by clients in order to help
+     * code logic (eg: check credential, etc)
+     * It allow to perform no REST actions
+     ****************************************************/
+    'post   /auth': 'HelperController.auth', // Simulate auth action (allow the client to know the validity of credential useful for futur requests)
+
+    /***************************
+     *
      * EVENT relatives routes
-     */
-    'get    /api/events/:id':                   'EventController.find',
-    'get    /api/events/:id/members/:idmember': 'EventController.findMember',
-    'post   /api/events':                       'EventController.create',
-    'delete /api/events/:id':                   'EventController.delete',
-    'delete /api/events/:id/members/:idmember': 'EventController.deleteMember',
-    'put    /api/events/:id':                   'EventController.update',
-    'get    /api/events/:id/members*':          'EventController.findMultipleMembers',
-    'get    /events*':                      'EventController.findMultiple',
+     *
+     ***************************/
+    'get     /events/:id':                   'EventController.find',
+    'get     /events/:id/members/:idmember': 'EventController.findMember',
+    'post    /events':                       'EventController.create',
+    'delete  /events/:id':                   'EventController.delete',
+    'delete  /events/:id/members/:idmember': 'EventController.deleteMember',
+    'put     /events/:id':                   'EventController.update',
+    'get     /events/:id/members*':          'EventController.findMultipleMembers',
+    'get     /events*':                      'EventController.findMultiple',
 
-    /**
-     * INVITATION relatives routes
-     */
-    'post    /api/events/:idevent/invitations':     'InvitationController.create',
-    'get     /api/events/:idevent/invitations/:id': 'InvitationController.find',
-    'put     /api/events/:idevents/invitations':    'InvitationController.update', // author can cancel / receiver can cancel, accept
-    'delete  /api/events/:idevent/invitations/:id': 'InvitationController.delete', // put state on cancel
-    'get     /api/events/:idevent/invitation*':     'InvitationController.findMultiple',
+    // Invitations
+    'post    /events/:idevent/invitations':     'EventController.createInvitation',
+    'get     /events/:idevent/invitations/:id': 'InvitationController.find',
+    'put     /events/:idevents/invitations':    'InvitationController.update', // author can cancel / receiver can cancel, accept
+    'delete  /events/:idevent/invitations/:id': 'InvitationController.delete', // put state on cancel
+    'get     /events/:idevent/invitation*':     'InvitationController.findMultiple',
 
-    /**
-     * AUTHENTICATION relatives routes
-     */
-//    'post   /api/auth':                         'AuthController.login',
-//    'delete /api/auth':                         'AuthController.logout',
-
-    /**
+    /***************************
+     *
      * USER relatives routes
-     */
+     *
+     ***************************/
     // only users
-    'get    /api/users/:id':                    'UserController.find',
-    'post   /api/users':                        'UserController.create',
-    'put    /api/users/:id':                    'UserController.update',
-    'patch  /api/users/:id':                    'UserController.patch', // password reset token
-    'delete /api/users/:id':                    'UserController.delete',
-    'get    /api/users*':                       'UserController.findMultiple',
+    'get    /users/:id':                    'UserController.find',
+    'post   /users':                        'UserController.create',
+    'put    /users/:id':                    'UserController.update',
+    'patch  /users/:id':                    'UserController.patch', // password reset token
+    'delete /users/:id':                    'UserController.delete',
+
 
     // USER friendships relatives routes
     'get    /users/:userid/friendships/:id':            'UserFriendShipController.find',
-    'get    /users/:userid/friends/:idfriend':          'UserFriendShipController.FindFriend',
-    'delete /users/:userid/friends/:idfriend':          'UserFriendShipController.delete', // cancel a friendship request
     'put    /users/:userid/friendships/:id':            'UserFriendShipController.update', // update request (a response for friends)
+    'post   /users/:userid/friendships':                'UserFriendShipController.create', // Create a friendship request
     'get    /users/:userid/friendships*':               'UserFriendShipController.findMultiple',
-    'post   /users/:userid/friends':                    'UserFriendShipController.create', // Create a friendship request
+
+    'delete /users/:userid/friends/:idfriend':          'UserFriendShipController.delete', // cancel a friendship request
     'get    /users/:userid/friends*':                   'UserFriendShipController.FindFriends',
 
     // USER friends group relatives routes
-    'get    /api/users/:iduser/friendsgroup/:id':                  'UserFriendsGroupController.find',
-    'post   /api/users/:iduser/friendsgroup':                      'UserFriendsGroupController.create',
-    'post   /api/users/:iduser/friendsgroup/:id/members':          'UserFriendsGroupController.addMember',
-    'put    /api/users/:iduser/friendsgroup':                      'UserFriendsGroupController.update',
-    'delete /api/users/:iduser/friendsgroup/:id':                  'UserFriendsGroupController.delete',
-    'delete /api/users/:iduser/friendsgroup/:id/members/:idmember':'UserFriendsGroupController.deleteMember',
-    'get    /api/users/:iduser/friendsgroup*':                     'UserFriendsGroupController.findMultiple',
+    'get    /users/:iduser/friendsgroup/:id':                  'UserFriendsGroupController.find',
+    'post   /users/:iduser/friendsgroup':                      'UserFriendsGroupController.create',
+    'post   /users/:iduser/friendsgroup/:id/members':          'UserFriendsGroupController.addMember',
+    'put    /users/:iduser/friendsgroup':                      'UserFriendsGroupController.update',
+    'delete /users/:iduser/friendsgroup/:id':                  'UserFriendsGroupController.delete',
+    'delete /users/:iduser/friendsgroup/:id/members/:idmember':'UserFriendsGroupController.deleteMember',
+    'get    /users/:iduser/friendsgroup*':                     'UserFriendsGroupController.findMultiple',
 
-    // Products
-    'get    /api/products/:id':                  'ProductController.find',
-    'post   /api/products':                      'ProductController.create',
-    'put    /api/products':                      'ProductController.update',
-    'delete /api/products/:id':                  'ProductController.delete',
-    'get    /api/products*':                     'ProductController.findMultiple'
+    'get    /users*':                       'UserController.findMultiple',
+
+    /***************************
+     *
+     * PRODUCTS relatives routes
+     *
+     ***************************/
+    'get    /products/:id':                  'ProductController.find',
+    'post   /products':                      'ProductController.create',
+    'put    /products':                      'ProductController.update',
+    'delete /products/:id':                  'ProductController.delete',
+    'get    /products*':                     'ProductController.findMultiple'
+
+
 
     // If a request to a URL doesn't match any of the custom routes above,
     // it is matched against Sails route blueprints.  See `config/blueprints.js`

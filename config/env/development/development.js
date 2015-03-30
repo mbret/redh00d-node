@@ -25,15 +25,28 @@ module.exports = {
 
     general: {
         // Active protection of JSON returned data of each request
-        protectJsonData: false
+        protectJsonData: false,
+        
+        siteURL: 'https://localhost:1337',
+        docURL: 'https://localhost:1337/doc'
+        // docURL is not overwritten to keep protected link when deployed on server. If you want to use local doc, navigate inside api-docs folder.
     },
 
     policies: {
-        DevController: true
+        DevController: {
+            '*': true,
+            'auth': ['isAllowed']
+        }
     },
 
     log: {
         level: 'info'
+    },
+
+    ssl: {
+//       ca: require('fs').readFileSync(__dirname + './ssl/server.crt'),
+       key: require('fs').readFileSync(__dirname + '/../../ssl/server.key'),
+       cert: require('fs').readFileSync(__dirname + '/../../ssl/server.crt')
     }
 
 };

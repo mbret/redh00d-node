@@ -6,14 +6,17 @@
  * @docs		:: http://sailsjs.org/#!documentation/models
  */
 
-//var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 var uuid = require("node-uuid");
 
 // use this method https://groups.google.com/forum/#!topic/sailsjs/GTGoOGHAEvE to emulate inheritance of object
 // The base model is cloned and then merged with this model. This model is a child of the clone so not a child of ./BaseModel itself
 module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
+    tableName: 'user',
     autoPK: true,
+    autoCreatedAt: true,
+    autoUpdatedAt: true,
 
     attributes: {
 
@@ -126,62 +129,50 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
         /**
          * Check if the supplied password matches the stored password.
+         * - Useful when login action, change password ...
          */
         validatePassword: function( candidatePassword, cb ) {
-            if( candidatePassword === this.encryptedPassword ){
-                return cb(null, true);
-            }
-            else{
-                return cb(null, false);
-            }
-//            bcrypt.compare( candidatePassword, this.encryptedPassword, function (err, valid) {
-//                if(err) return cb(err);
-//                cb(null, valid);
-//            });
+            bcrypt.compare( candidatePassword, this.encryptedPassword, function (err, valid) {
+                if(err) return cb(err);
+                cb(null, valid);
+            });
         },
 
         /**
          * Generate password reset token
          */
         generatePasswordResetToken: function(cb) {
-            this.passwordResetToken = Token.generate();
-            this.save(function (err) {
-                if(err) return cb(err);
-                cb();
-            });
+            var token = TokenService.generate(); // get json object
+            User.update( {'ID': this.ID}, {passwordResetToken: token}, function (err, user) {
+                    if(err) return cb(err);
+                    this.passwordResetToken = token;
+                    return cb();
+                }
+            );
         },
 
         /**
          * Send password reset email
          *
-         * Generate a password reset token and send an email to the user with
+         * send an email to the user with
          * instructions to reset their password
          */
         sendPasswordResetEmail: function(cb) {
-            var self = this;
+            var mailOptions = {
+                from: sails.__(sails.config.general.mail.from.contact.name) + ' ' + '<' + sails.config.general.mail.from.contact.email + '>', // sender address
+                to: this.email, // list of receivers
+                subject: sails.__('Reset password'), // Subject line
+//                text: sails.__('Please click on this link to update your password'), // plaintext body
+                html: '<b>' + sails.__('Please click on this link to update your password') + '</b>' // html body
+            };
 
-            this.generatePasswordResetToken(function (err) {
-                if(err) return cb(err);
-
-                // Send email
-                var email = new Email._model({
-                    to: {
-                        name: self.fullName(),
-                        email: self.email
-                    },
-                    subject: "Reset your password",
-                    data: {
-                        resetURL: sails.config.localAppURL + '/api/users/reset-password/#/' + self.ID + '/' +self.passwordResetToken.value
-                    },
-                    tags: ['password-reset','transactional'],
-                    template: 'password-reset'
-                });
-
-                email.setDefaults();
-
-                email.send(function (err, res, msg) {
-                    cb(err, res, msg, self.passwordResetToken);
-                });
+            MailerService.sendMail(mailOptions, function(err, info){
+                if(err){
+                    return cb(err);
+                }else{
+                    console.log('Message sent: ' + info);
+                    return cb();
+                }
             });
         },
 
@@ -192,6 +183,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
     },
 
     beforeCreate: [
+
         // Encrypt user's password
         function (values, cb){
             User.encryptPassword(values, function (err) {
@@ -244,14 +236,16 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
      * User password encryption. Uses bcrypt.
      */
     encryptPassword: function(values, cb) {
-        values.encryptedPassword = values.password;
-        sails.log.debug("User: Class.encryptPassword: Password encrypted from '%s' to '%s'", values.password, values.encryptedPassword);
-        cb();
-//        bcrypt.hash(values.password, 10, function (err, encryptedPassword) {
-//            if(err) return cb(err);
-//            values.encryptedPassword = encryptedPassword;
-//            cb();
-//        });
+//        values.encryptedPassword = values.password;
+//        cb();
+        bcrypt.hash(values.password, 10, function (err, encryptedPassword) {
+            if(err) return cb(err);
+            values.encryptedPassword = encryptedPassword;
+            sails.log.info("User: Class.encryptPassword: Password encrypted from '%s' to '%s'", values.password, values.encryptedPassword);
+            return cb();
+        });
+
+
     }
 
 });

@@ -10,6 +10,12 @@
 module.exports = {
 
     /**
+     * Overrides for the settings in `config/controllers.js`
+     * (specific to EventController)
+     */
+    _config: {},
+
+    /**
      * Return an event by id
      */
     find: function (req, res) {
@@ -25,6 +31,7 @@ module.exports = {
     /**
      * Return all events.
      * Return a list of events (empty or not) and a status 200.
+     * @todo write this method
      */
     findMultiple: function (req, res) {
 
@@ -58,41 +65,23 @@ module.exports = {
         });
     },
 
-
-
     /**
      * Delete an event
-     * @param req
-     * @param res
+     * - Only admin can delete events
+     * @todo write this method
      */
     destroy: function(req, res){
-
-        // Check the event before deletion
-        Event.findOne( req.param('id')).exec(function(err, event){
-            if(err){
-                //@todo
-                return res.notFound("This event doesn't exist");
-            }
-
-            // Deletion
-            event.destroy(function(err){
-                if(err){
-                    //@todo
-                    return res.serverError(err);
-                }
-                return res.noContent();
-            })
-        });
+        return res.send(501);
     },
 
     /**
      * Update an event
-     * Required parameters: id
-     * Optional parameters: name/date/description/place
-     * @param req
-     * @param res
+     *
+     * @todo write this method
      */
     update: function(req, res){
+
+        return res.send(501);
 
         // Get param from request
         var dataToUpdate = {};
@@ -138,11 +127,12 @@ module.exports = {
     },
 
     /**
-     * Create an event for a user.
-     * @param req
-     * @param res
+     * Create an event
+     * -
+     * @todo write this method
      */
     create: function(req, res){
+        return res.send(501);
 
         var eventData = {
             name: req.param('name'),
@@ -180,11 +170,20 @@ module.exports = {
 
     },
 
+    /**********************************
+     *
+     * Invitations relatives method
+     *
+     **********************************/
+
     /**
-     * Overrides for the settings in `config/controllers.js`
-     * (specific to EventController)
+     * Create an invitation
+     * - add an event member and put the state to (waiting)
      */
-    _config: {}
+    createInvitation: function(req, res){
+        return res.send(501);
+    }
+
 
   
 };

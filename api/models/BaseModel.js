@@ -2,14 +2,20 @@ module.exports = {
 
     attributes: {
 
-
         toJSON: function() {
             var model = this.toObject();
             return model;
+        },
+
+        /**
+         * This method protect sensitive data before sending to customers
+         * - overwrite this method in child model
+         */
+        toCustomer: function() {
+            return this.toObject();
         }
     },
 
-    // Modifies user input before validation
     beforeValidation: function(event, next){
         next();
     },

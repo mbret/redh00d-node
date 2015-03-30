@@ -113,16 +113,16 @@
 //   - UserFriendshipController.delete()
 // ------------------------------------------------------------------------------------------
 /**
- * @api {delete} /users/:id_user/friendships/:id_friendship Delete a friendship
+ * @api {delete} /users/:id_user/friends/:id_friend Delete a friendship
  * @apiName DeleteFriendship
  * @apiGroup Friendships
  * @apiPermission accountOwner admin
- * @apiDescription
+ * @apiDescription Delete a friendship with the specified friend.
  * <br/><b style="color:green;">Throw valid response:</b> 204.
  * <br/><b style="color:red;">Throw error response:</b> 400, 401, 403.
  *
  * @apiParam (urlParams) {Number} id_user User's ID.
- * @apiParam (urlParams) {Number} id_friendship ID of the friendship to cancel.
+ * @apiParam (urlParams) {Number} id_friend ID of the friend to cancel.
  * @apiExample Use example
  * DELETE http://109.31.47.142:3000/api/users/15/friends/27
  *
