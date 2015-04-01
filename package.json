@@ -46,9 +46,9 @@
     "supertest": "0.13.x"
   },
   "scripts": {
-    "start": "node app.js",
+    "start": "sails lift",
     "debug": "node debug app.js",
-    "test": "NODE_ENV=test mocha test --recursive"
+    "test": "mocha"
   },
   "main": "app.js",
   "repository": {

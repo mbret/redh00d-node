@@ -31,9 +31,11 @@ To use the api you can use many tools (Chrome console, Postman, etc) but also pr
 - If you use programming language do refer to the specific api to use it.
 - If you use a specific tool like Postman it should be clear enough, no more help needed.
 
-## Run test:
-- Run `npm update` in terminal.
-- Run `mocha` in terminal.
+## Start application
+- Run `npm start`
+
+## Test application:
+- Run `npm test`
 
 ## (re)Generate documentation:
 - Run `node api-docs/run-generation.js` in terminal.
