@@ -14,27 +14,29 @@ module.exports = {
         return Promise.all([
             UserRole.create({name: 'admin', displayName: 'Administrator'}),
             UserRole.create({name: 'user', displayName: 'User'}),
-
             ProductCategory.create({name: 'food', displayName: 'Food'}),
-            ProductCategory.create({name: 'drink', displayName: 'Drink'}),
+            ProductCategory.create({name: 'drink', displayName: 'Drink'})
         ])
-        .all([
-            User.create({email: 'user@user.com', password: 'password', firstName: 'User', lastName: 'User'}),
-            User.create({email: 'user2@user2.com', password: 'password', firstName: 'User', lastName: 'User'}),
-            User.create({ email: 'admin@admin.com', password: 'password', firstName: 'Admin', lastName: 'Admin', role: 1 }),
-            Product.create({isOfficial: true, name: 'Coca Cola', logo: 'coca_cola', categoryID: 2}),
-            Product.create({isOfficial: false, name: 'Chips', logo: null, categoryID: 1})
-        ])
-        .all([
-            // events
-            Event.create({name:'Soirée pyjama', description:'Venez tous nue', author: 2, place: 'Toul', date: '2014-12-31', ID: 1}),
-            Event.create({name:'Meeting redh00d', description:'On va fumer de la bonne grosse beu !!', author: 2, place: 'Coloc', date: '2014-12-01'})
-        ])
-        .all([
-            // products of events
-            EventProduct.create({eventID:1, userID: 2, productID: 2, quantity: 2}),
-            EventProduct.create({eventID:1, userID: 2, productID: 1, quantity: 1})
-        ]);
+            .then(function(){
+                Promise.all([
+                    User.create({email: 'user@user.com', password: 'password', firstName: 'User', lastName: 'User'}),
+                    User.create({email: 'user2@user2.com', password: 'password', firstName: 'User', lastName: 'User'}),
+                    User.create({ email: 'admin@admin.com', password: 'password', firstName: 'Admin', lastName: 'Admin', role: 1 }),
+                    Product.create({isOfficial: true, name: 'Coca Cola', logo: 'coca_cola', categoryID: 2}),
+                    Product.create({isOfficial: false, name: 'Chips', logo: null, categoryID: 1})
+                ])
+                    .all([
+                        // events
+                        Event.create({name:'Soirée pyjama', description:'Venez tous nue', author: 2, place: 'Toul', date: '2014-12-31', ID: 1}),
+                        Event.create({name:'Meeting redh00d', description:'On va fumer de la bonne grosse beu !!', author: 2, place: 'Coloc', date: '2014-12-01'})
+                    ])
+                    .all([
+                        // products of events
+                        EventProduct.create({eventID:1, userID: 2, productID: 2, quantity: 2}),
+                        EventProduct.create({eventID:1, userID: 2, productID: 1, quantity: 1})
+                    ]);
+            });
+
     },
 
     init_development: function(){

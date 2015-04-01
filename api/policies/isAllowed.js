@@ -21,7 +21,10 @@ module.exports = function isAllowed(req, res, next) {
     }
     else{
         // case of reject maybe user is not authenticate ?
-        if( ! req.user.isAuthenticated ) return res.unauthorized();
+        if( ! req.user.isAuthenticated ){
+            sails.log.info("isAllowed -> request not authenticated");
+            return res.unauthorized();
+        }
         else return res.forbidden();
     }
 

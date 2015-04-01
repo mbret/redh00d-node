@@ -40,7 +40,7 @@ module.exports = {
             else if( acl.allow && acl.allow[resource] && acl.allow[resource].indexOf(action) > -1 ){
                 rightFound = true;
                 isAllowed = true;
-                sails.log.info("Permission policy, Allow access to [current role tested="+currentRole+"][resource="+resource+"][action="+action+"]");
+                sails.log.info("Permission policy, Allow access to ["+currentRole+"][resource="+resource+"][action="+action+"]");
             }
 
             currentRole = permissions.roles[currentRole].parent;
