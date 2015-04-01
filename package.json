@@ -2,7 +2,7 @@
   "name": "redh00d-node",
   "private": true,
   "version": "0.0.0",
-  "description": "Redh00d API",
+  "description": "Redh00d Web service",
   "keywords": [
     "api",
     "social"
@@ -25,6 +25,7 @@
     "grunt-sails-linker": "^0.9.6",
     "grunt-sync": "0.0.8",
     "include-all": "~0.1.3",
+
     "node-uuid": "1.4.x",
     "nodemailer": "^0.5.15",
     "nodemailer-smtp-transport": "^1.0.2",
@@ -43,7 +44,8 @@
   "devDependencies": {
     "mocha": "1.13.x",
     "must": "0.6.x",
-    "supertest": "0.13.x"
+    "supertest": "0.13.x",
+    "lodash": "^3.6.0"
   },
   "scripts": {
     "start": "sails lift",
@@ -53,7 +55,7 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "https://109.31.47.142/bonobo/redh00d-node.git"
+    "url": "https://github.com/mbret/redh00d-ws.git"
   },
   "author": "Maxime Bret, Baptiste Mulot",
   "license": ""
