@@ -34,7 +34,6 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             columnName: 'userRoleDisplayName'
         }
 
-
     },
 
     beforeCreate: function( values, cb ){
@@ -43,7 +42,14 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
     beforeUpdate: function( values, cb ){
         return cb();
-    }
+    },
 
+    /**
+     * Return the default user role
+     * @returns Promise|callback
+     */
+    findDefault: function(cb){
+        return UserRole.findOne({ name: sails.config.general.defaultUserRoleName }, cb);
+    }
 
 });

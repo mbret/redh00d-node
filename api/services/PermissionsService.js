@@ -11,9 +11,9 @@ module.exports = {
      * @returns {boolean}
      */
     isAllowed: function( roleName, resource, action ){
-        // `sails` object is available here:
 
         var permissions = sails.config.permissions;
+        
         // Reject if ACL is not register for this resource
         if( ! this._hasRole(roleName) || ! this._hasResource(resource)  ){
             throw new Error("Permission policy, trying to get a unknown role or resource or action [role="+roleName+"][resource="+resource+"][action="+action+"]");

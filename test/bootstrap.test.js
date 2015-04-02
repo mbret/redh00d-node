@@ -6,7 +6,7 @@ before(function(done) {
 
         // configuration for testing purposes
         log:{
-            level: "warn"
+            level: "error"
         },
 
         fillDb: true,
@@ -21,8 +21,8 @@ before(function(done) {
         },
 
         test: {
-            userEmail: '',
-            userPassword: '',
+            user: null,
+            admin: null,
             userAuth: "Basic dXNlckB1c2VyLmNvbTpwYXNzd29yZA==", // user@user.com / password
             adminAuth: 'Basic YWRtaW5AYWRtaW4uY29tOnBhc3N3b3Jk', // admin@admin.com / password
             toolsPath: __dirname + '/tools'
@@ -30,7 +30,19 @@ before(function(done) {
     }, function(err, server) {
         if (err) return done(err);
         sails = server;
-        done(null, sails);
+        
+        // load detail of current user
+        User.findOne({email: 'user@user.com'})
+            .then(function(user){
+                sails.config.test.user = user;
+                
+                // load detail of current admin user
+                return User.findOne({email: 'admin@admin.com'}).then(function(user){
+                    sails.config.test.admin = user;
+                    done(null, sails);
+                });
+            })
+            .catch(done);
     });
 });
 

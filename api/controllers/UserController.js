@@ -77,8 +77,8 @@ module.exports = {
     create: function (req, res) {
 
         var data = {};
-        if ( req.param('firstname') ) data.firstName = req.param('firstname');
-        if ( req.param('lastname') ) data.lastName = req.param('lastname');
+        if ( req.param('firstName') ) data.firstName = req.param('firstName');
+        if ( req.param('lastName') ) data.lastName = req.param('lastName');
         if ( req.param('password') ) data.password = req.param('password');
         if ( req.param('phone') ) data.phone = req.param('phone');
         if ( req.param('email') ) data.email = req.param('email');
@@ -176,8 +176,10 @@ module.exports = {
                 return res.forbidden();
             }
 
+            var query = validator.isEmail(req.param('id')) ? {email: req.param('id')} : req.param('id');
+            
             // Check user
-            User.findOne({email: req.param('id')}, function (err, user) {
+            User.findOne(query, function (err, user) {
                 if (err) return res.serverError(err);
                 if (!user) return res.notFound();
 
@@ -231,16 +233,26 @@ module.exports = {
      */
     delete: function (req, res) {
         // Case of user try to delete an other account
-        if( (req.param('id') != req.user.ID) && ! PermissionsService.isAllowed( req.user.role.name, req.options.controller, 'deleteOthers') ){
+        if( ! PermissionsService.isAllowed( req.user.role.name, req.options.controller, 'deleteOthers') ){
             return res.forbidden();
         }
         else{
 
-            User.findOne({'ID':req.param('id')}).then(function(user){
-                if(!user) return res.notFound();
-                return User.destroy({ID:req.param('id')}).then(function(){
-                    return res.noContent();
-                });
+            User.findOne(req.param('id')).then(function(user){
+                if(!user){
+                    return res.notFound();
+                }
+                
+                // User cannot destroy itself
+                if(user.ID == req.user.ID){
+                    return res.badRequest();
+                }
+                else{
+                    // destroy user
+                    return User.destroy({ID:req.param('id')}).then(function(){
+                        return res.noContent();
+                    });
+                }
             }).catch(function(err){
                 return res.serverError(err);
             });
