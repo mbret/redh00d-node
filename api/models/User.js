@@ -89,15 +89,6 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             minLength: 4,
             required: true
         },
-//        events: {
-//
-//        },
-//        friends: {
-//
-//        },
-//        friendsGroups: {
-//
-//        },
 
         /**
          * Get user's full name
@@ -229,7 +220,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
                 });
             }
             return cb(); // otherwise continue
-        }
+        },
     ],
 
     /**

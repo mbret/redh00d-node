@@ -59,7 +59,7 @@ module.exports = {
     create: function(req, res){
         var data = {};
         if ( req.param('name') ) data.name = req.param('name');
-        if ( req.param('logo') ) return res.send(501); // @todo
+        if ( req.param('logo') ) data.logo = req.param('logo');
         if ( req.param('category') ) data.category = req.param('category');
 
         // param only for admin
@@ -87,7 +87,6 @@ module.exports = {
      * @todo write this method
      */
     update: function(req, res){
-
         return res.send(501);
     }
 

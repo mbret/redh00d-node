@@ -132,10 +132,10 @@ module.exports.routes = {
      *
      ***************************/
     'get    /products/:id':                  'ProductController.find',
-    'post   /products':                      'ProductController.create',
-    'put    /products':                      'ProductController.update',
     'delete /products/:id':                  'ProductController.delete',
-    'get    /products*':                     'ProductController.findMultiple'
+    'get    /products*':                     'ProductController.findMultiple',
+    'post   /products':                      'ProductController.create',
+    'put    /products':                      'ProductController.update'
 
 
 

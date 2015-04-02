@@ -35,7 +35,8 @@ module.exports.bootstrap = function(cb) {
             else{
                 return cb();
             }
-        }
+        },
+
     ], function(error){
        return cb(error);
     });

@@ -16,13 +16,14 @@ module.exports = function isAllowed(req, res, next) {
     var action = req.options.action;
 
     // test permission
+    //sails.log.info('isAllowed -> req.user -> ', req.user);
     if( PermissionsService.isAllowed( req.user.role.name, resource, action ) ){
         return next();
     }
     else{
         // case of reject maybe user is not authenticate ?
         if( ! req.user.isAuthenticated ){
-            sails.log.info("isAllowed -> request not authenticated");
+            //sails.log.info("isAllowed -> request not authenticated");
             return res.unauthorized();
         }
         else return res.forbidden();

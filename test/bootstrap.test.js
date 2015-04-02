@@ -6,7 +6,7 @@ before(function(done) {
 
         // configuration for testing purposes
         log:{
-            level: "info"
+            level: "warn"
         },
 
         fillDb: true,

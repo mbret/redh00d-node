@@ -3,33 +3,40 @@ var assert = require("assert");
 
 describe('ProductController', function() {
 
-    var authorization = "Basic eG1heDU0QGdtYWlsLmNvbTpwYXNzd29yZA=="; // xmax54@gmail.com / password
-    var authorizationAdmin = 'Basic YWRtaW5AYWRtaW4uY29tOnBhc3N3b3Jk'; // admin@admin.com / password
-//    var request = request(sails.hooks.http.app);
+    var products;
+    var productsCategories;
 
     before(function(done){
-        done();
-    })
+        Product.find().exec(function(err, entries){
+            if(err) done(err);
+            products = entries;
+            ProductCategory.find().exec(function(err, entries){
+                if(err) done(err);
+                productsCategories = entries;
+                done();
+            });
+        });
+    });
 
     beforeEach(function(done){
         done();
-    })
+    });
 
     after(function(done){
         done();
-    })
+    });
 
     afterEach(function(done){
         done();
-    })
+    });
 
     describe("GET /products", function(){
 
-        it('should respond product with ID 1', function(done){
-            request(sails.hooks.http.app).get('/products/1').set('Authorization', authorization)
+        it('should respond product with ID x', function(done){
+            request(sails.hooks.http.app).get('/products/' + products[0].ID).set('Authorization', sails.config.test.userAuth)
                 .expect(200)
                 .expect(function(res){
-                    if( !res.body.product || !res.body.product.ID == 1 ) throw new Error("No product or wrong product");
+                    if( !res.body.product || !res.body.product.ID == products[0].ID ) throw new Error("No product or wrong product");
                 })
                 .end(done);
         });
@@ -37,11 +44,11 @@ describe('ProductController', function() {
         it('should respond 404', function(done){
             async.series([
                 function(callback){
-                    request(sails.hooks.http.app).get('/products/x').set('Authorization', authorization)
+                    request(sails.hooks.http.app).get('/products/x').set('Authorization', sails.config.test.userAuth)
                         .expect(404).end(callback);
                 },
                 function(callback){
-                    request(sails.hooks.http.app).get('/products/20').set('Authorization', authorization)
+                    request(sails.hooks.http.app).get('/products/99999').set('Authorization', sails.config.test.userAuth)
                         .expect(404).end(callback);
                 }
             ], function(err, results){
@@ -51,7 +58,7 @@ describe('ProductController', function() {
         });
 
         it('should respond list of products', function(done){
-            request(sails.hooks.http.app).get('/products').set('Authorization', authorization)
+            request(sails.hooks.http.app).get('/products').set('Authorization', sails.config.test.userAuth)
                 .expect(200)
                 .expect(function(res){
                     if( !res.body.products ) throw new Error("No products");
@@ -67,11 +74,11 @@ describe('ProductController', function() {
         it('should respond Bad Request', function(done){
             async.series([
                 function(callback){
-                    request(sails.hooks.http.app).post('/products').set('Authorization', authorization)
+                    request(sails.hooks.http.app).post('/products').set('Authorization', sails.config.test.userAuth)
                         .expect(400).end(callback);
                 },
                 function(callback){
-                    request(sails.hooks.http.app).post('/products').send({name: 'qsds'}).set('Authorization', authorization)
+                    request(sails.hooks.http.app).post('/products').send({name: 'qsds'}).set('Authorization', sails.config.test.userAuth)
                         .expect(400).end(callback);
                 }
             ], function(err, results){
@@ -81,18 +88,18 @@ describe('ProductController', function() {
         });
 
         it('should create the product banana', function(done){
-            request(sails.hooks.http.app).post('/products').send({name: 'banana', category: 1}).set('Authorization', authorization)
+            request(sails.hooks.http.app).post('/products').send({name: 'banana', category: productsCategories[0].ID, logo: 'banana.jpg'}).set('Authorization', sails.config.test.userAuth)
                 .expect(201).expect(function(res){
                     assert.equal(res.body.product.name, 'banana');
                     assert.equal(res.body.product.isOfficial, false);
-                    assert.equal(res.body.product.category.ID, 1);
+                    assert.equal(res.body.product.category.ID, productsCategories[0].ID);
                 })
                 .end(done);
         });
 
         // official: admin
         it('should not be able to set these criteria', function(done){
-            request(sails.hooks.http.app).post('/products').send({official: true, name: 'youhou', category: 1}).set('Authorization', authorization)
+            request(sails.hooks.http.app).post('/products').send({official: true, name: 'youhou', category: 1, logo: 'youhou.jpg'}).set('Authorization', sails.config.test.userAuth)
                 .expect(201).expect(function(res){
                     assert.equal(res.body.product.isOfficial, false);
                 })

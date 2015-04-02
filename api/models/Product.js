@@ -32,7 +32,8 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             required: true
         },
         logo: {
-            type: 'string'
+            type: 'string',
+            required: true
         },
         category: {
             model: 'ProductCategory',
