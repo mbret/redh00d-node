@@ -1,6 +1,8 @@
 # Readme
 
 [![Build Status](https://magnum.travis-ci.com/mbret/redh00d-ws.svg?token=Mjz2n6ks7X1yu16DThti&branch=master)](https://magnum.travis-ci.com/mbret/redh00d-ws)
+[![Join the chat at https://gitter.im/mbret/redh00d](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mbret/redh00d)
+
 
 This document contain all basic stuff about installing and running application. For more complete information please visit redh00d team website at 
 https://sites.google.com/site/redh00dintern/API.
