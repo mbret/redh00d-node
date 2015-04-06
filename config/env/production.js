@@ -45,7 +45,7 @@ module.exports = {
     policies: {
         DevController: {
             '*': true,
-            'auth': ['isAllowed']
+            'auth': ['isAllowedWithPolicies']
         }
     },
 

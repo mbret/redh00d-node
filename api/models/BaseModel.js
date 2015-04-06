@@ -12,7 +12,8 @@ module.exports = {
          * - overwrite this method in child model
          */
         toCustomer: function() {
-            return this.toObject();
+            var model = this.toObject();
+            return model;
         }
     },
 

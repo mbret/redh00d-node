@@ -1,33 +1,66 @@
-var passport = require( "passport" ),
-    BasicStrategy = require('passport-http').BasicStrategy;
+'use strict';
 
+var path = require('path');
 
 /**
- * This is the basic authentication for the api.
- * Customer just need to include username/password values on Basic Auth request
- * Use only with https
- * @todo with api key
+ * Passport configuration
+ *
+ * This if the configuration for your Passport.js setup and it where you'd
+ * define the authentication strategies you want your application to employ.
+ *
+ * I have tested the service with all of the providers listed below - if you
+ * come across a provider that for some reason doesn't work, feel free to open
+ * an issue on GitHub.
+ *
+ * Also, authentication scopes can be set through the `scope` property.
+ *
+ * For more information on the available providers, check out:
+ * http://passportjs.org/guide/providers/
  */
-passport.use(
-    new BasicStrategy(
-        function (email, password, done) {
-            if( email)
+module.exports.passport = {
 
-            User.findOne( {email: email}).populate('role').exec(function (err, user) {
-                if( err) return done(err);
-                if( !user) return done( null, false );
+    /***************************************************************************
+     *                                                                          *
+     * Token secret                                                             *
+     *                                                                          *
+     ***************************************************************************/
+    token: {
+        secret: 'cfb30a124904ef2bf7de83d7f85e4f51',
+        expiresInMinutes: 10 //60*24
+    },
 
-                user.validatePassword(password, function(err, valid){
-                    if(err) return done(err);
-                    if( !valid ) return done(null, false);
-                    return done(null, user);
-                    // load grade for futur test
-//                    user.loadRole( function(err){
-//                        if(err) return done(err);
-//                        return done(null, user);
-//                    } );
+    strategies : {
+        // https://github.com/ryanwebber/sails-authorization/blob/master/client/www/js/views.js
+        local: {
+            strategy: require('passport-local').Strategy,
+            options: {
+                // Since we need to allow users to login using both usernames as well as
+                // emails, we'll set the username field to something more generic.
+                usernameField: 'email',
+                passwordField: 'password'
+            }
+        },
 
-                });
-            });
-    })
-);
+        basic: {
+            strategy: require('passport-http').BasicStrategy,
+            protocol: 'basic'
+        },
+
+        bearer: {
+            strategy: require('passport-http-bearer'),
+            protocol: 'bearer'
+        },
+
+        //facebook: {
+        //    name: 'Facebook',
+        //    protocol: 'oauth2',
+        //    strategy: require('passport-facebook').Strategy,
+        //    options: {
+        //        clientID: '440811692744629',
+        //        clientSecret: 'b97e0244dd4c44cff27faca23a2cf255'
+        //    },
+        //    scope: ['email', 'read_stream', 'publish_actions']
+        //}
+    }
+    
+};

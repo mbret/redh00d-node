@@ -19,11 +19,18 @@ module.exports = {
         ])
         .then(function(values){
             return Promise.all([
-                User.create({email: 'user@user.com', password: 'password', firstName: 'User', lastName: 'User'}),
-                User.create({email: 'user2@user2.com', password: 'password', firstName: 'User', lastName: 'User'}),
-                User.create({ email: 'admin@admin.com', password: 'password', firstName: 'Admin', lastName: 'Admin', role: values[0].ID }),
+                User.create({email: 'user@user.com', firstName: 'User', lastName: 'User'}),
+                User.create({email: 'user2@user2.com', firstName: 'User', lastName: 'User'}),
+                User.create({ email: 'admin@admin.com', firstName: 'Admin', lastName: 'Admin', role: values[0].ID }),
                 Product.create({isOfficial: true, name: 'Coca Cola', logo: 'coca_cola', category: 2}),
                 Product.create({isOfficial: false, name: 'Chips', logo: 'chips', category: 1})
+            ]);
+        })
+        .then(function(values){
+            return Promise.all([
+                UserPassport.create({protocol: 'local', password: 'password', user: values[0].ID}),
+                UserPassport.create({protocol: 'local', password: 'password', user: values[1].ID}),
+                UserPassport.create({protocol: 'local', password: 'password', user: values[2].ID}),
             ]);
         })
         .then(function(){

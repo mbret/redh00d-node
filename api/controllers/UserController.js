@@ -83,7 +83,7 @@ module.exports = {
         if ( req.param('phone') ) data.phone = req.param('phone');
         if ( req.param('email') ) data.email = req.param('email');
         // param only for admin
-        if( req.user.isAdmin() ){
+        if( req.user && req.user.isAdmin() ){
             if ( req.param('api_key') ) data.apiKey = req.param('api_key');
             if ( req.param('role_id') ) data.role = req.param('role_id');
         }

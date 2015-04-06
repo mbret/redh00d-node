@@ -62,15 +62,12 @@ module.exports.routes = {
     'get  /dev/delete-logs':'DevController.deleteLogs',
     'get  /dev/auth':        'DevController.auth', // use this action to perform first auth
 
-    /****************************************************
-     *
-     * Helpers relatives routes
-     *
-     * These routes are used by clients in order to help
-     * code logic (eg: check credential, etc)
-     * It allow to perform no REST actions
-     ****************************************************/
-    'post   /auth': 'HelperController.auth', // Simulate auth action (allow the client to know the validity of credential useful for futur requests)
+    'get    /helper/me' : 'HelperController.me',
+    
+    // Providers auth
+    'get    /auth/facebook': 'AuthController.facebook',
+    'get    /auth/facebook/callback': 'AuthController.facebookCallback',
+    'post   /auth/login': 'AuthController.login',
 
     /***************************
      *

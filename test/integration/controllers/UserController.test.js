@@ -104,23 +104,12 @@ describe('UserController', function() {
     describe("POST /users", function(){
 
         it('should respond Bad Request', function(done){
-            async.series([
-                function(callback){
-                    request(sails.hooks.http.app).post('/users')
-                        .expect(400).end(callback);
-                },
-                function(callback){
-                    request(sails.hooks.http.app).post('/users').send({email: 'email@email.com'})
-                        .expect(400).end(callback);
-                },
-            ], function(err, results){
-                if(err) return done(err);
-                done();
-            });
+            request(sails.hooks.http.app).post('/users').set('Authorization', sails.config.test.adminAuth)
+                .expect(400).end(done);
         });
 
         it('should create the user with email email@email.com', function(done){
-            request(sails.hooks.http.app).post('/users').send({email: 'email@email.com', password: 'password', firstName: 'Maxime', lastName: 'Bret'})
+            request(sails.hooks.http.app).post('/users').send({email: 'email@email.com', firstName: 'Maxime', lastName: 'Bret'}).set('Authorization', sails.config.test.adminAuth)
                 .expect(201).expect(function(res){
                     if( !res.body.user || res.body.user.email != 'email@email.com' ) throw new Error("User not created");
                 })

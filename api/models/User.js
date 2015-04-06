@@ -42,12 +42,12 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         },
         firstName: {
             type: 'string',
-            required: true,
+            required: false,
             columnName: 'userFirstName'
         },
         lastName: {
             type: 'string',
-            required: true,
+            required: false,
             columnName: 'userLastName'
         },
         // Not required because it has a default value (see below)
@@ -87,7 +87,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         password: {
             type: 'string',
             minLength: 4,
-            required: true
+            required: false
         },
 
         /**
@@ -121,6 +121,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         /**
          * Check if the supplied password matches the stored password.
          * - Useful when login action, change password ...
+         * @todo promise
          */
         validatePassword: function( candidatePassword, cb ) {
             bcrypt.compare( candidatePassword, this.encryptedPassword, function (err, valid) {
@@ -161,7 +162,6 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
                 if(err){
                     return cb(err);
                 }else{
-                    console.log('Message sent: ' + info);
                     return cb();
                 }
             });
@@ -176,11 +176,11 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
     beforeCreate: [
 
         // Encrypt user's password
-        function (values, cb){
-            User.encryptPassword(values, function (err) {
-                return cb(err);
-            });
-        },
+        //function (values, cb){
+        //    User.encryptPassword(values, function (err) {
+        //        return cb(err);
+        //    });
+        //},
 
         // Create an API key
         //@todo maybe check here the uniqueness of the api key inside db before register
@@ -213,30 +213,30 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
     beforeUpdate: [
         // Encrypt user's password, if changed
-        function (values, cb) {
-            if ( values.password ) {
-                User.encryptPassword(values, function (err) {
-                    cb(err);
-                });
-            }
-            return cb(); // otherwise continue
-        },
+        //function (values, cb) {
+        //    if ( values.password ) {
+        //        User.encryptPassword(values, function (err) {
+        //            cb(err);
+        //        });
+        //    }
+        //    return cb(); // otherwise continue
+        //},
     ],
 
     /**
      * User password encryption. Uses bcrypt.
      */
-    encryptPassword: function(values, cb) {
-//        values.encryptedPassword = values.password;
-//        cb();
-        bcrypt.hash(values.password, 10, function (err, encryptedPassword) {
-            if(err) return cb(err);
-            values.encryptedPassword = encryptedPassword;
-            sails.log.info("User: Class.encryptPassword: Password encrypted from '%s' to '%s'", values.password, values.encryptedPassword);
-            return cb();
-        });
-
-
-    }
+//    encryptPassword: function(values, cb) {
+////        values.encryptedPassword = values.password;
+////        cb();
+//        bcrypt.hash(values.password, 10, function (err, encryptedPassword) {
+//            if(err) return cb(err);
+//            values.encryptedPassword = encryptedPassword;
+//            sails.log.info("User: Class.encryptPassword: Password encrypted from '%s' to '%s'", values.password, values.encryptedPassword);
+//            return cb();
+//        });
+//
+//
+//    }
 
 });

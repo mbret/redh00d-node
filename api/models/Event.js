@@ -71,7 +71,6 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             event.date == null;
         }
 
-        console.log(event.date);
         //@todo
         next();
     },

@@ -43,41 +43,12 @@ module.exports = {
                 'poweredBy',
                 '$custom',
                 'passportInit', // custom
-                'authenticateUser', // custom
                 'router',
                 'www',
                 'favicon',
                 '404', // call res.notFound()
                 '500' // call res.serverError
             ],
-
-            /**
-             * This function authenticate a user from his request each request time.
-             * The user is guest or (one role of this application)
-             */
-            authenticateUser: function(req, res, next){
-                // Try to authenticate user with basic auth (rest api)
-                passport.authenticate( 'basic', { session: false }, function (err, user, info) {
-                    if (err) return next(err);
-
-                    if(!user){
-                        // build a partial user model (some method are tested even when user is guest)
-                        req.user = {
-                            isAuthenticated: false, // important
-                            isGuest: true, // important
-                            isAdmin: function(){return false}, // important
-                            role: {name: 'guest'}
-                        };
-                    }
-                    else{
-                        req.user = user;
-                        req.user.isAuthenticated = true;
-                        req.user.isGuest = false;
-                    }
-                    return next();
-
-                })(req, res, next);
-            },
 
             // simple log of http request
             // Only in console, nginx take control on production environment
