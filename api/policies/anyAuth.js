@@ -3,7 +3,7 @@
  *
  */
 
-module.exports = function isAuthenticated(req, res, next) {
+module.exports = function anyAuth(req, res, next) {
 
     var authenticate;
     
@@ -24,12 +24,12 @@ module.exports = function isAuthenticated(req, res, next) {
     // Check for basic auth
     var auth = req.headers.authorization;
     if (auth && auth.search('Basic ') > -1) {
-        sails.log.info('isAuthenticated -> basic authentication asked');
+        sails.log.info('anyAuth -> basic authentication asked');
         authenticate = passport.authenticate('basic', { session: false }, onResult);
     }
     // Bearer auth
     else{
-        sails.log.info('isAuthenticated -> bearer authentication asked');
+        sails.log.info('anyAuth -> bearer authentication asked');
         authenticate = passport.authenticate( 'bearer', { session: false }, onResult);
     }
 

@@ -17,10 +17,12 @@
  * @param {Object}   profile
  * @param {Function} next
  */
-module.exports = function (accessToken, refreshToken, profile, next) {
+module.exports = function (req, accessToken, refreshToken, profile, next) {
 
+    var email = profile.emails[0].value;
+    
     // Check if this passport exist
-    Passport.findOne({
+    UserPassport.findOne({
         provider   : profile.provider,
         identifier : profile.id
     })
@@ -30,7 +32,7 @@ module.exports = function (accessToken, refreshToken, profile, next) {
             if(!passport){
 
                 var creationData = {
-                    email: profile.email
+                    email: email
                 };
                 
                 // Fetch or create user
@@ -45,7 +47,7 @@ module.exports = function (accessToken, refreshToken, profile, next) {
                         };
                         
                         // Create passport
-                        return Passport.create(data).then(function(passport){
+                        return UserPassport.create(data).then(function(passport){
                             return user;
                         });
                         
@@ -53,7 +55,7 @@ module.exports = function (accessToken, refreshToken, profile, next) {
             }
         })
         .then(function(user){
-            next(user);
+            next(null, user);
         })
         .catch(next);
 };

@@ -24,24 +24,25 @@ module.exports.policies = {
     '*': false,
 
     HelperController: {
-        'me': ['isAuthenticated']
+        'me': ['anyAuth']
     },
     
     AuthController: {
         login: true,
+        register: true,
         facebook: true,
         facebookCallback: true
     },
     
     UserController: {
-        '*':        ['isAuthenticated', 'isAllowedWithPolicies']
+        '*':        ['anyAuth', 'isAllowedWithPolicies']
     },
 
     EventController: {
-        '*':        ['isAuthenticated', 'isAllowedWithPolicies']
+        '*':        ['anyAuth', 'isAllowedWithPolicies']
     },
 
     ProductController: {
-        '*':        ['isAuthenticated', 'isAllowedWithPolicies']
+        '*':        ['anyAuth', 'isAllowedWithPolicies']
     }
 };

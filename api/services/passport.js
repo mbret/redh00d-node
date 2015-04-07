@@ -22,7 +22,8 @@ passport.loadStrategies = function () {
   var strategies = sails.config.passport.strategies;
 
   Object.keys(strategies).forEach(function (key) {
-    var options = { passReqToCallback: true }, Strategy;
+        var options = { passReqToCallback: true };
+        var Strategy;
 
       // Local strategy
       if (key === 'local') {
@@ -64,14 +65,7 @@ passport.loadStrategies = function () {
           // do that.
           _.extend(options, strategies[key].options);
 
-          switch (protocol) {
-              case 'basic':
-                  self.use(new Strategy(self.protocols[protocol]));
-                  break;
-              default:
-                  self.use(new Strategy(options, self.protocols[protocol]));
-                  break;
-          }
+          self.use(new Strategy(options, self.protocols[protocol]));
       }
   });
 };

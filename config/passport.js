@@ -51,16 +51,16 @@ module.exports.passport = {
             protocol: 'bearer'
         },
 
-        //facebook: {
-        //    name: 'Facebook',
-        //    protocol: 'oauth2',
-        //    strategy: require('passport-facebook').Strategy,
-        //    options: {
-        //        clientID: '440811692744629',
-        //        clientSecret: 'b97e0244dd4c44cff27faca23a2cf255'
-        //    },
-        //    scope: ['email', 'read_stream', 'publish_actions']
-        //}
+        facebook: {
+            name: 'Facebook',
+            protocol: 'oauth2',
+            strategy: require('passport-facebook').Strategy,
+            options: {
+                clientID: '440811692744629',
+                clientSecret: 'b97e0244dd4c44cff27faca23a2cf255'
+            },
+            scope: ['email', 'read_stream', 'publish_actions']
+        }
     }
     
 };
