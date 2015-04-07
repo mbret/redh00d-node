@@ -28,10 +28,7 @@ describe('AuthenticationIntegration', function() {
                     if( !res.body.access_token ) throw new Error("No token");
                     token = res.body.access_token;
                 })
-                .end(function(err){
-                    done(err);
-                    cb(err, token);
-                });
+                .end(done);
         });
         it('should now authenticate thanks to this token', function(done){
             request(app).get('/events').set('Authorization', 'Bearer ' + token).expect(200, done);

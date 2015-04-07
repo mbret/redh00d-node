@@ -32,10 +32,7 @@ describe('AuthControllerIntegration', function() {
                     if( !res.body.access_token ) throw new Error("No token");
                     token = res.body.access_token;
                 })
-                .end(function(err){
-                    done(err);
-                    cb(err, token);
-                });
+                .end(done);
         });
     });
     
