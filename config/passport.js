@@ -26,7 +26,12 @@ module.exports.passport = {
      ***************************************************************************/
     token: {
         secret: 'cfb30a124904ef2bf7de83d7f85e4f51',
-        expiresInMinutes: 10 //60*24
+        options: {
+            expiresInMinutes: 10, //60*24
+            audience: 'sfd',
+            subject: 'qsdf',
+            issuer: 'sdf'
+        }
     },
 
     strategies : {
@@ -46,9 +51,15 @@ module.exports.passport = {
             protocol: 'basic'
         },
 
-        bearer: {
-            strategy: require('passport-http-bearer'),
-            protocol: 'bearer'
+        jwt: {
+            strategy: require('passport-jwt').Strategy,
+            protocol: 'jwt',
+            options: {
+                secretOrKey: 'cfb30a124904ef2bf7de83d7f85e4f51',
+                issuer: "",
+                audience: "",
+                authScheme: 'JWT'
+            }
         },
 
         facebook: {

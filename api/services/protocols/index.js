@@ -12,8 +12,8 @@
  * can contain any combination of tokens issued by the authentication API.
  */
 module.exports = {
-    basic : require('./basic'),
-    bearer : require('./bearer'),
+    basic  : require('./basic'),
+    jwt    : require('./jwt'),
     local  : require('./local'),
     oauth  : require('./oauth'),
     oauth2 : require('./oauth2'),

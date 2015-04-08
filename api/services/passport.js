@@ -71,8 +71,9 @@ passport.loadStrategies = function () {
 };
 
 passport.issueAccessToken = function(user){
-    var tokenConfig = sails.config.passport.token;
-    return require('jsonwebtoken').sign({user:user.id}, tokenConfig.secret, { expiresInMinutes: tokenConfig.expiresInMinutes });
+    var secret = sails.config.passport.token.secret;
+    var tokenOptions = sails.config.passport.token.options;
+    return require('jsonwebtoken').sign({user:user.id}, secret, tokenOptions);
 };
 
 passport.serializeUser(function (user, next) {

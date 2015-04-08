@@ -1,38 +1,28 @@
+
+// Get policies functions
+var basicAuth = require(__dirname + '/basicAuth.js');
+var jwtAuth = require(__dirname + '/jwtAuth.js');
+
 /**
- *
- *
+ * This policy will check for every available authentication method.
+ * It use and require others policies from application.
+ * @param req
+ * @param res
+ * @param next
  */
+function anyAuth(req, res, next) {
 
-module.exports = function anyAuth(req, res, next) {
-
-    var authenticate;
-    
-    // Callback for authenticate method
-    var onResult = function (err, user, info){
-        if (err) return next(err);
-
-        if(!user){
-            return res.unauthorized();
-        }
-        else{
-            req.user = user;
-            req.user.isAuthenticated = true;
-            return next();
-        }
-    };
-    
+    //@todo use passport option in config to define how to recognize each type of auth
     // Check for basic auth
     var auth = req.headers.authorization;
     if (auth && auth.search('Basic ') > -1) {
-        sails.log.info('anyAuth -> basic authentication asked');
-        authenticate = passport.authenticate('basic', { session: false }, onResult);
+        basicAuth(req, res, next);
     }
-    // Bearer auth
+    // JWT auth
     else{
-        sails.log.info('anyAuth -> bearer authentication asked');
-        authenticate = passport.authenticate( 'bearer', { session: false }, onResult);
+        jwtAuth(req, res, next);
     }
 
-    authenticate(req, res, next);
+}
 
-};
+module.exports = anyAuth;

@@ -15,7 +15,7 @@ describe('BearerAuthIntegration', function() {
     });
 
     describe('Token', function(){
-        it('should return 400 because of invalid token', function(done){
+        it('should return 401 because of invalid token', function(done){
             request(app).get('/events').set('Authorization', 'Bearer 4qsd56q4sd5').expect(401, done);
         });
         it('should return 401 because of no token provided', function(done){
