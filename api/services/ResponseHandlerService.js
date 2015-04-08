@@ -21,13 +21,8 @@ module.exports = {
             data = {};
         }
 
-        // add classic status
-//        data.status = res.statusCode;
-
         // add debug dump
         if( sails.config.environment === 'development' ){
-            var session = req.session;
-//            session.ID = req.sessionID;
             data._debug = {
                 api_version: sails.config.general.version,
                 creators: sails.config.general.creators,
@@ -51,9 +46,9 @@ module.exports = {
         }
 
         return res.jsonx( data );
-
     },
 
+    
 
     /**
      * Handle error responses.

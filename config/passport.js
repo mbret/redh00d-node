@@ -27,10 +27,11 @@ module.exports.passport = {
     token: {
         secret: 'cfb30a124904ef2bf7de83d7f85e4f51',
         options: {
-            expiresInMinutes: 10, //60*24
-            audience: 'sfd',
-            subject: 'qsdf',
-            issuer: 'sdf'
+            expiresInSeconds: 60 * 24, // Time interval in minutes when token will be expired or false if not expires
+            audience: 'redh00d',
+            subject: 'API redh00d',
+            issuer: 'redh00d',
+            algorithm: "HS256" // Algorithm that using for signing JWT
         }
     },
 
@@ -56,8 +57,8 @@ module.exports.passport = {
             protocol: 'jwt',
             options: {
                 secretOrKey: 'cfb30a124904ef2bf7de83d7f85e4f51',
-                issuer: "",
-                audience: "",
+                audience: 'redh00d',
+                issuer: 'redh00d',
                 authScheme: 'JWT'
             }
         },

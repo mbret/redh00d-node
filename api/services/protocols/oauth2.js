@@ -19,43 +19,18 @@
  */
 module.exports = function (req, accessToken, refreshToken, profile, next) {
 
-    var email = profile.emails[0].value;
-    
-    // Check if this passport exist
-    UserPassport.findOne({
-        provider   : profile.provider,
+    sails.log.info('oauth2 authenticate -> accessToken:' + accessToken + ', refreshToken:' + refreshToken + ', profile.emails: ', profile.emails);
+
+    var query    = {
         identifier : profile.id
-    })
-        .then(function(passport){
+        , protocol   : 'oauth2'
+        , tokens     : { accessToken: accessToken }
+    };
 
-            // No passport
-            if(!passport){
+    if (refreshToken !== undefined) {
+        query.tokens.refreshToken = refreshToken;
+    }
 
-                var creationData = {
-                    email: email
-                };
-                
-                // Fetch or create user
-                return User.findOrCreate({email: profile.email}, creationData)
-                    .then(function(user){
+    passport.connect(req, query, profile, next);
 
-                        var data    = {
-                            identifier : profile.id,
-                            protocol   : 'oauth2',
-                            tokens     : { accessToken: accessToken },
-                            user       : user
-                        };
-                        
-                        // Create passport
-                        return UserPassport.create(data).then(function(passport){
-                            return user;
-                        });
-                        
-                    })
-            }
-        })
-        .then(function(user){
-            next(null, user);
-        })
-        .catch(next);
 };

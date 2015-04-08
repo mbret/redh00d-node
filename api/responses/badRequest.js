@@ -8,14 +8,20 @@
  *
  *
  */
-module.exports = function badRequest(error) {
+module.exports = function badRequest(data, code, message) {
 
-    // Log error to console
-    sails.log.info('Sending 400 ("Bad Request") response: \n', error);
     this.res.status(400);
+    
+    var response = {
+        code: code || 'E_BAD_REQUEST',
+        message: message || 'The request cannot be fulfilled due to bad syntax',
+        data: data || {}
+    };
+    
+    this.req._sails.log.info('Sent ("Bad Request") response\n', response);
 
     // send response
-    return ResponseHandlerService.handleErrorSend( this.req, this.res, error, "badRequest" );
+    return ResponseHandlerService.handleSend( this.req, this.res, response );
 
 };
 
