@@ -15,6 +15,7 @@ module.exports = {
      * @returns {*}
      */
     ping: function(req, res){
+        console.log(req.hostname);
         return res.ok();
     },
 
