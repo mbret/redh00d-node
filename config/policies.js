@@ -31,7 +31,7 @@ module.exports.policies = {
     AuthController: {
         login: true,
         register: true,
-        facebook: true,
+        provider: true,
         facebookCallback: true
     },
     

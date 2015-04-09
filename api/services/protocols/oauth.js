@@ -18,6 +18,9 @@
  * @param {Function} next
  */
 module.exports = function (req, token, tokenSecret, profile, next) {
+
+    sails.log.info('OAuth authenticate -> accessToken:' + accessToken + ', refreshToken:' + refreshToken + ', profile: ', profile);
+    
     var query    = {
         identifier : profile.id,
         protocol   : 'oauth',

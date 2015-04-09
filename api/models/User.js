@@ -134,13 +134,14 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
          * Generate password reset token
          */
         generatePasswordResetToken: function(cb) {
-            var token = TokenService.generate(); // get json object
-            User.update( {'ID': this.ID}, {passwordResetToken: token}, function (err, user) {
-                    if(err) return cb(err);
-                    this.passwordResetToken = token;
-                    return cb();
-                }
-            );
+            //var token = TokenService.generate(); // get json object
+            //User.update( {'ID': this.ID}, {passwordResetToken: token}, function (err, user) {
+            //        if(err) return cb(err);
+            //        this.passwordResetToken = token;
+            //        return cb();
+            //    }
+            //);
+            return cb(new Error('Not implemented'));
         },
 
         /**
@@ -175,12 +176,10 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
     beforeCreate: [
 
-        // Encrypt user's password
-        //function (values, cb){
-        //    User.encryptPassword(values, function (err) {
-        //        return cb(err);
-        //    });
-        //},
+        function(values, cb){
+            console.log('USER CREATED', values);
+            cb();
+        },
 
         // Create an API key
         //@todo maybe check here the uniqueness of the api key inside db before register

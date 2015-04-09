@@ -162,18 +162,18 @@ describe('UserController', function() {
         /*
          * Reset password
          */
-        it('should generate unique token password reset for specific user', function(done){
-            request(sails.hooks.http.app).patch('/users/' + testUser.ID).set('Authorization', sails.config.test.adminAuth).send({reset_password: true, silent: true})
-                .expect(204)
-                .expect(function(res){
-                    return User.findOne(testUser.ID).exec(function(err, user){
-                        if(!user.passwordResetToken || user.passwordResetToken.value.length <= 0){
-                            throw new Error("Token not generated");
-                        }
-                    });
-                })
-                .end(done);
-        });
+        //it('should generate unique token password reset for specific user', function(done){
+        //    request(sails.hooks.http.app).patch('/users/' + testUser.ID).set('Authorization', sails.config.test.adminAuth).send({reset_password: true, silent: true})
+        //        .expect(204)
+        //        .expect(function(res){
+        //            return User.findOne(testUser.ID).exec(function(err, user){
+        //                if(!user.passwordResetToken || user.passwordResetToken.value.length <= 0){
+        //                    throw new Error("Token not generated");
+        //                }
+        //            });
+        //        })
+        //        .end(done);
+        //});
     });
 
     describe("DELETE /users", function(){

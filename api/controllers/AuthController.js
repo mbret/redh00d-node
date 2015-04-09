@@ -1,22 +1,29 @@
 'use strict';
 
-var passport = require('passport');
 var validator = require('validator');
 var Facebook = require('machinepack-facebook');
 
 /**
- * Create a token and attach it to the given user.
- * @param user
- * @returns {*|Progress}
+ * Triggers when user authenticates via passport
+ * @param {Object} req Request object
+ * @param {Object} res Response object
+ * @param {Object} error Error object
+ * @param {Object} user User profile
+ * @param {Object} info Info if some error occurs
+ * @private
  */
-function issueToken(user){
-    // Load passport and create new access token
-    var query = {
-        protocol : 'local',
-        user     : user.ID
-    };
+function _onPassportAuth(req, res, error, user, info) {
+    if (error){
+        return res.serverError(error);
+    }
+    if (!user) return res.badRequest(null, info.code, info.message);
+
     var token = passport.issueAccessToken(user);
-    return UserPassport.update(query, { accessToken: token });
+    
+    return res.ok({
+        token: token,
+        user: user
+    });
 }
 
 module.exports = {
@@ -26,24 +33,8 @@ module.exports = {
      * @param req
      * @param res
      */
-    login: function(req, res, next){
-        passport.authenticate('local', function(err, user, info){
-            if (err){
-                return res.serverError(err);
-            }
-            if(!user){
-                return res.badRequest(info.message);
-            }
-
-            // Create and attach token
-            issueToken(user)
-                .then(function(userPassword){
-                    return res.ok({ access_token: userPassword[0].accessToken});
-                })
-                .catch(function(err){
-                    return res.serverError(err);
-                });
-        })(req, res, next);
+    login: function(req, res){
+        passport.authenticate('local', _onPassportAuth.bind(this, req, res))(req, res);
     },
 
     /**
@@ -66,29 +57,21 @@ module.exports = {
             return res.badRequest('Password.Too.Short');
         }
 
-        var data = {
-            email: email
-        };
-
         // Create the user and init everything necessary for application
-        User.create(data)
+        User.create({ email: email })
             .then(function(user){
                 
-                // Create passport
-                var passportData = {
-                    protocol : 'local',
-                    password : password,
-                    user     : user.ID
-                };
-                
-                return UserPassport.create(passportData)
+                return UserPassport.create( {
+                        protocol : 'local',
+                        password : password,
+                        user     : user.ID
+                    })
                     .then(function(userPassport){
-                        
-                        // Create and attach token
-                        return issueToken(user)
-                            .then(function(userPassword){
-                                return res.created({ user: user.toCustomer(), access_token: userPassword[0].accessToken});
-                            });
+                        var token = passport.issueAccessToken(user);
+                        return {
+                            token: token,
+                            user: user
+                        };
                     })
                     .catch(function(err){
                         // It could be invalid password here but we check before with validator
@@ -98,8 +81,8 @@ module.exports = {
                             });
                     });
             })
+            .then(res.created)
             .catch(function(err){
-                console.log(err);
                 if (err.code === 'E_VALIDATION') {
                     if (err.invalidAttributes.email) {
                         // This error could be something else but as we validate before we should only get an error because emeail already taken here
@@ -111,29 +94,15 @@ module.exports = {
                 return res.serverError(err);
             });
     },
-    
+
     /**
-     * Redirect the user to the provider for authentication. When complete,
-     * the provider will redirect the user back to the application at /auth/:provider/callback
-     * @param req
-     * @param res
+     * Create a third-party authentication endpoint
+     *
+     * @param {Object} req
+     * @param {Object} res
      */
-    facebook: function(req, res){
-
-        var options = {};
-
-        var strategy = sails.config.passport.strategies['facebook'];
-
-        // Attach scope if it has been set in the config
-        if (strategy.hasOwnProperty('scope')) {
-            options.scope = strategy.scope;
-        }
-
-        // Sessions are not typically needed by APIs, so they can be disabled.
-        options.session = false;
-
-        passport.authenticate('facebook', options)(req, res);
-        
+    provider: function (req, res) {
+        passport.endpoint(req, res);
     },
 
     /**
@@ -142,16 +111,26 @@ module.exports = {
      * @param res
      * @param next
      */
-    facebookCallback: function(req, res, next){
-        passport.authenticate('facebook', {
-            successRedirect : '/profile',
-            failureRedirect : '/'
-        })(req, res, function(err, user){
+    facebookCallback: function(req, res){
+        // The provider will redirect the user to this URL after approval. Finish
+        // the authentication process by attempting to obtain an access token. If
+        // access was granted, the user will be logged in. Otherwise, authentication
+        // has failed.
+        passport.authenticate('facebook', function (err, user, challenges, statuses) {
+            // handle facebook error 
+            var definitiveError = null;
+            var info = {};
             if(err){
-                return res.serverError(err);
+                if(err.type == 'OAuthException'){
+                    info.code = 'OAuthException';
+                    info.message = err.message;
+                }
+                else{
+                    definitiveError = err;
+                }
             }
-            return res.ok(user);
-        });
+            return _onPassportAuth(req, res, definitiveError, user, info);
+        })(req, res, req.next);
     }
 };
 

@@ -8,15 +8,13 @@
  */
 module.exports = function(req, jwt_payload, done) {
 
-    console.log(jwt_payload);
-
-    User.findOne({id: jwt_payload.id})
+    sails.log.info('jwt auth protocol -> jwt_payload: ', jwt_payload);
+    
+    User.findOne({ID: jwt_payload.user}).populate('role')
         .then(function (entry) {
-            if (!entry) {
-                return done(null, false, {message: "Invalid.Token"});
-            }
-
-            return next(null, user, {});
+            if (!entry)  return done(null, false, {message: "Invalid.Token"});
+            
+            return done(null, entry, {});
         })
         .catch(done);
 };

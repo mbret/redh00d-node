@@ -66,7 +66,7 @@ module.exports.routes = {
     'get    /ping': 'HelperController.me',
 
     // Providers auth
-    'get    /auth/facebook': 'AuthController.facebook',
+    'get    /auth/:provider': 'AuthController.provider',
     'get    /auth/facebook/callback': 'AuthController.facebookCallback',
     'post   /auth/login': 'AuthController.login',
     'post   /auth/register': 'AuthController.register',

@@ -25,14 +25,15 @@ describe('AuthenticationIntegration', function() {
             request(app).post('/auth/login').send({email: sails.config.test.user.email, password: sails.config.test.userPassword})
                 .expect(200)
                 .expect(function(res){
-                    if( !res.body.access_token ) throw new Error("No token");
-                    token = res.body.access_token;
+                    if( !res.body.token ) throw new Error("No token");
+                    token = res.body.token;
                 })
                 .end(done);
         });
         it('should now authenticate thanks to this token', function(done){
-            request(app).get('/events').set('Authorization', 'Bearer ' + token).expect(200, done);
+            request(app).get('/events').set('Authorization', 'JWT ' + token).expect(200, done);
         });
+
     });
     // @todo facebook
 
