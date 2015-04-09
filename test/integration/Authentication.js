@@ -3,7 +3,10 @@ var async = require('async');
 var agent;
 var app;
 
-describe('AuthenticationIntegration', function() {
+/**
+ * Test several authentication scenarios that involves more than one request.
+ */
+describe('integration.Authentication', function() {
 
     before(function(done) {
         app = sails.hooks.http.app;
@@ -14,12 +17,13 @@ describe('AuthenticationIntegration', function() {
         done();
     });
 
+
     /**
-     * Token authentication
+     * JWT authentication scenario
      * - The client ask for a token with email/password
      * - The client use token for each request
      */
-    describe('tokenAuth', function(){
+    describe('jwt', function(){
         var token;
         it('should return access token', function(done){
             request(app).post('/auth/login').send({email: sails.config.test.user.email, password: sails.config.test.userPassword})

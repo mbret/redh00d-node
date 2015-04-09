@@ -12,7 +12,7 @@ module.exports = function notFound (data) {
 
     this.res.status(404);
 
-    return ResponseHandlerService.handleErrorSend( this.req, this.res, data, "notFound" );
+    return ResponseService.handleErrorSend( this.req, this.res, data, "notFound" );
 
 };
 

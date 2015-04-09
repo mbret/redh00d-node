@@ -19,7 +19,7 @@ module.exports = function serverError (err) {
     }
 
 
-    return ResponseHandlerService.handleErrorSend( this.req, this.res, err, "serverError" );
+    return ResponseService.handleErrorSend( this.req, this.res, err, "serverError" );
 
 };
 

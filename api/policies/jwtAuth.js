@@ -10,7 +10,6 @@ function jwtAuth(req, res, next) {
     passport.authenticate('jwt', { session: false }, function (err, user, info){
         if (err) return next(err);
 
-        console.log(info);
         if(!user){
             return res.unauthorized();
         }

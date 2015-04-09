@@ -5,7 +5,6 @@
 module.exports = {
 
     me: function(req, res){
-        console.log(req.user);
         return res.ok(req.user.toCustomer());
     },
 
@@ -16,6 +15,14 @@ module.exports = {
      * @returns {*}
      */
     ping: function(req, res){
+        return res.ok();
+    },
+
+    authJWT: function(req, res){
+        return res.ok();
+    },
+
+    authBasic: function(req, res){
         return res.ok();
     }
 

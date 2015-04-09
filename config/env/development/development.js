@@ -36,6 +36,12 @@ module.exports = {
         DevController: {
             '*': true,
             'auth': ['isAllowedWithPolicies']
+        },
+        HelperController: {
+            me: ['anyAuth'],
+            ping: true,
+            authJWT: ['jwtAuth'],
+            authBasic: ['basicAuth']
         }
     },
 

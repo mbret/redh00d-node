@@ -21,7 +21,7 @@ module.exports = function badRequest(data, code, message) {
     this.req._sails.log.info('Sent ("Bad Request") response\n', response);
 
     // send response
-    return ResponseHandlerService.handleSend( this.req, this.res, response );
+    return ResponseService.handleSend( this.req, this.res, response );
 
 };
 

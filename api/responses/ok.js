@@ -20,6 +20,6 @@ module.exports = function sendOK (data) {
     this.res.status(200);
 
     // send response
-    return ResponseHandlerService.handleSend( this.req, this.res, data );
+    return ResponseService.handleSend( this.req, this.res, data );
 
 };

@@ -22,6 +22,6 @@ module.exports = function noContent () {
     data = {};
 
     // send response
-    return ResponseHandlerService.handleSend( this.req, this.res, data );
+    return ResponseService.handleSend( this.req, this.res, data );
 
 };

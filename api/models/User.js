@@ -177,7 +177,6 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
     beforeCreate: [
 
         function(values, cb){
-            console.log('USER CREATED', values);
             cb();
         },
 

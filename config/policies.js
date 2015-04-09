@@ -23,10 +23,7 @@ module.exports.policies = {
     // (`true` allows public access)
     '*': false,
 
-    HelperController: {
-        me: ['anyAuth'],
-        ping: true
-    },
+
     
     AuthController: {
         login: true,
