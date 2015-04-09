@@ -63,7 +63,8 @@ module.exports.routes = {
     'get  /dev/auth':        'DevController.auth', // use this action to perform first auth
 
     'get    /helper/me' : 'HelperController.me',
-    
+    'get    /ping': 'HelperController.me',
+
     // Providers auth
     'get    /auth/facebook': 'AuthController.facebook',
     'get    /auth/facebook/callback': 'AuthController.facebookCallback',

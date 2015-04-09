@@ -7,8 +7,18 @@ module.exports = {
     me: function(req, res){
         console.log(req.user);
         return res.ok(req.user.toCustomer());
+    },
+
+    /**
+     * This action can be used to make sure API is reachable.
+     * @param req
+     * @param res
+     * @returns {*}
+     */
+    ping: function(req, res){
+        return res.ok();
     }
-    
+
     /**
      * Helper that simulate login method.
      * @param req

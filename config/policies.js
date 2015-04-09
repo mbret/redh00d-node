@@ -24,7 +24,8 @@ module.exports.policies = {
     '*': false,
 
     HelperController: {
-        'me': ['anyAuth']
+        me: ['anyAuth'],
+        ping: true
     },
     
     AuthController: {
