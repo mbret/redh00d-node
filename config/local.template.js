@@ -67,5 +67,7 @@ module.exports = {
 
     //environment: process.env.NODE_ENV || 'development'
 
-    //proxyHost: 'develop.api.redh00d.unreachable.me'
+    //proxyHost: 'develop.api.redh00d.unreachable.me',
+
+    //proxyPort: 443
 };
