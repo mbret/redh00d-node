@@ -18,6 +18,7 @@ module.exports.bootstrap = function(cb) {
     async.series([
 
         // Init database
+        // Use current set env to run different database script
         function(cb){
 
             if(sails.config.fillDb === true){

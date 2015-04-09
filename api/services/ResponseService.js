@@ -25,7 +25,7 @@ module.exports = {
         if( sails.config.environment === 'development' ){
             data._debug = {
                 api_version: sails.config.general.version,
-                creators: sails.config.general.creators,
+                creators: ["Maxime Bret"],
                 default_user_role: sails.config.general.defaultUserRoleName,
                 connection: sails.config.models.connection,
                 init_db_each_launch: sails.config.general.initDatabase,
@@ -38,10 +38,6 @@ module.exports = {
                     connection_secure: req.secure,
                     ajax: req.xhr
                 }
-//                request_signed_cookies: req.signedCookies,
-//                request_unsigned_cookies: req.cookies,
-//                current_session: req.session,
-//                sessionStore: req.sessionStore
             }
         }
 

@@ -7,20 +7,11 @@
 
 module.exports.general = {
 
-    creators: [
-        "Maxime Bret",
-        "Baptiste Mulot"
-    ],
-
     defaultUserRoleName: 'user',
 
     initDatabase: false, // Set this variable to true to initialize default values in database each lift
 
     version: '0.0.1 (September 01, 2014)',
-
-    siteURL: 'https://api.redh00d.unreachable.me',
-
-    docURL: 'https://api.redh00d.unreachable.me/doc',
 
     // Error codes for api response
     errors: {

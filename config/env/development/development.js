@@ -29,9 +29,6 @@ module.exports = {
         // Active protection of JSON returned data of each request
         protectJsonData: false,
         
-        siteURL: 'https://localhost:1337',
-        docURL: 'https://localhost:1337/doc'
-        // docURL is not overwritten to keep protected link when deployed on server. If you want to use local doc, navigate inside api-docs folder.
     },
 
     policies: {
