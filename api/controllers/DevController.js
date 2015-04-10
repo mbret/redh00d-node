@@ -104,19 +104,6 @@ module.exports = {
     },
 
 
-    /**
-     * Auth action. Used to make the first auth call from app
-     * If user is authenticated and allowed then he will arrive here. Otherwise he is rejected by policies
-     * @param req
-     * @param res
-     * @returns {*}
-     */
-    auth: function(req, res){
-        // If we arrive here, it means that account is allowed and is legal
-        return res.ok();
-    }
-
-
 };
 
 

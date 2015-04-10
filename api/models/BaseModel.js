@@ -2,19 +2,15 @@ module.exports = {
 
     attributes: {
 
+        /**
+         * This method protect sensitive data before sending to customers
+         * - overwrite this method in child model
+         */
         toJSON: function() {
             var model = this.toObject();
             return model;
         },
 
-        /**
-         * This method protect sensitive data before sending to customers
-         * - overwrite this method in child model
-         */
-        toCustomer: function() {
-            var model = this.toObject();
-            return model;
-        }
     },
 
     beforeValidation: function(event, next){
@@ -38,12 +34,12 @@ module.exports = {
     },
 
     /**
-     * Call .toCustomer() to all model inside the given array and return it
+     * Call .toJSON() to all model inside the given array and return it
      */
-    toCustomer: function( models ){
+    toJSON: function( models ){
         var customerModels = [];
         for( var i in models ){
-            customerModels.push( models[i].toCustomer() );
+            customerModels.push( models[i].toJSON() );
         }
         return customerModels;
     }

@@ -42,12 +42,6 @@ module.exports = {
         protectJsonData: false // Active protection of JSON returned data of each request
     },
 
-    policies: {
-        DevController: {
-            '*': true,
-            'auth': ['isAllowedWithPolicies']
-        }
-    },
 
     ssl: {
 //       ca: require('fs').readFileSync(__dirname + './ssl/server.crt'),

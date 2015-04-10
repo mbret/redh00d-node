@@ -21,9 +21,12 @@ module.exports.policies = {
 
     // Default policy for all controllers and actions
     // (`true` allows public access)
-    '*': false,
-
-
+    '*': [
+        'basicAuth', // always check basic auth first
+        'jwtAuth',
+        'isAuth', // IMPORTANT, this last check ensure that user will not pass through authentication method
+        'isAllowedWithPolicies', // Check for permission
+    ],
     
     AuthController: {
         login: true,
@@ -31,16 +34,11 @@ module.exports.policies = {
         provider: true,
         facebookCallback: true
     },
-    
-    UserController: {
-        '*':        ['anyAuth', 'isAllowedWithPolicies']
-    },
 
-    EventController: {
-        '*':        ['anyAuth', 'isAllowedWithPolicies']
-    },
-
-    ProductController: {
-        '*':        ['anyAuth', 'isAllowedWithPolicies']
+    HelperController: {
+        ping: true,
+        authJWT: ['jwtAuth', 'isAuth'],
+        authBasic: ['basicAuth', 'isAuth']
     }
+
 };

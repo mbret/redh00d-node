@@ -60,7 +60,6 @@ module.exports.routes = {
     'get  /dev/logs':'DevController.logs',
     'get  /dev/access-logs':'DevController.accessLogs',
     'get  /dev/delete-logs':'DevController.deleteLogs',
-    'get  /dev/auth':        'DevController.auth', // use this action to perform first auth
 
     'get    /helper/me' : 'HelperController.me',
     'get    /ping': 'HelperController.ping',

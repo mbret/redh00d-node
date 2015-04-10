@@ -23,7 +23,7 @@ module.exports = {
             if(err) return res.serverError(err);
             if(!event) return res.notFound();
             return res.ok({
-                event:event.toCustomer()
+                event:event.toJSON()
             });
         });
     },
@@ -60,7 +60,7 @@ module.exports = {
         findQuery.exec(function callback(err, events){
             if(err) return res.serverError(err);
             return res.ok({
-                events: Event.toCustomer( events )
+                events: Event.toJSON( events )
             });
         });
     },

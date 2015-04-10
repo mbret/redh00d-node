@@ -101,7 +101,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
          * This method protect sensitive data before sending to customers
          * Return everything for development
          */
-        toCustomer: function() {
+        toJSON: function() {
             var user = this.toObject();
             if( sails.config.general.protectJsonData === false ) {
                 return user;

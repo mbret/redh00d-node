@@ -1,34 +1,10 @@
 var Sails = require('sails');
+var ConfigOverrides = require('../config/env/testing');
 var sails;
 
 before(function(done) {
-    Sails.lift({
 
-        // configuration for testing purposes
-        log:{
-            level: "error"
-        },
-
-        fillDb: true,
-        autoLogon: false,
-
-        models: {
-            migrate: 'drop' // erase database before each launch
-        },
-
-        general: {
-            initDatabase: false
-        },
-
-        test: {
-            user: null,
-            admin: null,
-            userPassword: 'password',
-            userAuth: "Basic dXNlckB1c2VyLmNvbTpwYXNzd29yZA==", // user@user.com / password
-            adminAuth: 'Basic YWRtaW5AYWRtaW4uY29tOnBhc3N3b3Jk', // admin@admin.com / password
-            toolsPath: __dirname + '/tools'
-        }
-    }, function(err, server) {
+    Sails.lift(ConfigOverrides, function(err, server) {
         if (err) return done(err);
         sails = server;
         
