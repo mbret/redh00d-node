@@ -23,7 +23,7 @@ module.exports = {
             if(err) return res.serverError(err);
             if(!user) return res.notFound();
             return res.ok({
-                user:user.toCustomer()
+                user:user.toJSON()
             });
         });
     },
@@ -61,7 +61,7 @@ module.exports = {
         findQuery.exec(function callback(err, users){
             if(err) return res.serverError(err);
             return res.ok({
-                users: User.toCustomer( users )
+                users: User.toJSON( users )
             });
         });
     },
@@ -95,7 +95,7 @@ module.exports = {
                 else return res.serverError(err);
             }
             return res.created({
-                user: user.toCustomer()
+                user: user.toJSON()
             });
         });
     },
@@ -145,7 +145,7 @@ module.exports = {
                 if(!user || user.length < 1) return res.notFound();
 
                 return res.ok({
-                    user: user[0].toCustomer() // only return first result
+                    user: user[0].toJSON() // only return first result
                 });
             });
         }

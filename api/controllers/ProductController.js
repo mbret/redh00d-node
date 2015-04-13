@@ -13,7 +13,7 @@ module.exports = {
             if(err) return res.serverError(err);
             if(!product) return res.notFound();
             return res.ok({
-                product: product.toCustomer()
+                product: product.toJSON()
             });
         });
     },
@@ -39,7 +39,7 @@ module.exports = {
         findQuery.exec(function callback(err, products){
             if(err) return res.serverError(err);
             return res.ok({
-                products: Product.toCustomer( products )
+                products: Product.toJSON( products )
             });
         });
     },
@@ -72,7 +72,7 @@ module.exports = {
             return Product.findOne({'ID': product.ID}).populate('category').then(function(product){
                 if(!product) return res.notFound();
                 return res.created({
-                    product: product.toCustomer()
+                    product: product.toJSON()
                 });
             });
         })
