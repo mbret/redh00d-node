@@ -9,7 +9,7 @@
  *
  */
 
-module.exports = function isAllowedWithPolicies(req, res, next) {
+module.exports = function isAuthorized(req, res, next) {
 
     // They are already formatted from sails to match with permissions
     var resource = req.options.controller;
@@ -18,7 +18,7 @@ module.exports = function isAllowedWithPolicies(req, res, next) {
     var isAuthenticated = (!req.user) ? false : req.user.isAuthenticated;
 
     
-    sails.log.info('isAllowedWithPolicies -> check ', roleName, resource, action);
+    sails.log.info('isAuthorized -> check ', roleName, resource, action);
     // test permission
     //sails.log.info('isAllowed -> req.user -> ', req.user);
     if( PermissionsService.isAllowed( roleName, resource, action ) ){

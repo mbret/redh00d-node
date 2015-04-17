@@ -20,7 +20,7 @@ module.exports = function (req, email, password, next) {
 
             var query = {
                 protocol : 'local',
-                user     : user.ID
+                user     : user.id
             };
             
             return UserPassport.findOne(query)

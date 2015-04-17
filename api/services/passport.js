@@ -200,7 +200,7 @@ passport.connect = function (req, query, profile, next) {
                         
                     })
                     .then(function(user){
-                        query.user = user.ID;
+                        query.user = user.id;
 
                         return UserPassport.create(query).then(function(entry){
                             return user;
@@ -242,7 +242,7 @@ passport.connect = function (req, query, profile, next) {
  */
 passport.issueAccessToken = function(user){
     var secretKey = sails.config.passport.token.secret;
-    return jwt.sign({user:user.ID}, secretKey, {
+    return jwt.sign({user:user.id}, secretKey, {
         algorithm: sails.config.passport.token.options.algorithm || 'HS256',
         expiresInSeconds: sails.config.passport.token.options.expiresInSeconds || 60 * 24,
         audience: sails.config.passport.token.options.audience,

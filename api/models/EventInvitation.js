@@ -10,16 +10,16 @@ module.exports = {
 
     attributes: {
 
-        ID: {
+        id: {
             type: 'integer'
         },
         status: {
 
         },
-        userID: {
+        userId: {
 
         },
-        targetUserID: {
+        targetUserId: {
 
         }
     }

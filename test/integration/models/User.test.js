@@ -42,7 +42,7 @@ describe('UserModel', function() {
                     || ! user.createdAt instanceof Date
                     || ! user.updatedAt instanceof Date
                     || user.apiKey.length < 1
-                    || user.role != defaultUserRole.ID // default role
+                    || user.role != defaultUserRole.id // default role
                     ){
                     throw new Error('User malformed or incomplete');
                 }

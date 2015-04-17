@@ -21,7 +21,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
     attributes: {
 
         // BDD fields
-        ID: {
+        id: {
             type: 'integer',
             autoIncrement: true,
             unique: true,
@@ -194,7 +194,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
                 sails.log.debug("User.beforeCreate no roleID provided, default is set (default=" + sails.config.general.defaultUserRoleName +")");
                 UserRole.findDefault(function(err, role){
                     if(role){
-                        values.role = role.ID;
+                        values.role = role.id;
                     }
                     else{
                         return cb( new Error("Unable to load the role") );

@@ -49,15 +49,15 @@ describe('AuthControllerIntegration', function() {
         });
         
         it('should return created user with access token', function(done){
-            var ID = -1;
+            var id = -1;
             request(app).post('/auth/register').send({email: 'toto@gmail.com', password: 'toto'})
                 .expect(201)
                 .expect(function(res){
                     if( !res.body.token || !res.body.user ) throw new Error("No token or no user");
-                    ID = res.body.user.ID;
+                    id = res.body.user.id;
                 })
                 .end(function(err){
-                    return User.findOne(ID).then(function(user){
+                    return User.findOne(id).then(function(user){
                         if(!user) return done(new Error('User not crated in db'));
                         return done();
                     });

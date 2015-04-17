@@ -12,13 +12,13 @@ describe('UserController', function() {
         // get admin role
         UserRole.findOne({name: 'admin'})
             .then(function(role){
-                return User.find({role: role.ID}).populate('role').then(function(entries){
+                return User.find({role: role.id}).populate('role').then(function(entries){
                     usersAdmin = entries;
                     return role;
                 });
             })
             .then(function(role){
-                return User.find({ role: { '!': role.ID }}).populate('role').then(function(entries){
+                return User.find({ role: { '!': role.id }}).populate('role').then(function(entries){
                     users = entries;
                 });
             })
@@ -37,8 +37,8 @@ describe('UserController', function() {
         async.series([
             // clear user
             function(cb){
-                if(testUser && testUser.ID){
-                    User.destroy(testUser.ID)
+                if(testUser && testUser.id){
+                    User.destroy(testUser.id)
                         .then(function(){ cb() })
                         .catch(cb);
                 }
@@ -67,10 +67,10 @@ describe('UserController', function() {
 
     describe("GET /users", function(){
 
-        it('should respond user with ID x', function(done){
-            request(sails.hooks.http.app).get('/users/' + users[0].ID).set('Accept', 'application/json').set('Authorization', sails.config.test.userAuth)
+        it('should respond user with id x', function(done){
+            request(sails.hooks.http.app).get('/users/' + users[0].id).set('Accept', 'application/json').set('Authorization', sails.config.test.userAuth)
                 .expect(function(res){
-                    if( !res.body.user || !res.body.user.ID == users[0].ID ) throw new Error("No user or wrong user");
+                    if( !res.body.user || !res.body.user.id == users[0].id ) throw new Error("No user or wrong user");
                 })
                 .end(done);
         });
@@ -121,20 +121,20 @@ describe('UserController', function() {
     describe("PUT /users", function(){
 
         it('should update a user as admin', function(done){
-            request(sails.hooks.http.app).put('/users/' + users[0].ID).set('Authorization', sails.config.test.adminAuth)
+            request(sails.hooks.http.app).put('/users/' + users[0].id).set('Authorization', sails.config.test.adminAuth)
                 .expect(200).end(done);
         });
 
         it('should update the firstname of account for its specific user', function(done){
-            request(sails.hooks.http.app).put('/users/' + users[0].ID).send({firstname: 'barbapapa'}).set('Authorization', sails.config.test.userAuth)
+            request(sails.hooks.http.app).put('/users/' + users[0].id).send({firstname: 'barbapapa'}).set('Authorization', sails.config.test.userAuth)
                 .expect(200).expect(function(res){
                     if( !res.body.user || res.body.user.firstName != 'barbapapa' ) throw new Error("User not updated correctly");
                 }).end(done);
         });
 
-        // User with email xmax54@gmail.com ID:1 should not be able to update another user
+        // User with email xmax54@gmail.com id:1 should not be able to update another user
         it('should not be able to delete another user as user', function(done){
-            request(sails.hooks.http.app).put('/users/' + users[1].ID).set('Authorization', sails.config.test.userAuth)
+            request(sails.hooks.http.app).put('/users/' + users[1].id).set('Authorization', sails.config.test.userAuth)
                 .expect(403).end(done);
         });
 
@@ -147,7 +147,7 @@ describe('UserController', function() {
 
     describe("PATCH /users", function(){
 
-        // User with email xmax54@gmail.com ID:1 should not be able to patch another user
+        // User with email xmax54@gmail.com id:1 should not be able to patch another user
         it('should not be able to patch another user as user', function(done){
             request(sails.hooks.http.app).patch('/users/user2@user.com').set('Authorization', sails.config.test.userAuth)
                 .expect(403).end(done);
@@ -163,10 +163,10 @@ describe('UserController', function() {
          * Reset password
          */
         //it('should generate unique token password reset for specific user', function(done){
-        //    request(sails.hooks.http.app).patch('/users/' + testUser.ID).set('Authorization', sails.config.test.adminAuth).send({reset_password: true, silent: true})
+        //    request(sails.hooks.http.app).patch('/users/' + testUser.id).set('Authorization', sails.config.test.adminAuth).send({reset_password: true, silent: true})
         //        .expect(204)
         //        .expect(function(res){
-        //            return User.findOne(testUser.ID).exec(function(err, user){
+        //            return User.findOne(testUser.id).exec(function(err, user){
         //                if(!user.passwordResetToken || user.passwordResetToken.value.length <= 0){
         //                    throw new Error("Token not generated");
         //                }
@@ -179,18 +179,18 @@ describe('UserController', function() {
     describe("DELETE /users", function(){
 
         it('should not be able to delete itself as user (forbidden)', function(done){
-            request(sails.hooks.http.app).del('/users/' + sails.config.test.user.ID).set('Authorization', sails.config.test.userAuth)
+            request(sails.hooks.http.app).del('/users/' + sails.config.test.user.id).set('Authorization', sails.config.test.userAuth)
                 .expect(403).end(done);
         });
 
         it('should not be able to delete itself as admin (bad request)', function(done){
-            request(sails.hooks.http.app).del('/users/' + sails.config.test.admin.ID).set('Authorization', sails.config.test.adminAuth)
+            request(sails.hooks.http.app).del('/users/' + sails.config.test.admin.id).set('Authorization', sails.config.test.adminAuth)
                 .expect(400).end(done);
         });
         
-        // User with email xmax54@gmail.com ID:1 should not be able to delete another user
+        // User with email xmax54@gmail.com id:1 should not be able to delete another user
         it('should not be able to delete another user as user', function(done){
-            request(sails.hooks.http.app).del('/users/' + testUser.ID).set('Authorization', sails.config.test.userAuth)
+            request(sails.hooks.http.app).del('/users/' + testUser.id).set('Authorization', sails.config.test.userAuth)
                 .expect(403).end(done);
         });
 
@@ -201,7 +201,7 @@ describe('UserController', function() {
         });
         
         it('should delete the user test as admin', function(done){
-            request(sails.hooks.http.app).del('/users/' + testUser.ID).set('Authorization', sails.config.test.adminAuth)
+            request(sails.hooks.http.app).del('/users/' + testUser.id).set('Authorization', sails.config.test.adminAuth)
                 .expect(204).end(done);
         });
         

@@ -19,7 +19,7 @@ module.exports = {
      * @return {user|500|404}
      */
     find: function (req, res) {
-        User.findOne({'ID':req.param('id')}).populate('role').exec(function(err,user){
+        User.findOne({'id':req.param('id')}).populate('role').exec(function(err,user){
             if(err) return res.serverError(err);
             if(!user) return res.notFound();
             return res.ok({
@@ -38,7 +38,7 @@ module.exports = {
 
         // Get optional parameters from URL to refine the search
         var optionalData = {};
-        if( req.param('id') ) optionalData.ID = req.param('ID');
+        if( req.param('id') ) optionalData.id = req.param('id');
         if( req.param('firstname') ) optionalData.firstName = req.param('firstname');
         if( req.param('email') ) optionalData.email = req.param('email');
         if( req.param('lastname') ) optionalData.lastName = req.param('lastname');
@@ -111,7 +111,7 @@ module.exports = {
     update: function (req, res) {
 
         // Case of user try to update an other account
-        if( (req.param('id') != req.user.ID) && ! PermissionsService.isAllowed( req.user.role.name, req.options.controller, 'updateOthers') ){
+        if( (req.param('id') != req.user.id) && ! PermissionsService.isAllowed( req.user.role.name, req.options.controller, 'updateOthers') ){
             return res.forbidden();
         }
         else{
@@ -132,7 +132,7 @@ module.exports = {
 
             // Query to update
             var query = {
-                'ID': req.param('id')
+                'id': req.param('id')
             }
 
             // Update process
@@ -244,12 +244,12 @@ module.exports = {
                 }
                 
                 // User cannot destroy itself
-                if(user.ID == req.user.ID){
+                if(user.id == req.user.id){
                     return res.badRequest();
                 }
                 else{
                     // destroy user
-                    return User.destroy({ID:req.param('id')}).then(function(){
+                    return User.destroy({id:req.param('id')}).then(function(){
                         return res.noContent();
                     });
                 }

@@ -25,7 +25,11 @@ module.exports.policies = {
         'basicAuth', // always check basic auth first
         'jwtAuth',
         'isAuth', // IMPORTANT, this last check ensure that user will not pass through authentication method
-        'isAllowedWithPolicies', // Check for permission
+
+        // Check for permission
+        // We are not using several policies here because it's better to delegate permission to extern service
+        // It's more portable and can be share through a database and be manageable for example.
+        'isAuthorized',
     ],
     
     AuthController: {
@@ -36,9 +40,9 @@ module.exports.policies = {
     },
 
     HelperController: {
-        ping: true,
-        authJWT: ['jwtAuth', 'isAuth'],
-        authBasic: ['basicAuth', 'isAuth']
+        ping: true, // everyone can ping server
+        authJWT: ['jwtAuth', 'isAuth'], // used to test jwt auth
+        authBasic: ['basicAuth', 'isAuth'] // used to test basic auth
     }
 
 };

@@ -20,8 +20,11 @@
  * http://sailsjs.org/#/documentation/concepts/Routes/RouteTargetSyntax.html
  */
 
-module.exports.routes = {
+var routesDef = {
+    events: '/events'
+};
 
+var routes = {
     // This path is used to do some stuff in any way before all controllers
     // We could have call a controller which implement function(req, res, next) and call at last next()
     // but due to short logic/code a function placed here is more practice.
@@ -137,10 +140,12 @@ module.exports.routes = {
     'post   /products':                      'ProductController.create',
     'put    /products':                      'ProductController.update'
 
-
-
     // If a request to a URL doesn't match any of the custom routes above,
     // it is matched against Sails route blueprints.  See `config/blueprints.js`
     // for configuration options and examples.
+};
 
+module.exports = {
+    routes: routes,
+    routesDef: routesDef
 };

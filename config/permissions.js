@@ -33,7 +33,7 @@ module.exports.permissions = {
         user: {
             allow: {
                 user: ['find','findmultiple','delete', 'update', 'patch', 'generateResetPasswordToken'],
-                event: ['find', 'findmultiple'],
+                event: ['find', 'findmultiple', 'create'],
                 product: ['find','findmultiple','create'],
                 dev:    ['auth'], // allow user to authenticate first time
                 helper: ['me']

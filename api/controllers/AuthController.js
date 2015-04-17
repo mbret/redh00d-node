@@ -64,7 +64,7 @@ module.exports = {
                 return UserPassport.create( {
                         protocol : 'local',
                         password : password,
-                        user     : user.ID
+                        user     : user.id
                     })
                     .then(function(userPassport){
                         var token = passport.issueAccessToken(user);

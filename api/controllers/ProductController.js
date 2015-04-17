@@ -9,7 +9,7 @@ module.exports = {
      * Find a product
      */
     find: function(req, res){
-        Product.findOne({'ID':req.param('id')}).populate('category').exec(function(err,product){
+        Product.findOne({'id':req.param('id')}).populate('category').exec(function(err,product){
             if(err) return res.serverError(err);
             if(!product) return res.notFound();
             return res.ok({
@@ -69,7 +69,7 @@ module.exports = {
 
         // Run job
         Product.create( data).then(function(product){
-            return Product.findOne({'ID': product.ID}).populate('category').then(function(product){
+            return Product.findOne({'id': product.id}).populate('category').then(function(product){
                 if(!product) return res.notFound();
                 return res.created({
                     product: product.toJSON()

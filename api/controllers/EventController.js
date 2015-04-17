@@ -19,7 +19,7 @@ module.exports = {
      * Return an event by id
      */
     find: function (req, res) {
-        Event.findOne({'ID':req.param('id')}).populate('author').exec(function(err,event){
+        Event.findOne({'id':req.param('id')}).populate('author').exec(function(err,event){
             if(err) return res.serverError(err);
             if(!event) return res.notFound();
             return res.ok({
@@ -37,7 +37,7 @@ module.exports = {
 
         // Get optional parameters from URL to refine the search
         var optionalData = {};
-        if( req.param('id') ) optionalData.ID = req.param('ID');
+        if( req.param('id') ) optionalData.id = req.param('id');
         if( req.param('name') ) optionalData.name = req.param('name');
         if( req.param('date') ) optionalData.date = req.param('date');
         if( req.param('place') ) optionalData.place = req.param('place');
@@ -91,7 +91,7 @@ module.exports = {
         if ( req.param('date') ) dataToUpdate.date = req.param('date');
 
         var query = {
-            'ID': req.param('id')
+            'id': req.param('id')
         }
 
         Event.update(query, dataToUpdate, function(err, event) {
@@ -122,7 +122,7 @@ module.exports = {
      */
     findUser: function(req, res){
         // inject event id in request
-        req.param.eventID = req.param('ID');
+        req.param.eventId = req.param('id');
         sails.controllers.user.findMultiple(req, res);
     },
 
@@ -143,12 +143,12 @@ module.exports = {
 
         if( ! req.param('user_id') ) return res.badRequest( "no user specified" );
 
-        // Search user to inject ID
-        User.findOne( {ID: req.param('user_id')}).exec(function(err, user){
+        // Search user to inject id
+        User.findOne( {id: req.param('user_id')}).exec(function(err, user){
             if(err) return res.serverError();
             if( ! user ) return res.notFound( res.i18n("Resource (%s) doesn't exist", res.i18n('user')) );
 
-            eventData.userID = user.ID;
+            eventData.userId = user.id;
 
             // Create the event
             Event.create( eventData ).exec(function(err, event){

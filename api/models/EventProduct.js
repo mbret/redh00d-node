@@ -15,7 +15,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
     attributes:{
 
-        ID: {
+        id: {
             type: 'integer',
             autoIncrement: true,
             unique: true,
@@ -23,13 +23,13 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             primaryKey: true,
             columnName: 'eventProductID'
         },
-        eventID: {
+        eventId: {
             type: 'integer'
         },
-        userID: {
+        userId: {
             type: 'integer'
         },
-        productID: {
+        productId: {
             type: 'integer'
         },
         quantity: {

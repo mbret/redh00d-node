@@ -32,11 +32,11 @@ describe('ProductController', function() {
 
     describe("GET /products", function(){
 
-        it('should respond product with ID x', function(done){
-            request(sails.hooks.http.app).get('/products/' + products[0].ID).set('Authorization', sails.config.test.userAuth)
+        it('should respond product with id x', function(done){
+            request(sails.hooks.http.app).get('/products/' + products[0].id).set('Authorization', sails.config.test.userAuth)
                 .expect(200)
                 .expect(function(res){
-                    if( !res.body.product || !res.body.product.ID == products[0].ID ) throw new Error("No product or wrong product");
+                    if( !res.body.product || !res.body.product.id == products[0].id ) throw new Error("No product or wrong product");
                 })
                 .end(done);
         });
@@ -88,11 +88,11 @@ describe('ProductController', function() {
         });
 
         it('should create the product banana', function(done){
-            request(sails.hooks.http.app).post('/products').send({name: 'banana', category: productsCategories[0].ID, logo: 'banana.jpg'}).set('Authorization', sails.config.test.userAuth)
+            request(sails.hooks.http.app).post('/products').send({name: 'banana', category: productsCategories[0].id, logo: 'banana.jpg'}).set('Authorization', sails.config.test.userAuth)
                 .expect(201).expect(function(res){
                     assert.equal(res.body.product.name, 'banana');
                     assert.equal(res.body.product.isOfficial, false);
-                    assert.equal(res.body.product.category.ID, productsCategories[0].ID);
+                    assert.equal(res.body.product.category.id, productsCategories[0].id);
                 })
                 .end(done);
         });

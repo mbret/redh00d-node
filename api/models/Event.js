@@ -16,7 +16,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
     attributes:{
 
         // BDD fields
-        ID: {
+        id: {
             type: 'integer',
             autoIncrement: true,
             unique: true,

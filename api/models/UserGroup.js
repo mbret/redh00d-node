@@ -10,10 +10,10 @@ module.exports = {
 
     attributes: {
   	
-  	    ID: {
+  	    id: {
             type: 'integer'
         },
-        authorID: {
+        authorId: {
 
         },
         name: {

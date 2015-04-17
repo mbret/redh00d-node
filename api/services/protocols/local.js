@@ -28,7 +28,7 @@ module.exports = function (req, identifier, password, next) {
 
         UserPassport.findOne({
             protocol : 'local',
-            user     : user.ID
+            user     : user.id
         }, function (err, passport) {
             if (err) {
                 return next(err);

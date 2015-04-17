@@ -21,30 +21,30 @@ module.exports = {
             return Promise.all([
                 User.create({email: 'user@user.com', firstName: 'User', lastName: 'User'}),
                 User.create({email: 'user2@user2.com', firstName: 'User', lastName: 'User'}),
-                User.create({ email: 'admin@admin.com', firstName: 'Admin', lastName: 'Admin', role: values[0].ID }),
+                User.create({ email: 'admin@admin.com', firstName: 'Admin', lastName: 'Admin', role: values[0].id }),
                 Product.create({isOfficial: true, name: 'Coca Cola', logo: 'coca_cola', category: 2}),
                 Product.create({isOfficial: false, name: 'Chips', logo: 'chips', category: 1})
             ]);
         })
         .then(function(values){
             return Promise.all([
-                UserPassport.create({protocol: 'local', password: 'password', user: values[0].ID}),
-                UserPassport.create({protocol: 'local', password: 'password', user: values[1].ID}),
-                UserPassport.create({protocol: 'local', password: 'password', user: values[2].ID}),
+                UserPassport.create({protocol: 'local', password: 'password', user: values[0].id}),
+                UserPassport.create({protocol: 'local', password: 'password', user: values[1].id}),
+                UserPassport.create({protocol: 'local', password: 'password', user: values[2].id}),
             ]);
         })
         .then(function(){
             return Promise.all([
                 // events
-                Event.create({name:'Soirée pyjama', description:'Venez tous nue', author: 2, place: 'Toul', date: '2014-12-31', ID: 1}),
+                Event.create({name:'Soirée pyjama', description:'Venez tous nue', author: 2, place: 'Toul', date: '2014-12-31', id: 1}),
                 Event.create({name:'Meeting redh00d', description:'On va fumer de la bonne grosse beu !!', author: 2, place: 'Coloc', date: '2014-12-01'})
             ]);
         })
         .then(function(events){
             return Promise .all([
                 // products of events
-                EventProduct.create({eventID:events[0].ID, userID: 2, productID: 2, quantity: 2}),
-                EventProduct.create({eventID:events[1].ID, userID: 2, productID: 1, quantity: 1})
+                EventProduct.create({eventid:events[0].id, userid: 2, productid: 2, quantity: 2}),
+                EventProduct.create({eventid:events[1].id, userid: 2, productid: 1, quantity: 1})
             ]);
         });
 

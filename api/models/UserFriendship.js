@@ -9,7 +9,7 @@
 module.exports = {
 
     attributes: {
-        ID: {
+        id: {
             type: 'integer'
         }
     }
