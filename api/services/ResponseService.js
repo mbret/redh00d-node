@@ -21,6 +21,8 @@ module.exports = {
             data = {};
         }
 
+        data.status = res.statusCode ;
+
         // add debug dump
         if( sails.config.environment === 'development' ){
             data._debug = {

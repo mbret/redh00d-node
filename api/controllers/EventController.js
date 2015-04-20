@@ -6,26 +6,28 @@
  *
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
+var validator = require('validator');
 
 module.exports = {
-
-    /**
-     * Overrides for the settings in `config/controllers.js`
-     * (specific to EventController)
-     */
-    _config: {},
 
     /**
      * Return an event by id
      */
     find: function (req, res) {
-        Event.findOne({'id':req.param('id')}).populate('author').exec(function(err,event){
-            if(err) return res.serverError(err);
-            if(!event) return res.notFound();
-            return res.ok({
-                event:event.toJSON()
-            });
-        });
+
+        var id = req.param('id', null);
+        if( !validator.isNumeric(id) ){
+            return res.badRequest();
+        }
+
+        Event.findOne({ id: id }).populate('author')
+            .then(function(event){
+                if(!event) return res.notFound();
+                return res.ok({
+                    event:event.toJSON()
+                });
+            })
+            .catch(res.serverError);
     },
 
     /**

@@ -1,5 +1,8 @@
 var Sails = require('sails');
-var ConfigOverrides = require('../config/env/testing');
+var _ = require('lodash');
+var ConfigOverrides = require('../config/env/testing/testing');
+ConfigOverrides = _.merge(ConfigOverrides, require('../config/env/testing/policies'));
+ConfigOverrides = _.merge(ConfigOverrides, require('../config/env/testing/permissions'));
 var sails;
 
 before(function(done) {

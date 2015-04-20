@@ -1,37 +1,36 @@
 /**
- * isAllowed
+ * isAuthorized policy.
  *
- * @module      :: Policy
- * @description :: Simple policy to allow any authenticated user.
- *                 This policies check if the authentication by BasicAuth is ok. If user is authenticated then the user is placed inside req.user
- *                 Check Passport for more info about BasicAuth.
- * @docs        :: http://sailsjs.org/#!documentation/policies, https://github.com/jaredhanson/passport
+ * This policy just check if the request has enough permission to perform an action.
+ * It use the permission service which use ACL like permissions.
  *
+ * At this point sails has extracted the controller and the method from the request routes,
+ * we can easily perform a check on these two resources.
  */
+function isAuthorized(req, res, next) {
 
-module.exports = function isAuthorized(req, res, next) {
-
-    // They are already formatted from sails to match with permissions
+    // Sails automatically extract the controller and the method from the request routes
     var resource = req.options.controller;
     var action = req.options.action;
-    var roleName = (!req.user) ? 'guest' : req.user.role.name;
-    var isAuthenticated = (!req.user) ? false : req.user.isAuthenticated;
 
-    
-    sails.log.info('isAuthorized -> check ', roleName, resource, action);
-    // test permission
-    //sails.log.info('isAllowed -> req.user -> ', req.user);
-    if( PermissionsService.isAllowed( roleName, resource, action ) ){
-        return next();
+    if(_.isNull(resource) || _.isUndefined(resource) || _.isNull(action) || _.isUndefined(action)){
+        sails.log.info('isAuthorized -> check -> Unable to get a valid controller / action from the request, automatically rejected');
+        return res.forbidden();
     }
     else{
-        // case of reject maybe user is not authenticate ?
-        if( ! isAuthenticated ){
-            //sails.log.info("isAllowed -> request not authenticated");
-            return res.unauthorized();
+        var role = (req.user) ? req.user.role.name : 'guest';
+
+        sails.log.info('isAuthorized -> check ', resource, action);
+
+        // We now use the permission service
+        var isAuthorized = PermissionsService.isAllowed( role, resource, action );
+        if(isAuthorized){
+            return next();
         }
-        else return res.forbidden();
+        else{
+            return res.forbidden();
+        }
     }
+}
 
-
-};
+module.exports = isAuthorized;

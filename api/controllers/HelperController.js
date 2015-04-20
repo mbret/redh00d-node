@@ -24,7 +24,26 @@ module.exports = {
 
     authBasic: function(req, res){
         return res.ok();
+    },
+
+    /**
+     * Simple route to test permissions
+     * @param req
+     * @param res
+     */
+    authorizedGet: function(req, res){
+        return res.ok();
+    },
+
+    /**
+     * Simple route to test permissions
+     * @param req
+     * @param res
+     */
+    authorizedPost: function(req, res){
+        return res.ok();
     }
+
 
     /**
      * Helper that simulate login method.

@@ -68,6 +68,8 @@ var routes = {
     'get    /ping': 'HelperController.ping',
     'get    /helper/auth/jwt': 'HelperController.authJWT',
     'get    /helper/auth/basic': 'HelperController.authBasic',
+    'get    /helper/authorized': 'HelperController.authorizedGet',
+    'post   /helper/authorized': 'HelperController.authorizedPost',
 
     // Providers auth
     'get    /auth/:provider': 'AuthController.provider',

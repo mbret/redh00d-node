@@ -29,27 +29,21 @@ describe('EventController', function() {
 
     describe("GET /events", function(){
 
-        it('should respond event with id x', function(done){
+        it('should respond 400', function(done){
+            request(app).get(sails.config.routesDef.events + '/x').set('Authorization', sails.config.test.userAuth).expect(400).end(done);
+        });
+
+        it('should respond 404', function(done){
+            request(sails.hooks.http.app).get(sails.config.routesDef.events + '/99999').set('Authorization', sails.config.test.userAuth).expect(404).end(done);
+        });
+
+        it('should respond an event', function(done){
             request(sails.hooks.http.app).get(sails.config.routesDef.events + '/' + events[0].id).set('Authorization', sails.config.test.userAuth)
                 .expect(function(res){
                     res.body.should.have.property('event');
                     res.body.event.should.have.property('id');
                 })
                 .end(done);
-        });
-
-        it('should respond 404', function(done){
-            async.series([
-                function(callback){
-                    request(sails.hooks.http.app).get(sails.config.routesDef.events + '/x').set('Authorization', sails.config.test.userAuth).expect(404).end(callback);
-                },
-                function(callback){
-                    request(sails.hooks.http.app).get(sails.config.routesDef.events + '/99999').set('Authorization', sails.config.test.userAuth).expect(404).end(callback);
-                }
-            ], function(err, results){
-                if(err) return done(err);
-                done();
-            });
         });
 
         it('should respond list of events', function(done){

@@ -1,63 +1,139 @@
 /**
  *
  */
-module.exports = {
+var PermissionService = {
+
+    // Get reference to the config
+    permissions: sails.config.permissions,
 
     /**
-     *
+     * Check if a resource's action is allowed for the given role.
+     * This method reject everything that is not specified / registered / unknown etc.
      * @param roleName
      * @param controllerName
      * @param actionName
      * @returns {boolean}
      */
-    isAllowed: function( roleName, resource, action ){
+    isAllowed: function( role, resource, action ){
 
-        var permissions = sails.config.permissions;
-        
+        if(!role){
+            role = 'guest';
+        }
+
         // Reject if ACL is not register for this resource
-        if( ! this._hasRole(roleName) || ! this._hasResource(resource)  ){
-            throw new Error("Permission policy, trying to get a unknown role or resource or action [role="+roleName+"][resource="+resource+"][action="+action+"]");
+        if( ! this._isRoleRegistered(role) || ! this._isResourceRegistered(resource) ){
+            sails.log.info("Permission policy, trying to get a unknown role or resource or action [role="+role+"][resource="+resource+"][action="+action+"]");
+            return false;
         }
 
-        // Loop over hierarchy. We check the lower level and if the acl is not satisfied we check then the parents
-        // ex: user has some rights but doesn't overwrite the rights of his parent, guest. So we check users rights and then guest rights.
-        // Deny is prior to allow and is check before
-        var currentRole = roleName;
-        var rightFound = null;
-        var isAllowed = false;
+        var isAuthorized = this._isRoleAllowedRecursively(role, resource, action);
+        sails.log.info("Permission policy, Restrict/Grant access to [current role tested="+role+"][resource="+resource+"][action="+action+"][access="+isAuthorized+"]");
 
-        // Continue while hierarchy is not over or access is not explicitly denied!
-        while( currentRole && rightFound !== true ){
+        return isAuthorized;
+    },
 
-            var acl = permissions.acl[currentRole];
-            // Check if this current role is denied
-            if( acl.deny && acl.deny[resource] && acl.deny[resource].indexOf(action) > -1 ){
-                rightFound = true;
-                isAllowed = false;
-                sails.log.info("Permission policy, Restrict access to [current role tested="+currentRole+"][resource="+resource+"][action="+action+"]");
-            }
-            // Otherwise check if this current role has rights
-            else if( acl.allow && acl.allow[resource] && acl.allow[resource].indexOf(action) > -1 ){
-                rightFound = true;
-                isAllowed = true;
-                sails.log.info("Permission policy, Allow access to ["+currentRole+"][resource="+resource+"][action="+action+"]");
-            }
+    /**
+     * Check recursively if one role is allowed to perform this resource's action.
+     * It will check recursively through the role's parents.
+     * @param role
+     * @param resource
+     * @param action
+     * @returns {*}
+     * @private
+     */
+    _isRoleAllowedRecursively: function( role, resource, action ){
 
-            currentRole = permissions.roles[currentRole].parent;
+        // Check if this current role is denied
+        if( this._isDenied(role, resource, action) ){
+            sails.log.info("Permission policy, Restrict access to [current role tested="+role+"][resource="+resource+"][action="+action+"]");
+            return false;
         }
-
-        return isAllowed;
+        // Otherwise check if this current role has rights
+        else if( this._isAllowed(role, resource, action) ){
+            sails.log.info("Permission policy, Allow access to [" + role + "][resource="+resource+"][action="+action+"]");
+            return true;
+        }
+        else{
+            var parent = this._getParent(role);
+            if(parent == null){
+                return false;
+            }
+            else{
+                return this._isRoleAllowedRecursively( parent, resource, action );
+            }
+        }
     },
 
-    _hasResource: function( resource ){
-        return sails.config.permissions.resources.indexOf(resource) < 0 ? false : true;
+    /**
+     * Check if this resource's action is denied for this role.
+     * @param role
+     * @param resource
+     * @param action
+     * @returns {boolean}
+     * @private
+     */
+    _isDenied: function(role, resource, action){
+        var aclForRole = this.permissions.acl[ role ];
+        if( aclForRole.deny && aclForRole.deny[resource] && aclForRole.deny[resource].indexOf(action) > -1 ){
+            return true;
+        }
+        return false;
     },
 
-    _hasRole: function( role ){
-        return sails.config.permissions.roles[role] ? true : false;
+    /**
+     * Check if this resource's action is allowed for this role.
+     * @param role
+     * @param resource
+     * @param action
+     * @returns {boolean}
+     * @private
+     */
+    _isAllowed: function(role, resource, action){
+        var aclForRole = this.permissions.acl[ role ];
+        if( aclForRole.allow && aclForRole.allow[resource] && aclForRole.allow[resource].indexOf(action) > -1 ){
+            return true;
+        }
+        return false;
+    },
+
+    /**
+     * Check if a resource with that name has been registered.
+     * @param resource
+     * @returns {boolean}
+     * @private
+     */
+    _isResourceRegistered: function( resource ){
+        return this.permissions.resources.indexOf(resource) < 0 ? false : true;
+    },
+
+    /**
+     * Check if a role with that name has been registered.
+     * @param role
+     * @returns {boolean}
+     * @private
+     */
+    _isRoleRegistered: function( role ){
+        var found = false;
+        _.forEach(this.permissions.roles, function(entry){
+            if(entry.name === role){
+                found = true;
+            }
+        });
+        return found;
+    },
+
+    _getParent: function( role ){
+        var parent = null;
+        _.forEach(this.permissions.roles, function(entry){
+            if(entry.name === role && entry.parent){
+                parent = entry.parent;
+            }
+        });
+        return parent;
     }
 
 };
 
+module.exports = PermissionService;
 // `sails` is not available out here
 // (it doesn't exist yet)

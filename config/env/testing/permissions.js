@@ -32,7 +32,7 @@ var permissions = {
     acl: {
         guest: {
             allow: {
-                user: ['create']
+                user: ['create', 'foo']
             }
         },
         user: {

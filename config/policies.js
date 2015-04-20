@@ -39,10 +39,6 @@ module.exports.policies = {
         facebookCallback: true
     },
 
-    HelperController: {
-        ping: true, // everyone can ping server
-        authJWT: ['jwtAuth', 'isAuth'], // used to test jwt auth
-        authBasic: ['basicAuth', 'isAuth'] // used to test basic auth
-    }
+    HelperController: false
 
 };

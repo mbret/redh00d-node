@@ -27,4 +27,5 @@ module.exports = {
         adminAuth: 'Basic YWRtaW5AYWRtaW4uY29tOnBhc3N3b3Jk', // admin@admin.com / password
         toolsPath: __dirname + '/tools'
     }
+
 }
