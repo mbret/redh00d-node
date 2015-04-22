@@ -35,21 +35,19 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             unique: true,
             columnName: "userMail"
         },
-        // Password for bdd
-        encryptedPassword: {
-            type: 'string',
-            columnName: "userPassword"
-        },
+
         firstName: {
             type: 'string',
             required: false,
             columnName: 'userFirstName'
         },
+
         lastName: {
             type: 'string',
             required: false,
             columnName: 'userLastName'
         },
+
         // Not required because it has a default value (see below)
         role: {
             model: 'UserRole',
@@ -66,11 +64,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             type: 'json',
             columnName: 'userPasswordResetToken'
         },
-        apiKey: {
-            type: 'string',
-            unique: true,
-            columnName: 'userApiKey'
-        },
+
         // Managed by waterline
         createdAt: {
             type: 'datetime',
@@ -109,39 +103,11 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             else{
                 user.password = "***";
                 user.email = "***";
-                user.encryptedPassword = "***";
                 user.sessionTokens = "***";
                 user._csrf = "***";
-                user.apiKey = "***";
                 return user;
             }
 
-        },
-
-        /**
-         * Check if the supplied password matches the stored password.
-         * - Useful when login action, change password ...
-         * @todo promise
-         */
-        validatePassword: function( candidatePassword, cb ) {
-            bcrypt.compare( candidatePassword, this.encryptedPassword, function (err, valid) {
-                if(err) return cb(err);
-                cb(null, valid);
-            });
-        },
-
-        /**
-         * Generate password reset token
-         */
-        generatePasswordResetToken: function(cb) {
-            //var token = TokenService.generate(); // get json object
-            //User.update( {'ID': this.ID}, {passwordResetToken: token}, function (err, user) {
-            //        if(err) return cb(err);
-            //        this.passwordResetToken = token;
-            //        return cb();
-            //    }
-            //);
-            return cb(new Error('Not implemented'));
         },
 
         /**
@@ -150,23 +116,23 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
          * send an email to the user with
          * instructions to reset their password
          */
-        sendPasswordResetEmail: function(cb) {
-            var mailOptions = {
-                from: sails.__(sails.config.all.mail.from.contact.name) + ' ' + '<' + sails.config.all.mail.from.contact.email + '>', // sender address
-                to: this.email, // list of receivers
-                subject: sails.__('Reset password'), // Subject line
+        //sendPasswordResetEmail: function(cb) {
+        //    var mailOptions = {
+        //        from: sails.__(sails.config.all.mail.from.contact.name) + ' ' + '<' + sails.config.all.mail.from.contact.email + '>', // sender address
+        //        to: this.email, // list of receivers
+        //        subject: sails.__('Reset password'), // Subject line
 //                text: sails.__('Please click on this link to update your password'), // plaintext body
-                html: '<b>' + sails.__('Please click on this link to update your password') + '</b>' // html body
-            };
-
-            MailerService.sendMail(mailOptions, function(err, info){
-                if(err){
-                    return cb(err);
-                }else{
-                    return cb();
-                }
-            });
-        },
+//                html: '<b>' + sails.__('Please click on this link to update your password') + '</b>' // html body
+//            };
+//
+//            MailerService.sendMail(mailOptions, function(err, info){
+//                if(err){
+//                    return cb(err);
+//                }else{
+//                    return cb();
+//                }
+//            });
+//        },
 
         isAdmin: function(){
             return this.role.name === "admin";
@@ -174,67 +140,28 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
     },
 
-    beforeCreate: [
+    beforeCreate: [ setDefaultRoleIfUndefined ],
 
-        function(values, cb){
-            cb();
-        },
-
-        // Create an API key
-        //@todo maybe check here the uniqueness of the api key inside db before register
-        function (values, cb) {
-            values.apiKey = uuid.v4();
-            sails.log.debug("User: Class.beforeCreate: API key generated '%s'", values.apiKey);
-            cb();
-        },
-
-        // Set default role
-        function(values, cb){
-            if( ! values.role ){
-                sails.log.debug("User.beforeCreate no roleID provided, default is set (default=" + sails.config.permissions.defaultRole +")");
-                UserRole.findDefault(function(err, role){
-                    if(role){
-                        values.role = role.id;
-                    }
-                    else{
-                        return cb( new Error("Unable to load the role") );
-                    }
-                    return cb(err);
-                })
-            }
-            else{
-                return cb();
-            }
-        }
-
-    ],
-
-    beforeUpdate: [
-        // Encrypt user's password, if changed
-        //function (values, cb) {
-        //    if ( values.password ) {
-        //        User.encryptPassword(values, function (err) {
-        //            cb(err);
-        //        });
-        //    }
-        //    return cb(); // otherwise continue
-        //},
-    ],
-
-    /**
-     * User password encryption. Uses bcrypt.
-     */
-//    encryptPassword: function(values, cb) {
-////        values.encryptedPassword = values.password;
-////        cb();
-//        bcrypt.hash(values.password, 10, function (err, encryptedPassword) {
-//            if(err) return cb(err);
-//            values.encryptedPassword = encryptedPassword;
-//            sails.log.info("User: Class.encryptPassword: Password encrypted from '%s' to '%s'", values.password, values.encryptedPassword);
-//            return cb();
-//        });
-//
-//
-//    }
+    beforeUpdate: [ ]
 
 });
+
+/**
+ * Set the default user role if undefined during creation
+ * @param values
+ * @param cb
+ * @returns {*}
+ */
+function setDefaultRoleIfUndefined(values, cb){
+    if(values.role) return cb();
+
+    sails.log.debug("User -> setDefaultRoleIfUndefined -> default is set (default=" + sails.config.permissions.defaultRole +")");
+    UserRole.findDefault(function(err, role){
+        if(err) return cb(err);
+        if(!role) return cb( new Error("Unable to load the role") );
+
+        values.role = role.id;
+        return cb();
+    })
+
+}

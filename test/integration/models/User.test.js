@@ -41,7 +41,6 @@ describe('UserModel', function() {
                     || user.email != 'toto@tata.com'
                     || ! user.createdAt instanceof Date
                     || ! user.updatedAt instanceof Date
-                    || user.apiKey.length < 1
                     || user.role != defaultUserRole.id // default role
                     ){
                     throw new Error('User malformed or incomplete');
