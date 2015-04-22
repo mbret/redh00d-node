@@ -21,13 +21,9 @@ module.exports.bootstrap = function(cb) {
         // Use current set env to run different database script
         function(cb){
 
-            if(sails.config.fillDb === true){
+            if(sails.config.database.initOnStartup === true){
                 switch(sails.config.environment){
                     case 'production':
-                        DbService.init(sails.config.environment)
-                            .then(function(){ cb(); })
-                            .catch(cb);
-                        break;
                     case 'development':
                         DbService.init(sails.config.environment)
                             .then(function(){ cb(); })

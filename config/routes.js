@@ -35,7 +35,7 @@ var routes = {
     },
 
     'get /doc': function (req, res) {
-        return res.send('<iframe style="border:none;height:97%;width:100%;" src="'+sails.config.general.docURL+'"></iframe>');
+        return res.send('<iframe style="border:none;height:97%;width:100%;" src="'+sails.config.all.docURL+'"></iframe>');
     },
 
     'get /': function(req, res){

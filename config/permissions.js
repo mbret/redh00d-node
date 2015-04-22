@@ -4,6 +4,8 @@
 
 var permissions = {
 
+    defaultRole: 'user',
+
     // They match the role inside database
     roles: [
         {

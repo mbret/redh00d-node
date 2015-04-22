@@ -15,8 +15,8 @@ module.exports = {
         migrate: 'drop' // erase database before each launch
     },
 
-    general: {
-        initDatabase: false
+    database: {
+        initOnStartip: false
     },
 
     test: {

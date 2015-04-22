@@ -13,7 +13,7 @@ module.exports = function serverError (err) {
     if(!err) err = {};
     // In case of err is not an error handled by main program we do not send anything to customer to avoid sensitive information
     if(sails.config.environment !== 'development'){
-        if( !err.code || (err.code && !sails.config.general.errors.codes[err.code]) ){
+        if( !err.code || (err.code && !sails.config.all.errors.codes[err.code]) ){
             err = {};
         }
     }

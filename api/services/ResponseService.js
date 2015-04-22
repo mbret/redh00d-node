@@ -26,12 +26,12 @@ module.exports = {
         // add debug dump
         if( sails.config.environment === 'development' ){
             data._debug = {
-                api_version: sails.config.general.version,
+                api_version: sails.config.all.version,
                 creators: ["Maxime Bret"],
-                default_user_role: sails.config.general.defaultUserRoleName,
+                default_user_role: sails.config.permissions.defaultRole,
                 connection: sails.config.models.connection,
-                init_db_each_launch: sails.config.general.initDatabase,
-                protect_json_response: sails.config.general.protectJsonData,
+                init_db_each_launch: sails.config.database.initOnStartup,
+                protect_json_response: sails.config.all.protectJsonData,
                 environment: sails.config.environment,
                 request: {
                     locale: res.locale,
@@ -60,13 +60,13 @@ module.exports = {
      * @returns {*}
      */
     handleErrorSend: function(req, res, data, defaultErrorCode){
-        var defaultMessage = sails.config.general.errors.codes[defaultErrorCode];
+        var defaultMessage = sails.config.all.errors.codes[defaultErrorCode];
 
         if( !data ) data = {};
 
         if( !data.message ){
             if( data.code ){
-                data.message = res.__( sails.config.general.errors.codes[data.code] );
+                data.message = res.__( sails.config.all.errors.codes[data.code] );
             }
             else{
                 data.message = res.__( defaultMessage );

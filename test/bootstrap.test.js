@@ -1,13 +1,10 @@
 var Sails = require('sails');
-var _ = require('lodash');
-var ConfigOverrides = require('../config/env/testing/testing');
-ConfigOverrides = _.merge(ConfigOverrides, require('../config/env/testing/policies'));
-ConfigOverrides = _.merge(ConfigOverrides, require('../config/env/testing/permissions'));
+var config = require('./tools/config-loader')(__dirname + '/../config/env/testing');
 var sails;
 
 before(function(done) {
 
-    Sails.lift(ConfigOverrides, function(err, server) {
+    Sails.lift(config, function(err, server) {
         if (err) return done(err);
         sails = server;
         

@@ -103,7 +103,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
          */
         toJSON: function() {
             var user = this.toObject();
-            if( sails.config.general.protectJsonData === false ) {
+            if( sails.config.all.protectJsonData === false ) {
                 return user;
             }
             else{
@@ -152,7 +152,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
          */
         sendPasswordResetEmail: function(cb) {
             var mailOptions = {
-                from: sails.__(sails.config.general.mail.from.contact.name) + ' ' + '<' + sails.config.general.mail.from.contact.email + '>', // sender address
+                from: sails.__(sails.config.all.mail.from.contact.name) + ' ' + '<' + sails.config.all.mail.from.contact.email + '>', // sender address
                 to: this.email, // list of receivers
                 subject: sails.__('Reset password'), // Subject line
 //                text: sails.__('Please click on this link to update your password'), // plaintext body
@@ -191,7 +191,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         // Set default role
         function(values, cb){
             if( ! values.role ){
-                sails.log.debug("User.beforeCreate no roleID provided, default is set (default=" + sails.config.general.defaultUserRoleName +")");
+                sails.log.debug("User.beforeCreate no roleID provided, default is set (default=" + sails.config.permissions.defaultRole +")");
                 UserRole.findDefault(function(err, role){
                     if(role){
                         values.role = role.id;
