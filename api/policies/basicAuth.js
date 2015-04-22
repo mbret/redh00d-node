@@ -22,7 +22,7 @@ module.exports = function (req, res, next) {
 
     sails.log.info('anyAuth -> basic authentication asked, authenticating', username, 'using basic auth:', req.url);
 
-    passport.authenticate('basic', { session: false }, function (err, user, info){
+    PassportService.authenticate('basic', { session: false }, function (err, user, info){
         if (err) {
             return next(err);
         }

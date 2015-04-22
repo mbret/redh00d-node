@@ -14,7 +14,7 @@ function jwtAuth(req, res, next) {
     }
 
     sails.log.info('jwtAuth -> authentication asked');
-    passport.authenticate('jwt', { session: false }, function (err, user, info){
+    PassportService.authenticate('jwt', { session: false }, function (err, user, info){
         if (err) return next(err);
 
         if(!user){

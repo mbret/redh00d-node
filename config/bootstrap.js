@@ -13,7 +13,7 @@ module.exports.bootstrap = function(cb) {
 
     // Load passport providers on startup
     // Will add to passport.use() all the strategy
-    sails.services.passport.loadStrategies();
+    PassportService.loadStrategies();
     
     async.series([
 
