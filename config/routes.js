@@ -61,9 +61,6 @@ var routes = {
      *
      ***************************/
     'get  /dev/db': 'DevController.dumpDatabase',
-    'get  /dev/logs':'DevController.logs',
-    'get  /dev/access-logs':'DevController.accessLogs',
-    'get  /dev/delete-logs':'DevController.deleteLogs',
 
     'get    /helper/me' : 'HelperController.me',
     'get    /ping': 'HelperController.ping',
