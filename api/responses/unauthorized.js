@@ -6,7 +6,7 @@
  *
  */
 
-module.exports = function(data) {
+module.exports = function(data, code, message) {
 
     this.res.status(401);
 
