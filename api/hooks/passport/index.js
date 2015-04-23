@@ -1,12 +1,56 @@
 'use strict';
 
-var path     = require('path'),
-    url      = require('url'),
-    passport = require('passport'),
-    jwt      = require('jsonwebtoken');
+var path            = require('path');
+var url             = require('url');
+var jwt             = require('jsonwebtoken');
+var passport        = require('passport');
+passport.protocols  = require('./protocols');
 
-// Load authentication protocols
-passport.protocols = require('./protocols');
+/**
+ * Created by mbret on 23/04/2015.
+ */
+module.exports = function (sails) {
+
+    return {
+
+        configure: function(){
+
+        },
+
+        initialize: function (cb) {
+
+            // Load passport providers on startup
+            // Will add to passport.use() all the strategy
+            loadStrategies(sails);
+
+            return cb();
+        },
+
+        routes: {
+            before: {
+                '/*': function configurePassport (req, res, next) {
+                    passport.initialize()(req, res, next);
+                }
+            }
+        },
+
+        /**
+         * Issue a new token for authenticated later.
+         * @param user
+         */
+        issueAccessToken: function (user){
+            var secretKey = sails.config.passport.token.secret;
+            return jwt.sign({user:user.id}, secretKey, {
+                algorithm: sails.config.passport.token.options.algorithm || 'HS256',
+                expiresInSeconds: sails.config.passport.token.options.expiresInSeconds || 60 * 24,
+                audience: sails.config.passport.token.options.audience,
+                subject: sails.config.passport.token.options.subject,
+                issuer: sails.config.passport.token.options.issuer
+            });
+        }
+    };
+};
+
 
 /**
  * Load all strategies defined in the Passport configuration
@@ -19,57 +63,73 @@ passport.protocols = require('./protocols');
  * http://passportjs.org/guide/providers/
  *
  */
-passport.loadStrategies = function () {
-  var self       = this;
-  var strategies = sails.config.passport.strategies;
+function loadStrategies(sails) {
+    var strategies = sails.config.passport.strategies;
 
-  Object.keys(strategies).forEach(function (key) {
+    Object.keys(strategies).forEach(function (key) {
         var options = { passReqToCallback: true };
         var Strategy;
 
-      // Local strategy
-      if (key === 'local') {
-          _.extend(options, strategies[key].options);
+        // Local strategy
+        if (key === 'local') {
+            _.extend(options, strategies[key].options);
 
-          Strategy = strategies[key].strategy;
+            Strategy = strategies[key].strategy;
 
-          self.use(new Strategy(options, self.protocols.local));
-      }
-      // Fb, basic, etc
-      else{
-          var protocol = strategies[key].protocol; // auth protocol
-          var callback = strategies[key].callback;
+            passport.use(new Strategy(options, passport.protocols.local));
+        }
+        // Fb, basic, etc
+        else{
+            var protocol = strategies[key].protocol; // auth protocol
+            var callback = strategies[key].callback;
 
-          if (!callback) {
-              callback = path.join('auth', key, 'callback');
-              //throw Error('No callback specified');
-          }
+            if (!callback) {
+                callback = path.join('auth', key, 'callback');
+                //throw Error('No callback specified');
+            }
 
-          Strategy = strategies[key].strategy;
+            Strategy = strategies[key].strategy;
 
-          var baseUrl = sails.getBaseurl();
+            var baseUrl = sails.getBaseurl();
 
-          switch (protocol) {
-              case 'oauth':
-              case 'oauth2':
-                  options.callbackURL = url.resolve(baseUrl, callback);
-                  break;
+            switch (protocol) {
+                case 'oauth':
+                case 'oauth2':
+                    options.callbackURL = url.resolve(baseUrl, callback);
+                    break;
 
-              case 'openid':
-                  options.returnURL = url.resolve(baseUrl, callback);
-                  options.realm     = baseUrl;
-                  options.profile   = true;
-                  break;
-          }
+                case 'openid':
+                    options.returnURL = url.resolve(baseUrl, callback);
+                    options.realm     = baseUrl;
+                    options.profile   = true;
+                    break;
+            }
 
-          // Merge the default options with any options defined in the config. All
-          // defaults can be overridden, but I don't see a reason why you'd want to
-          // do that.
-          _.extend(options, strategies[key].options);
+            // Merge the default options with any options defined in the config. All
+            // defaults can be overridden, but I don't see a reason why you'd want to
+            // do that.
+            _.extend(options, strategies[key].options);
 
-          self.use(new Strategy(options, self.protocols[protocol]));
-      }
-  });
+            passport.use(new Strategy(options, passport.protocols[protocol]));
+        }
+    });
+}
+
+
+/**
+ *
+ * @param user
+ * @returns {*}
+ */
+function issueAccessToken(user){
+    var secretKey = sails.config.passport.token.secret;
+    return jwt.sign({user:user.id}, secretKey, {
+        algorithm: sails.config.passport.token.options.algorithm || 'HS256',
+        expiresInSeconds: sails.config.passport.token.options.expiresInSeconds || 60 * 24,
+        audience: sails.config.passport.token.options.audience,
+        subject: sails.config.passport.token.options.subject,
+        issuer: sails.config.passport.token.options.issuer
+    });
 };
 
 /**
@@ -179,25 +239,25 @@ passport.connect = function (req, query, profile, next) {
         , identifier : query.identifier.toString()
     })
         .then(function(userPassport){
-            
-            // This is the first time this user authenticate with this 
+
+            // This is the first time this user authenticate with this
             // provider to the api, create passport and user
             if (!userPassport) {
                 //console.log('NO PROVIDER');
                 // @todo
                 // We try to find a possible user
                 // If we find a user with this email it means that it's the first time the user use a provider
-                // to authenticate. 
+                // to authenticate.
                 return User.findOne({email: user.email})
                     .then(function(userFound){
-                   
+
                         if(userFound){
                             return userFound;
                         }
                         else{
                             return User.create(user);
                         }
-                        
+
                     })
                     .then(function(user){
                         query.user = user.id;
@@ -206,7 +266,7 @@ passport.connect = function (req, query, profile, next) {
                             return user;
                         });
                     });
-                
+
             }
             // Scenario: An existing user is trying to log in using an already
             //           connected passport.
@@ -235,21 +295,6 @@ passport.connect = function (req, query, profile, next) {
 };
 
 
-/**
- *  
- * @param user
- * @returns {*}
- */
-passport.issueAccessToken = function(user){
-    var secretKey = sails.config.passport.token.secret;
-    return jwt.sign({user:user.id}, secretKey, {
-        algorithm: sails.config.passport.token.options.algorithm || 'HS256',
-        expiresInSeconds: sails.config.passport.token.options.expiresInSeconds || 60 * 24,
-        audience: sails.config.passport.token.options.audience,
-        subject: sails.config.passport.token.options.subject,
-        issuer: sails.config.passport.token.options.issuer
-    });
-};
 
 passport.serializeUser(function (user, next) {
     next(null, user.id);
@@ -258,5 +303,3 @@ passport.serializeUser(function (user, next) {
 passport.deserializeUser(function (id, next) {
     User.findOne(id).populate('role').exec(next);
 });
-
-module.exports = passport;

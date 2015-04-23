@@ -42,7 +42,6 @@ module.exports = {
                 'methodOverride',
                 'poweredBy',
                 '$custom',
-                'passportInit', // custom
                 'router',
                 'www',
                 'favicon',
@@ -57,9 +56,6 @@ module.exports = {
                 return next();
             },
 
-            // Use passport
-            passportInit: require('passport').initialize()
-
             /***************************************************************************
              *                                                                          *
              * The body parser that will handle incoming multipart HTTP requests. By    *
@@ -70,7 +66,7 @@ module.exports = {
              ***************************************************************************/
             // bodyParser: require('skipper')
 
-        },
+        }
 
 
         /***************************************************************************
@@ -82,7 +78,7 @@ module.exports = {
          * since that's the only time Express will cache flat-files.                *
          *                                                                          *
          ***************************************************************************/
-        cache: 31557600000
+        //cache: 31557600000
     }
 
 };

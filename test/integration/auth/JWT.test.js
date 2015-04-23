@@ -36,7 +36,7 @@ describe('integration.auth.JWT', function() {
         it('should revoke the token because of timeout', function(done){
             // Change the expiration time of the token, so the token will be immediately obsolete.
             sails.config.passport.token.options.expiresInSeconds = 1;
-            var token = PassportService.issueAccessToken(sails.config.test.user);
+            var token = sails.hooks.passport.issueAccessToken(sails.config.test.user);
             setTimeout(function(){
                 request(app).get('/helper/auth/jwt').set('Authorization', 'JWT ' + token).expect(401, done);
             }, 1000);

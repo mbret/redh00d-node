@@ -2,6 +2,7 @@
 
 var validator = require('validator');
 var Facebook = require('machinepack-facebook');
+var passport = require('passport');
 
 /**
  * Triggers when user authenticates via passport
@@ -18,7 +19,7 @@ function _onPassportAuth(req, res, error, user, info) {
     }
     if (!user) return res.badRequest(null, info.code, info.message);
 
-    var token = PassportService.issueAccessToken(user);
+    var token = sails.hooks.passport.issueAccessToken(user);
     
     return res.ok({
         token: token,
@@ -34,7 +35,7 @@ module.exports = {
      * @param res
      */
     login: function(req, res){
-        PassportService.authenticate('local', _onPassportAuth.bind(this, req, res))(req, res);
+        passport.authenticate('local', _onPassportAuth.bind(this, req, res))(req, res);
     },
 
     /**
@@ -67,7 +68,7 @@ module.exports = {
                         user     : user.id
                     })
                     .then(function(userPassport){
-                        var token = PassportService.issueAccessToken(user);
+                        var token = sails.hooks.passport.issueAccessToken(user);
                         return {
                             token: token,
                             user: user
@@ -102,7 +103,7 @@ module.exports = {
      * @param {Object} res
      */
     provider: function (req, res) {
-        PassportService.endpoint(req, res);
+        passport.endpoint(req, res);
     },
 
     /**
@@ -116,7 +117,7 @@ module.exports = {
         // the authentication process by attempting to obtain an access token. If
         // access was granted, the user will be logged in. Otherwise, authentication
         // has failed.
-        PassportService.authenticate('facebook', function (err, user, challenges, statuses) {
+        passport.authenticate('facebook', function (err, user, challenges, statuses) {
             // handle facebook error 
             var definitiveError = null;
             var info = {};

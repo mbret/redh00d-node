@@ -1,3 +1,5 @@
+var passport = require('passport');
+
 /**
  * Implement a policy based on jwt authentication
  * @param req
@@ -14,7 +16,7 @@ function jwtAuth(req, res, next) {
     }
 
     sails.log.info('jwtAuth -> authentication asked');
-    PassportService.authenticate('jwt', { session: false }, function (err, user, info){
+    passport.authenticate('jwt', { session: false }, function (err, user, info){
         if (err) return next(err);
 
         if(!user){

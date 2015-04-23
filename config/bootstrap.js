@@ -11,9 +11,7 @@
 
 module.exports.bootstrap = function(cb) {
 
-    // Load passport providers on startup
-    // Will add to passport.use() all the strategy
-    PassportService.loadStrategies();
+
 
     PermissionsService.setPermissions(sails.config.permissions);
 
