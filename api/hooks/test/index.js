@@ -16,14 +16,17 @@ module.exports = function (sails) {
 
         routes: {
             before: {
+                'all /*': function addMixins (req, res, next) {
+                    next();
+                }
                 //'GET /*': function (req, res, next) {
                 //    return next();
                 //}
             },
             after: {
-                //'GET /*': function (req, res, next) {
-                //    return next();
-                //}
+                'all /*': function addMixins (req, res, next) {
+                    next();
+                }
             }
         }
     };
