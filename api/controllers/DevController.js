@@ -53,57 +53,6 @@ module.exports = {
 
     },
 
-    /**
-     * Remove all logs
-     * @param req
-     * @param res
-     */
-    deleteLogs: function(req, res){
-        var fs = require('fs');
-        var input = sails.config.appPath + '/data/logs.log';
-        var input2 = sails.config.appPath + '/data/access.log';
-        fs.truncate(input, 0, function () {
-            fs.truncate(input2, 0, function () {
-                return res.send(200, "removed");
-            });
-        });
-    },
-
-    accessLogs: function(req, res){
-
-        var fs = require('fs');
-        var logs = "";
-        var input = fs.createReadStream(sails.config.appPath + '/data/access.log');
-
-        FilesService.readLines(input, function (data) {
-            logs = logs + data + "<br/>";
-        }, function(){
-            logs += '<div id="end" ></div>';
-            res.set('Content-Type', 'text/html');
-            return res.send(200, logs);
-        })
-    },
-
-    /**
-     * Display logs
-     * @param req
-     * @param res
-     */
-    logs: function(req, res){
-        var fs = require('fs');
-        var logs = "";
-        var input = fs.createReadStream(sails.config.appPath + '/data/logs.log');
-
-        FilesService.readLines(input, function (data) {
-            logs = logs + data + "<br/>";
-        }, function(){
-            logs += '<div id="end" ></div>';
-            res.set('Content-Type', 'text/html');
-            return res.send(200, logs);
-        })
-    },
-
-
 };
 
 

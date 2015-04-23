@@ -65,7 +65,7 @@ module.exports = {
         return UserRole.findOne({name: 'admin'}).then(function(widget){
 
             if(widget){
-                sails.log.debug('DbService: The database seems to be already initialized, operation ommitted!');
+                sails.log.debug('DatabaseService: The database seems to be already initialized, operation ommitted!');
                 return;
             }
 

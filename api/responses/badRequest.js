@@ -18,10 +18,8 @@ module.exports = function badRequest(data, code, message) {
         data: data || {}
     };
     
-    this.req._sails.log.info('Sent ("Bad Request") response\n', response);
-
     // send response
-    return ResponseService.handleSend( this.req, this.res, response );
+    return ResponseService.send( this.req, this.res, response );
 
 };
 

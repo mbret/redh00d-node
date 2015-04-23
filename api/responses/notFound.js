@@ -8,11 +8,18 @@
  *
  * @param {object} data additional information
  */
-module.exports = function notFound (data) {
+module.exports = function notFound (data, code, message) {
 
     this.res.status(404);
 
-    return ResponseService.handleErrorSend( this.req, this.res, data, "notFound" );
+    var response = {
+        code: code || 'E_NOT_FOUND',
+        message: message || 'The resource cannot be found',
+        data: data || {}
+    };
+
+    // send response
+    return ResponseService.send( this.req, this.res, response );
 
 };
 

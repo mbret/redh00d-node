@@ -1,80 +1,94 @@
 /**
  * This helper is useful to deal with response and get some useful method about.
  *
- * @type {{handleSend: handleSend}}
+ * @type {{send: send}}
  */
 module.exports = {
 
     /**
-     * This method handle the response sending.
-     *
-     * @description :: Some extra information are injected inside data and the response is correctly send.
      *
      * @param req
      * @param res
      * @param data
      * @returns {*}
      */
-    handleSend: function(req, res, data){
+    sendError: function(req, res, data){
 
-        if( ! data ) {
+        req._sails.log.error('Sent ' + req.statusCode + ' response\n', data);
+
+        data = this._prepareData(req, res, data);
+
+        // Only include errors in response if application environment
+        // is not set to 'production'.  In production, we shouldn't
+        // send back any identifying information about errors.
+        if (sails.config.environment === 'production') {
+            data = undefined;
+        }
+
+        // Always send json / xml
+        return res.jsonx( data );
+    },
+
+    /**
+     * This method handle response sending. Use it whenever you want to send something.
+     *
+     * @param req
+     * @param res
+     * @param data
+     * @returns {*}
+     */
+    send: function(req, res, data){
+
+        req._sails.log.info('Sent ' + req.statusCode + ' response\n', data);
+
+        data = this._prepareData(req, res, data);
+
+        // Always send json / xml
+        return res.jsonx( data );
+    },
+
+    _prepareData: function(req, res, data){
+        if(!data){
             data = {};
         }
 
-        data.status = res.statusCode ;
+        // Check response before all send
+        if(!this._checkValidity(res)){
+            throw new Error('Invalid response provided');
+        }
+
+        return this._attachCommonData(req, res, data);
+    },
+
+    _attachCommonData: function(req, res, data){
+
+        if(!data.status) data.status = res.statusCode ;
+
+        data.api_version = sails.config.apiVersion;
 
         // add debug dump
-        if( sails.config.environment === 'development' ){
-            data._debug = {
-                api_version: sails.config.all.version,
-                creators: ["Maxime Bret"],
-                default_user_role: sails.config.permissions.defaultRole,
-                connection: sails.config.models.connection,
-                init_db_each_launch: sails.config.database.initOnStartup,
-                protect_json_response: sails.config.all.protectJsonData,
-                environment: sails.config.environment,
+        if( sails.config.environment !== 'production' ){
+            data.debug = {
+                information: "More development information are available at /dev route",
                 request: {
                     locale: res.locale,
-                    host: req.host,
-                    ip: req.ip,
+                    api_internal_host: req.host,
+                    api_internal_port: req.port,
+                    api_internal_ip: req.ip,
                     connection_secure: req.secure,
                     ajax: req.xhr
+                },
+                response: {
+                    status: res.statusCode
                 }
             }
         }
 
-        return res.jsonx( data );
+        return data;
     },
 
-    
-
-    /**
-     * Handle error responses.
-     * - log response
-     * - affect the default error information if something is missing
-     * - call normal response handler
-     * @param req
-     * @param res
-     * @param data
-     * @param defaultErrorCode
-     * @returns {*}
-     */
-    handleErrorSend: function(req, res, data, defaultErrorCode){
-        var defaultMessage = sails.config.all.errors.codes[defaultErrorCode];
-
-        if( !data ) data = {};
-
-        if( !data.message ){
-            if( data.code ){
-                data.message = res.__( sails.config.all.errors.codes[data.code] );
-            }
-            else{
-                data.message = res.__( defaultMessage );
-            }
-        }
-        if( !data.code ) data.code = defaultErrorCode;
-
-        return this.handleSend(req, res, data);
+    _checkValidity: function(res){
+        return true;
     }
 
 

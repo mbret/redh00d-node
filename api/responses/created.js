@@ -19,6 +19,6 @@ module.exports = function sendOK (data) {
     this.res.status(201);
 
     // send response
-    return ResponseService.handleSend( this.req, this.res, data );
+    return ResponseService.send( this.req, this.res, data );
 
 };

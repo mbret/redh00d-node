@@ -7,7 +7,7 @@
 
 module.exports = {
 
-    version: '0.0.1 (September 01, 2014)',
+    apiVersion: '0.0.1 (September 01, 2014)',
 
     database: {
 

@@ -4,7 +4,15 @@
 var PermissionService = {
 
     // Get reference to the config
-    permissions: sails.config.permissions,
+    permissions: null,
+
+    /**
+     * Set permissions from a permission config.
+     * @param permissions
+     */
+    setPermissions: function( permissions ){
+        this.permissions = permissions;
+    },
 
     /**
      * Check if a resource's action is allowed for the given role.
@@ -15,6 +23,10 @@ var PermissionService = {
      * @returns {boolean}
      */
     isAllowed: function( role, resource, action ){
+
+        if(this.permissions == null){
+            throw new Error('No permission configuration provided');
+        }
 
         if(!role){
             role = 'guest';

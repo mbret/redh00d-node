@@ -14,7 +14,9 @@ module.exports.bootstrap = function(cb) {
     // Load passport providers on startup
     // Will add to passport.use() all the strategy
     PassportService.loadStrategies();
-    
+
+    PermissionsService.setPermissions(sails.config.permissions);
+
     async.series([
 
         // Init database
@@ -25,7 +27,7 @@ module.exports.bootstrap = function(cb) {
                 switch(sails.config.environment){
                     case 'production':
                     case 'development':
-                        DbService.init(sails.config.environment)
+                        DatabaseService.init(sails.config.environment)
                             .then(function(){ cb(); })
                             .catch(cb);
                         break;

@@ -10,7 +10,13 @@ module.exports = function(data) {
 
     this.res.status(401);
 
-    return ResponseService.handleErrorSend( this.req, this.res, data, "badAuthentication" );
+    var response = {
+        code: code || 'E_UNAUTHORIZED',
+        message: message || 'Not authorized',
+        data: data || {}
+    };
+
+    return ResponseService.send( this.req, this.res, response );
 
 };
 
