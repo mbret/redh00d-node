@@ -14,10 +14,17 @@ module.exports = {
         //initOnStartup: false
     },
 
+    errorCode: {
+        E_EMAIL_ALREADY_TAKEN: 'E_EMAIL_ALREADY_TAKEN',
+        E_EMAIL_INVALID: 'E_EMAIL_INVALID',
+        E_PASSWORD_TOO_SHORT: 'E_PASSWORD_TOO_SHORT'
+    },
+    
     all: {
         // Error codes for api response
         errors: {
             codes: {
+                E_EMAIL_ALREADY_TAKEN: 'E_EMAIL_ALREADY_TAKEN',
                 badRequest: "Bad request",
                 notFound:   "Not found",
                 resourceNotFound: "Resource not found",

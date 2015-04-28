@@ -14,7 +14,7 @@ module.exports = {
      */
     sendError: function(req, res, data){
 
-        req._sails.log.error('Sent ' + req.statusCode + ' response\n', data);
+        req._sails.log.error('Sent ' + res.statusCode + ' response\n', data);
 
         data = this._prepareData(req, res, data);
 
@@ -39,7 +39,7 @@ module.exports = {
      */
     send: function(req, res, data){
 
-        req._sails.log.info('Sent ' + req.statusCode + ' response\n', data);
+        req._sails.log.info('Sent ' + res.statusCode + ' response\n', data);
 
         data = this._prepareData(req, res, data);
 

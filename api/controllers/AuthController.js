@@ -50,12 +50,12 @@ module.exports = {
 
         // Email
         if( !validator.isEmail(email) ){
-            return res.badRequest('Email.Invalid');
+            return res.badRequest(null, sails.config.errorCode.E_EMAIL_INVALID);
         }
 
         // Password must have at least 3 char
         if ( !validator.isLength(password, 3)) {
-            return res.badRequest('Password.Too.Short');
+            return res.badRequest(null, sails.config.errorCode.E_PASSWORD_TOO_SHORT);
         }
 
         // Create the user and init everything necessary for application
@@ -85,11 +85,11 @@ module.exports = {
             .then(res.created)
             .catch(function(err){
                 if (err.code === 'E_VALIDATION') {
-                    if (err.invalidAttributes.email) {
+                    if (err.invalidAttributes[User.attributes.email.columnName]) {
                         // This error could be something else but as we validate before we should only get an error because emeail already taken here
-                        return res.badRequest('Email already taken');
+                        return res.badRequest(null, sails.config.errorCode.E_EMAIL_ALREADY_TAKEN);
                     } else {
-                        return res.badRequest( 'This user exist' );
+                        return res.badRequest();
                     }
                 }
                 return res.serverError(err);
