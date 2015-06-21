@@ -37,6 +37,11 @@ module.exports.bootstrap = function(cb) {
                 return cb();
             }
         },
+        
+        // test
+        function(cb){
+            cb();
+        }
 
     ], function(error){
        return cb(error);

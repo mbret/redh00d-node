@@ -61,7 +61,9 @@ module.exports = {
      * @todo write this method
      */
     findFriend: function(req, res){
+
         return res.send(501);
+
     },
 
     /**
@@ -69,7 +71,17 @@ module.exports = {
      * @todo write this method
      */
     findFriends: function(req, res){
-        return res.send(501);
+        var id = req.param('id', null);
+        if( !validator.isNumeric(id) ){
+            return res.badRequest();
+        }
+
+        // get user friends
+        User.findFriends(id)
+            .then(function(friends){
+                return res.ok(friends);
+            })
+            .catch(res.serverError);
     }
 
 }

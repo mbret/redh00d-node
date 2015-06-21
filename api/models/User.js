@@ -8,6 +8,7 @@
 
 var bcrypt = require('bcryptjs');
 var uuid = require("node-uuid");
+var Promise = require('bluebird');
 
 // use this method https://groups.google.com/forum/#!topic/sailsjs/GTGoOGHAEvE to emulate inheritance of object
 // The base model is cloned and then merged with this model. This model is a child of the clone so not a child of ./BaseModel itself
@@ -142,7 +143,23 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
     beforeCreate: [ setDefaultRoleIfUndefined ],
 
-    beforeUpdate: [ ]
+    beforeUpdate: [ ],
+
+    /**
+     * Return the user friends list.
+     * @param userId
+     * @returns Promise that contain the result as array or a reject promise.
+     */
+    findFriends: function(userId){
+        return UserFriendship.find({fromUser: userId})// I don't know why but populate is bugged and only fill first row, so I load individually
+            .then(function(friendships){
+                var friendsToRetrieve = [];
+                friendships.forEach(function(e){
+                    friendsToRetrieve.push(User.findOne(e.toUser));
+                });
+                return Promise.all(friendsToRetrieve);
+            });
+    }
 
 });
 

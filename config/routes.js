@@ -108,7 +108,6 @@ var routes = {
     'patch  /users/:id':                    'UserController.patch', // password reset token
     'delete /users/:id':                    'UserController.delete',
 
-
     // USER friendships relatives routes
     'get    /users/:userid/friendships/:id':            'UserFriendShipController.find',
     'put    /users/:userid/friendships/:id':            'UserFriendShipController.update', // update request (a response for friends)

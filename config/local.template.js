@@ -67,5 +67,7 @@ module.exports = {
 
     //proxyHost: 'develop.api.redh00d.unreachable.me',
 
-    //proxyPort: 443
+    //proxyPort: 443,
+    
+    //bypassAuth: false // @todo
 };
