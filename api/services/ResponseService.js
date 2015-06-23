@@ -57,34 +57,31 @@ module.exports = {
             throw new Error('Invalid response provided');
         }
 
-        return this._attachCommonData(req, res, data);
+        this._attachCommonHeaderInfo(req, res);
+        return data;
     },
 
-    _attachCommonData: function(req, res, data){
+    _attachCommonHeaderInfo: function(req, res){
 
-        if(!data.status) data.status = res.statusCode ;
-
-        data.api_version = sails.config.apiVersion;
+        res.set({
+            'X-redh00d-api-version': sails.config.apiVersion,
+            'X-redh00d-response-status': res.statusCode
+        });
 
         // add debug dump
         if( sails.config.environment !== 'production' ){
-            data.debug = {
-                information: "More development information are available at /dev route",
-                request: {
-                    locale: res.locale,
-                    api_internal_host: req.host,
-                    api_internal_port: req.port,
-                    api_internal_ip: req.ip,
-                    connection_secure: req.secure,
-                    ajax: req.xhr
-                },
-                response: {
-                    status: res.statusCode
-                }
-            }
-        }
+            res.set({
+                'X-redh00d-information': "More development information are available at /dev route",
+                'X-redh00d-request-local': res.locale,
+                'X-redh00d-request-api-internal-host': req.host,
+                'X-redh00d-request-api-internal-port': req.port,
+                'X-redh00d-request-api-internal-ip': req.ip,
+                'X-redh00d-request-connection-secure': req.secure,
+                'X-redh00d-request-ajax': req.xhr
+            });
 
-        return data;
+
+        }
     },
 
     _checkValidity: function(res){

@@ -150,15 +150,61 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
      * @param userId
      * @returns Promise that contain the result as array or a reject promise.
      */
-    findFriends: function(userId){
+    findFriends: function(userId, status){
+        // get all friendship where userId is related
         return UserFriendship.find({fromUser: userId})// I don't know why but populate is bugged and only fill first row, so I load individually
             .then(function(friendships){
                 var friendsToRetrieve = [];
+                // For each relation load the complete user
                 friendships.forEach(function(e){
                     friendsToRetrieve.push(User.findOne(e.toUser));
                 });
                 return Promise.all(friendsToRetrieve);
             });
+    },
+
+    /**
+     * Create a friend request from a user to another or accept a reciprocate request.
+     * You need to call this method twice and change the id order to accept the request completely.
+     * @param fromUserId
+     * @param toUserId
+     */
+    requestFriend: function(fromUserId, toUserId){
+        // Check if a relationship link exist
+        //return UserFriendship.find({ fromUser: fromUserId, toUser: toUserId})
+        //    .then(function(friendship){
+                // Scenario 1: A relationship exist between these two users
+                // In case a relationship exist, we accept it
+                //if(friendship){
+                //    friendship.status = 'accepted';
+                //    return friendship.save();
+                //}
+                // In case no relationship exist we create it in both way
+                //else{
+                    return UserFriendship.create({ fromUser: fromUserId, toUser: toUserId, status: 'requested'})
+                        .then(function(){
+                            return UserFriendship.create({ fromUser: toUserId, toUser: fromUserId, status: 'pending'})
+                        });
+                //}
+            //});
+    },
+
+    /**
+     * Delete a friendship between these two user.
+     * @param fromUserId
+     * @param toUserId
+     */
+    removeFriend: function(fromUserId, toUserId){
+
+    },
+
+    /**
+     * Block a user friend.
+     * @param fromUserId
+     * @param toUserId
+     */
+    blockFriend: function(fromUserId, toUserId){
+
     }
 
 });

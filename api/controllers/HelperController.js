@@ -5,7 +5,7 @@
 module.exports = {
 
     me: function(req, res){
-        return res.ok(req.user.toJSON());
+        return res.ok({user: req.user.toJSON()});
     },
 
     /**

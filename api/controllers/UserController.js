@@ -22,9 +22,7 @@ module.exports = {
         User.findOne({'id':req.param('id')}).populate('role').exec(function(err,user){
             if(err) return res.serverError(err);
             if(!user) return res.notFound();
-            return res.ok({
-                user:user.toJSON()
-            });
+            return res.ok(user.toJSON());
         });
     },
 

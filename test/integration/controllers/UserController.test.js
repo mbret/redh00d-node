@@ -1,5 +1,6 @@
 var request = require('supertest');
 var async = require('async');
+var assert = require("assert");
 
 describe('UserController', function() {
 
@@ -70,7 +71,9 @@ describe('UserController', function() {
         it('should respond user with id x', function(done){
             request(sails.hooks.http.app).get('/users/' + users[0].id).set('Accept', 'application/json').set('Authorization', sails.config.test.userAuth)
                 .expect(function(res){
-                    if( !res.body.user || !res.body.user.id == users[0].id ) throw new Error("No user or wrong user");
+                    res.body.should.not.be.empty;
+                    res.body.should.have.property('id');
+                    assert.equal(res.body.id == users[0].id);
                 })
                 .end(done);
         });

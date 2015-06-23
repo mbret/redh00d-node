@@ -46,10 +46,10 @@ var routes = {
                 str += chunk;
             });
             resp.on('end', function(){
-                res.send(JSON.parse(str).value.joke);
+                res.ok(JSON.parse(str).value.joke);
             })
         }).on("error", function(e){
-            res.send('It works!');
+            res.ok('It works!');
         });
 
     },
@@ -101,8 +101,11 @@ var routes = {
      * USER relatives routes
      *
      ***************************/
-    // only users
+    // this route can be used to retrieve a friend also
+    // There are no users/x/friends/x or /any/x/users/x because user is a self living resource. Not dependant from other
     'get    /users/:id':                    'UserController.find',
+
+    // List of users
     'post   /users':                        'UserController.create',
     'put    /users/:id':                    'UserController.update',
     'patch  /users/:id':                    'UserController.patch', // password reset token
@@ -115,6 +118,8 @@ var routes = {
     'get    /users/:userid/friendships*':               'UserFriendShipController.findMultiple',
 
     'delete /users/:userid/friends/:idfriend':          'UserFriendShipController.delete', // cancel a friendship request
+
+    // List of user friends, use /users/x to retrieve a friend
     'get    /users/:userid/friends*':                   'UserFriendShipController.FindFriends',
 
     // USER friends group relatives routes

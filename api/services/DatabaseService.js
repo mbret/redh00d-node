@@ -24,6 +24,12 @@ module.exports = {
                     User.create({email: 'user2@user2.com', firstName: 'User', lastName: 'User'}),
                     User.create({email: 'xmax54@gmail.com', firstName: 'Maxime', lastName: 'Bret'}),
                     User.create({ email: 'admin@admin.com', firstName: 'Admin', lastName: 'Admin', role: first[0].id }),
+                    User.create({email: 'user3@user3.com', firstName: 'Darin', lastName: 'Manikkam'}),
+                    User.create({email: 'user4@user4.com', firstName: 'Jean', lastName: 'Wisser'}),
+                    User.create({email: 'user5@user5.com', firstName: 'Alexandre', lastName: 'Maouche'}),
+                    User.create({email: 'user6@user6.com', firstName: 'Benjamin', lastName: 'Bogard'}),
+                    User.create({email: 'user7@user7.com', firstName: 'Sébastien', lastName: 'Heysen'}),
+                    User.create({email: 'user8@user8.com', firstName: 'Julien', lastName: 'Laurent'}),
                 ]).then(function(values){
                     return {
                         usersRoles: [first[0], first[1]],
@@ -62,11 +68,12 @@ module.exports = {
                 });
             })
             .then(function(values){
+                // Create friendships between users
                 return Promise.all([
-                    UserFriendship.create({ fromUser: values.users[0].id, toUser: values.users[1].id, type: 'friend'}),
-                    UserFriendship.create({ fromUser: values.users[1].id, toUser: values.users[0].id, type: 'friend'}),
-                    UserFriendship.create({ fromUser: values.users[0].id, toUser: values.users[2].id, type: 'friend'}),
-                    UserFriendship.create({ fromUser: values.users[2].id, toUser: values.users[0].id, type: 'friend'}),
+                    User.requestFriend(values.users[0].id, values.users[1].id),
+                    User.requestFriend(values.users[1].id, values.users[0].id), // accept
+                    User.requestFriend(values.users[0].id, values.users[2].id),
+                    User.requestFriend(values.users[2].id, values.users[0].id), // accept
                 ]).then(function(v){
                     values.friends = v;
                     return values;
