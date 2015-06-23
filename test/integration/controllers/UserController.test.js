@@ -73,7 +73,7 @@ describe('UserController', function() {
                 .expect(function(res){
                     res.body.should.not.be.empty;
                     res.body.should.have.property('id');
-                    assert.equal(res.body.id == users[0].id);
+                    assert.equal(res.body.id, users[0].id);
                 })
                 .end(done);
         });
