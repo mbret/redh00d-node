@@ -66,5 +66,12 @@ describe('AuthControllerIntegration', function() {
 
     });
 
+    describe('resetPassword', function(){
+
+        //it('should authorize request', function(done){
+        //    request(app).post('')
+        //});
+    });
+
 
 });

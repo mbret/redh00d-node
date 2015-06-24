@@ -131,6 +131,8 @@ var routes = {
     'delete /users/:iduser/friendsgroup/:id/members/:idmember':'UserFriendsGroupController.deleteMember',
     'get    /users/:iduser/friendsgroup*':                     'UserFriendsGroupController.findMultiple',
 
+    'post   /users/:email/password-reset':                      'AuthController.resetPassword',
+
     'get    /users*':                       'UserController.findMultiple',
 
     /***************************

@@ -36,7 +36,8 @@ module.exports.policies = {
         login: true,
         register: true,
         provider: true,
-        facebookCallback: true
+        facebookCallback: true,
+        resetPassword: true
     },
 
     HelperController: false

@@ -9,6 +9,7 @@
 var bcrypt = require('bcryptjs');
 var uuid = require("node-uuid");
 var Promise = require('bluebird');
+var crypto = require('crypto');
 
 // use this method https://groups.google.com/forum/#!topic/sailsjs/GTGoOGHAEvE to emulate inheritance of object
 // The base model is cloned and then merged with this model. This model is a child of the clone so not a child of ./BaseModel itself
@@ -135,6 +136,54 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 //            });
 //        },
 
+        /**
+         * @todo
+         * @returns {bluebird|exports|module.exports}
+         */
+        sendPasswordResetEmail: function(){
+            var self = this;
+            return new Promise(function(resolve, reject){
+                async.waterfall([
+                    // generate token
+                    function(done){
+                        crypto.randomBytes(20, function(err, buf){
+                            var token = buf.toString('hex');
+                            done(err, token);
+                        });
+                    },
+                    // Update local auth with token
+                    function(token, done){
+                        return UserPassport.update( { user: self.id }, {
+                            resetPasswordToken: token,
+                            resetPasswordTokenExpires: new Date(Date.now() + 3600000) // 1 hour
+                        })
+                            .then(function(entries){
+                                if(!entries) return done(new Error('No UserPassport for id ' + self.id));
+                                return done();
+                            })
+                            .catch(done);
+                    },
+                    // send mail
+                    function(done){
+                        console.log('send mail with password reset');
+                        // @todo
+                        done();
+                    }
+                ], function(err){
+                    if(err){
+                        return reject(err);
+                    }
+                    else{
+                        return resolve();
+                    }
+                });
+            });
+        },
+
+        /**
+         * Helper that return if an user is admin or not.
+         * @returns {boolean}
+         */
         isAdmin: function(){
             return this.role.name === "admin";
         }

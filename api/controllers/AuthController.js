@@ -107,6 +107,41 @@ module.exports = {
     },
 
     /**
+     * This route will send to user an email containing all information to reset his password.
+     * - If the user doesn't have a password we send specific code
+     * - Otherwise A unique token for reset password will be generated and an email send.
+     * @param req
+     * @param res
+     */
+    resetPassword: function(req, res){
+        var email = req.param('email', null);
+        if( !validator.isEmail(email) ){
+            return res.badRequest();
+        }
+
+        // Try to find user that belong to this email
+        User.findOne({email: email})
+            .then(function(user){
+                if(!user){
+                    return res.badRequest(null, sails.config.errorCode.E_EMAIL_DOES_NOT_BELONG_TO_SOMEONE);
+                }
+                // Try to find id user is using local auth
+                return UserPassport.findOne({ protocol : 'local', user : user.id })
+                    .then(function(passport){
+                        if(!passport){
+                            return res.badRequest(null, sails.config.errorCode.E_PASSWORD_RESET_NO_PASSWORD_SET_YET);
+                        }
+
+                        return user.sendPasswordResetEmail()
+                            .then(function(){
+                                return res.ok();
+                            });
+                    });
+            })
+            .catch(res.serverError);
+    },
+
+    /**
      *
      * @param req
      * @param res
