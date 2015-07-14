@@ -1,5 +1,6 @@
+var path = require('path');
 var Sails = require('sails');
-var config = require('./tools/config-loader')(__dirname + '/../config/env/testing');
+var config = require('./tools/config-loader')(path.join(__dirname, '..', 'config', 'env', 'testing'));
 var sails;
 
 before(function(done) {

@@ -1,7 +1,7 @@
 var request = require('supertest');
 var assert = require("assert");
 
-describe('UserFriendshipController', function() {
+describe('UserFriendGroupController', function() {
 
     var app;
     var user;
@@ -25,9 +25,9 @@ describe('UserFriendshipController', function() {
     });
 
     /**
-     * Get a list of user friends
+     * Create a friends group
      */
-    describe("GET users/userid/friends", function(){
+    describe("POST users/userid/friendsgroups", function(){
 
         it('should respond bad request', function(done){
             request(app).get('/users/x/friends').set('Authorization', sails.config.test.userAuth)

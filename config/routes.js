@@ -106,10 +106,10 @@ var routes = {
     'get    /users/:id':                    'UserController.find',
 
     // List of users
-    'post   /users':                        'UserController.create',
-    'put    /users/:id':                    'UserController.update',
-    'patch  /users/:id':                    'UserController.patch', // password reset token
-    'delete /users/:id':                    'UserController.delete',
+    'post   /users':                                            'UserController.create',
+    'put    /users/:id':                                        'UserController.update',
+    'patch  /users/:id':                                        'UserController.patch', // password reset token
+    'delete /users/:id':                                        'UserController.delete',
 
     // USER friendships relatives routes
     'get    /users/:userid/friendships/:id':                    'UserFriendShipController.find',
@@ -123,13 +123,13 @@ var routes = {
     'get    /users/:userid/friends*':                           'UserFriendShipController.FindFriends',
 
     // USER friends group relatives routes
-    'get    /users/:userid/friendsgroup/:id':                   'UserFriendGroupController.find',
-    'post   /users/:userid/friendsgroup':                       'UserFriendGroupController.create',    // create a friends group
-    'post   /users/:userid/friendsgroup/:id/members':           'UserFriendGroupController.addMember',
-    'put    /users/:userid/friendsgroup':                       'UserFriendGroupController.update',
-    'delete /users/:userid/friendsgroup/:id':                   'UserFriendGroupController.delete',
-    'delete /users/:userid/friendsgroup/:id/members/:idmember': 'UserFriendGroupController.deleteMember',
-    'get    /users/:userid/friendsgroup*':                      'UserFriendGroupController.findMultiple',
+    //'get    /users/:userid/friendsgroups/:id':                   'UserFriendGroupController.find',
+    'post   /users/:userid/friendsgroups':                       'UserFriendGroupController.create',    // create a friends group
+    //'post   /users/:userid/friendsgroups/:id/members':           'UserFriendGroupController.addMember',
+    //'put    /users/:userid/friendsgroups':                       'UserFriendGroupController.update',
+    //'delete /users/:userid/friendsgroups/:id':                   'UserFriendGroupController.delete',
+    //'delete /users/:userid/friendsgroups/:id/members/:idmember': 'UserFriendGroupController.deleteMember',
+    //'get    /users/:userid/friendsgroups*':                      'UserFriendGroupController.findMultiple',
 
     'post   /users/:email/password-reset':                      'AuthController.resetPassword',
 
