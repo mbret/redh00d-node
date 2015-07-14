@@ -15,7 +15,7 @@
         var config = {};
         var files = fs.readdirSync(configPath);
         files.forEach(function(filePath){
-            if(filePath.substring(filePath.length-2, 2) === 'js'){
+            if(filePath.substring(filePath.length-2, filePath.length) === 'js'){
                 var file = require(path.join(configPath, filePath));
                 config = _.merge(config, file);
             }

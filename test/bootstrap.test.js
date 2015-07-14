@@ -12,6 +12,7 @@ before(function(done) {
         // load detail of current user
         User.findOne({email: 'user@user.com'})
             .then(function(user){
+                console.log(sails.config.test);
                 sails.config.test.user = user;
                 
                 // load detail of current admin user
