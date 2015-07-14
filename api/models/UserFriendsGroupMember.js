@@ -8,28 +8,29 @@
 
 module.exports = {
 
-    tableName: 'user_friend_group',
+    tableName: 'user_friend_group_member',
 
     attributes: {
 
         id: {
-          type: 'integer',
-          autoIncrement: true,
-          unique: true,
-          index: true,
-          primaryKey: true,
-          columnName: 'userFriendGroupID'
+            type: 'integer',
+            autoIncrement: true,
+            unique: true,
+            index: true,
+            primaryKey: true,
+            columnName: 'userFriendGroupMemberID'
         },
-        user: {
-            model: 'User',
+        group: {
+            model: 'UserFriendsGroup',
             columnName: 'FK_applicantUserID',
             required: true,
             index: true
         },
-        name: {
-            type: 'string',
+        user: {
+            model: 'User',
+            columnName: 'FK_targetUserID',
             required: true,
-            columnName: 'userFriendGroupName'
+            index: true
         },
     
     }

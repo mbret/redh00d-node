@@ -15,6 +15,8 @@ module.exports = {
     },
 
     errorCode: {
+        E_USER_INVALID: 'E_USER_INVALID',
+        E_POST_DATA_INVALID: 'E_POST_DATA_INVALID', // can be used to respond to bad post data for creation for example.
         E_EMAIL_ALREADY_TAKEN: 'E_EMAIL_ALREADY_TAKEN',
         E_EMAIL_INVALID: 'E_EMAIL_INVALID',
         E_EMAIL_DOES_NOT_BELONG_TO_SOMEONE: 'E_EMAIL_DOES_NOT_BELONG_TO_SOMEONE',

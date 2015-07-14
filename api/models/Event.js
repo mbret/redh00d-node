@@ -26,7 +26,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         },
         author: {
             model: 'User',
-            columnName: 'FK_userApplicantID',
+            columnName: 'FK_applicantUserID',
             required: true,
             index: true
         },

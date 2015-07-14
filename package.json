@@ -40,6 +40,7 @@
     "machinepack-facebook": "^1.0.5",
     "node-uuid": "1.4.x",
     "nodemailer": "^0.5.15",
+    "nodemailer-express-handlebars": "^1.0.0",
     "nodemailer-smtp-transport": "^1.0.3",
     "passport": "^0.2.2",
     "passport-facebook": "^2.0.0",

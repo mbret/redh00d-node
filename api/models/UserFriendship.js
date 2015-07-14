@@ -40,6 +40,8 @@
 // The base model is cloned and then merged with this model. This model is a child of the clone so not a child of ./BaseModel itself
 module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
+    tableName: 'user_friends',
+
     attributes: {
         id: {
             type: 'integer'

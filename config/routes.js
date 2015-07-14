@@ -112,24 +112,24 @@ var routes = {
     'delete /users/:id':                    'UserController.delete',
 
     // USER friendships relatives routes
-    'get    /users/:userid/friendships/:id':            'UserFriendShipController.find',
-    'put    /users/:userid/friendships/:id':            'UserFriendShipController.update', // update request (a response for friends)
-    'post   /users/:userid/friendships':                'UserFriendShipController.create', // Create a friendship request
-    'get    /users/:userid/friendships*':               'UserFriendShipController.findMultiple',
+    'get    /users/:userid/friendships/:id':                    'UserFriendShipController.find',
+    'put    /users/:userid/friendships/:id':                    'UserFriendShipController.update',      // update request (a response for friends)
+    'post   /users/:userid/friendships':                        'UserFriendShipController.create',      // Create a friendship request
+    'get    /users/:userid/friendships*':                       'UserFriendShipController.findMultiple',
 
-    'delete /users/:userid/friends/:idfriend':          'UserFriendShipController.delete', // cancel a friendship request
+    'delete /users/:userid/friends/:idfriend':                  'UserFriendShipController.delete',      // cancel a friendship request
 
     // List of user friends, use /users/x to retrieve a friend
-    'get    /users/:userid/friends*':                   'UserFriendShipController.FindFriends',
+    'get    /users/:userid/friends*':                           'UserFriendShipController.FindFriends',
 
     // USER friends group relatives routes
-    'get    /users/:iduser/friendsgroup/:id':                  'UserFriendsGroupController.find',
-    'post   /users/:iduser/friendsgroup':                      'UserFriendsGroupController.create',
-    'post   /users/:iduser/friendsgroup/:id/members':          'UserFriendsGroupController.addMember',
-    'put    /users/:iduser/friendsgroup':                      'UserFriendsGroupController.update',
-    'delete /users/:iduser/friendsgroup/:id':                  'UserFriendsGroupController.delete',
-    'delete /users/:iduser/friendsgroup/:id/members/:idmember':'UserFriendsGroupController.deleteMember',
-    'get    /users/:iduser/friendsgroup*':                     'UserFriendsGroupController.findMultiple',
+    'get    /users/:userid/friendsgroup/:id':                   'UserFriendsGroupController.find',
+    'post   /users/:userid/friendsgroup':                       'UserFriendsGroupController.create',    // create a friends group
+    'post   /users/:userid/friendsgroup/:id/members':           'UserFriendsGroupController.addMember',
+    'put    /users/:userid/friendsgroup':                       'UserFriendsGroupController.update',
+    'delete /users/:userid/friendsgroup/:id':                   'UserFriendsGroupController.delete',
+    'delete /users/:userid/friendsgroup/:id/members/:idmember': 'UserFriendsGroupController.deleteMember',
+    'get    /users/:userid/friendsgroup*':                      'UserFriendsGroupController.findMultiple',
 
     'post   /users/:email/password-reset':                      'AuthController.resetPassword',
 

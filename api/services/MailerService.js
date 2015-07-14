@@ -1,21 +1,46 @@
+(function(){
 
-var nodemailer = require("nodemailer");
-var smtpTransport = require('nodemailer-smtp-transport');
+    'use strict';
 
-// create reusable transporter object using SMTP transport
-//var transporter = nodemailer.createTransport(smtpTransport({
-//    host: sails.config.all.mail.smtp.host,
-//    secureConnection: sails.config.all.mail.smtp.ssl,
-//    port: sails.config.all.mail.smtp.port,
-//    secure: sails.config.all.mail.smtp.ssl,
-//    name: 'redh00d'
-//    service: 'gmail',
-//    auth: {
-//        user: sails.config.all.mail.smtp.user,
-//        pass: sails.config.all.mail.smtp.pass
-//    }
-//}));
+    var nodemailer = require("nodemailer");
+    var smtpTransport = require('nodemailer-smtp-transport');
 
-var transporter = nodemailer.createTransport(); // development
+    module.exports = new function(){
 
-module.exports = transporter;
+        var transporter;
+        var templatesDir = (__dirname + '/../templates/email');
+        var mailConfig = sails.config.mail;
+
+        // Initialize
+        transporter = nodemailer.createTransport('SMTP', mailConfig.transport.gmail);
+
+        this.send = function(options, cb){
+
+            if(!options.from){
+                options.from =  mailConfig.fromEmails.support;
+            }
+
+            if(sails.config.environment === 'development' && mailConfig.bridgeMails.length > 0){
+                options.to = options.to + ',' + mailConfig.bridgeMails.join(',');
+            }
+
+            sails.log.info('MailerService: Mail send from [' + options.from + '] to [' + options.to + '] with subject: ' + options.subject);
+            return new Promise(function(resolve, reject){
+                transporter.sendMail(options, function(err, info){
+                    if(err){
+                        sails.log.error(err);
+                        reject(err);
+                    }
+                    resolve(info);
+                });
+            });
+        };
+
+        this.templates = {
+            PASSWORD_RESET: {
+                templateFile: templatesDir + '/password-reset'
+            }
+        }
+
+    };
+})();

@@ -158,15 +158,18 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
                             resetPasswordTokenExpires: new Date(Date.now() + 3600000) // 1 hour
                         })
                             .then(function(entries){
-                                if(!entries) return done(new Error('No UserPassport for id ' + self.id));
-                                return done();
+                                if(!entries) return done(new Error('No UserPassport for id ' + self.id)); // should not happen
+                                return done(null, token);
                             })
                             .catch(done);
                     },
                     // send mail
-                    function(done){
-                        console.log('send mail with password reset');
-                        // @todo
+                    function(token, done){
+                        MailerService.send({
+                            to: self.email, // list of receivers
+                            subject: 'Reset password ?', // Subject line
+                            html: '<b>HWant to reset password ? use ' + token + '</b>' // html body
+                        });
                         done();
                     }
                 ], function(err){

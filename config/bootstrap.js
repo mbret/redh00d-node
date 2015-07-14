@@ -11,8 +11,6 @@
 
 module.exports.bootstrap = function(cb) {
 
-
-
     PermissionsService.setPermissions(sails.config.permissions);
 
     async.series([
