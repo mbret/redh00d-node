@@ -6,7 +6,7 @@
 
     /**
      * Created by maxime on 30/07/2014.
-     * @description Interract with model UserfriendsGroup and UserGroupMember.
+     * @description Interract with model UserFriendGroup and UserGroupMember.
      *              Group are relative to each users and are unique for these users.
      * @todo write this controller
      */
@@ -44,9 +44,21 @@
                 return res.badRequest(null, sails.config.errorCode.E_POST_DATA_INVALID);
             }
 
-            // Create group
+            var data = {
+                name: name
+            };
 
-            res.ok();
+            // Create group
+            UserFriendGroup.create(data)
+                .then(function(group){
+                    return res.created(group);
+                })
+                .catch(function(err){
+                    if (err.code === 'E_VALIDATION') {
+                        return res.badRequest(null, sails.config.errorCode.E_MODEL_VALIDATION);
+                    }
+                    return res.serverError(err);
+                });
         },
 
         /**

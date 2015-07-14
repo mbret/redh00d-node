@@ -8,7 +8,7 @@
 // ------------------------------------------------------------------------------------------
 // Find a friendship group
 //
-//  - UserFriendsGroupController.find()
+//  - UserFriendGroupController.find()
 // ------------------------------------------------------------------------------------------
 /**
  * @api {get} /users/:id_user/friendsgroups/:id_group Find a group
@@ -31,7 +31,7 @@
 // ------------------------------------------------------------------------------------------
 // Find user's groups
 //
-//  - UserFriendsGroupController.findMultiple()
+//  - UserFriendGroupController.findMultiple()
 // ------------------------------------------------------------------------------------------
 /**
  * @api {get} /users/:id_user/friendsgroups Find groups
@@ -52,7 +52,7 @@
 // ------------------------------------------------------------------------------------------
 // Create a user group
 //
-//  - UserFriendsGroupController.create()
+//  - UserFriendGroupController.create()
 // ------------------------------------------------------------------------------------------
 /**
  * @api {post} /users/:id_id/friendsgroups Create a group
@@ -77,7 +77,7 @@
 // ------------------------------------------------------------------------------------------
 // Update a user group
 //
-//  - UserFriendsGroupController.update()
+//  - UserFriendGroupController.update()
 // ------------------------------------------------------------------------------------------
 /**
  * @api {put} /users/:id_user/friendsgroups/:id_group Update a group
@@ -101,7 +101,7 @@
 // ------------------------------------------------------------------------------------------
 // Delete a user group
 //
-//  - UserFriendsGroupController.delete()
+//  - UserFriendGroupController.delete()
 // ------------------------------------------------------------------------------------------
 /**
  * @api {delete} /users/:id_user/friendsgroups/:id_group Delete a group
@@ -121,7 +121,7 @@
 // ------------------------------------------------------------------------------------------
 // Add a member inside group
 //
-//  - UserFriendsGroupController.addMember()
+//  - UserFriendGroupController.addMember()
 // ------------------------------------------------------------------------------------------
 /**
  * @api {post} /users/:id_user/friendsgroups/:id_group/members Add a group member
@@ -146,7 +146,7 @@
 // ------------------------------------------------------------------------------------------
 // Delete a member inside group
 //
-//  - UserFriendsGroupController.deleteMember()
+//  - UserFriendGroupController.deleteMember()
 // ------------------------------------------------------------------------------------------
 /**
  * @api {delete} /users/:id_user/friendsgroups/:id_group/members/:id_member Delete a group member

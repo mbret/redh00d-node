@@ -1,9 +1,7 @@
 /**
- * UserFriendshipGroup
+ * UserFriendshipGroupMember
  *
- * @module      :: Model
- * @description :: A short summary of how this model works and what it represents.
- * @docs		:: http://sailsjs.org/#!documentation/models
+ *
  */
 
 module.exports = {
@@ -21,7 +19,7 @@ module.exports = {
             columnName: 'userFriendGroupMemberID'
         },
         group: {
-            model: 'UserFriendsGroup',
+            model: 'UserFriendGroup',
             columnName: 'FK_applicantUserID',
             required: true,
             index: true
