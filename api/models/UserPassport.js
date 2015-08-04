@@ -32,6 +32,9 @@ function hashPassword (passport, next) {
  * the user, but not the authentication data, to and from the session.
  */
 var UserPassport = {
+
+    identity: 'userpassport',
+
     attributes: {
         // Required field: Protocol
         //

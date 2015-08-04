@@ -8,15 +8,10 @@ module.exports = {
         level: "error"
     },
 
-    fillDb: true,
     autoLogon: false,
 
     models: {
         migrate: 'drop' // erase database before each launch
-    },
-
-    database: {
-        initOnStartip: false
     },
 
     test: {

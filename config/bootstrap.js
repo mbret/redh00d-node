@@ -15,28 +15,6 @@ module.exports.bootstrap = function(cb) {
 
     async.series([
 
-        // Init database
-        // Use current set env to run different database script
-        function(cb){
-
-            if(sails.config.database.initOnStartup === true){
-                switch(sails.config.environment){
-                    case 'production':
-                    case 'development':
-                        DatabaseService.init(sails.config.environment)
-                            .then(function(){ cb(); })
-                            .catch(cb);
-                        break;
-                    default:
-                        cb();
-                }
-            }
-            else{
-                return cb();
-            }
-        },
-        
-        // test
         function(cb){
             cb();
         }
@@ -44,7 +22,5 @@ module.exports.bootstrap = function(cb) {
     ], function(error){
        return cb(error);
     });
-
-
 
 };

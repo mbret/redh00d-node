@@ -12,6 +12,8 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
     tableName: 'user_role',
     autoUpdatedAt: false,
     autoCreatedAt: false,
+    identity: 'userrole',
+    migrate: 'drop',
 
     attributes: {
 
@@ -26,7 +28,8 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         name: {
             type: 'string',
             required: true,
-            columnName: 'userRoleName'
+            columnName: 'userRoleName',
+            unique: true
         },
         displayName: {
             type: 'string',

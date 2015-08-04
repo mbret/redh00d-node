@@ -41,6 +41,7 @@
 module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
     tableName: 'user_friends',
+    identity: 'userfriendship',
 
     attributes: {
         id: {

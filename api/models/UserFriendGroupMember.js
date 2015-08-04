@@ -7,6 +7,7 @@
 module.exports = {
 
     tableName: 'user_friend_group_member',
+    identity: 'userfriendgroupmember',
 
     attributes: {
 

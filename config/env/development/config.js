@@ -12,10 +12,6 @@
 
 module.exports = {
 
-    database: {
-        initOnStartup: true
-    },
-
     all: {
         // Active protection of JSON returned data of each request
         protectJsonData: false,

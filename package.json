@@ -56,6 +56,7 @@
     "sails-memory": "^0.10.4",
     "sails-mysql": "^0.10.12",
     "validator": "^3.40.0",
+    "waterline-db-handler": "git+https://github.com/mbret/waterline-db-handler.git",
     "winston": "^0.7.3",
     "winston-mail": "^0.3.2"
   },

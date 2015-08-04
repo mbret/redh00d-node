@@ -12,6 +12,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
     autoCreatedAt: true,
     autoUpdatedAt: true,
     autoPK: true,
+    identity: 'eventproduct',
 
     attributes:{
 
