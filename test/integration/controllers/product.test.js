@@ -56,12 +56,20 @@ describe('integration.controllers.product', function() {
                 .end(done);
         });
 
-        it('should respond 404', function(done){
+        it('should respond 400', function(done){
             async.series([
                 function(callback){
                     request(sails.hooks.http.app).get('/products/x').set('Authorization', sails.config.test.userAuth)
-                        .expect(404).end(callback);
+                        .expect(400).end(callback);
                 },
+            ], function(err, results){
+                if(err) return done(err);
+                done();
+            });
+        });
+
+        it('should respond 404', function(done){
+            async.series([
                 function(callback){
                     request(sails.hooks.http.app).get('/products/99999').set('Authorization', sails.config.test.userAuth)
                         .expect(404).end(callback);
@@ -76,10 +84,10 @@ describe('integration.controllers.product', function() {
             request(sails.hooks.http.app).get('/products').set('Authorization', sails.config.test.userAuth)
                 .expect(200)
                 .expect(function(res){
-                    if( !res.body.products ) throw new Error("No products");
+                    res.body.should.not.be.empty;
                 })
                 .end(done);
-        })
+        });
 
     });
 

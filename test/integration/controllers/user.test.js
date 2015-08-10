@@ -99,12 +99,20 @@ describe('integration.controllers.user', function() {
                 .end(done);
         });
 
-        it('should respond 404', function(done){
+        it('should respond 400', function(done){
             async.series([
                 function(callback){
                     request(sails.hooks.http.app).get('/users/x').set('Accept', 'application/json').set('Authorization', sails.config.test.userAuth)
-                        .expect(404).end(callback);
+                        .expect(400).end(callback);
                 },
+            ], function(err, results){
+                if(err) return done(err);
+                done();
+            });
+        });
+
+        it('should respond 404', function(done){
+            async.series([
                 function(callback){
                     request(sails.hooks.http.app).get('/users/20').set('Accept', 'application/json').set('Authorization', sails.config.test.userAuth)
                         .expect(404).end(callback);

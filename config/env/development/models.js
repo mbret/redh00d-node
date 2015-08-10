@@ -2,7 +2,7 @@
 
 module.exports.models = {
 
-    connection: 'localDiskDb',
-    migrate: 'alter' // erase database before each launch
+    connection: 'mysql',
+    migrate: 'drop' // erase database before each launch
 
 };

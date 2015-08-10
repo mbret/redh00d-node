@@ -68,15 +68,15 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         },
 
         // Managed by waterline
-        createdAt: {
-            type: 'datetime',
-            columnName: 'userCreatedDate'
-        },
-        // Managed by waterline
-        updatedAt: {
-            type: 'datetime',
-            columnName: 'userUpdatedDate '
-        },
+        //createdAt: {
+        //    type: 'datetime',
+        //    columnName: 'userCreatedDate'
+        //},
+        //// Managed by waterline
+        //updatedAt: {
+        //    type: 'datetime',
+        //    columnName: 'userUpdatedDate '
+        //},
 
         // Other fields
         // Password used before bdd for validation

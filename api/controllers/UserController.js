@@ -19,7 +19,13 @@ module.exports = {
      * @return {user|500|404}
      */
     find: function (req, res) {
-        User.findOne({'id':req.param('id')}).populate('role').exec(function(err,user){
+
+        var id = req.param('id', null);
+        if( !validator.isNumeric(id) ){
+            return res.badRequest();
+        }
+
+        User.findOne({'id': id}).populate('role').exec(function(err,user){
             if(err) return res.serverError(err);
             if(!user) return res.notFound();
             return res.ok(user.toJSON());
@@ -48,20 +54,14 @@ module.exports = {
         //@todo implement these criteria
         if( req.param('firstname_like') || req.param('lastname_like') ) res.send(501);
 
-        // Build query with sort, etc
-        var findQuery = User.find(optionalData);
-        if( optionalSortData !== {} ) {
-            findQuery.sort(optionalSortData);
-        }
-        findQuery.populate('role');
-
         // Run job
-        findQuery.exec(function callback(err, users){
-            if(err) return res.serverError(err);
-            return res.ok({
-                users: User.toJSON( users )
-            });
-        });
+        sails.models.user.find().populate('role')
+            .then(function(users){
+                return res.ok({
+                    users: sails.models.user.toJSON( users )
+                });
+            })
+            .catch(res.serverError);
     },
 
     /**

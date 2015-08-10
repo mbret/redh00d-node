@@ -23,9 +23,7 @@ module.exports = {
         sails.models.event.findOne({ id: id }).populate('author')
             .then(function(event){
                 if(!event) return res.notFound();
-                return res.ok({
-                    event:event.toJSON()
-                });
+                return res.ok(event.toJSON());
             })
             .catch(res.serverError);
     },
@@ -38,33 +36,36 @@ module.exports = {
     findMultiple: function (req, res) {
 
         // Get optional parameters from URL to refine the search
-        var optionalData = {};
-        if( req.param('id') ) optionalData.id = req.param('id');
-        if( req.param('name') ) optionalData.name = req.param('name');
-        if( req.param('date') ) optionalData.date = req.param('date');
-        if( req.param('place') ) optionalData.place = req.param('place');
+        var search = {};
+        if( req.param('id') ) search.id = req.param('id');
+        if( req.param('name') ) search.name = req.param('name');
+        if( req.param('date') ) search.date = req.param('date');
+        if( req.param('place') ) search.place = req.param('place');
 
-        var optionalSortData = {};
-        if( req.param('date_sort') ) optionalSortData.date = req.param('date_sort');
+        var optionalSortData = [];
+        // @todo
+        //if( req.param('date_sort') ) optionalSortData.push('date ' + req.param('date_sort'));
 //        if( req.param('lastname_sort') ) optionalSortData.lastName = req.param('lastname_sort');
 
         //@todo implement these criteria
 //        if( req.param('firstname_like') || req.param('lastname_like') ) res.send(501);
 
-        // Build query with sort, etc
-        var findQuery = sails.models.event.find(optionalData);
-        if( optionalSortData !== {} ) {
-            findQuery.sort(optionalSortData);
+        var query = {};
+
+        // where
+        if(Object.keys(search) > 0){
+            query.where = search;
         }
-        findQuery.populate('author');
+
+        // sort
+        // @todo
 
         // Run job
-        findQuery.exec(function callback(err, events){
-            if(err) return res.serverError(err);
-            return res.ok({
-                events: sails.models.event.toJSON( events )
-            });
-        });
+        sails.models.event.find(query).populate('author')
+            .then(function(events){
+                return res.ok(sails.models.event.toJSON(events));
+            })
+            .catch(res.serverError);
     },
 
     /**

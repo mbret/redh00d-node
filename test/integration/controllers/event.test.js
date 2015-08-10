@@ -47,8 +47,7 @@ describe('integration.controllers.event', function() {
         it('should respond an event', function(done){
             request(sails.hooks.http.app).get(sails.config.routesDef.events + '/' + events[0].id).set('Authorization', sails.config.test.userAuth)
                 .expect(function(res){
-                    res.body.should.have.property('event');
-                    res.body.event.should.have.property('id');
+                    res.body.should.have.property('id');
                 })
                 .end(done);
         });
@@ -56,8 +55,7 @@ describe('integration.controllers.event', function() {
         it('should respond list of events', function(done){
             request(sails.hooks.http.app).get(sails.config.routesDef.events).set('Authorization', sails.config.test.userAuth)
                 .expect(function(res){
-                    res.body.should.have.property('events');
-                    res.body.events.should.not.be.empty;
+                    res.body.should.not.be.empty;
                 })
                 .end(done);
         })

@@ -3,13 +3,21 @@
  * @description Interract with model Product
  * @todo write this controller
  */
+var validator = require('validator');
+
 module.exports = {
 
     /**
      * Find a product
      */
     find: function(req, res){
-        Product.findOne({'id':req.param('id')}).populate('category').exec(function(err,product){
+
+        var id = req.param('id', null);
+        if(!validator.isNumeric(id)){
+            return res.badRequest();
+        }
+
+        Product.findOne({'id': id}).populate('category').exec(function(err,product){
             if(err) return res.serverError(err);
             if(!product) return res.notFound();
             return res.ok({
@@ -23,25 +31,11 @@ module.exports = {
      * @todo enable criteria
      */
     findMultiple: function(req, res){
-        // Get optional parameters from URL to refine the search
-        var optionalData = {};
-
-        var optionalSortData = {};
-
-        // Build query with sort, etc
-        var findQuery = Product.find(optionalData);
-        if( optionalSortData !== {} ) {
-            findQuery.sort(optionalSortData);
-        }
-        findQuery.populate('category');
-
-        // Run job
-        findQuery.exec(function callback(err, products){
-            if(err) return res.serverError(err);
-            return res.ok({
-                products: Product.toJSON( products )
-            });
-        });
+        sails.models.product.find({})
+            .then(function(products){
+                return res.ok(sails.models.product.toJSON(products));
+            })
+            .catch(res.serverError);
     },
 
     /**
@@ -90,4 +84,4 @@ module.exports = {
         return res.send(501);
     }
 
-}
+};

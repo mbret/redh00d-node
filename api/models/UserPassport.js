@@ -12,7 +12,8 @@ function hashPassword (passport, next) {
       passport.password = hash;
       next(err, passport);
     });
-  } else {
+  }
+  else{
     next(null, passport);
   }
 }

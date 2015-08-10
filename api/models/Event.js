@@ -9,9 +9,6 @@
 module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
     tableName: 'event',
-    autoCreatedAt: true,
-    autoUpdatedAt: true,
-    autoPK: true,
     identity: 'event',
 
     attributes:{
@@ -50,16 +47,6 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             type: 'datetime',
             required: true,
             columnName: 'eventDate'
-        },
-        // This attribute is auto managed by ORM
-        createdAt: {
-            type: 'datetime',
-            columnName: 'eventCreatedDate'
-        },
-        // This attribute is auto managed by ORM
-        updatedAt: {
-            type: 'datetime',
-            columnName: 'eventUpdatedDate'
         },
 
     },
