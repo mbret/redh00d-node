@@ -70,4 +70,13 @@ module.exports = {
     //proxyPort: 443,
     
     //bypassAuth: false // @todo
+
+    //connections: {
+    //    mysql: {
+    //        host: 'host',
+    //        user: 'user',
+    //        password: 'password',
+    //        database: 'database'
+    //    },
+    //},
 };

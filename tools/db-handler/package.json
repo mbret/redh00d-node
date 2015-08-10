@@ -1,0 +1,6 @@
+{
+  "name": "db-handler",
+  "dependencies": {
+    "mysql": "^2.8.0"
+  }
+}

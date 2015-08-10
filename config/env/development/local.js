@@ -1,11 +1,16 @@
 var path = require('path');
-module.exports.connections = {
+module.exports = {
 
-    mysql: {
-        host: 'localhost',
-        user: 'redh00d',
-        password: 'redh00d',
-        database: 'redh00d'
-    }
+    connections: {
+        mysql: {
+            host: 'localhost',
+            user: 'redh00d',
+            password: 'redh00d',
+            database: 'redh00d'
+        },
+    },
+
+
+    port: process.env.PORT || 1340
 
 };

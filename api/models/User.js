@@ -67,25 +67,6 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             columnName: 'userPasswordResetToken'
         },
 
-        // Managed by waterline
-        //createdAt: {
-        //    type: 'datetime',
-        //    columnName: 'userCreatedDate'
-        //},
-        //// Managed by waterline
-        //updatedAt: {
-        //    type: 'datetime',
-        //    columnName: 'userUpdatedDate '
-        //},
-
-        // Other fields
-        // Password used before bdd for validation
-        password: {
-            type: 'string',
-            minLength: 4,
-            required: false
-        },
-
         /**
          * Get user's full name
          */
