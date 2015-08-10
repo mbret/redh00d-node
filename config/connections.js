@@ -19,6 +19,7 @@
  * http://sailsjs.org/#/documentation/reference/sails.config/sails.config.connections.html
  */
 
+var path = require('path');
 module.exports.connections = {
 
     /***************************************************************************
@@ -30,11 +31,11 @@ module.exports.connections = {
      ***************************************************************************/
     localDiskDb: {
         adapter: 'sails-disk',
-        filePath : '.tmp/'
+        filePath : path.join(__dirname, '..','.tmp/')
     },
 
     memoryDb:{
-        module: 'sails-memory'
+        adapter: 'sails-memory'
     },
 
     /***************************************************************************

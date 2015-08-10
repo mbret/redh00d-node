@@ -1,18 +1,25 @@
 var request = require('supertest');
 var should  = require('chai').should();
 
-describe('EventController', function() {
+describe('integration.controllers.event', function() {
 
     var events; // list of events to test
     var app;
 
     before(function(done){
         app = sails.hooks.http.app;
-        Event.find().exec(function(err, entries){
-            if(err) done(err);
-            events = entries;
-            done();
-        });
+
+        // create list of events
+        return Promise
+            .all([
+                sails.models.event.create({name:'Soirée pyjama', description:'Venez tous nue', author: 2, place: 'Toul', date: '2014-12-31', id: 1}),
+                sails.models.event.create({name:'Meeting redh00d', description:'On va fumer de la bonne grosse beu !!', author: 2, place: 'Coloc', date: '2014-12-01'}),
+            ])
+            .then(function(results){
+                events = results;
+                done();
+            })
+            .catch(done);
     });
 
     beforeEach(function(done){

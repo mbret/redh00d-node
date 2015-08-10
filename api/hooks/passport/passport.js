@@ -106,7 +106,7 @@ module.exports.extend = function(sails, passport){
         }
 
         // Try to get the possible passport for this provider AND for this user (identifier)
-        UserPassport.findOne({
+        sails.models.userpassport.findOne({
             provider   : provider
             , identifier : query.identifier.toString()
         })
@@ -134,7 +134,7 @@ module.exports.extend = function(sails, passport){
                         .then(function(user){
                             query.user = user.id;
 
-                            return UserPassport.create(query).then(function(entry){
+                            return sails.models.userpassport.create(query).then(function(entry){
                                 return user;
                             });
                         });

@@ -4,9 +4,9 @@
         return Promise
             .all([
                 Models.UserRole.create({name: 'admin', displayName: 'Administrator'}),
-                Models.UserRole.create({name: 'user', displayName: 'User'}),
-                Models.ProductCategory.create({name: 'food', displayName: 'Food'}),
-                Models.ProductCategory.create({name: 'drink', displayName: 'Drink'})
+                //Models.UserRole.create({name: 'user', displayName: 'User'}),
+                //Models.ProductCategory.create({name: 'food', displayName: 'Food'}),
+                //Models.ProductCategory.create({name: 'drink', displayName: 'Drink'})
             ]);
         //.then(function(first){
         //    return Promise.all([

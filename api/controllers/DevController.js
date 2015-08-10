@@ -30,10 +30,10 @@ module.exports = {
         Promise.resolve().then(function () {
             //Load some data in parallel
             return Promise.all([
-                UserRole.find(),
-                Event.find(),
+                sails.models.userrole.find(),
+                sails.models.event.find(),
                 Product.find(),
-                ProductCategory.find(),
+                sails.models.productcategory.find(),
                 User.find()
 
             ]).spread(function (roles, events, products, productCategory, users) {

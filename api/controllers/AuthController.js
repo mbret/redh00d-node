@@ -62,7 +62,7 @@ module.exports = {
         User.create({ email: email })
             .then(function(user){
                 
-                return UserPassport.create( {
+                return sails.models.userpassport.create( {
                         protocol : 'local',
                         password : password,
                         user     : user.id
@@ -126,7 +126,7 @@ module.exports = {
                     return res.badRequest(null, sails.config.errorCode.E_EMAIL_DOES_NOT_BELONG_TO_SOMEONE);
                 }
                 // Try to find id user is using local auth
-                return UserPassport.findOne({ protocol : 'local', user : user.id })
+                return sails.models.userpassport.findOne({ protocol : 'local', user : user.id })
                     .then(function(passport){
                         if(!passport){
                             return res.badRequest(null, sails.config.errorCode.E_PASSWORD_RESET_NO_PASSWORD_SET_YET);

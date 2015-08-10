@@ -3,7 +3,7 @@ var async = require('async');
 var agent;
 var app;
 
-describe('integration.auth.Basic', function() {
+describe('integration.auth.basic', function() {
 
     before(function(done) {
         app = sails.hooks.http.app;
@@ -30,6 +30,7 @@ describe('integration.auth.Basic', function() {
         it('should return 400 (bad request)', function(done){
             request(app).get('/helper/auth/basic').set('Authorization', 'Basic dXNlckB1c3Nlci5jb206cGFzc3dvcmQ=').expect(401, done);
         });
+        // use correct mail / password of the user
         it('should return 200 thanks to good credentials on classic route', function(done){
             request(app).get('/helper/auth/basic').send().set('Authorization', sails.config.test.userAuth).expect(200, done);
         });

@@ -20,7 +20,7 @@ module.exports = {
             return res.badRequest();
         }
 
-        Event.findOne({ id: id }).populate('author')
+        sails.models.event.findOne({ id: id }).populate('author')
             .then(function(event){
                 if(!event) return res.notFound();
                 return res.ok({
@@ -52,7 +52,7 @@ module.exports = {
 //        if( req.param('firstname_like') || req.param('lastname_like') ) res.send(501);
 
         // Build query with sort, etc
-        var findQuery = Event.find(optionalData);
+        var findQuery = sails.models.event.find(optionalData);
         if( optionalSortData !== {} ) {
             findQuery.sort(optionalSortData);
         }
@@ -62,7 +62,7 @@ module.exports = {
         findQuery.exec(function callback(err, events){
             if(err) return res.serverError(err);
             return res.ok({
-                events: Event.toJSON( events )
+                events: sails.models.event.toJSON( events )
             });
         });
     },
@@ -96,7 +96,7 @@ module.exports = {
             'id': req.param('id')
         }
 
-        Event.update(query, dataToUpdate, function(err, event) {
+        sails.models.event.update(query, dataToUpdate, function(err, event) {
 
             if (err) {
                 // Error due to validators
@@ -153,7 +153,7 @@ module.exports = {
             eventData.userId = user.id;
 
             // Create the event
-            Event.create( eventData ).exec(function(err, event){
+            sails.models.event.create( eventData ).exec(function(err, event){
                 if(err){
                     // Validation error
                     if(err.ValidationError){

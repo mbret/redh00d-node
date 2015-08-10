@@ -26,7 +26,7 @@ module.exports = function (req, identifier, password, next) {
             return next(null, false, {message: "Error.Passport.Email.NotFound"});
         }
 
-        UserPassport.findOne({
+        sails.models.userpassport.findOne({
             protocol : 'local',
             user     : user.id
         }, function (err, passport) {

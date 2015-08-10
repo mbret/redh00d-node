@@ -2,6 +2,7 @@ var assert = require("assert");
 
 describe('EventModel', function() {
 
+    var Event = null;
     // var ...
     var baseEventData = {
         author: 1,
@@ -12,6 +13,7 @@ describe('EventModel', function() {
     };
 
     before(function(done){
+        Event = sails.models.event;
         done();
     });
 

@@ -36,7 +36,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             required: true
         },
         category: {
-            model: 'ProductCategory',
+            model: 'productcategory',
             columnName: 'FK_productCategoryID',
             required: true
         }

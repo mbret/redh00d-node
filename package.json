@@ -8,7 +8,7 @@
     "social"
   ],
   "scripts": {
-    "start": "sails lift",
+    "start": "node app.js",
     "debug": "node debug app.js",
     "test": "mocha"
   },
@@ -20,9 +20,8 @@
   "author": "Maxime Bret, Baptiste Mulot",
   "license": "",
   "dependencies": {
-    "bcryptjs": "^2.1.0",
-    "bluebird": "^2.9.27",
-    "email-templates": "~1.1.0",
+    "bcryptjs": "^2.2.1",
+    "bluebird": "^2.9.34",
     "grunt": "^0.4.5",
     "grunt-contrib-clean": "^0.5.0",
     "grunt-contrib-coffee": "^0.10.1",
@@ -49,14 +48,13 @@
     "passport-jwt": "^1.1.0",
     "passport-local": "^1.0.0",
     "rc": "^0.5.5",
-    "request": "^2.57.0",
+    "request": "^2.60.0",
     "sails": "^0.11.1",
     "sails-disk": "^0.10.8",
     "sails-hook-dev": "^1.0.0",
     "sails-memory": "^0.10.4",
     "sails-mysql": "^0.10.12",
-    "validator": "^3.40.0",
-    "waterline-db-handler": "git+https://github.com/mbret/waterline-db-handler.git",
+    "validator": "^3.43.0",
     "winston": "^0.7.3",
     "winston-mail": "^0.3.2"
   },

@@ -10,10 +10,6 @@ module.exports = {
 
     autoLogon: false,
 
-    models: {
-        migrate: 'drop' // erase database before each launch
-    },
-
     test: {
         user: null,
         admin: null,

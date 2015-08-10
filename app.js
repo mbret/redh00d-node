@@ -18,6 +18,9 @@
  * `node app.js --silent --port=80 --prod`
  */
 
+// store app root path
+process.env.APP_ROOT_PATH = __dirname;
+
 // Ensure a "sails" can be located:
 var sails;
 try {
@@ -47,7 +50,6 @@ try {
 		rc = function () { return {}; };
 	}
 }
-
 
 // Start server
 sails.lift(rc('sails'));

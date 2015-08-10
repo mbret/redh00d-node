@@ -1,11 +1,11 @@
 var assert = require("assert");
 
-describe('UserModel', function() {
+describe('integration.models.user', function() {
 
     var defaultUserRole;
 
     before(function(done){
-        UserRole.findDefault()
+        sails.models.userrole.findDefault()
             .then(function(role){
                 defaultUserRole = role;
                 done();
@@ -51,6 +51,41 @@ describe('UserModel', function() {
 
     });
 
+    describe('destroy', function(){
+
+        var testUser;
+
+        before(function(done){
+            sails.models.user.create({email: 'test@test.com', firstName: 'test', lastName: 'test'})
+                .then(function(user){
+                    testUser = user;
+                    return sails.models.userpassport.create({protocol: 'local', user: testUser.id, password: 'password'});
+                })
+                .then(done.bind(this, null))
+                .catch(done);
+        });
+
+        after(function(done){
+            // clean test user
+            sails.models.user.destroy(testUser.id)
+                .then(done.bind(this, null))
+                .catch(done);
+        });
+
+        it('should destroy the user passports', function(done){
+            // destroy
+           sails.models.user.destroy(testUser.id)
+               .then(function(){
+                   // verify that no passport exists
+                   return sails.models.userpassport.find({user: testUser.id})
+                       .then(function(passports){
+                           passports.should.be.empty;
+                           done();
+                       });
+               })
+               .catch(done);
+        });
+    });
 
 
 });

@@ -8,6 +8,8 @@
 
 module.exports = {
 
+    //tableName: 'event_invitation',
+
     attributes: {
 
         id: {

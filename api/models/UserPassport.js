@@ -34,6 +34,7 @@ function hashPassword (passport, next) {
 var UserPassport = {
 
     identity: 'userpassport',
+    tableName: 'user_passport',
 
     attributes: {
         // Required field: Protocol
@@ -96,7 +97,12 @@ var UserPassport = {
        * @param {Function} next
        */
       beforeCreate: function (passport, next) {
-            hashPassword(passport, next);
+          if(passport.protocol === 'local' && !passport.password){
+              return next(new Error('UserPassport:beforeCreate: Protocol local require a password'));
+          }
+          hashPassword(passport, function(){
+              next();
+          });
       },
 
       /**
@@ -106,7 +112,7 @@ var UserPassport = {
        * @param {Function} next
        */
       beforeUpdate: function (passport, next) {
-            hashPassword(passport, next);
+          hashPassword(passport, next);
       }
 };
 

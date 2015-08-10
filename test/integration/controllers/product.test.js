@@ -1,21 +1,36 @@
 var request = require('supertest');
 var assert = require("assert");
 
-describe('ProductController', function() {
+describe('integration.controllers.product', function() {
 
     var products;
     var productsCategories;
 
     before(function(done){
-        Product.find().exec(function(err, entries){
-            if(err) done(err);
-            products = entries;
-            ProductCategory.find().exec(function(err, entries){
-                if(err) done(err);
-                productsCategories = entries;
+
+        // create products categories
+        return Promise
+            .all([
+                sails.models.productcategory.create({name: 'food', displayName: 'Food'}),
+                sails.models.productcategory.create({name: 'drink', displayName: 'Drink'})
+            ])
+            .then(function(results){
+                productsCategories = results;
+
+                // create products
+                return Promise
+                    .all([
+                        sails.models.product.create({isOfficial: true, name: 'Coca Cola', logo: 'coca_cola', category: productsCategories[1].id}),
+                        sails.models.product.create({isOfficial: false, name: 'Chips', logo: 'chips', category: productsCategories[0].id})
+                    ])
+                    .then(function(results){
+                        products = results;
+                    });
+            })
+            .then(function(){
                 done();
-            });
-        });
+            })
+            .catch(done);
     });
 
     beforeEach(function(done){

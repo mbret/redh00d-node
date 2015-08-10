@@ -23,7 +23,7 @@ module.exports = function (req, email, password, next) {
                 user     : user.id
             };
             
-            return UserPassport.findOne(query)
+            return sails.models.userpassport.findOne(query)
                 .then(function(userPassport){
                     if (userPassport) {
                         userPassport.validatePassword(password, function (err, valid) {

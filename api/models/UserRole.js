@@ -52,7 +52,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
      * @returns Promise|callback
      */
     findDefault: function(cb){
-        return UserRole.findOne({ name: sails.config.permissions.defaultRole }, cb);
+        return sails.models.userrole.findOne({ name: sails.config.permissions.defaultRole }, cb);
     }
 
 });

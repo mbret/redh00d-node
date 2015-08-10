@@ -153,7 +153,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
                     },
                     // Update local auth with token
                     function(token, done){
-                        return UserPassport.update( { user: self.id }, {
+                        return sails.models.userpassport.update( { user: self.id }, {
                             resetPasswordToken: token,
                             resetPasswordTokenExpires: new Date(Date.now() + 3600000) // 1 hour
                         })
@@ -196,6 +196,20 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
     beforeCreate: [ setDefaultRoleIfUndefined ],
 
     beforeUpdate: [ ],
+
+    beforeDestroy: function(criteria, cb){
+        cb();
+    },
+
+    afterDestroy: function(destroyedRecords, cb){
+        var requests = [];
+        destroyedRecords.forEach(function(record){
+           requests.push(sails.models.userpassport.destroy({user: record.userID}));
+        });
+        Promise.all(requests)
+            .then(cb.bind(this, null))
+            .catch(cb);
+    },
 
     /**
      * Return the user friends list.
@@ -271,7 +285,7 @@ function setDefaultRoleIfUndefined(values, cb){
     if(values.role) return cb();
 
     sails.log.debug("User -> setDefaultRoleIfUndefined -> default is set (default=" + sails.config.permissions.defaultRole +")");
-    UserRole.findDefault(function(err, role){
+    sails.models.userrole.findDefault(function(err, role){
         if(err) return cb(err);
         if(!role) return cb( new Error("Unable to load the role") );
 
