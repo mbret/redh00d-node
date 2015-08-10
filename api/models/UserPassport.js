@@ -38,19 +38,29 @@ var UserPassport = {
     tableName: 'user_passport',
 
     attributes: {
+
+        id: {
+            type: 'integer',
+            autoIncrement: true,
+            unique: true,
+            index: true,
+            primaryKey: true,
+            columnName: 'id'
+        },
+
         // Required field: Protocol
         //
         // Defines the protocol to use for the passport. When employing the local
         // strategy, the protocol will be set to 'local'. When using a third-party
         // strategy, the protocol will be set to the standard used by the third-
         // party service (e.g. 'oauth', 'oauth2', 'openid').
-        protocol: { type: 'alphanumeric', required: true },
+        protocol: { type: 'alphanumeric', required: true, columnName: 'protocol' },
 
         // Local field: Password
         //
         // When the local strategy is employed, a password will be used as the
         // means of authentication along with either a username or an email.
-        password: { type: 'string', minLength: 3 },
+        password: { type: 'string', minLength: 3, columnName: 'password' },
 
         // Provider fields: Provider, identifer and tokens
         //
@@ -63,12 +73,12 @@ var UserPassport = {
         // dards. When using OAuth 1.0, a `token` as well as a `tokenSecret` will
         // be issued by the provider. In the case of OAuth 2.0, an `accessToken`
         // and a `refreshToken` will be issued.
-        provider   : { type: 'alphanumericdashed' },
-        identifier : { type: 'string' },
-        accessToken     : { type: 'string' },
+        provider   : { type: 'alphanumericdashed', columnName: 'provider' },
+        identifier : { type: 'string', columnName: 'identifier' },
+        accessToken     : { type: 'string', columnName: 'accessToken' },
 
-        resetPasswordToken: {type: 'string'},
-        resetPasswordTokenExpires: {type: 'datetime'},
+        resetPasswordToken: {type: 'string', columnName: 'resetPasswordToken'},
+        resetPasswordTokenExpires: {type: 'datetime', columnName: 'resetPasswordTokenExpires'},
 
         // Associations
         //
@@ -77,17 +87,29 @@ var UserPassport = {
         //
         // For more information on associations in Waterline, check out:
         // https://github.com/balderdashy/waterline
-        user: { model: 'User', required: true },
+        user: { model: 'User', required: true, columnName: 'user' },
 
-    /**
-     * Validate password used by the local strategy.
-     *
-     * @param {string}   password The password to validate
-     * @param {Function} next
-     */
-    validatePassword: function (password, next) {
-        bcrypt.compare(password, this.password, next);
-    }
+        createdAt: {
+            type: 'datetime',
+            defaultsTo: function (){ return new Date(); },
+            columnName: 'createdAt'
+        },
+
+        updatedAt: {
+            type: 'datetime',
+            defaultsTo: function (){ return new Date(); },
+            columnName: 'updatedAt'
+        },
+
+        /**
+         * Validate password used by the local strategy.
+         *
+         * @param {string}   password The password to validate
+         * @param {Function} next
+         */
+        validatePassword: function (password, next) {
+            bcrypt.compare(password, this.password, next);
+        }
 
   },
 

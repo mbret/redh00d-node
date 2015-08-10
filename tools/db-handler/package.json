@@ -1,6 +1,7 @@
 {
   "name": "db-handler",
   "dependencies": {
+    "lodash": "^3.10.1",
     "mysql": "^2.8.0"
   }
 }

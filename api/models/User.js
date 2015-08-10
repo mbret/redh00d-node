@@ -56,15 +56,24 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             columnName: 'FK_userRoleID',
             required: false
         },
+
         phone: {
             type: 'int',
             required: false,
             defaultTo: null,
             columnName: 'userPhone'
         },
-        passwordResetToken: {
-            type: 'json',
-            columnName: 'userPasswordResetToken'
+
+        createdAt: {
+            type: 'datetime',
+            defaultsTo: function (){ return new Date(); },
+            columnName: 'createdAt'
+        },
+
+        updatedAt: {
+            type: 'datetime',
+            defaultsTo: function (){ return new Date(); },
+            columnName: 'updatedAt'
         },
 
         /**
