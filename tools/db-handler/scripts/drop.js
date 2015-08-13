@@ -9,7 +9,6 @@ var util                    = require('util');
 
 module.exports = function(connection){
 
-
     var queries = [
         util.format("TRUNCATE `%s`", UserRole.tableName),
         util.format("TRUNCATE `%s`", User.tableName),
@@ -18,7 +17,7 @@ module.exports = function(connection){
 
     queries.forEach(function(query){
         connection.query(query, function(err, rows, fields) {
-            if(err) throw err;
+            if(err) reject(err);
         });
     });
 
