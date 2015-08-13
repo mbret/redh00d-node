@@ -39,7 +39,7 @@ pm2-process.json
 # 
 ################################################
 
-config/local.js
+config/**/local.js
 
 
 
