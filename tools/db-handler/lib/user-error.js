@@ -1,7 +1,14 @@
 (function(){
     'use strict';
-    function UserError(message){
-        this.message = message;
+    function UserError(err){
+
+        if(err instanceof Error){
+            this.message = err.message;
+            this.stack = err.stack;
+        }
+        else{
+            this.message = err;
+        }
     }
 
     module.exports = UserError;

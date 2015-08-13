@@ -25,6 +25,10 @@ var argv = require('yargs')
         yargs
             .option('e', e);
     })
+    .command('init', 'Initialize the current database', function(yargs){
+        yargs
+            .option('e', e);
+    })
     .command('exec', 'Execute a js sample to the current database', function(yargs){
         yargs
             .option('s', s)

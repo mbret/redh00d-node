@@ -4,13 +4,10 @@ module.exports = {
     connections: {
         mysql: {
             host: 'localhost',
-            user: 'redh00d',
-            password: 'redh00d',
+            user: 'root',
+            password: 'root',
             database: 'redh00d'
         },
     },
-
-
-    port: process.env.PORT || 1340
 
 };

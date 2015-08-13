@@ -4,7 +4,8 @@
     var path        = require('path');
     var util        = require('util');
     var _           = require('lodash');
-    var dbConnect   = require(path.join(__dirname, 'db-connect.js'));
+    var dbConnect   = require(path.join(process.env.LIB_PATH, 'db-connect.js'));
+    var UserError   = require(path.join(process.env.LIB_PATH, 'user-error.js'));
 
     module.exports = function(scriptPath){
         return {
@@ -17,9 +18,19 @@
                         }
 
                         var script = require(scriptPath);
-                        script(connection);
+                        try{
+                            script(connection)
+                                .then(function(){
+                                    return resolve('Script executed');
+                                })
+                                .catch(function(err){
+                                    reject(new UserError(err));
+                                });
+                        }
+                        catch(err){
+                            return reject(err);
+                        }
 
-                        return resolve('Database dropped!');
                     });
 
                 });

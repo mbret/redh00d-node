@@ -65,19 +65,21 @@
             actionHandler
                 .run()
                 .then(function(message){
-                    logger.flash(message);
-                    logger.flash('Script completed with all the great success you deserve');
+                    self.logger.flash(message);
+                    self.logger.flash('Script completed with all the great success you deserve');
                 })
                 .catch(function(err){
                     if(err instanceof UserError){
+                        self.logger.red('An error occured when executing your script, here is the detail:');
                         self.logger.red(err.message);
                     }
                     else{
                         self.logger.red("An internal error occured, here is the stack (yes deal with it!):");
-                        self.logger.red(err.message);
+                        self.logger.red(err.stack);
                     }
                 })
                 .then(function(){
+                    self.logger.yellow('Scipt is over');
                     self.emit('shutdown');
                 });
         }

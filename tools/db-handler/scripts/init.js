@@ -58,15 +58,25 @@ module.exports = function(connection){
         ]
     });
 
+    var promises = [];
     queries.forEach(function(object){
         object.values.forEach(function(value){
-            connection.query({
-                sql: object.sql,
-                values: value
-            }, function (error, results, fields) {
-                if(error) throw error;
-            });
+            promises.push(
+                new Promise(function(resolve, reject){
+                    connection.query({
+                        sql: object.sql,
+                        values: value
+                    }, function (error, results, fields) {
+                        if(error){
+                            return reject(error);
+                        }
+                        return resolve();
+                    })
+                })
+            );
         });
     });
+
+    return Promise.all(promises);
 
 };

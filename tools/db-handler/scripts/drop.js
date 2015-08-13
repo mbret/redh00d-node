@@ -15,10 +15,20 @@ module.exports = function(connection){
         util.format("TRUNCATE `%s`", UserPassport.tableName)
     ];
 
+    var promises = [];
     queries.forEach(function(query){
-        connection.query(query, function(err, rows, fields) {
-            if(err) reject(err);
-        });
+        promises.push(
+            new Promise(function(resolve, reject){
+                connection.query(query, function(err, rows, fields) {
+                    if(err){
+                        return reject(err);
+                    }
+                    return resolve();
+                });
+            })
+        );
     });
+
+    return Promise.all(promises);
 
 };
