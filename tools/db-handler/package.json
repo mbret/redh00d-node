@@ -1,5 +1,6 @@
 {
   "name": "db-handler",
+  "author": "Maxime Bret",
   "dependencies": {
     "lodash": "^3.10.1",
     "mysql": "^2.8.0",
