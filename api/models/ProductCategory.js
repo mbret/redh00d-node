@@ -12,7 +12,6 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
     autoCreatedAt: true,
     autoUpdatedAt: true,
     autoPK: true,
-    identity: 'productcategory',
 
     attributes:{
 
@@ -26,11 +25,12 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         },
         name: {
             type: 'string',
-            unique: true
+            unique: true,
+            required: true
         },
-        displayName: {
-            type: 'string'
-        }
+        //displayName: {
+        //    type: 'string'
+        //}
 
     }
 
