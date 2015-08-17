@@ -7,12 +7,12 @@
     var dbConnect   = require(path.join(process.env.LIB_PATH, 'db-connect.js'));
     var UserError   = require(path.join(process.env.LIB_PATH, 'user-error.js'));
 
-    module.exports = function(scriptPath){
+    module.exports = function(config, scriptPath){
         return {
             run: function(){
                 return new Promise(function(resolve, reject){
 
-                    dbConnect(function(err, connection){
+                    dbConnect(config, function(err, connection){
                         if(err){
                             return reject(err);
                         }

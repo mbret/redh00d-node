@@ -19,13 +19,14 @@
     Script.prototype.run = function(){
 
         try{
-            global._        = _; // export globals like sails (for models)
+            global._            = _; // export globals like sails (for models)
 
-            var self        = this;
-            this.logger     = require(path.join(process.env.LIB_PATH, 'logger.js'));
+            var self            = this;
+            this.logger         = require(path.join(process.env.LIB_PATH, 'logger.js'));
 
-            var UserError   = require(path.join(process.env.LIB_PATH, 'user-error.js'));
-            var executor    = require(path.join(process.env.LIB_PATH, 'db-exec.js'));
+            var UserError       = require(path.join(process.env.LIB_PATH, 'user-error.js'));
+            var executor        = require(path.join(process.env.LIB_PATH, 'db-exec.js'));
+            var configHelper    = require(path.join(process.env.LIB_PATH, 'config-helper.js'));
 
             this.logger.green('');
             this.logger.green('-------------------------------------');
@@ -38,6 +39,7 @@
 
             var argv        = require(path.join(process.env.LIB_PATH, 'args.js'));
             var command     = argv._[0];
+            var config      = configHelper.load(argv);
 
             this.logger.green('Here are some information about your current script command:');
             this.logger.green('- command     : %s', command);
@@ -49,13 +51,13 @@
             var actionHandler = null;
             switch(command){
                 case 'exec':
-                    actionHandler = executor(path.resolve(process.cwd(), argv.s));
+                    actionHandler = executor(config, path.resolve(process.cwd(), argv.s));
                     break;
                 case 'drop':
-                    actionHandler = executor(path.resolve(__dirname, '../scripts/drop.js'));
+                    actionHandler = executor(config, path.resolve(__dirname, '../scripts/drop.js'));
                     break;
                 case 'init':
-                    actionHandler = executor(path.resolve(__dirname, '../scripts/init.js'));
+                    actionHandler = executor(config, path.resolve(__dirname, '../scripts/init.js'));
                     break;
                 default:
                     break;
@@ -79,7 +81,7 @@
                     }
                 })
                 .then(function(){
-                    self.logger.yellow('Scipt is over');
+                    self.logger.yellow('Scipt done!');
                     self.emit('shutdown');
                 });
         }

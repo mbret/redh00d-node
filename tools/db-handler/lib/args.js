@@ -9,7 +9,7 @@ var e = {
     type: 'string',
     describe: 'Environment to use (used to detect sails config)',
     demand: true,
-    choices: ['production', 'development', 'testing', 'dev', 'prod', 'test']
+    choices: ['production', 'development', 'testing']
 };
 // sample to execute
 var s = {
@@ -18,21 +18,30 @@ var s = {
     type: 'string',
     describe: 'Script path to execute',
 };
+var c = {
+    alias: 'connection',
+    demand: false,
+    type: 'string',
+    describe: 'Connection name to use with your config (You should use a valid connection name available in /config/connection.js)',
+};
 
 var argv = require('yargs')
     .usage('index.js <command>')
     .command('drop', 'Drop the current database', function(yargs){
         yargs
-            .option('e', e);
+            .option('e', e)
+            .option('c', c);
     })
     .command('init', 'Initialize the current database', function(yargs){
         yargs
-            .option('e', e);
+            .option('e', e)
+            .option('c', c);
     })
     .command('exec', 'Execute a js sample to the current database', function(yargs){
         yargs
             .option('s', s)
             .option('e', e)
+            .option('c', c)
             .check(checkSample);
     })
     .demand(1, 1) // demand at least one argv._ non option (command)
