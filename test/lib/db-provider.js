@@ -2,7 +2,6 @@
     'use strict';
     module.exports = function(){
         var UserRole = sails.models.userrole;
-        var User = sails.models.user;
         return Promise
             .all([
                 UserRole.create({name: 'admin', displayName: 'Administrator'}),
@@ -12,8 +11,8 @@
             ])
         .then(function(results){
             return Promise.all([
-                User.create({ email: 'user@user.com', firstName: 'User', lastName: 'User'}),
-                User.create({ email: 'admin@admin.com', firstName: 'Admin', lastName: 'Admin', role: results[0].id }),
+                sails.models.user.create({ email: 'user@user.com', firstName: 'User', lastName: 'User'}),
+                sails.models.user.create({ email: 'admin@admin.com', firstName: 'Admin', lastName: 'Admin', role: results[0].id }),
 
             ]).then(function(values){
                 return {
@@ -55,10 +54,10 @@
         //.then(function(values){
         //    // Create friendships between users
         //    return Promise.all([
-        //        //User.requestFriend(values.users[0].id, values.users[1].id),
-        //        //User.requestFriend(values.users[1].id, values.users[0].id), // accept
-        //        //User.requestFriend(values.users[0].id, values.users[2].id),
-        //        //User.requestFriend(values.users[2].id, values.users[0].id), // accept
+        //        //sails.models.userrequestFriend(values.users[0].id, values.users[1].id),
+        //        //sails.models.userrequestFriend(values.users[1].id, values.users[0].id), // accept
+        //        //sails.models.userrequestFriend(values.users[0].id, values.users[2].id),
+        //        //sails.models.userrequestFriend(values.users[2].id, values.users[0].id), // accept
         //    ]).then(function(v){
         //        values.friends = v;
         //        return values;

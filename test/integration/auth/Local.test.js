@@ -3,7 +3,7 @@ var async = require('async');
 var agent;
 var app;
 
-describe('integration.auth.Local', function() {
+describe('integration.auth.local', function() {
 
     before(function(done) {
         app = sails.hooks.http.app;

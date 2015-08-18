@@ -14,7 +14,7 @@ module.exports = function (req, email, password, next) {
         return next(null, false, {code:401});
     }
     
-    User.findOne({email: email}).populate('role')
+    sails.models.user.findOne({email: email}).populate('role')
         .then(function (user) {
             if( !user) return next( null, false, {code: 400} );
 

@@ -25,7 +25,7 @@ module.exports = {
             return res.badRequest();
         }
 
-        User.findOne({'id': id}).populate('role').exec(function(err,user){
+        sails.models.user.findOne({'id': id}).populate('role').exec(function(err,user){
             if(err) return res.serverError(err);
             if(!user) return res.notFound();
             return res.ok(user.toJSON());
@@ -86,9 +86,9 @@ module.exports = {
         }
 
         // Create user
-        User.create( data ).exec(function(err, user){
+        sails.models.user.create( data ).exec(function(err, user){
             if(err){
-                if(err.ValidationError) return res.badRequest( {params: ErrorValidationHandlerService.transformFromWaterline(err.ValidationError)} );
+                if(err.ValidationError) return res.badRequest();
                 else return res.serverError(err);
             }
             return res.created({
@@ -133,10 +133,10 @@ module.exports = {
             }
 
             // Update process
-            User.update(query, data, function(err, user) {
+            sails.models.user.update(query, data, function(err, user) {
 
                 if (err) {
-                    if(err.ValidationError) return res.badRequest( {params: ErrorValidationHandlerService.transformFromWaterline(err.ValidationError)} );
+                    if(err.ValidationError) return res.badRequest();
                     else return res.serverError(err);
                 }
                 if(!user || user.length < 1) return res.notFound();
@@ -176,7 +176,7 @@ module.exports = {
             var query = validator.isEmail(req.param('id')) ? {email: req.param('id')} : req.param('id');
             
             // Check user
-            User.findOne(query, function (err, user) {
+            sails.models.user.findOne(query, function (err, user) {
                 if (err) return res.serverError(err);
                 if (!user) return res.notFound();
 
@@ -235,7 +235,7 @@ module.exports = {
         }
         else{
 
-            User.findOne(req.param('id')).then(function(user){
+            sails.models.user.findOne(req.param('id')).then(function(user){
                 if(!user){
                     return res.notFound();
                 }
@@ -246,7 +246,7 @@ module.exports = {
                 }
                 else{
                     // destroy user
-                    return User.destroy({id:req.param('id')}).then(function(){
+                    return sails.models.user.destroy({id:req.param('id')}).then(function(){
                         return res.noContent();
                     });
                 }

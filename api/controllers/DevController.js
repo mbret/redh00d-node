@@ -34,7 +34,7 @@ module.exports = {
                 sails.models.event.find(),
                 Product.find(),
                 sails.models.productcategory.find(),
-                User.find()
+                sails.models.user.find()
 
             ]).spread(function (roles, events, products, productCategory, users) {
                 data.roles = roles;

@@ -59,7 +59,7 @@ module.exports = {
         }
 
         // Create the user and init everything necessary for application
-        User.create({ email: email })
+        sails.models.user.create({ email: email })
             .then(function(user){
                 
                 return sails.models.userpassport.create( {
@@ -85,7 +85,7 @@ module.exports = {
             .then(res.created)
             .catch(function(err){
                 if (err.code === 'E_VALIDATION') {
-                    if (err.invalidAttributes[User.attributes.email.columnName]) {
+                    if (err.invalidAttributes[sails.models.userattributes.email.columnName]) {
                         // This error could be something else but as we validate before we should only get an error because emeail already taken here
                         return res.badRequest(null, sails.config.errorCode.E_EMAIL_ALREADY_TAKEN);
                     } else {
@@ -120,7 +120,7 @@ module.exports = {
         }
 
         // Try to find user that belong to this email
-        User.findOne({email: email})
+        sails.models.user.findOne({email: email})
             .then(function(user){
                 if(!user){
                     return res.badRequest(null, sails.config.errorCode.E_EMAIL_DOES_NOT_BELONG_TO_SOMEONE);

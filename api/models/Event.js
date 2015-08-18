@@ -13,40 +13,39 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
     attributes:{
 
-        // BDD fields
         id: {
             type: 'integer',
             autoIncrement: true,
             unique: true,
             index: true,
             primaryKey: true,
-            columnName: 'eventID'
+            columnName: 'ID_EVENT'
         },
         author: {
-            model: 'User',
-            columnName: 'FK_applicantUserID',
+            model: 'user',
+            columnName: 'ID_USER',
             required: true,
             index: true
         },
-        name: {
+        title: {
             type: 'string',
             required: true,
-            columnName: 'eventName'
+            columnName: 'TITLE'
         },
         description: {
             type: 'string',
             required: true,
-            columnName: 'eventDescription'
+            columnName: 'DESCRIPTION'
         },
-        place: {
+        location: {
             type: 'string',
             required: true,
-            columnName: 'eventPlace'
+            columnName: 'LOCATION'
         },
         date: {
             type: 'datetime',
             required: true,
-            columnName: 'eventDate'
+            columnName: 'DATE'
         },
 
     },

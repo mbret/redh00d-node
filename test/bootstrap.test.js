@@ -14,7 +14,7 @@ before(function(done) {
         dbProvider()
             .then(function(){
                 // load detail of current user
-                return User.findOne({email: 'user@user.com'})
+                return sails.models.user.findOne({email: 'user@user.com'})
                     .then(function(user){
                         if(!user){
                             done(new Error('user@user.com not found'));
@@ -24,7 +24,7 @@ before(function(done) {
             })
             .then(function(user){
                 // load detail of current admin user
-                return User.findOne({email: 'admin@admin.com'})
+                return sails.models.user.findOne({email: 'admin@admin.com'})
                     .then(function(user){
                         if(!user){
                             done(new Error('admin@admin.com not found'));

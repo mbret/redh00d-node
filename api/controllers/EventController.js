@@ -95,7 +95,7 @@ module.exports = {
 
         var query = {
             'id': req.param('id')
-        }
+        };
 
         sails.models.event.update(query, dataToUpdate, function(err, event) {
 
@@ -135,49 +135,56 @@ module.exports = {
      * @todo write this method
      */
     create: function(req, res){
-        return res.send(501);
 
-        var eventData = {
-            name: req.param('name'),
-            description: req.param('description'),
-            place: req.param('place'),
-            date: req.param('date')
-        };
+        var title = req.param('title', null);
+        var description = req.param('description', null);
+        var location = req.param('location', null);
+        var user = req.user.id;
+        var date = req.param('date', null);
 
-        if( ! req.param('user_id') ) return res.badRequest( "no user specified" );
+        if(!validator.isLength(title, 1)){
+            return res.badRequest();
+        }
+
+        if(!validator.isDate(date)){
+            return res.badRequest();
+        }
+
+        if(!validator.isNumeric(user)){
+            return res.badRequest();
+        }
+
+        // Permissions check
+        // @todo
+
+        // Create the event
+        sails.models.event
+            .create({
+                title: title,
+                description: description,
+                author: user,
+                location: location,
+                date: date
+            })
+            .then(function(event){
+                return res.created(event);
+            })
+            .catch(function(err){
+                if(err.code === 'E_VALIDATION'){
+                    return res.badRequest();
+                }
+                return res.serverError(err);
+            });
 
         // Search user to inject id
-        User.findOne( {id: req.param('user_id')}).exec(function(err, user){
-            if(err) return res.serverError();
-            if( ! user ) return res.notFound( res.i18n("Resource (%s) doesn't exist", res.i18n('user')) );
-
-            eventData.userId = user.id;
-
-            // Create the event
-            sails.models.event.create( eventData ).exec(function(err, event){
-                if(err){
-                    // Validation error
-                    if(err.ValidationError){
-                        return res.badRequest( null, err.ValidationError );
-                    }
-                    else{
-                        return res.serverError(err);
-                    }
-                }
-
-                return res.created({
-                    event: event
-                });
-            });
-        });
+        //sails.models.user.findOne( {id: req.param('user_id')}).exec(function(err, user){
+        //    if(err) return res.serverError();
+        //    if( ! user ) return res.notFound( res.i18n("Resource (%s) doesn't exist", res.i18n('user')) );
+        //
+        //    eventData.userId = user.id;
+        //});
 
     },
-
-    /**********************************
-     *
-     * Invitations relatives method
-     *
-     **********************************/
 
     /**
      * Create an invitation

@@ -19,6 +19,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
     autoPK: true,
     autoCreatedAt: true,
     autoUpdatedAt: true,
+    identity: 'user',
 
     attributes: {
 
@@ -213,7 +214,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
                 var friendsToRetrieve = [];
                 // For each relation load the complete user
                 friendships.forEach(function(e){
-                    friendsToRetrieve.push(User.findOne(e.toUser));
+                    friendsToRetrieve.push(sails.models.user.findOne(e.toUser));
                 });
                 return Promise.all(friendsToRetrieve);
             });

@@ -57,8 +57,8 @@ describe('AuthControllerIntegration', function() {
                     id = res.body.user.id;
                 })
                 .end(function(err){
-                    return User.findOne(id).then(function(user){
-                        if(!user) return done(new Error('User not crated in db'));
+                    return sails.models.user.findOne(id).then(function(user){
+                        if(!user) return done(new Error('User not created in db'));
                         return done();
                     });
                 })

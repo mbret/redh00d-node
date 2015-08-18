@@ -8,6 +8,10 @@ var expect  = require('chai').expect;
 describe('integration.models.product', function() {
 
     var category = null;
+    var testProduct = {
+        name: 'Product of model test',
+        category: null
+    };
 
     before(function(done){
         // Create used category in these test suite
@@ -17,6 +21,7 @@ describe('integration.models.product', function() {
             })
             .then(function(entry){
                 category = entry;
+                testProduct.category = category.id;
             })
             .then(done)
             .catch(done);
@@ -38,15 +43,12 @@ describe('integration.models.product', function() {
 
         it('should create a valid product', function (done) {
             sails.models.product
-                .create({
-                    name: 'Coca Cola',
-                    category: category.id
-                })
+                .create(testProduct)
                 .then(function(product){
                     expect(product).to.have.property('id');
                     expect(product).to.have.property('category');
-                    expect(product.name).to.equal('Coca Cola');
-                    expect(product.category).to.equal(category.id);
+                    expect(product.name).to.equal(testProduct.name);
+                    expect(product.category).to.equal(testProduct.category);
                     id = product.id;
                     done();
                 })
@@ -55,10 +57,7 @@ describe('integration.models.product', function() {
 
         it('should not create two same product', function (done) {
             sails.models.product
-                .create({
-                    name: 'Coca Cola',
-                    category: category.id
-                })
+                .create(testProduct)
                 .then(function(product){
                     done(new Error('Product should not have been created'));
                 })
@@ -85,10 +84,7 @@ describe('integration.models.product', function() {
 
         before(function(done){
             sails.models.product
-                .create({
-                    name: 'Coca Cola',
-                    category: category.id
-                })
+                .create(testProduct)
                 .then(function(product){
                     if(!product) done(new Error('Unable to create product'));
                     id = product.id;

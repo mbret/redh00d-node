@@ -17,7 +17,6 @@ describe('integration.Authentication', function() {
         done();
     });
 
-
     /**
      * JWT authentication scenario
      * - The client ask for a token with email/password

@@ -28,7 +28,7 @@ describe('integration.models.user', function() {
     describe('Create test', function () {
 
         it ('should create a correct minimal user record', function (done) {
-            User.create({
+            sails.models.user.create({
                 firstName: "Toto",
                 lastName: "Tata",
                 email: "toto@tata.com",

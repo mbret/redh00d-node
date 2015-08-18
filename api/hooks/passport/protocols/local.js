@@ -17,7 +17,7 @@ module.exports = function (req, identifier, password, next) {
 
     query.email = identifier;
 
-    User.findOne(query, function (err, user) {
+    sails.models.user.findOne(query, function (err, user) {
         if (err) {
             return next(err);
         }

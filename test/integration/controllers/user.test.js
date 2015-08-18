@@ -198,7 +198,7 @@ describe('integration.controllers.user', function() {
         //    request(sails.hooks.http.app).patch('/users/' + testUser.id).set('Authorization', sails.config.test.adminAuth).send({reset_password: true, silent: true})
         //        .expect(204)
         //        .expect(function(res){
-        //            return User.findOne(testUser.id).exec(function(err, user){
+        //            return sails.models.user.findOne(testUser.id).exec(function(err, user){
         //                if(!user.passwordResetToken || user.passwordResetToken.value.length <= 0){
         //                    throw new Error("Token not generated");
         //                }

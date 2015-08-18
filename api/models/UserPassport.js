@@ -87,7 +87,7 @@ var UserPassport = {
         //
         // For more information on associations in Waterline, check out:
         // https://github.com/balderdashy/waterline
-        user: { model: 'User', required: true, columnName: 'user' },
+        user: { model: 'user', required: true, columnName: 'user' },
 
         createdAt: {
             type: 'datetime',

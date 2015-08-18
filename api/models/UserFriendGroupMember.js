@@ -26,7 +26,7 @@ module.exports = {
             index: true
         },
         user: {
-            model: 'User',
+            model: 'user',
             columnName: 'FK_targetUserID',
             required: true,
             index: true

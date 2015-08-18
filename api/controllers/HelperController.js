@@ -51,7 +51,7 @@ module.exports = {
      * @param res
      */
     //login: function(req, res){
-    //    User.findOne({email: req.param('email', null)})
+    //    sails.models.user.findOne({email: req.param('email', null)})
     //        .then(function(user){
     //            if(!user){
     //                return res.badRequest();

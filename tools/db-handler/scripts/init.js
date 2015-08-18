@@ -58,6 +58,10 @@ module.exports = function(connection){
         ]
     });
 
+    queries.push({
+
+    });
+
     var promises = [];
     queries.forEach(function(object){
         object.values.forEach(function(value){

@@ -28,7 +28,7 @@ module.exports.policies = {
 
         // Check for permission
         // We are not using several policies here because it's better to delegate permission to extern service
-        // It's more portable and can be share through a database and be manageable for example.
+        // It's more portable and can be shared through a database and be manageable for example.
         'isAuthorized',
     ],
     
@@ -40,6 +40,8 @@ module.exports.policies = {
         resetPassword: true
     },
 
+    // Controller that can be used as test
+    // Is blocked to users by default
     HelperController: false
 
 };

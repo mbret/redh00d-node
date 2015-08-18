@@ -20,7 +20,7 @@ module.exports = {
           columnName: 'userFriendGroupID'
         },
         user: {
-            model: 'User',
+            model: 'user',
             columnName: 'FK_applicantUserID',
             required: true,
             index: true

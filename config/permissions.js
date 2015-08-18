@@ -53,6 +53,7 @@ var permissions = {
         },
         admin: {
             allow: {
+                product: ['delete'],
                 user: ['create', 'deleteOthers', 'updateOthers', 'patchOthers']
             }
         }

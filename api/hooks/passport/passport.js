@@ -120,14 +120,14 @@ module.exports.extend = function(sails, passport){
                     // We try to find a possible user
                     // If we find a user with this email it means that it's the first time the user use a provider
                     // to authenticate.
-                    return User.findOne({email: user.email})
+                    return sails.models.user.findOne({email: user.email})
                         .then(function(userFound){
 
                             if(userFound){
                                 return userFound;
                             }
                             else{
-                                return User.create(user);
+                                return sails.models.user.create(user);
                             }
 
                         })
@@ -146,7 +146,7 @@ module.exports.extend = function(sails, passport){
                 else {
                     //console.log('ONE PROVIDER');
                     // Fetch the user associated with the Passport
-                    return User.findOne(userPassport.user.id);
+                    return sails.models.user.findOne(userPassport.user.id);
                 }
             })
             .then(function(user){
@@ -171,6 +171,6 @@ module.exports.extend = function(sails, passport){
     });
 
     passport.deserializeUser(function (id, next) {
-        User.findOne(id).populate('role').exec(next);
+        sails.models.user.findOne(id).populate('role').exec(next);
     });
 };

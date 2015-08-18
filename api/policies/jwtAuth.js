@@ -6,7 +6,7 @@ var passport = require('passport');
  * @param res
  * @param next
  */
-function jwtAuth(req, res, next) {
+function jwtAuth(req, res, next){
 
     var auth = req.headers.authorization;
 

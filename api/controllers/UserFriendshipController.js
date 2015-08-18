@@ -78,7 +78,7 @@
             }
 
             // get user friends
-            User.findFriends(id)
+            sails.models.user.findFriends(id)
                 .then(function(friends){
                     return res.ok(friends);
                 })
