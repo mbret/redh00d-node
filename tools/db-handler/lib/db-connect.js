@@ -26,7 +26,7 @@
 
         script.on('shutdown', function(){
             connection.end(function(err){
-                script.logger.yellow('The connection to the database %s has been closed', connectionConfig.database);
+                script.logger.debug('The connection to the database %s has been closed', connectionConfig.database);
             });
         });
 
@@ -34,7 +34,7 @@
             if(err){
                 return cb(err);
             }
-            script.logger.yellow('The connection to the database %s has been established', connectionConfig.database);
+            script.logger.debug('The connection to the database %s has been established', connectionConfig.database);
             cb(null, connection);
         });
 

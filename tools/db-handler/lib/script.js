@@ -3,6 +3,8 @@
 
     var events  = require('events');
     var path    = require('path');
+    var chalk   = require('chalk');
+    var util    = require('util');
     var _       = require('lodash');
 
     var Script =  function(){};
@@ -28,23 +30,23 @@
             var executor        = require(path.join(process.env.LIB_PATH, 'db-exec.js'));
             var configHelper    = require(path.join(process.env.LIB_PATH, 'config-helper.js'));
 
-            this.logger.green('');
-            this.logger.green('-------------------------------------');
-            this.logger.green('');
-            this.logger.green('   -        Db handler        -');
-            this.logger.green('   Prepare to destroy the server!');
-            this.logger.green('');
-            this.logger.green('--------------------------------------');
-            this.logger.green('');
+            this.logger.silly('');
+            this.logger.silly('-------------------------------------');
+            this.logger.silly('');
+            this.logger.silly('   -        Db handler        -', '');
+            this.logger.silly('   Prepare to destroy the server!        ');
+            this.logger.silly('');
+            this.logger.silly('--------------------------------------');
+            this.logger.silly('');
 
             var argv        = require(path.join(process.env.LIB_PATH, 'args.js'));
             var command     = argv._[0];
             var config      = configHelper.load(argv);
 
-            this.logger.green('Here are some information about your current script command:');
-            this.logger.green('- command     : %s', command);
-            this.logger.green('');
-            this.logger.yellow('Script starting..');
+            this.logger.silly('Here are some information about your current script command:');
+            this.logger.silly('- command     : %s', command);
+            this.logger.silly('');
+            this.logger.debug('Script starting..');
 
             // Prepare the action
             // Will do some stuff depending of the command
@@ -67,21 +69,21 @@
             actionHandler
                 .run()
                 .then(function(message){
-                    self.logger.flash(message);
-                    self.logger.flash('Script completed with all the great success you deserve');
+                    self.logger.info(message);
+                    self.logger.info('Script completed with all the great success you deserve!');
                 })
                 .catch(function(err){
                     if(err instanceof UserError){
-                        self.logger.red('An error occured when executing your script, here is the detail:');
-                        self.logger.red(err.message);
+                        self.logger.error('An error occured when executing your script, here is the detail:');
+                        self.logger.error(err.message);
                     }
                     else{
-                        self.logger.red("An internal error occured, here is the stack (yes deal with it!):");
-                        self.logger.red(err.stack);
+                        self.logger.error("An internal error occured, here is the stack (yes deal with it!):");
+                        self.logger.error(err.stack);
                     }
                 })
                 .then(function(){
-                    self.logger.yellow('Scipt done!');
+                    self.logger.debug('Scipt done!');
                     self.emit('shutdown');
                 });
         }

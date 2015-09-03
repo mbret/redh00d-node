@@ -2,6 +2,7 @@
   "name": "db-handler",
   "author": "Maxime Bret",
   "dependencies": {
+    "chalk": "^1.1.1",
     "lodash": "^3.10.1",
     "mysql": "^2.8.0",
     "winston": "^1.0.1",
