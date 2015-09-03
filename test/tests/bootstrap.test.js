@@ -24,7 +24,7 @@ before(function(done) {
             console.error('Error on child process: ' + data);
         });
 
-        exec.on('close', function (code) {
+        exec.on('close', function (code){
             if(code !== 0){
                 done(new Error('There was one or more error with child process'));
             }

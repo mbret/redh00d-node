@@ -14,7 +14,7 @@ describe('integration.auth.local', function() {
         done();
     });
 
-    describe('Login', function(){
+    describe('default', function(){
 
         it('should return 401 because local auth is not authorized on classic routese', function(done){
             request(app).post('/helper/auth/any').send({email: sails.config.test.user.email, password: sails.config.test.userPassword})

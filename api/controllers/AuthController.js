@@ -55,7 +55,7 @@ module.exports = {
 
         // Password must have at least 3 char
         if ( !validator.isLength(password, 3)) {
-            return res.badRequest(null, sails.config.errorCode.E_PASSWORD_TOO_SHORT);
+            return res.badRequest(null, sails.config.errorCode.E_PASSWORD_TOO_SHORT, 'password mus have at least 3 characters');
         }
 
         // Create the user and init everything necessary for application
@@ -85,7 +85,7 @@ module.exports = {
             .then(res.created)
             .catch(function(err){
                 if (err.code === 'E_VALIDATION') {
-                    if (err.invalidAttributes[sails.models.userattributes.email.columnName]) {
+                    if (err.invalidAttributes[sails.models.user.attributes.email.columnName]) {
                         // This error could be something else but as we validate before we should only get an error because emeail already taken here
                         return res.badRequest(null, sails.config.errorCode.E_EMAIL_ALREADY_TAKEN);
                     } else {
