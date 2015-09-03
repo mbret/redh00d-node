@@ -1,14 +1,10 @@
-/**
- * Created by mbret on 10/04/2015.
- */
 module.exports = {
 
-    // configuration for testing purposes
-    log:{
-        level: "error"
+    // Predefined data that can be used with tests
+    testData: {
+        userAuthorization: "Basic dXNlckB1c2VyLmNvbTpwYXNzd29yZA==", // user@user.com / password
+        adminAuthorization: 'Basic YWRtaW5AYWRtaW4uY29tOnBhc3N3b3Jk', // admin@admin.com / password
     },
-
-    autoLogon: false,
 
     test: {
         user: null,
@@ -19,4 +15,4 @@ module.exports = {
         toolsPath: __dirname + '/tools'
     }
 
-}
+};

@@ -1,3 +1,3 @@
---timeout 5000
---colors
+./test/tests
 --recursive
+--timeout 5000

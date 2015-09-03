@@ -6,7 +6,6 @@ process.env.APP_ROOT_PATH   = path.join(__dirname, '..', '..');
 process.env.SCRIPT_PATH     = path.join(__dirname, 'lib/script.js');
 process.env.LIB_PATH        = path.join(__dirname, 'lib');
 
-// Get script process
+ //Get script process
 var script  = require(path.join(__dirname, 'lib/script.js'));
-
 script.run();

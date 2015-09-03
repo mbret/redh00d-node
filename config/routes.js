@@ -63,6 +63,8 @@ module.exports = {
         'get    /ping': 'HelperController.ping',
         'get    /helper/auth/jwt': 'HelperController.authJWT',
         'get    /helper/auth/basic': 'HelperController.authBasic',
+        'get    /helper/auth/any': 'HelperController.auth',
+        'post   /helper/auth/any': 'HelperController.auth',
         'get    /helper/authorized': 'HelperController.authorizedGet',
         'post   /helper/authorized': 'HelperController.authorizedPost',
 

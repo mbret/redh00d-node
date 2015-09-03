@@ -1,22 +1,6 @@
 var bcrypt = require('bcryptjs');
 
-/**
- * Hash a passport password.
- *
- * @param {Object}   password
- * @param {Function} next
- */
-function hashPassword (passport, next) {
-  if (passport.password){
-    bcrypt.hash(passport.password, 10, function (err, hash) {
-      passport.password = hash;
-      next(err, passport);
-    });
-  }
-  else{
-    next(null, passport);
-  }
-}
+
 
 /**
  * Passport Model
@@ -113,30 +97,57 @@ var UserPassport = {
 
   },
 
-      /**
-       * Callback to be run before creating a Passport.
-       *
-       * @param {Object}   passport The soon-to-be-created Passport
-       * @param {Function} next
-       */
-      beforeCreate: function (passport, next) {
-          if(passport.protocol === 'local' && !passport.password){
-              return next(new Error('UserPassport:beforeCreate: Protocol local require a password'));
-          }
-          hashPassword(passport, function(){
-              next();
-          });
-      },
+        /**
+        * Callback to be run before creating a Passport.
+        *
+        * @param {Object}   passport The soon-to-be-created Passport
+        * @param {Function} next
+        */
+        beforeCreate: function (passport, next) {
+            if(passport.protocol === 'local' && !passport.password){
+                return next(new Error('UserPassport:beforeCreate: Protocol local require a password'));
+            }
+            this.encrypt(passport.password, function(err, encrypted){
+                if(err) next(err);
+                passport.password = encrypted;
+                next();
+            });
+        },
 
-      /**
-       * Callback to be run before updating a Passport.
-       *
-       * @param {Object}   passport Values to be updated
-       * @param {Function} next
-       */
-      beforeUpdate: function (passport, next) {
-          hashPassword(passport, next);
-      }
+        /**
+        * Callback to be run before updating a Passport.
+        *
+        * @param {Object}   passport Values to be updated
+        * @param {Function} next
+        */
+        beforeUpdate: function (passport, next) {
+            this.encrypt(passport.password, function(err, encrypted){
+                if(err) next(err);
+                passport.password = encrypted;
+                next();
+            });
+        },
+
+    /**
+     * Hash a passport password.
+     *
+     * @param {Object}   password
+     * @param {Function} next
+     */
+    encrypt:  function (password, next) {
+        if (password){
+            bcrypt.hash(password, 10, function (err, hash) {
+                next(err, hash);
+            });
+        }
+        else{
+            next(null, password);
+        }
+    },
+
+    encryptSync: function(password){
+        return bcrypt.hashSync(password, 10);
+    }
 };
 
 module.exports = UserPassport;

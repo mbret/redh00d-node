@@ -18,6 +18,11 @@ module.exports = {
         return res.ok();
     },
 
+    // Test any auth method
+    auth: function(req, res){
+        return res.ok();
+    },
+
     authJWT: function(req, res){
         return res.ok();
     },
