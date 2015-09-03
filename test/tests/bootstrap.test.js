@@ -18,7 +18,7 @@ before(function(done) {
         // call the db tool
         // No need to drop as the config is already set to drop
         var execScript = path.join(SAILS_APP_PATH, 'tools/db-handler');
-        exec = spawn('node', [execScript, 'exec', '-e', 'testing', '-c', 'mysql', '-s', path.join(TEST_LIB_PATH, 'db-init.script.js')], {stdio: 'pipe'});
+        exec = spawn('node', [execScript, 'init', '-e', 'testing', '-c', 'mysql'], {stdio: 'pipe'});
 
         exec.stderr.on('data', function (data) {
             console.error('Error on child process: ' + data);

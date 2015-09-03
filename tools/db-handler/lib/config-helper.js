@@ -1,9 +1,10 @@
 (function(){
     'use strict';
 
-    var path = require('path');
-    var _ = require('lodash');
-    var fs = require('fs');
+    var path    = require('path');
+    var _       = require('lodash');
+    var fs      = require('fs');
+    var script  = require(process.env.SCRIPT_PATH);
 
     module.exports = {
 
@@ -17,6 +18,25 @@
             var globalConfig = _.merge(_loadConfig(configPath), _loadConfig(configEnvPath));
             return _prepareConfig(globalConfig, argv);
         },
+
+        getLocalScriptPath: function(name, env){
+            var envFileName = path.join(process.env.SCRIPTS_PATH, name + '.' + env + '.js');
+            var defaultFileName = path.join(process.env.SCRIPTS_PATH, name + '.js');
+
+            // try env specific
+            try{
+                var stat = fs.lstatSync(path.join(process.env.SCRIPTS_PATH, name + '.' + env + '.js'));
+                script.logger.debug('Using specific script for env ' + env);
+                return envFileName;
+            }
+            catch(e){
+                if(e && e.code === 'ENOENT'){
+                    script.logger.debug('No specific script for env ' + env + ', fallback to default one');
+                }
+                else if(e) throw e;
+                return defaultFileName;
+            }
+        }
 
     };
 

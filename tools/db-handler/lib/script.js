@@ -56,10 +56,10 @@
                     actionHandler = executor(config, path.resolve(process.cwd(), argv.s));
                     break;
                 case 'drop':
-                    actionHandler = executor(config, path.resolve(__dirname, '../scripts/drop.js'));
+                    actionHandler = executor(config, configHelper.getLocalScriptPath('drop', argv.e));
                     break;
                 case 'init':
-                    actionHandler = executor(config, path.resolve(__dirname, '../scripts/init.js'));
+                    actionHandler = executor(config, configHelper.getLocalScriptPath('init', argv.e));
                     break;
                 default:
                     break;
