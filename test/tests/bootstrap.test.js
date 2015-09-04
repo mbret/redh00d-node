@@ -17,7 +17,7 @@ before(function(done) {
         // Initialize test database
         // call the db tool
         // No need to drop as the config is already set to drop
-        var execScript = path.join(SAILS_APP_PATH, 'tools/db-handler');
+        var execScript = path.join(SAILS_APP_PATH, 'tools/waterline-db-handler');
         exec = spawn('node', [execScript, 'init', '-e', 'testing', '-c', 'mysql'], {stdio: 'pipe'});
 
         exec.stderr.on('data', function (data) {
