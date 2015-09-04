@@ -2,21 +2,9 @@
 
     'use strict';
 
-    /**
-     * Created by maxime on 30/07/2014.
-     * @description Interract with model
-     * @todo write this controller
-     */
-
     var validator = require('validator');
 
     module.exports = {
-
-        /* ========================================================
-         *
-         *              Friendship relative part
-         *
-         * ======================================================== */
 
         /**
          * Find a friendship request
@@ -47,9 +35,20 @@
          * Create a friendship request
          * - Create a request with status as waiting
          * @todo write this method
+         * @todo test if request already exist
          */
         create: function(req, res){
-            return res.send(501);
+
+            sails.models.friendship
+                .create({
+                    fromUser: 1,
+                    toUser: 1,
+                    status: 'requested',
+                })
+                .then(function(){
+
+                })
+                .catch(res.serverError);
         },
 
         /**

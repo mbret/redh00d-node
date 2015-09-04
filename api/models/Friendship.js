@@ -40,33 +40,50 @@
 // The base model is cloned and then merged with this model. This model is a child of the clone so not a child of ./BaseModel itself
 module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
 
-    tableName: 'user_friends',
-    identity: 'userfriendship',
+    tableName: 'FRIENDSHIP',
+    identity: 'friendship',
 
     attributes: {
+
         id: {
-            type: 'integer'
+            type: 'integer',
+            autoIncrement: true,
+            unique: true,
+            index: true,
+            primaryKey: true,
+            columnName: 'ID_FRIENDSHIP'
         },
+
         fromUser: {
             model: 'user',
-            columnName: 'FK_fromUserID',
+            columnName: 'ID_USER_FROM',
             required: true
         },
+
         toUser: {
             model: 'user',
-            columnName: 'FK_toUserID',
+            columnName: 'ID_USER_TO',
             required: true
         },
+
         status: {
             type: 'string',
             required: true,
             enum: ['pending', 'blocked', 'requested', 'accepted', 'rejected']
         },
-        //ToUserStatus: {
-        //    type: 'string',
-        //    required: true,
-        //    enum: ['pending', 'blocked', 'requested', 'accepted', 'rejected']
-        //}
+
+        createdAt: {
+            type: 'datetime',
+            defaultsTo: function (){ return new Date(); },
+            columnName: 'CREATED_AT'
+        },
+
+        updatedAt: {
+            type: 'datetime',
+            defaultsTo: function (){ return new Date(); },
+            columnName: 'UPDATED_AT'
+        },
+
     }
 
 });

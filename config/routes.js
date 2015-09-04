@@ -111,15 +111,15 @@ module.exports = {
         'delete /users/:id':                                        'UserController.delete',
 
         // USER friendships relatives routes
-        'get    /users/:userid/friendships/:id':                    'UserFriendShipController.find',
-        'put    /users/:userid/friendships/:id':                    'UserFriendShipController.update',      // update request (a response for friends)
-        'post   /users/:userid/friendships':                        'UserFriendShipController.create',      // Create a friendship request
-        'get    /users/:userid/friendships*':                       'UserFriendShipController.findMultiple',
+        'get    /users/:userid/friendships/:id':                    'FriendShipController.find',
+        'put    /users/:userid/friendships/:id':                    'FriendShipController.update',      // update request (a response for friends)
+        'post   /users/:userid/friendships':                        'FriendShipController.create',      // Create a friendship request
+        'get    /users/:userid/friendships*':                       'FriendShipController.findMultiple',
 
-        'delete /users/:userid/friends/:idfriend':                  'UserFriendShipController.delete',      // cancel a friendship request
+        'delete /users/:userid/friends/:idfriend':                  'FriendShipController.delete',      // cancel a friendship request
 
         // List of user friends, use /users/x to retrieve a friend
-        'get    /users/:userid/friends*':                           'UserFriendShipController.FindFriends',
+        'get    /users/:userid/friends*':                           'FriendShipController.FindFriends',
 
         // USER friends group relatives routes
         //'get    /users/:userid/friendsgroups/:id':                   'UserFriendGroupController.find',
