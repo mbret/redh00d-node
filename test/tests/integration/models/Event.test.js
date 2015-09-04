@@ -1,6 +1,10 @@
 var assert = require("assert");
+var chai = require('chai');
+chai.use(require('chai-datetime'));
+var should  = chai.should();
+var expect = chai.expect;
 
-describe('EventModel', function() {
+describe('integration.models.event', function() {
 
     var Event = null;
     // var ...
@@ -17,57 +21,47 @@ describe('EventModel', function() {
         done();
     });
 
-    beforeEach(function(done){
-        done();
-    });
+    describe('create', function () {
 
-    after(function(done){
-        done();
-    });
+        var event = {
+            id: null,
+            author: 1,
+            title: '$64$64$4$68$',
+            description: "$64$64$4$68$",
+            location: "864$",
+            date: new Date()
+        };
 
-    afterEach(function(done){
-        done();
-    });
-
-    describe('Create test', function () {
-
-        it ('should create a correct minimal event record', function (done) {
-            sails.models.event.create(baseEventData).exec(function(err, event){
-                if(err) throw new Error(err);
-                if(!event) throw new Error('Event not created');
-                if(event.author != 1
-                    || event.name != 'Event for test'
-                    || event.description != 'Join us !'
-                    || event.place.length < 1
-                    || ! event.date instanceof Date
-                    || ! event.createdAt instanceof Date
-                    || ! event.updatedAt instanceof Date
-                    ){
-                    throw new Error('Event malformed or incomplete');
-                }
-                return done();
-            });
+        afterEach(function(done){
+            // remove created user
+            sails.models.event
+                .destroy(event.id)
+                .then(function(destroyed){
+                    done();
+                })
+                .catch(done);
         });
 
-        //it ('should not create an event record', function (done) {
-        //
-        //    // empty
-        //    Event.create({}).exec(function(err){
-        //        if( ! err || ! err.ValidationError) throw new Error('Event should have had validation errors');
-        //    });
-        //
-        //    // bad date
-        //    newData = baseEventData;
-        //    newData.date = 'qsd';
-        //    Event.create(newData).exec(function(err){
-        //        if( ! err || ! err.ValidationError) throw new Error('Event should have had date validation errors');
-        //    });
-        //
-        //    return done();
-        //});
+        it ('should create an event', function (done) {
+            sails.models.event.create(event)
+                .then(function(data){
+                    expect(data).to.be.a('object');
+                    expect(data).to.include.keys('id', 'title', 'author', 'description', 'location', 'date', 'otherMayBring', 'createdAt', 'updatedAt', 'picture');
+                    data.title.should.equal(event.title);
+                    data.description.should.equal(event.description);
+                    data.author.should.equal(event.author);
+                    data.location.should.equal(event.location);
+                    expect(data.date).to.be.a('date');
+                    expect(data.createdAt).to.be.a('date');
+                    expect(data.updatedAt).to.be.a('date');
+                    data.date.should.equalDate(event.date);
+
+                    event.id = data.id;
+                    return done();
+                })
+                .catch(done);
+        });
 
     });
-
-
 
 });

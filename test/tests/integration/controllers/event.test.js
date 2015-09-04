@@ -10,7 +10,7 @@ describe('integration.controllers.event', function() {
         done();
     });
 
-    describe("GET", function(){
+    describe("get", function(){
 
         var events; // list of events to test
 
@@ -42,10 +42,8 @@ describe('integration.controllers.event', function() {
 
         after(function(done){
             sails.models.event
-                .destroy([events[0].id, events[1].id])
-                .then(function(destroyed){
-                    done();
-                })
+                .destroy()
+                .then(done.bind(this, null))
                 .catch(done);
         });
 
@@ -75,11 +73,30 @@ describe('integration.controllers.event', function() {
                     res.body.should.not.be.empty;
                 })
                 .end(done);
-        })
+        });
 
+        describe('permissions', function(){
+
+            describe('get', function(){
+                it('should get 401 as visitor', function(done){
+                    request(app)
+                        .get(sails.config.routesDef.events)
+                        .expect(401, done);
+                });
+            });
+
+            describe('get one', function(){
+                it('should get 401 as visitor', function(done){
+                    request(app)
+                        .get(sails.config.routesDef.events + '/12')
+                        .expect(401, done);
+                });
+            });
+
+        });
     });
 
-    describe("POST", function(){
+    describe("post", function(){
 
         // Model data for event rest creation
         // This object represent a valid object to send in order to create an event
@@ -104,12 +121,6 @@ describe('integration.controllers.event', function() {
                 .catch(done);
         });
 
-        it('should reject me as a visitor', function(done){
-           request(app)
-               .post(sails.config.routesDef.events)
-               .expect(401, done);
-        });
-
         it('should create an event', function(done){
             request(app).post(sails.config.routesDef.events).set('Authorization', sails.config.test.userAuth)
                 .send(eventsParamsTest)
@@ -126,61 +137,58 @@ describe('integration.controllers.event', function() {
 
             // Create an event for test purpose
             // This event is clear only at the end "after"
-            before(function(done){
-                sails.models.event
-                    .create({
-                        author: sails.config.test.user.id,
-                        title: eventsParamsTest.title,
-                        description: eventsParamsTest.description,
-                        location: eventsParamsTest.location,
-                        date: eventsParamsTest.date
-                    })
-                    .then(function(event){
-                        done();
-                    })
-                    .catch(done);
-            });
+            //before(function(done){
+            //    sails.models.event
+            //        .create({
+            //            author: sails.config.test.user.id,
+            //            title: eventsParamsTest.title,
+            //            description: eventsParamsTest.description,
+            //            location: eventsParamsTest.location,
+            //            date: eventsParamsTest.date
+            //        })
+            //        .then(function(event){
+            //            done();
+            //        })
+            //        .catch(done);
+            //});
+            //
+            //after(function(done){
+            //    sails.models.event
+            //        .destroy()
+            //        .then(function(destroyed){
+            //            done();
+            //        })
+            //        .catch(done);
+            //});
 
-            after(function(done){
-                sails.models.event
-                    .destroy()
-                    .then(function(destroyed){
-                        done();
-                    })
-                    .catch(done);
-            });
-
-            it('should revoke because event exist', function(done){
-                request(app).post(sails.config.routesDef.events).set('Authorization', sails.config.test.userAuth)
-                    .send(eventsParamsTest)
-                    .expect(400)
-                    .end(done);
-            });
-
-            it('should revoke because no params', function(done){
-                request(app).post(sails.config.routesDef.events).set('Authorization', sails.config.test.userAuth)
-                    .expect(400)
-                    .end(done);
-            });
-
-            it('should revoke because invalid title', function(done){
-                var params = eventsParamsTest;
-                delete params.title;
-                request(app).post(sails.config.routesDef.events).set('Authorization', sails.config.test.userAuth)
-                    .send(params)
-                    .expect(400)
-                    .end(done);
-            });
-
-            it('should revoke because invalid location', function(done){
-                var params = eventsParamsTest;
-                delete params.location;
-                request(app).post(sails.config.routesDef.events).set('Authorization', sails.config.test.userAuth)
-                    .send(params)
-                    .expect(400)
-                    .end(done);
+            it('should get 400 because invalid params', function(done){
+                var dataSets = [
+                    null,
+                    { description: "foo", location: "bar", date: new Date() },
+                    { title: '684$', location: "bar", date: new Date() },
+                    { title: '456', description: "foo", date: new Date() },
+                    { title: '456', description: "foo", location: "bar"},
+                    //eventsParamsTest, // event exist
+                ];
+                async.each(dataSets, function(data, cb){
+                    request(app).post(sails.config.routesDef.events).set('Authorization', sails.config.test.userAuth)
+                        .send(data)
+                        .expect(400, cb)
+                }, function(err){
+                    done(err);
+                });
             });
         });
 
+        describe('permissions', function(){
+
+            describe('post', function(){
+                it('should get 401 as visitor', function(done){
+                    request(app)
+                        .post(sails.config.routesDef.events)
+                        .expect(401, done);
+                });
+            });
+        });
     })
 });

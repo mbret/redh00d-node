@@ -1,26 +1,10 @@
 var request = require('supertest');
 
-describe('AllController', function() {
+describe('integration.controllers.any', function() {
 
     var authorization = "Basic dXNlckB1c2VyLmNvbTpwYXNzd29yZA=="; // xmax54@gmail.com / password
     var authorizationAdmin = 'Basic YWRtaW5AYWRtaW4uY29tOnBhc3N3b3Jk'; // admin@admin.com / password
 //    var request = request(sails.hooks.http.app);
-
-    before(function(done){
-        done();
-    })
-
-    beforeEach(function(done){
-        done();
-    })
-
-    after(function(done){
-        done();
-    })
-
-    afterEach(function(done){
-        done();
-    })
 
     describe("All", function(){
 
