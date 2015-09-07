@@ -25,7 +25,6 @@ before(function(done) {
         });
 
         exec.on('close', function (code){
-            console.log('salut');
             if(code !== 0){
                 done(new Error('There was one or more error with child process'));
             }

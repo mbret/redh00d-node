@@ -12,27 +12,15 @@ describe('UserFriendGroupController', function() {
         done();
     });
 
-    beforeEach(function(done){
-        done();
-    });
-
-    after(function(done){
-        done();
-    });
-
-    afterEach(function(done){
-        done();
-    });
-
     /**
      * Create a friends group
      */
     describe("POST users/userid/friendsgroups", function(){
 
-        it('should respond bad request', function(done){
-            request(app).get('/users/x/friends').set('Authorization', sails.config.test.userAuth)
-                .expect(400).end(done);
-        });
+        //it('should respond bad request', function(done){
+        //    request(app).get('/users/x/friends').set('Authorization', sails.config.test.userAuth)
+        //        .expect(400).end(done);
+        //});
 
         //it('should respond a list of friends', function(done){
         //    request(app).get('/users/' + user.id + '/friends').set('Authorization', sails.config.test.userAuth)
