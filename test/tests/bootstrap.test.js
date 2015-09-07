@@ -1,12 +1,12 @@
-var path = require('path');
-var Sails = require('sails');
-var SAILS_APP_PATH = path.join(__dirname, '..', '..');
-var TEST_LIB_PATH = path.join(__dirname, '../lib');
-var config = require(path.join(TEST_LIB_PATH, 'config-loader'))(path.join(SAILS_APP_PATH, 'config', 'env', 'testing'), 'testing');
-//var dbProvider = require('./lib/db-provider');
-var spawn = require('child_process').spawn;
-var sails;
+'use strict';
 
+var path            = require('path');
+var Sails           = require('sails');
+var SAILS_APP_PATH  = path.join(__dirname, '..', '..');
+var TEST_LIB_PATH   = path.join(__dirname, '../lib');
+var config          = require(path.join(TEST_LIB_PATH, 'config-loader'))(path.join(SAILS_APP_PATH, 'config', 'env', 'testing'), 'testing');
+var spawn           = require('child_process').spawn;
+var sails;
 
 before(function(done) {
 
@@ -18,13 +18,14 @@ before(function(done) {
         // call the db tool
         // No need to drop as the config is already set to drop
         var execScript = path.join(SAILS_APP_PATH, 'tools/waterline-db-handler');
-        exec = spawn('node', [execScript, 'init', '-e', 'testing', '-c', 'mysql'], {stdio: 'pipe'});
+        var exec = spawn('node', [execScript, 'init', '-e', 'testing', '-c', 'mysql'], {stdio: 'pipe'});
 
         exec.stderr.on('data', function (data) {
             console.error('Error on child process: ' + data);
         });
 
         exec.on('close', function (code){
+            console.log('salut');
             if(code !== 0){
                 done(new Error('There was one or more error with child process'));
             }
@@ -57,5 +58,10 @@ before(function(done) {
 
 after(function(done) {
     // here you can clear fixtures, etc.
-    sails.lower(done);
+    if(sails){
+        sails.lower(done);
+    }
+    else{
+        done();
+    }
 });

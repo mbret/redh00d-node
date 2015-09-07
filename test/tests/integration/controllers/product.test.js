@@ -34,18 +34,6 @@ describe('integration.controllers.product', function() {
             .catch(done);
     });
 
-    beforeEach(function(done){
-        done();
-    });
-
-    after(function(done){
-        done();
-    });
-
-    afterEach(function(done){
-        done();
-    });
-
     describe("GET", function(){
 
         it('should respond product with id x', function(done){

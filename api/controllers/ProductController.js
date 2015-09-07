@@ -63,9 +63,9 @@ module.exports = {
             data.isOfficial = req.param('official', null);
         }
 
-        sails.models.create( data)
+        sails.models.product.create( data)
             .then(function(product){
-                return sails.models.findOne({'id': product.id}).populate('category').then(function(product){
+                return sails.models.product.findOne({'id': product.id}).populate('category').then(function(product){
                     if(!product) return res.notFound();
                     return res.created(product.toJSON());
                 });
