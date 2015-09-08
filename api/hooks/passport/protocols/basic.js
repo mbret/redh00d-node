@@ -9,7 +9,7 @@ var validator = require('validator');
  * @param {Function} next
  */
 module.exports = function (req, email, password, next) {
-    
+
     if(!email && !password){
         return next(null, false, {code:401});
     }

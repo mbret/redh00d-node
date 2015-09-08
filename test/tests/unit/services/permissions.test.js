@@ -2,7 +2,7 @@ var request = require('supertest');
 var assert = require("assert");
 //var should = require("should");
 
-describe('PermissionsService', function() {
+describe('unit.services.permissions', function() {
 
     describe("Allowed", function(){
         it('should be allowed', function(){

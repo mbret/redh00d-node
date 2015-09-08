@@ -47,6 +47,7 @@ module.exports.passport = {
             }
         },
 
+        // https://github.com/jaredhanson/passport-http
         basic: {
             strategy: require('passport-http').BasicStrategy,
             protocol: 'basic'

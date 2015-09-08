@@ -9,50 +9,49 @@ var spawn           = require('child_process').spawn;
 var sails;
 
 before(function(done) {
-
     Sails.lift(config, function(err, server) {
-        if (err) return done(err);
-        sails = server;
+            if (err) return done(err);
+            sails = server;
 
-        // Initialize test database
-        // call the db tool
-        // No need to drop as the config is already set to drop
-        var execScript = path.join(SAILS_APP_PATH, 'tools/waterline-db-handler');
-        var exec = spawn('node', [execScript, 'init', '-e', 'testing', '-c', 'mysql'], {stdio: 'pipe'});
+            // Initialize test database
+            // call the db tool
+            // No need to drop as the config is already set to drop
+            var execScript = path.join(SAILS_APP_PATH, 'tools/waterline-db-handler');
+            var exec = spawn('node', [execScript, 'init', '-e', 'testing', '-c', 'mysql']);
 
-        exec.stderr.on('data', function (data) {
-            console.error('Error on child process: ' + data);
+            exec.stderr.on('data', function (data) {
+                console.error('Error on child process: ' + data);
+            });
+
+            exec.on('close', function (code){
+                if(code !== 0){
+                    done(new Error('There was one or more error with child process'));
+                }
+
+                // load detail of current user
+                sails.models.user.findOne({email: 'user@user.com'})
+                    .then(function(user){
+                        if(!user){
+                            done(new Error('user@user.com not found'));
+                        }
+                        sails.config.test.user = user;
+                    })
+                    .then(function(){
+                        // load detail of current admin user
+                        return sails.models.user.findOne({email: 'admin@admin.com'})
+                            .then(function(user){
+                                if(!user){
+                                    done(new Error('admin@admin.com not found'));
+                                }
+                                sails.config.test.admin = user;
+                            });
+                    })
+                    .then(function(){
+                        done();
+                    })
+                    .catch(done);
+            });
         });
-
-        exec.on('close', function (code){
-            if(code !== 0){
-                done(new Error('There was one or more error with child process'));
-            }
-
-            // load detail of current user
-            sails.models.user.findOne({email: 'user@user.com'})
-                .then(function(user){
-                    if(!user){
-                        done(new Error('user@user.com not found'));
-                    }
-                    sails.config.test.user = user;
-                })
-                .then(function(){
-                    // load detail of current admin user
-                    return sails.models.user.findOne({email: 'admin@admin.com'})
-                        .then(function(user){
-                            if(!user){
-                                done(new Error('admin@admin.com not found'));
-                            }
-                            sails.config.test.admin = user;
-                        });
-                })
-                .then(function(){
-                    done();
-                })
-                .catch(done);
-        });
-    });
 });
 
 after(function(done) {
