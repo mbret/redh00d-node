@@ -39,14 +39,18 @@
          */
         create: function(req, res){
 
-            sails.models.friendship
-                .create({
-                    fromUser: 1,
-                    toUser: 1,
-                    status: 'requested',
-                })
-                .then(function(){
+            // url
+            var fromUser = req.user.id;
+            // data
+            var toUser = req.param('user_id', null);
 
+            if(!validator.isNumeric(toUser)){
+                return res.badRequest('user_id should be numeric');
+            }
+
+            sails.models.friendship.askFriend(fromUser, toUser)
+                .then(function(){
+                    return res.created();
                 })
                 .catch(res.serverError);
         },

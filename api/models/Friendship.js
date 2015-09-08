@@ -69,7 +69,7 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
         status: {
             type: 'string',
             required: true,
-            enum: ['pending', 'blocked', 'requested', 'accepted', 'rejected']
+            enum: ['pending', 'blocked', 'accepted', 'rejected']
         },
 
         createdAt: {
@@ -84,6 +84,15 @@ module.exports = _.merge( _.cloneDeep( require('./BaseModel') ), {
             columnName: 'UPDATED_AT'
         },
 
+    },
+
+    askFriend: function(fromUser, toUser){
+        return sails.models.friendship
+            .create({
+                fromUser: fromUser,
+                toUser: toUser,
+                status: 'pending',
+            });
     }
 
 });

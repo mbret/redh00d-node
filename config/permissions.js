@@ -28,7 +28,7 @@ var permissions = {
         'product', // ProductController
         'dev', // DevController
         'helper', // HelperController
-        'userfriendship'
+        'friendship'
     ],
 
     // ACL must use correct roles and resources as defined above
@@ -42,7 +42,7 @@ var permissions = {
             allow: {
                 user: ['find','findmultiple','delete', 'update', 'patch', 'generateResetPasswordToken'],
                 event: ['find', 'findmultiple', 'create'],
-                userfriendship: ['findfriends'],
+                friendship: ['create', 'findfriends'],
                 product: ['find','findmultiple','create'],
                 dev:    ['auth'], // allow user to authenticate first time
                 helper: ['me']

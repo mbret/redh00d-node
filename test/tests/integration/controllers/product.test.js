@@ -90,7 +90,7 @@ describe('integration.controllers.product', function() {
                         .expect(400).end(callback);
                 },
                 function(callback){
-                    request(sails.hooks.http.app).post('/products').send({name: 'qsds'}).set('Authorization', sails.config.test.userAuth)
+                    request(sails.hooks.http.app).post('/products').set('Authorization', sails.config.test.userAuth).send({name: 'qsds'})
                         .expect(400).end(callback);
                 }
             ], function(err, results){

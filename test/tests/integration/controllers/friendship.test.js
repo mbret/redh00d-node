@@ -34,4 +34,92 @@ describe('integration.controllers.friendship', function() {
 
     });
 
+    // https://developers.schoology.com/api-documentation/rest-api-v1/friend-request
+    /**
+     * /users/1/friendships
+     */
+    describe('post friendship', function(){
+
+        it('should reject as visitor', function(done){
+            request(app).post('/friendships')
+                .expect(401)
+                .end(done);
+        });
+
+        it('should respond bad request', function(done){
+            request(app).post('/friendships').set('Authorization', sails.config.test.userAuth)
+                .send({user_id: 2})
+                .expect(400)
+                .end(done);
+        });
+
+        it('should create a friend request from a to b', function(done){
+           request(app).post('/friendships').set('Authorization', sails.config.test.userAuth)
+               .send({user_id: 2})
+               .expect(201)
+               .end(done);
+        });
+
+    });
+
+    describe('put friendship', function(){
+
+        before(function(done){
+            // a ask b
+            done();
+        });
+
+        it('should accept request from a', function(done){
+            done();
+        });
+
+    });
+
+    /**
+     * friendships requests
+     *
+     * /users/1/friendships
+     */
+    describe('get friendships', function(){
+
+        it('should return pending friendship', function(done){
+            done();
+        });
+
+        it('should return accepted friendship', function(done){
+            done();
+        });
+
+    });
+
+    /**
+     *
+     * /users/1/friends
+     */
+    describe('get friends', function(){
+
+        it('should return friends list', function(done){
+           done();
+        });
+    });
+
+    describe('scenario', function(){
+
+        describe('user a ask b as friend, b accept', function(){
+
+            it('should create a request from a to b', function(done){
+                done();
+            });
+
+            it('should accept request from a', function(done){
+                done();
+            });
+
+            it('a should be able to retrieve b as friend', function(done){
+                done();
+            });
+        });
+
+    });
+
 });
