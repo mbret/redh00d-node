@@ -2,6 +2,9 @@ language: node_js
 node_js:
   - "4"
 notifications:
+  email:
+    email:
+      - bret.maxime@gmail.com
   webhooks:
     urls:
       - https://webhooks.gitter.im/e/14366569f6253ae6fa6c
