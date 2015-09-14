@@ -13,5 +13,6 @@ before_isntall:
   npm install -g grunt-cli
 install:
   npm install
+  node travis.js --install
 before_script:
   - mysql -e 'create database redh00d_test;'

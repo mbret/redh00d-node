@@ -67,7 +67,8 @@
     "supertest": "0.13.x",
     "lodash": "3.7.x",
     "chai-datetime": "^1.4.0",
-    "randomstring": "^1.1.0"
+    "randomstring": "^1.1.0",
+    "yargs": "^3.25.0"
   },
   "engines": {
     "node": ">= 0.12.0"
