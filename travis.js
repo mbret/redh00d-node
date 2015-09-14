@@ -33,5 +33,5 @@ switch(command){
  * Rename /config/env/testing/local.travis.js to ../local.js
  */
 function applyLocalConfig(){
-    fs.renameSync(path.join(__dirname, 'config/env/testing/local.travis.js'), path.join(__dirname, 'config/env/testing/local.js'));
+    fs.renameSync(path.join(__dirname, 'config/env/testing/local.js.travis'), path.join(__dirname, 'config/env/testing/local.js'));
 }
