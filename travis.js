@@ -1,6 +1,7 @@
 'use strict';
 
 var path    = require('path');
+var fs = require('fs');
 var args    = process.argv.slice(2);
 
 var argv = require('yargs')
@@ -13,3 +14,17 @@ var argv = require('yargs')
 var command = argv._[0];
 
 console.log('Travis node script, command:', command);
+console.info('Travis node script, command:', command);
+
+switch(command){
+    case 'install':
+        applyLocalConfig();
+        break;
+}
+
+/**
+ * Rename /config/env/testing/local.travis.js to ../local.js
+ */
+function applyLocalConfig(){
+    fs.renameSync(path.join(__dirname, 'config/env/testing/local.travis.js'), path.join(__dirname, 'config/env/testing/local.js'));
+}
