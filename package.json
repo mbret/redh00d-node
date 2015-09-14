@@ -8,7 +8,7 @@
     "social"
   ],
   "scripts": {
-    "start": "node app.js",
+    "start": "node --harmony app.js",
     "debug": "node debug app.js",
     "test": "mocha"
   },
@@ -66,6 +66,10 @@
     "must": "0.6.x",
     "supertest": "0.13.x",
     "lodash": "3.7.x",
-    "chai-datetime": "^1.4.0"
+    "chai-datetime": "^1.4.0",
+    "randomstring": "^1.1.0"
+  },
+  "engines": {
+    "node": ">= 0.12.0"
   }
 }

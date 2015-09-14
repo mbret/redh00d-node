@@ -1,5 +1,7 @@
+var path = require('path');
 var request = require('supertest');
 var assert = require("assert");
+var TestHelper = require(path.join(process.env.TEST_LIB_PATH, 'test-helper'));
 
 describe('integration.controllers.friendship', function() {
 
@@ -40,6 +42,17 @@ describe('integration.controllers.friendship', function() {
      */
     describe('post friendship', function(){
 
+        var userB = null;
+        before(function(done){
+            TestHelper
+                .createSimpleUser()
+                .then(function(user){
+                    userB = user.id;
+                    done();
+                })
+                .catch(done);
+        });
+
         it('should reject as visitor', function(done){
             request(app).post('/friendships')
                 .expect(401)
@@ -48,16 +61,18 @@ describe('integration.controllers.friendship', function() {
 
         it('should respond bad request', function(done){
             request(app).post('/friendships').set('Authorization', sails.config.test.userAuth)
-                .send({user_id: 2})
                 .expect(400)
                 .end(done);
         });
 
         it('should create a friend request from a to b', function(done){
            request(app).post('/friendships').set('Authorization', sails.config.test.userAuth)
-               .send({user_id: 2})
+               .send({user_id: userB})
                .expect(201)
-               .end(done);
+               .end(function(err, res){
+                   if(err) done(err);
+                   done(new Error('todo'));
+               });
         });
 
     });

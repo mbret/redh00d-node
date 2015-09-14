@@ -8,6 +8,8 @@ var config          = require(path.join(TEST_LIB_PATH, 'config-loader'))(path.jo
 var spawn           = require('child_process').spawn;
 var sails;
 
+process.env.TEST_LIB_PATH = TEST_LIB_PATH;
+
 before(function(done) {
     Sails.lift(config, function(err, server) {
             if (err) return done(err);

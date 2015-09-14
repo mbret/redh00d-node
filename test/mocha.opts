@@ -1,3 +1,4 @@
 ./test/tests
 --recursive
---timeout 6000
+--harmony
+--timeout 7000
