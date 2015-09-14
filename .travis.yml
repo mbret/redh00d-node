@@ -13,6 +13,7 @@ before_install:
   - npm install -g grunt-cli
 install:
   - npm install
+  - cd tools/waterline-db-handler && npm install
   - node travis.js install
 before_script:
   - mysql -e 'create database redh00d_test;'

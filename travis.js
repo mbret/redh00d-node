@@ -1,7 +1,14 @@
 'use strict';
 
+/**
+ * travis.js
+ *
+ * This script is used by travis test tool.
+ *
+ */
+
 var path    = require('path');
-var fs = require('fs');
+var fs      = require('fs');
 var args    = process.argv.slice(2);
 
 var argv = require('yargs')
