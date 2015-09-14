@@ -3,7 +3,7 @@ node_js:
   - "4"
 notifications:
   email:
-    email:
+    recipients:
       - bret.maxime@gmail.com
   webhooks:
     urls:
