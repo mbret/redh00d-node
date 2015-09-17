@@ -8,22 +8,11 @@ This document contain all basic stuff about installing and running application. 
 https://sites.google.com/site/redh00dintern/API.
 
 This application is a RESTFUL web service which provide bridge between customer application and data. The entire code is under Node.js
-## Some information (useful now or later)
-- Admin account: admin@admin.com / password
-- User1 account: user1@user.com / password
 
 ## Prerequisites for correct running application:
-- Install node.js.
-- Install forever globally `npm install -g forever`.
-- Install node-gyp globally `npm install -g node-gyp` (read doc for installation).
-- Move terminal inside project dir and run `npm update`.
-- Run `forever -c node app.js --dev` for a development instance.
-- Or run `forever -c node app.js --prod` for a production instance.
-- Or (on windows) use the two batch scripts available in project dir.
-- Or use sails.js starter. Then you need to install sails.js `npm install -g sails` and run `sails lift` inside project dir.
-- Or run the app.js by yourself if you are smart enough :) `node app.js`.
-- You will probably need to visit the home page with the browser to accept easily the first time the certificate. Visit https://localhost:1337/.
-- You can try to visit /api/dev/db (in development runtime) to check if you get any response.
+- Install node.js. (You need at least v4.0)
+- Run `npm install sails -g`.
+- Inside project root dir, run `npm install`.
 
 ## Prerequisites for correct application development:
 - All prerequisites for running application.
@@ -37,6 +26,8 @@ To use the api you can use many tools (Chrome console, Postman, etc) but also pr
 
 ## Start application
 - Run `npm start`
+- You will probably need to visit the home page with the browser to accept easily the first time the certificate. Visit https://localhost:1337/.
+- You can try to visit /api/dev/db (in development runtime) to check if you get any response.
 
 ## Test application:
 - Run `npm test`
