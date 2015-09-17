@@ -171,6 +171,12 @@ module.exports.extend = function(sails, passport){
     });
 
     passport.deserializeUser(function (id, next) {
-        sails.models.user.findOne(id).populate('role').exec(next);
+        sails.models.user
+            .findOne(id)
+            .populate('role')
+            .then(function(user){
+                return next();
+            })
+            .catch(next);
     });
 };

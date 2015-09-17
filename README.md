@@ -42,9 +42,6 @@ Server run user for node is www-data over pm2. www-data must have right to write
 - The pm2 process should watch your change and restart app. Check online.
 
 ## Troubleshooting:
-- Install of `node-gyp` fail: Please verify all requirements for the installation. Check official website page.
-- Install of `bcryt` fail on Windows: check these issues (http://goo.gl/v9APnG).
-- Application does not run because of `bcrypt` problem: Be sure that `bcrypt` is correctly installed on your project folder (node_modules)
 - Could not get any response with request manager application like postman or inside phone application: Be sure you have allowed certificate of application. It can be done by visiting first time the home page ex: https://localhost:1337.
 
 ## FAQ (Any questions that are not written above):
